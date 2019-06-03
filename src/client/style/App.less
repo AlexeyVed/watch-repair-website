@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background: url("http://designshack.net/wp-content/uploads/svg-background.jpg");
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    margin: auto;
+}
+
+.header {
+    flex-grow: 2;
+    height: 12vh;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: row-reverse;
+
+    .div-logo {
+        flex: 1 1 25%;
+        align-items: center;
+        justify-content: center;
+        background-color: #dfffca;
+        padding-left: 2vw;
+        display: flex;
+
+        .logo {
+            background: url(../image/logo.png) no-repeat left;
+            flex: 1 2 30%;
+            height: 100%;
+        }
+
+        .discription {
+            flex: 2 1 70%;
+            padding-right: 2vw;
+
+            .nameCompany {
+                font-size: 20px;
+                font-weight: bold;
+                letter-spacing: 2px;
+                text-align: center;
+            }
+            .text {
+                text-align: center;
+                font-size: 15px;
+                color: #4c4c4c;
+            }
+        }
+    }
+
+    .buttons {
+        flex: 2 2 25%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+    }
+
+    .login-reg-form {
+        flex: 10 0 50%;
+    }
+}
+
+.main {
+    flex-grow: 5;
+    height: 80vh;
+    background-color: beige;
+    display: flex;
+
+    .divForm {
+        background-color: bisque;
+        flex: 1 3 33%;
+        padding-top: 3vh;
+
+        .title-create {
+            text-align: center;
+            padding-top: 3vh;
+            margin-bottom: 3vh;
+            font-size: 20px
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+    }
+    .content {
+        flex: 3 1 66%;
+        background-color: #dfffca;
+    }
+}
+
+.footer {
+    flex-grow: 1;
+    height: 8vh;
+    background-color: aquamarine;
+}
