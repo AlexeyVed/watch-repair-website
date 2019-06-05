@@ -1,5 +1,5 @@
 {
-  "name": "react-with-server",
+  "name": "watch-repair-website",
   "version": "1.0.0",
   "description": "",
   "main": "src/server/index.js",
@@ -8,10 +8,46 @@
     "start": "start webpack-dev-server --mode development",
     "server": "start nodemon src/server/server.js",
     "all-start": "npm-run-all --parallel start server",
-    "all-build": "npm-run-all --parallel build server"
+    "test": "mocha --opts ./config/mocha.opts src/client/**/*.test.js --recursive --silent",
+    "test-cov": "nyc -e .jsx mocha --opts ./config/mocha.opts src/**/*.test.js --recursive -R nyan --silent",
+    "update-snapshots": "mocha --opts ./config/mocha.opts src/**/*.test.js --require mocha-snapshots --update"
   },
   "author": "",
   "license": "",
+  "nyc": {
+    "check-coverage": false,
+    "per-file": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "require": [
+      "@babel/register"
+    ],
+    "exclude": [
+      "coverage/**",
+      "test/**",
+      "test{,-*}.js",
+      "**/*.test.js",
+      "**/__tests__/**",
+      "**/node_modules/**",
+      "**/__snapshots__/**",
+      ".nyc_output/**",
+      ".nyc_output-tmp/**",
+      "config/mocha-setup.js",
+      "config/mocha.opts",
+      "**/mockData/**"
+    ],
+    "cache": true,
+    "all": false,
+    "temp-directory": "./.nyc_output-tmp",
+    "report-dir": "./.nyc_output"
+  },
   "dependencies": {
     "@date-io/date-fns": "^1.3.6",
     "@material-ui/core": "^4.0.1",
@@ -23,8 +59,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "^7.0.3",
-    "redux": "^4.0.1",
-    "redux-saga": "^1.0.2"
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -36,7 +71,6 @@
     "body-parser": "^1.18.3",
     "clean-webpack-plugin": "^1.0.0",
     "cors": "^2.8.5",
-    "crypto-js": "^3.1.9-1",
     "css-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.9.0",
@@ -48,6 +82,13 @@
     "url-loader": "^1.0.1",
     "webpack": "^4.5.0",
     "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.3"
+    "webpack-dev-server": "^3.1.3",
+    "chai": "^4.2.0",
+    "enzyme": "^3.9.0",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
+    "mocha-snapshots": "^4.2.0",
+    "enzyme-adapter-react-16": "^1.11.2",
+    "sinon": "^7.3.0"
   }
 }
