@@ -1,13 +1,14 @@
-import 'date-fns';
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+
+import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
     KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 const useStyles = makeStyles(theme => ({
     KeyboardDatePicker: {
@@ -15,10 +16,9 @@ const useStyles = makeStyles(theme => ({
 }
 }));
 
-function MaterialUIPickers() {
-    // The first commit of Material-UI
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
+const MaterialUIPickers = props => {
 
+    const [selectedDate, setSelectedDate] = React.useState(new Date());
     const classes = useStyles();
 
     function handleDateChange(date) {

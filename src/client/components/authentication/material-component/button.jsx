@@ -16,7 +16,7 @@ const ButtonSubmit = props => {
     const classes = useStyles();
 
     return (
-            <Button variant="outlined" color="primary" className={classes.button}>
+            <Button variant="outlined" color="primary" className={classes.button} onClick = {props.onClick}>
                 Submit
             </Button>
     );

@@ -2,19 +2,25 @@ import React, {Component} from 'react';
 
 import Header from './header';
 import Main from './main';
-import Footer from './footer/footer.jsx';
-
-
+import Portal from './authentication'
 
 
 export default class App extends Component {
+    state = {
+        showModal: false,
+    }
+
+    changeModal = () => {
+        this.setState(() => ({showModal: !this.state.showModal}))
+        return this.state.showModal
+    }
 
     render() {
         return (
             <div className = 'app'>
-                <Header/>
+                <Header showModal={this.changeModal}/>
                 <Main/>
-                <Footer/>
+                {(this.state.showModal) ? <Portal showModal={this.changeModal}/> : null }
             </div>
         )
     }

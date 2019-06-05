@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
 import Buttons from './buttons.jsx';
-import Authentication from './authentication.jsx';
 import Logo from './logo.jsx';
+
 
 export default class Header extends Component {
 
@@ -10,8 +10,8 @@ export default class Header extends Component {
         return (
             <div className = 'header'>
 
-                <Buttons/>
-                <Authentication/>
+                <Buttons showModal={this.props.showModal}/>
+                <div className="middle"></div>
                 <Logo/>
 
             </div>

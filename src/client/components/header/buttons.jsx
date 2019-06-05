@@ -1,14 +1,24 @@
 import React from 'react';
 
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 
-function TextButtons() {
+const useStyles = makeStyles(theme => ({
+    button: {
+        width: '100%',
+        height: '100%',
+    }
+}));
+
+const TextButtons = props => {
+
+    const classes = useStyles();
 
     return (
         <div className={'buttons'}>
-            <Button className={'button'}>Login In</Button>
-            <Button className={'button'}>Registration</Button>
+            <Button className={classes.button} onClick = {props.showModal}>Login In</Button>
+            <Button className={classes.button}>Registration</Button>
         </div>
     );
 }
