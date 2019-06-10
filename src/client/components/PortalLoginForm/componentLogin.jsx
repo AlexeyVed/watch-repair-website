@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 
 import { toggleModalLogin } from "../../actions";
 
-import Input from '../componentsMaterialUI/inputs.jsx'
-import Button from '../componentsMaterialUI/button.jsx'
+import './LoginForm.less'
 
 
 class LoginForm extends Component {
@@ -35,22 +34,21 @@ class LoginForm extends Component {
     render() {
         return (
             <div className="modal-window">
-                <div className='loginForm'>
-                    <div className="header-form">
+                <div className='login-form'>
+                    <div className="login-form__header">
                         Member login
+                        <button
+                            className='login-form__header__right-button-close'
+                            onClick = {this.props.toggleModalLogin}>
+                            &times;
+                        </button>
                     </div>
-                    <button onClick = {this.props.toggleModalLogin}>Close</button>
-                    <Input
-                        name = 'email'
-                        title = 'E-mail'
-                        onChange = { this.onChange }
+
+                    <input
                     />
-                    <Input
-                        name = 'password'
-                        title = 'password'
-                        onChange = { this.onChange }
+                    <input
                     />
-                    <Button onClick = {this.login}/>
+                    <button onClick = {this.login}>Submit</button>
                 </div>
             </div>
         );

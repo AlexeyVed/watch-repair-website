@@ -36,7 +36,7 @@ function checkUserInDataBase (login, password) {
                 console.log(result, 'result');
                 if (!result.length) {
                     checkUserFlag = false;
-                    reject('User not defined, press RegistrationForm!');
+                    reject('User not defined, press PortalRegistrationForm!');
                 } else {
                     if (result[0].password === password) {
                         currentID = result[0].id;
