@@ -1,27 +1,23 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
-import Header from './header';
-import Main from './main';
-import Portal from './authentication'
+import Header from './Header/Header.jsx';
+import Main from './Main';
+import Portal from './PortalAuthentication/PortalAuthentication'
 
 
-export default class App extends Component {
-    state = {
-        showModal: false,
-    }
-
-    changeModal = () => {
-        this.setState(() => ({showModal: !this.state.showModal}))
-        return this.state.showModal
-    }
+class App extends Component {
 
     render() {
         return (
             <div className = 'app'>
-                <Header showModal={this.changeModal}/>
+                <Header/>
                 <Main/>
-                {(this.state.showModal) ? <Portal showModal={this.changeModal}/> : null }
+                <Portal/>
             </div>
         )
     }
 }
+
+
+export default App;

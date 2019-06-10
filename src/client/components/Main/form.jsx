@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
-import Date from './material-components/timePickers.jsx'
-import Input from './material-components/inputs.jsx'
-import Select from './material-components/selects.jsx'
-import ButtonSubmit from './material-components/button.jsx'
+import Date from '../componentsMaterialUI/timePickers.jsx'
+import Input from '../componentsMaterialUI/inputs.jsx'
+import Select from '../componentsMaterialUI/selects.jsx'
+import ButtonSubmit from '../componentsMaterialUI/button.jsx'
 
 
 export default class Form extends Component {

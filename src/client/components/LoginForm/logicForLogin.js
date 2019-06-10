@@ -9,7 +9,6 @@ function verify(login, pass) {
     request.open("POST", "http://localhost:4000/login", true);
     request.setRequestHeader("Content-Type", "application/json");
     const data = JSON.stringify(obj);
-    console.log(data);
     request.send(data);
     return new Promise((resolve, reject) => {
         request.onreadystatechange = function () {
@@ -18,12 +17,9 @@ function verify(login, pass) {
                     if (request.responseText === 'OK') {
                         resolve();
                     } else {
-                        console.log(request);
-                        console.log(request.responseText);
                         reject(request.responseText);
                     }
                 } else {
-                    console.log('exclusively bad request');
                     reject('exclusively bad request');
                 }
             }

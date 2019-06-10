@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
-import Input from './material-component/inputs.jsx'
-import Button from './material-component/button.jsx'
+import { toggleModalRegister } from "../../actions";
+
+import Input from '../componentsMaterialUI/inputs.jsx'
+import Button from '../componentsMaterialUI/button.jsx'
 
 
-class LoginForm extends Component {
+class RegistrationForm extends Component {
     state = {
         inputLogin: '',
         inputPassword: ''
@@ -17,6 +20,7 @@ class LoginForm extends Component {
                     <div className="header-form">
                         Registration
                     </div>
+                    <button onClick = {this.props.toggleModalRegister}>Close</button>
                     <Input title = 'E-mail'/>
                     <Input title = 'password'/>
                     <Input title = 'password'/>
@@ -28,4 +32,9 @@ class LoginForm extends Component {
 
 }
 
-export default LoginForm;
+export default connect(
+    null,
+    {
+        toggleModalRegister
+    }
+)(RegistrationForm);
