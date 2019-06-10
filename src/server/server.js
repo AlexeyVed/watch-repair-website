@@ -16,42 +16,39 @@ function getConnection() {
 }
 
 app.post('/login', function (req, res) {
-    res.send('okay')
 
+    checkUserInDataBase(req.body.login, req.body.pass)
+        .then(() => {
+            res.send('Server says DOBRO');
+        })
+        .catch(err => {
+            res.send('error');
+        });
 });
 
-function checkUserInDataBase (login, password) {
+function checkUserInDataBase (email, password, flag) {
     return new Promise((resolve, reject) => {
         const connectionDB = getConnection();
         connectionDB.connect(function (err) {
             if (err) {
                 throw err;
             }
-            console.log("Connected!");
-            connectionDB.query("SELECT id, password FROM tblogin where login=?", [login], function (err, result, fields) {
+            connectionDB.query("SELECT email, password FROM login where email=?", [email], function (err, result) {
                 if (err){
                     throw err;
                 }
-                console.log(result);
-                console.log(result, 'result');
                 if (!result.length) {
-                    checkUserFlag = false;
-                    reject('User not defined, press PortalRegistrationForm!');
+                    reject('User not defined, press Registration!');
                 } else {
                     if (result[0].password === password) {
-                        currentID = result[0].id;
-                        console.log(result[0].id, 'user id');
-                        checkUserFlag = true;
-                        resolve();
+                        resolve('User correctly');
                     } else {
-                        checkUserFlag = false;
                         reject('Wrong password. Try again or stop trying to hack our service');
                     }
                 }
             });
         });
     });
-
 }
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening on port ${process.env.PORT || 4000}!`));

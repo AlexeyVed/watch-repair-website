@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {verify} from './logicForLogin';
+import axios from 'axios';
 import { connect } from 'react-redux';
 
 import { toggleModalLogin } from "../../actions";
@@ -14,22 +14,26 @@ class LoginForm extends Component {
         password: ''
     };
 
-    check = () => {}
-
     login = event => {
-
         const login = this.state.email;
         const pass = this.state.password;
-        console.log(this.state)
-        verify(login, pass)
-            .then(() => {
-                this.props.login(login);
+        console.log(login, pass)
+        axios.post(`http://localhost:4000/login`, { login, pass })
+            .then(res => {
+                console.log(res);
             })
-            .catch(error => {
-                console.log(error)
-            });
-        event.preventDefault();
     };
+
+    onChange = (e) => {
+        switch (e.target.name) {
+            case 'email':
+                this.setState({[e.target.name]: e.target.value})
+                break;
+            case 'password':
+                this.setState({[e.target.name]: e.target.value})
+                break;
+        }
+    }
 
     render() {
         return (
@@ -45,8 +49,18 @@ class LoginForm extends Component {
                     </div>
 
                     <input
+                        name='email'
+                        type='text'
+                        value={this.state.email}
+                        onChange={this.onChange}
+                        placeholder='Enter your email'
                     />
                     <input
+                        name='password'
+                        type='password'
+                        value={this.state.password}
+                        onChange={this.onChange}
+                        placeholder='Enter your password'
                     />
                     <button onClick = {this.login}>Submit</button>
                 </div>
