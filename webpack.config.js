@@ -6,7 +6,7 @@ const outputDirectory = 'dist';
 
 module.exports = {
   mode: 'development',
-  entry: ['babel-polyfill', './src/client/PortalAuthentication.jsx'],
+  entry: ['babel-polyfill', './src/client/index.jsx'],
   output: {
     path: path.join(__dirname, outputDirectory),
     filename: 'bundle.js'

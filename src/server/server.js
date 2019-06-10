@@ -19,7 +19,7 @@ app.post('/login', function (req, res) {
 
     checkUserInDataBase(req.body.login, req.body.pass)
         .then(() => {
-            res.send('Server says DOBRO');
+            res.send('correctly');
         })
         .catch(err => {
             res.send('error');

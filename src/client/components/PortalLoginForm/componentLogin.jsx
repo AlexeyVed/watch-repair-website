@@ -14,14 +14,16 @@ class LoginForm extends Component {
         password: ''
     };
 
-    login = event => {
+    login = () => {
         const login = this.state.email;
         const pass = this.state.password;
-        console.log(login, pass)
+
         axios.post(`http://localhost:4000/login`, { login, pass })
             .then(res => {
-                console.log(res);
+                console.log(res)
+                this.props.toggleModalLogin()
             })
+            .catch(error => {})
     };
 
     onChange = (e) => {
