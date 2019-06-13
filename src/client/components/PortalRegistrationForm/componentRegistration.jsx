@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
 
 import { toggleModalRegister } from "../../actions";
 
@@ -7,37 +8,60 @@ import './RegistrationForm.less'
 
 
 class RegistrationForm extends Component {
-    state = {
-        inputLogin: '',
-        inputPassword: ''
-    };
 
     render() {
+
+        const { handleSubmit, toggleModalRegister } = this.props;
+
         return (
             <div className='modal-window'>
-                <div className='registration-form'>
+                <form onSubmit={handleSubmit} className='registration-form'>
                     <div className="registration-form__header">
                         Registration
                         <button
                             className='registration-form__header__right-button-close'
-                            onClick = {this.props.toggleModalRegister}>
+                            onClick = {toggleModalRegister}>
                             &times;
                         </button>
                     </div>
-                    <input />
-                    <input/>
-                    <input />
-                    <button>Submit</button>
-                </div>
+                    <Field
+                        name='email'
+                        component='input'
+                        type='text'
+                        placeholder='Enter your email'
+                    />
+                    <Field
+                        name='confEmail'
+                        component='input'
+                        type='text'
+                        placeholder='Confirm your email'
+                    />
+                    <Field
+                        name='password'
+                        component='input'
+                        type='password'
+                        placeholder='Enter your password'
+                    />
+                    <Field
+                        name='confPassword'
+                        component='input'
+                        type='password'
+                        placeholder='Confirm your password'
+                    />
+                    <button type='submit' label='submit'>Submit</button>
+                </form>
             </div>
         );
     }
 
 }
 
-export default connect(
+RegistrationForm = connect(
     null,
-    {
-        toggleModalRegister
-    }
-)(RegistrationForm);
+    { toggleModalRegister }
+    )(RegistrationForm);
+
+export default reduxForm ({
+    form: 'registration',
+    onSubmit: values => console.log(values)
+})(RegistrationForm);

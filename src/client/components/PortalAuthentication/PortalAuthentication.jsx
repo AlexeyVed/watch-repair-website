@@ -29,8 +29,8 @@ class Portal extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        isActiveLogin: state.isActiveLogin,
-        isActiveRegister: state.isActiveRegister
+        isActiveLogin: state.clientReducer.showModal.isActiveLogin,
+        isActiveRegister: state.clientReducer.showModal.isActiveRegister
     };
 };
 

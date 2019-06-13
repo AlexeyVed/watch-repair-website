@@ -1,80 +1,56 @@
-import React, {Component} from 'react';
-import axios from 'axios';
+import React from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+
 
 import { toggleModalLogin } from "../../actions";
+import { login } from './logicForLogin.js'
 
 import './LoginForm.less'
 
 
-class LoginForm extends Component {
+class LoginForm extends React.Component {
 
-    state = {
-        email: '',
-        password: ''
-    };
+    render () {
 
-    login = () => {
-        const login = this.state.email;
-        const pass = this.state.password;
+        const { handleSubmit, toggleModalLogin } = this.props;
 
-        axios.post(`http://localhost:4000/login`, { login, pass })
-            .then(res => {
-                console.log(res)
-                this.props.toggleModalLogin()
-            })
-            .catch(error => {})
-    };
-
-    onChange = (e) => {
-        switch (e.target.name) {
-            case 'email':
-                this.setState({[e.target.name]: e.target.value})
-                break;
-            case 'password':
-                this.setState({[e.target.name]: e.target.value})
-                break;
-        }
-    }
-
-    render() {
         return (
-            <div className="modal-window">
-                <div className='login-form'>
+            <div className='modal-window'>
+                <form onSubmit={handleSubmit} className='login-form'>
                     <div className="login-form__header">
                         Member login
                         <button
                             className='login-form__header__right-button-close'
-                            onClick = {this.props.toggleModalLogin}>
+                            onClick={toggleModalLogin}>
                             &times;
                         </button>
                     </div>
-
-                    <input
+                    <Field
                         name='email'
+                        component='input'
                         type='text'
-                        value={this.state.email}
-                        onChange={this.onChange}
                         placeholder='Enter your email'
                     />
-                    <input
+                    <Field
                         name='password'
+                        component='input'
                         type='password'
-                        value={this.state.password}
-                        onChange={this.onChange}
                         placeholder='Enter your password'
                     />
-                    <button onClick = {this.login}>Submit</button>
-                </div>
+                    <button type='submit' label='submit'>Submit</button>
+                </form>
             </div>
         );
     }
-
 }
 
-export default connect(
+LoginForm = connect(
     null,
-    {
-        toggleModalLogin
-    }
-)(LoginForm)
+    { toggleModalLogin }
+    )(LoginForm);
+
+export default reduxForm ({
+    form: 'login',
+    onSubmit: values => login(values.email, values.password)
+})(LoginForm);

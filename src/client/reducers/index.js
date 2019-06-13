@@ -1,8 +1,17 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
+import {reducer as formReducer} from "redux-form";
 
-import clientReducers from './clientReducer.js'
+import clientReducer from './clientReducer.js'
+import adminReducer from './adminReducer.js'
 
 
-const rootReducers = clientReducers;
+const reducers = {
+    form: formReducer,
+    clientReducer,
+    adminReducer
+};
 
-export default rootReducers;
+
+const rootReducer = combineReducers(reducers);
+
+export default rootReducer;

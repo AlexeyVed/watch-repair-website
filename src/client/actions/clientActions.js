@@ -1,6 +1,7 @@
 import {
     TOGGLE_MODAL_LOGIN,
-    TOGGLE_MODAL_REGISTER
+    TOGGLE_MODAL_REGISTER,
+    TOGGLE_AUTHORIZATION
 } from './types.js'
 
 export const toggleModalLogin = () => {
@@ -14,3 +15,9 @@ export const toggleModalRegister = () => {
         type: TOGGLE_MODAL_REGISTER,
     }
 };
+
+export const toggleAuthorization = () => {
+    return {
+        type: TOGGLE_AUTHORIZATION,
+    }
+}

@@ -31,4 +31,3 @@ _ReSharper*/
 packages/
 dist/
 node_modules/
-src/server/db-connection-config.js
