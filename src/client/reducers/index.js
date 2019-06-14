@@ -1,13 +1,13 @@
 import {combineReducers} from 'redux';
 import {reducer as formReducer} from "redux-form";
 
-import clientReducer from './clientReducer.js'
+import appReducer from './appReducer.js'
 import adminReducer from './adminReducer.js'
 
 
 const reducers = {
     form: formReducer,
-    clientReducer,
+    appReducer,
     adminReducer
 };
 

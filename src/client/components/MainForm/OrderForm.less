@@ -18,20 +18,40 @@
     align-items: center;
   }
 
-  &__order-form > input {
-    width: 65%;
+  &__order-form > div > input {
+    width: 68%;
     height: 4vh;
     margin-top: 3vh;
     border-radius: 5px;
     border: 1px solid gray;
-    padding-left: 5%;
+    padding-left: 2%;
   }
 
-  &__order-form > select {
-    width: 70%;
-    height: 5vh;
-    margin-top: 3vh;
-    border-radius: 5px;
-    border: 1px solid gray;
+  &__order-form > .main-form__order-select {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    height: 75px;
+
+    label {
+      font-size: 14px;
+      position: absolute;
+      left: 17%;
+      color: #212121;
+    }
+
+    select {
+      width: 70%;
+      height: 5vh;
+      margin-top: 3vh;
+      border-radius: 5px;
+      border: 1px solid gray;
+    }
   }
+
+  &__order-form > button {
+    margin-top: 30px;
+  }
+
+
 }

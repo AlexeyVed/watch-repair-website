@@ -16,7 +16,7 @@ class App extends Component {
         return (
             <div className = 'app'>
                 <Header/>
-                {(!isAdmin) ? <Main/> : <MainAdmin/>}
+                {(isAdmin) ? <Main/> : <MainAdmin/>}
                 <Portal/>
             </div>
         )

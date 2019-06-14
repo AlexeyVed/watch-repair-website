@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { connect } from 'react-redux';
 
-import LoginForm from '../PortalLoginForm/componentLogin.jsx'
-import RegisterForm from '../PortalRegistrationForm/componentRegistration.jsx'
+import LoginForm from '../LoginForm/componentLogin.jsx'
+import RegisterForm from '../RegistrationForm/componentRegistration.jsx'
 import './PortalAuthentication.less'
 
 
@@ -29,8 +29,8 @@ class Portal extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        isActiveLogin: state.clientReducer.showModal.isActiveLogin,
-        isActiveRegister: state.clientReducer.showModal.isActiveRegister
+        isActiveLogin: state.appReducer.showModal.isActiveLogin,
+        isActiveRegister: state.appReducer.showModal.isActiveRegister
     };
 };
 

@@ -41,6 +41,31 @@ INSERT INTO `cities` VALUES (1,'Dnipro'),(2,'Uzhgorod');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `clocks`
+--
+
+DROP TABLE IF EXISTS `clocks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `clocks` (
+  `id` varchar(45) NOT NULL,
+  `typeClock` varchar(30) NOT NULL,
+  `timeRepair` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clocks`
+--
+
+LOCK TABLES `clocks` WRITE;
+/*!40000 ALTER TABLE `clocks` DISABLE KEYS */;
+INSERT INTO `clocks` VALUES ('1','Small',1),('2','Medium',2),('3','Big',3);
+/*!40000 ALTER TABLE `clocks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `login`
 --
 
@@ -100,4 +125,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-10 17:16:26
+-- Dump completed on 2019-06-14  5:05:31

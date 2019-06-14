@@ -1,9 +1,11 @@
-// Client
+// APP
 export const TOGGLE_MODAL_LOGIN = 'TOGGLE_MODAL_LOGIN';
 export const TOGGLE_MODAL_REGISTER = 'TOGGLE_MODAL_REGISTER';
-export const TOGGLE_AUTHORIZATION = 'TOGGLE_AUTHORIZATION';
+export const TOGGLE_IS_ADMIN = 'TOGGLE_IS_ADMIN';
+export const SET_CLOCKS = 'SET_CLOCKS';
+export const SET_CITIES = 'SET_CITIES';
+
+
 
 // Admin
-export const TOGGLE_IS_ADMIN = 'TOGGLE_IS_ADMIN';
-
 

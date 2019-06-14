@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import myInput from '../FieldRedux'
 
-
-import { toggleModalLogin } from "../../actions";
+import { toggleModalLogin, toggleAdminMode } from "../../actions";
+import { validateEmail, validatePassword } from '../../validation'
 import { login } from './logicForLogin.js'
 
 import './LoginForm.less'
@@ -27,16 +28,20 @@ class LoginForm extends React.Component {
                         </button>
                     </div>
                     <Field
+                        label='Your email'
                         name='email'
-                        component='input'
+                        component={myInput}
                         type='text'
                         placeholder='Enter your email'
+                        validate={validateEmail}
                     />
                     <Field
+                        label='Your password'
                         name='password'
-                        component='input'
+                        component={myInput}
                         type='password'
                         placeholder='Enter your password'
+                        validate={validatePassword}
                     />
                     <button type='submit' label='submit'>Submit</button>
                 </form>
@@ -47,10 +52,10 @@ class LoginForm extends React.Component {
 
 LoginForm = connect(
     null,
-    { toggleModalLogin }
+    { toggleModalLogin, toggleAdminMode }
     )(LoginForm);
 
 export default reduxForm ({
     form: 'login',
-    onSubmit: values => login(values.email, values.password)
+    onSubmit: values => { login(values.email, values.password) }
 })(LoginForm);

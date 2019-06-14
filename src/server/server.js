@@ -41,7 +41,7 @@ function checkUserInDataBase (email, password) {
                     reject('User not found');
                 } else {
                     if (result[0].password === password) {
-                        resolve('User correctly');
+                        resolve('User');
                     } else {
                         reject('Wrong password');
                     }
@@ -51,25 +51,52 @@ function checkUserInDataBase (email, password) {
     });
 }
 
-app.post('/register', async (req, res) => {
-    try {
-        const data = await saveDataPersonInLoginTable(req);
-        currentUserName = data.login;
-        currentID = data.id;
-        console.log('registration sucsufally', data.login, data.id)
-        res.send('OK');
-    } catch (err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-            res.send('user is already added');
-        } else {
-            res.send(err.sqlMessage);
-        }
-    }
+app.get('/getData', function (req, res) {
+    getCitiesAndClocks()
+        .then(result => {
+            res.send(result)
+        })
+        .catch(err => {
+            res.send(err)
+        })
+
 });
 
-function  saveDataPersonInLoginTable(req) {
+function getCitiesAndClocks () {
+
+    const connectionDB = getConnection();
+
+    const getCities = new Promise((resolve, reject) => {
+        connectionDB.connect(() => {
+            connectionDB.query(`SELECT city FROM cities`, function (err, result) {
+                if (err) throw err;
+                const arrOfCities = result.map(item => (item.city))
+                resolve(arrOfCities);
+                reject('Error! Download cities!');
+            });
+        });
+    })
+
+    const getClocks = new Promise((resolve, reject) => {
+        connectionDB.connect(() => {
+            connectionDB.query(`SELECT typeClock, timeRepair FROM clocks`, function (err, result) {
+                if (err) throw err;
+                resolve(result);
+                reject('Error! Download clocks!');
+            });
+        });
+    })
+
+    return Promise.all([getCities, getClocks])
+}
+
+/*app.post('/register', async (req, res) => {
+
+});
+
+function  saveUserInDB(req) {
     return new Promise((resolve, reject) => {
-        const {login, password, mail} = req.body;
+        const { mail, password } = req.body;
         const connectionDB = getConnection();
 
         connectionDB.connect(function (err) {
@@ -77,18 +104,18 @@ function  saveDataPersonInLoginTable(req) {
                 return reject(err);
             }
             console.log("Connected!");
-            const sql = `INSERT INTO login (login, password, mail) VALUES (?, ?, '')`;
+            const sql = `INSERT INTO login (mail, password) VALUES (?, ?, '')`;
             const values = [login, password];
             connectionDB.query(sql, values, function (err, result) {
                 if (err) {
                     return reject(err);
                 }
-                console.log("Saved data login");
-                resolve({login, id: result.insertId});
+
+                resolve(mail);
             });
         });
     });
-}
+}*/
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening on port ${process.env.PORT || 4000}!`));
 

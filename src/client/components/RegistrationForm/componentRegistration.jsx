@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
 import { toggleModalRegister } from "../../actions";
+import myInput from '../FieldRedux'
+import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '../../validation'
+import { register } from './logicForRegistration.js'
 
 import './RegistrationForm.less'
 
@@ -25,28 +28,40 @@ class RegistrationForm extends Component {
                         </button>
                     </div>
                     <Field
+                        label='Your email'
                         name='email'
-                        component='input'
+                        component={myInput}
                         type='text'
                         placeholder='Enter your email'
+                        validate={[validateEmail]}
+                        required
                     />
                     <Field
-                        name='confEmail'
-                        component='input'
+                        label='Confirm your email'
+                        name='confirm-email'
+                        component={myInput}
                         type='text'
                         placeholder='Confirm your email'
+                        validate={[validateEmail, confirmEmail]}
+                        required
                     />
                     <Field
+                        label='Create a password'
                         name='password'
-                        component='input'
+                        component={myInput}
                         type='password'
                         placeholder='Enter your password'
+                        validate={validatePassword}
+                        required
                     />
                     <Field
-                        name='confPassword'
-                        component='input'
+                        label='Confirm your password'
+                        name='confirm-password'
+                        component={myInput}
                         type='password'
                         placeholder='Confirm your password'
+                        validate={[confirmPassword]}
+                        required
                     />
                     <button type='submit' label='submit'>Submit</button>
                 </form>
