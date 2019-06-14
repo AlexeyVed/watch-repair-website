@@ -8,4 +8,4 @@ export const SET_CITIES = 'SET_CITIES';
 
 
 // Admin
-
+export const CHANGE_ADMIN_VIEW = 'CHANGE_ADMIN_VIEW';

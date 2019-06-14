@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Header from './Header/Header.jsx';
 import Main from './Main';
-import MainAdmin from './MainAdmin/MainAdmin.jsx';
+import MainAdmin from './AdminMain/MainAdmin.jsx';
 import Portal from './PortalAuthentication/PortalAuthentication.jsx'
 
 
@@ -16,7 +16,7 @@ class App extends Component {
         return (
             <div className = 'app'>
                 <Header/>
-                {(isAdmin) ? <Main/> : <MainAdmin/>}
+                {(!isAdmin) ? <Main/> : <MainAdmin/>}
                 <Portal/>
             </div>
         )
