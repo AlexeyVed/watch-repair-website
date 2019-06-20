@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
 
 import './AdminContent.less'
 
-
-class AdminContent extends Component {
-
-    render() {
-
-        const { view } = this.props
-        let showComponent;
+class AdminContent extends React.Component {
+  render () {
+    // const { view } = this.props
+    let showComponent
 
     /*    if (view === 'city') {
             showComponent =
@@ -21,19 +18,21 @@ class AdminContent extends Component {
             showComponent =
         }
         */
-        return (
-            <div className='work-space'>
-                {showComponent}
-            </div>
-        );
-    }
+
+    return (
+
+      <div className='work-space'>
+        {showComponent}
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        view: state.adminReducer.view,
+  return {
+    view: state.adminReducer.view
 
-    };
-};
+  }
+}
 
 export default connect(mapStateToProps)(AdminContent)

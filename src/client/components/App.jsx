@@ -1,32 +1,29 @@
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
 
-import Header from './Header/Header.jsx';
-import Main from './Main';
-import MainAdmin from './AdminMain/MainAdmin.jsx';
+import Header from './Header/Header.jsx'
+import Main from './Main'
+import MainAdmin from './AdminMain/MainAdmin.jsx'
 import Portal from './PortalAuthentication/PortalAuthentication.jsx'
 
+class App extends React.Component {
+  render () {
+    const { isAdmin } = this.props
 
-class App extends Component {
-
-    render() {
-
-        const { isAdmin } = this.props;
-
-        return (
-            <div className = 'app'>
-                <Header/>
-                {(!isAdmin) ? <Main/> : <MainAdmin/>}
-                <Portal/>
-            </div>
-        )
-    }
+    return (
+      <div className = 'app'>
+        <Header/>
+        {(isAdmin !== 'Admin') ? <Main/> : <MainAdmin/>}
+        <Portal/>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        isAdmin: state.adminReducer.isAdmin,
-    };
-};
+  return {
+    isAdmin: state.loginReducer.singInUser
+  }
+}
 
 export default connect(mapStateToProps)(App)
