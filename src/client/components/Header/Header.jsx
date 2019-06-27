@@ -29,7 +29,7 @@ const Header = props => {
   } else {
     view = <React.Fragment>
       <div className='container-user'>
-        { currentUser }
+        Welcome, { currentUser }
       </div>
       <div className='container-buttons'>
         <button

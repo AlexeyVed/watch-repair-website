@@ -13,7 +13,7 @@ class App extends React.Component {
     return (
       <div className = 'app'>
         <Header/>
-        {(isAdmin !== 'Admin') ? <Main/> : <MainAdmin/>}
+        {(isAdmin !== 'admin@example.com') ? <Main/> : <MainAdmin/>}
         <Portal/>
       </div>
     )

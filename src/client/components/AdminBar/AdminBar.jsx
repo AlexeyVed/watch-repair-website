@@ -22,11 +22,6 @@ class AdminBar extends React.Component {
       }
     }
 
-    stateShow = () => {
-      const { stateAdmin } = this.props
-      console.log(stateAdmin)
-    }
-
     render () {
       return (
         <div className='bar-choose-item'>
@@ -52,10 +47,6 @@ class AdminBar extends React.Component {
               onClick={this.click}>
                         Control clients
             </button>
-            <button className='for-state'
-              onClick={this.stateShow}>
-                        showState in console
-            </button>
           </div>
         </div>
       )
@@ -64,7 +55,6 @@ class AdminBar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    stateAdmin: state.adminReducer
 
   }
 }

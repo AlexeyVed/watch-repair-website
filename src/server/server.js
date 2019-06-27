@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const mysql = require('mysql')
 const cors = require('cors')
 const dbConnectionConfig = require('./db-connection-config.js')
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -22,17 +24,15 @@ app.post('/login', function (req, res) {
       res.send(msg)
     })
     .catch(err => {
-      console.log('error')
-      res.status(500).send(err)
+      loginError(err, req, res)
     })
 })
 
-function errorLogin (err) {
-
-}
-
 function checkUserInDataBase (email, password) {
   return new Promise((resolve, reject) => {
+    if (loginValidation(email, password)) {
+      reject('422')
+    }
     const connectionDB = getConnection()
     connectionDB.connect(() => {
       connectionDB.query('SELECT email, password FROM login where email=?', [email], function (err, result) {
@@ -40,20 +40,38 @@ function checkUserInDataBase (email, password) {
           throw err
         }
         if (email === 'admin@example.com' && password === 'passwordsecret') {
-          resolve('Admin')
+          resolve('admin@example.com')
         }
         if (!result.length) {
-          reject('User not found')
+          reject('404')
         } else {
           if (result[0].password === password) {
-            resolve('User')
+            resolve(email)
           } else {
-            reject('Wrong password')
+            reject('401')
           }
         }
       })
     })
   })
+}
+
+function loginError (err, req, res) {
+  (err === '422') ? res.status(422).send('Error validation')
+    : (err === '404') ? res.status(404).send('User not found')
+      : (err === '401') ? res.status(401).send('Error authorization')
+        : res.status(500).send('Server error')
+}
+
+function loginValidation (mail, pass) {
+  if (!mail || !pass) {
+    return true
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(mail)) {
+    return true
+  } else if (pass.length <= 4) {
+    return true
+  }
+  return false
 }
 
 app.get('/getData', function (req, res) {

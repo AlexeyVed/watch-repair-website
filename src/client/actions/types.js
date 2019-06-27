@@ -10,3 +10,6 @@ export const SING_IN_SUCCESS = 'SING_IN_SUCCESS'
 export const SING_IN_FAILURE = 'SING_IN_FAILURE'
 export const SING_IN_STARTED = 'SING_IN_STARTED'
 export const LOG_OUT = 'LOG_OUT'
+
+// ADMIN
+export const CHANGE_ADMIN_VIEW = 'CHANGE_ADMIN_VIEW'
