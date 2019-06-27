@@ -9,9 +9,7 @@ import { validateEmail, validatePassword } from '../../validation'
 import './LoginForm.less'
 
 class LoginForm extends React.Component {
-
   render () {
-
     const { handleSubmit, toggleLogin, loginApp } = this.props
 
     return (
@@ -54,7 +52,7 @@ const mapDispatchToProps = dispatch => {
   return {
     toggleLogin: () => dispatch(toggleModalLogin()),
     loginApp: values => dispatch(loginToApp(values.email, values.password))
-  };
+  }
 }
 
 const exportLoginForm = connect(
@@ -63,5 +61,5 @@ const exportLoginForm = connect(
 )(LoginForm)
 
 export default reduxForm({
-  form: 'login',
+  form: 'login'
 })(exportLoginForm)

@@ -9,8 +9,8 @@ import RefactorWorkers from '../RefactorWorkers/RefactorWorkers.jsx'
 import './AdminContent.less'
 
 class AdminContent extends React.Component {
-  render() {
-    const {view} = this.props
+  render () {
+    const { view } = this.props
     let showComponent = null
 
     if (view === 'city') {

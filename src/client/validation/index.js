@@ -11,7 +11,7 @@ export const confirmEmail = (input, allInputs) => (
 )
 
 export const validatePassword = (input) => (
-  (input == void 0 || input.length > 4) ? void 0 : 'Password must be over 5 symbols'
+  (input === void 0 || input.length > 4) ? void 0 : 'Password must be over 5 symbols'
 )
 
 export const confirmPassword = (input, allInputs) => (

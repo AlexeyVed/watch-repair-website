@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import {toggleModalLogin, toggleModalRegister, logOutApp, loginToApp} from '../../actions'
+import { toggleModalLogin, toggleModalRegister, logOutApp, loginToApp } from '../../actions'
 import './header.less'
 
 const Header = props => {
