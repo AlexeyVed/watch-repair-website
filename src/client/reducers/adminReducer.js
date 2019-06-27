@@ -1,27 +1,23 @@
 import {
-    CHANGE_ADMIN_VIEW
-} from '../actions/types';
-
+  CHANGE_ADMIN_VIEW
+} from '../actions/types'
 
 const initialState = {
-    view: null,
-};
+  view: null
+}
 
 const adminReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case CHANGE_ADMIN_VIEW:
+      return {
+        ...state,
+        view: action.payload
+      }
 
-    switch (action.type) {
+    default:
+      return state
+  }
+  return state
+}
 
-        case CHANGE_ADMIN_VIEW:
-            return {
-                ...state,
-                view: action.payload
-            };
-
-
-        default:
-            return state
-    }
-    return state
-};
-
-export default adminReducer;
+export default adminReducer

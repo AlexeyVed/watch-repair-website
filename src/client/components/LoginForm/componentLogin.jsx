@@ -1,61 +1,65 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import React from 'react'
+import { connect } from 'react-redux'
+import { Field, reduxForm } from 'redux-form'
 import myInput from '../FieldRedux'
 
-import { toggleModalLogin, toggleAdminMode } from "../../actions";
+import { toggleModalLogin, loginToApp } from '../../actions'
 import { validateEmail, validatePassword } from '../../validation'
-import { login } from './logicForLogin.js'
 
 import './LoginForm.less'
 
-
 class LoginForm extends React.Component {
+  render () {
+    const { handleSubmit, toggleLogin, loginApp } = this.props
 
-    render () {
-
-        const { handleSubmit, toggleModalLogin } = this.props;
-
-        return (
-            <div className='modal-window'>
-                <form onSubmit={handleSubmit} className='login-form'>
-                    <div className="login-form__header">
+    return (
+      <div className='modal-window'>
+        <form
+          onSubmit={handleSubmit(loginApp)}
+          className='login-form'>
+          <div className="login-form__header">
                         Member login
-                        <button
-                            className='login-form__header__right-button-close'
-                            onClick={toggleModalLogin}>
+            <button
+              className='login-form__header__right-button-close'
+              onClick={toggleLogin}>
                             &times;
-                        </button>
-                    </div>
-                    <Field
-                        label='Your email'
-                        name='email'
-                        component={myInput}
-                        type='text'
-                        placeholder='Enter your email'
-                        validate={validateEmail}
-                    />
-                    <Field
-                        label='Your password'
-                        name='password'
-                        component={myInput}
-                        type='password'
-                        placeholder='Enter your password'
-                        validate={validatePassword}
-                    />
-                    <button type='submit' label='submit'>Submit</button>
-                </form>
-            </div>
-        );
-    }
+            </button>
+          </div>
+          <Field
+            label='Your email'
+            name='email'
+            component={myInput}
+            type='text'
+            placeholder='Enter your email'
+            validate={validateEmail}
+          />
+          <Field
+            label='Your password'
+            name='password'
+            component={myInput}
+            type='password'
+            placeholder='Enter your password'
+            validate={validatePassword}
+          />
+          <button type='submit' label='submit'>Submit</button>
+        </form>
+      </div>
+    )
+  }
 }
 
-LoginForm = connect(
-    null,
-    { toggleModalLogin, toggleAdminMode }
-    )(LoginForm);
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleLogin: () => dispatch(toggleModalLogin()),
+    loginApp: values => dispatch(loginToApp(values.email, values.password))
+  }
+}
 
-export default reduxForm ({
-    form: 'login',
-    onSubmit: values => { login(values.email, values.password) }
-})(LoginForm);
+const exportLoginForm = connect(
+  null,
+  mapDispatchToProps
+)(LoginForm)
+
+export default reduxForm({
+  form: 'login'
+})(exportLoginForm)

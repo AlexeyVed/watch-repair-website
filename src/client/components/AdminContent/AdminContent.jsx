@@ -1,39 +1,64 @@
-import React, {Component} from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
+
+import RefactorCities from '../RefactorCities/RefactorCities.jsx'
+import RefactorClients from '../RefactorClients/RefactorClients.jsx'
+import RefactorClocks from '../RefactorClocks/RefactorClocks.jsx'
+import RefactorWorkers from '../RefactorWorkers/RefactorWorkers.jsx'
 
 import './AdminContent.less'
 
+class AdminContent extends React.Component {
+  render () {
+    const { view } = this.props
+    let showComponent = null
 
-class AdminContent extends Component {
-
-    render() {
-
-        const { view } = this.props
-        let showComponent;
-
-    /*    if (view === 'city') {
-            showComponent =
-        } else if (view === 'clock') {
-            showComponent =
-        } else if (view === 'worker') {
-            showComponent =
-        } else if (view === 'client') {
-            showComponent =
-        }
-        */
-        return (
-            <div className='work-space'>
-                {showComponent}
-            </div>
-        );
+    if (view === 'city') {
+      showComponent = <RefactorCities/>
+    } else if (view === 'clock') {
+      showComponent = <RefactorClocks/>
+    } else if (view === 'worker') {
+      showComponent = <RefactorWorkers/>
+    } else if (view === 'client') {
+      showComponent = <RefactorClients/>
     }
+
+    return (
+      <div className='admin-content'>
+        <div className='data-from-db'>
+          Data from DB
+        </div>
+        <div className='work-space'>
+          {showComponent}
+        </div>
+        <div className='crud-button'>
+          <button
+            name='Add'
+            onClick={this.click}>
+            Add
+          </button>
+          <button
+            name='Update'
+            onClick={this.click}>
+            Update
+          </button>
+          <button
+            name='Delete'
+            onClick={this.click}>
+            Delete
+          </button>
+        </div>
+      </div>
+
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        view: state.adminReducer.view,
+  return {
+    view: state.adminReducer.view
 
-    };
-};
+  }
+}
 
 export default connect(mapStateToProps)(AdminContent)

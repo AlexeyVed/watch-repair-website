@@ -1,24 +1,24 @@
-import React, { Fragment } from 'react';
+import React from 'react'
 
 import './FieldRedux.less'
 
-const myInput = (props) =>{
-    const { meta, label }=props;
-    return (
-        <div className='input-with-label'>
+const myInput = (props) => {
+  const { meta, label } = props
+  return (
+    <div className='input-with-label'>
 
-            <label className='input-label'>{label}</label>
-            <input
-                {...props.input}
-                type={props.type}
-                placeholder={props.placeholder}
-            />
-            {meta.error &&
+      <label className='input-label'>{label}</label>
+      <input
+        {...props.input}
+        type={props.type}
+        placeholder={props.placeholder}
+      />
+      {meta.error &&
             meta.touched &&
             <div className='input-error'>
-                {meta.error}
+              {meta.error}
             </div>}
-        </div>
-    )
+    </div>
+  )
 }
-export default myInput;
+export default myInput
