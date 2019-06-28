@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
-import { toggleModalRegister } from '../../actions'
-import myInput from '../FieldRedux'
-import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '../../validation'
+import { toggleModalRegister } from '../../../actions'
+import myInput from '../../FieldRedux'
+import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '../../../validation'
 import { register } from './logicForRegistration.js'
 
 import './RegistrationForm.less'

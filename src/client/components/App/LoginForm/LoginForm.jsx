@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import myInput from '../FieldRedux'
+import myInput from '../../FieldRedux'
 
-import { toggleModalLogin, loginToApp } from '../../actions'
-import { validateEmail, validatePassword } from '../../validation'
+import { toggleModalLogin, loginToApp } from '../../../actions'
+import { validateEmail, validatePassword } from '../../../validation'
 
 import './LoginForm.less'
 

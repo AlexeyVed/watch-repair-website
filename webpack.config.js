@@ -1,8 +1,8 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
-const outputDirectory = 'dist';
+const outputDirectory = 'dist'
 
 module.exports = {
   mode: 'development',
@@ -14,19 +14,19 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: "pre",
+        enforce: 'pre',
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: "eslint-loader"
+        loader: 'eslint-loader'
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         resolve: {
-          extensions: ['.js', '.jsx'],
+          extensions: ['.js', '.jsx']
         },
         use: [{
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }]
       },
       {
@@ -44,7 +44,8 @@ module.exports = {
     open: true,
     proxy: {
       '/api': 'http://localhost:4000'
-    }
+    },
+    historyApiFallback: true
   },
   plugins: [
     new CleanWebpackPlugin([outputDirectory]),
@@ -52,4 +53,4 @@ module.exports = {
       template: './public/index.html'
     })
   ]
-};
+}

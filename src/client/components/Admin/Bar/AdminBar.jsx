@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { changeAdminView } from '../../actions'
+import { changeAdminView } from '../../../actions'
 
 import './AdminBar.less'
 

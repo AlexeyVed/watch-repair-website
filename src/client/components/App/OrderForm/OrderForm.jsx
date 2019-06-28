@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import axios from 'axios'
 
-import myInput from '../FieldRedux'
-import { setCitiesToState, setClocksToState } from '../../actions'
-import { validateEmail } from '../../validation'
+import myInput from '../../FieldRedux'
+import { setCitiesToState, setClocksToState } from '../../../actions'
+import { validateEmail } from '../../../validation'
 
 import './OrderForm.less'
 

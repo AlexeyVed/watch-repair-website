@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Header from './Header/Header.jsx'
-import Main from './Main'
-import MainAdmin from './AdminMain/MainAdmin.jsx'
-import Portal from './PortalAuthentication/PortalAuthentication.jsx'
+import Header from './App/Header/Header.jsx'
+import Main from './App/Main/Main.jsx'
+import MainAdmin from './Admin/Main/MainAdmin.jsx'
+import Portal from './App/PortalAuthentication/PortalAuthentication.jsx'
 
 class App extends React.Component {
   render () {

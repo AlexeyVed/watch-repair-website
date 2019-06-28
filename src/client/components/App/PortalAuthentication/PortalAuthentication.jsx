@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 
-import LoginForm from '../LoginForm/componentLogin.jsx'
-import RegisterForm from '../RegistrationForm/componentRegistration.jsx'
+import LoginForm from '../LoginForm/LoginForm.jsx'
+import RegisterForm from '../RegistrationForm/RegistrationForm.jsx'
 import './PortalAuthentication.less'
 
 class Portal extends React.Component {

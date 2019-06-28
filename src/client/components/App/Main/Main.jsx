@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import OrderForm from '../MainForm/OrderForm.jsx'
-import Content from '../MainContent/content.jsx'
+import OrderForm from '../OrderForm/OrderForm.jsx'
+import Content from '../Content/Content.jsx'
 
 export default class Main extends Component {
   render () {
