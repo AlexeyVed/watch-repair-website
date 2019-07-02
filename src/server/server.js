@@ -28,6 +28,19 @@ app.post('/login', function (req, res) {
     })
 })
 
+app.get('/api', function (req, res) {
+  res.send('/api')
+  console.log('/api') // proxy работает из браузера
+})
+
+app.get('/ad', function (req, res) {
+  console.log('/ad') // proxy не работает, так  должно быть!
+})
+
+app.get('/api/login', function (req, res) {
+  console.log('/api/login') // proxy работает
+})
+
 function checkUserInDataBase (email, password) {
   return new Promise((resolve, reject) => {
     if (loginValidation(email, password)) {

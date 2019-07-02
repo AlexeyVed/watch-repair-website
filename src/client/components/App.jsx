@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from './App/Header/Header.jsx'
 import Main from './App/Main/Main.jsx'
+import Nav from './navigation.jsx'
 import MainAdmin from './Admin/Main/MainAdmin.jsx'
 import Portal from './App/PortalAuthentication/PortalAuthentication.jsx'
 
@@ -13,7 +15,11 @@ class App extends React.Component {
     return (
       <div className = 'app'>
         <Header/>
-        {(isAdmin !== 'admin@example.com') ? <Main/> : <MainAdmin/>}
+        <Nav/>
+        <Switch>
+          <Route exact path="/" component={Main} />
+          <Route path="/admin" component={MainAdmin} />
+        </Switch>
         <Portal/>
       </div>
     )
