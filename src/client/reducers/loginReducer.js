@@ -2,11 +2,13 @@ import {
   SING_IN_SUCCESS,
   SING_IN_FAILURE,
   SING_IN_STARTED,
-  LOG_OUT
+  LOG_OUT,
+  REDIRECT_LOGIN_SUCCESS
 } from '../actions/types'
 
 const initialState = {
   singInUser: null,
+  redirectLoginSuccess: false,
   singInLoading: false,
   singInError: null
 }
@@ -31,6 +33,12 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         singInLoading: true
+      }
+
+    case REDIRECT_LOGIN_SUCCESS:
+      return {
+        ...state,
+        redirectLoginSuccess: !state.redirectLoginSuccess
       }
 
     case LOG_OUT:

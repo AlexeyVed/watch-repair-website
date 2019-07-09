@@ -5,7 +5,7 @@
   "main": "src/server/index.js",
   "scripts": {
     "build": "start webpack --mode development",
-    "start": "start webpack-dev-server --mode development",
+    "start": "start webpack-dev-server --mode development --history-api-fallback",
     "server": "start nodemon src/server/server.js",
     "all-start": "npm-run-all --parallel start server",
     "test": "mocha --opts ./config/mocha.opts src/client/**/*.test.js --recursive --silent",

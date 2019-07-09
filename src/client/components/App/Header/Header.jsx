@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import LinkButton from '../../LinkButton/LinkButton.jsx'
+
 import { toggleModalLogin, toggleModalRegister, logOutApp, loginToApp } from '../../../actions'
 import './header.less'
 
@@ -14,16 +16,8 @@ const Header = props => {
       <div className='container-user'>
       </div>
       <div className='container-buttons'>
-        <button
-          className='container-buttons__button-login header-buttons'
-          onClick = { toggleLogin }>
-        Login In
-        </button>
-        <button
-          className='container-buttons__button-register header-buttons'
-          onClick = { toggleRegister }>
-        Registration
-        </button>
+        <LinkButton to='/login' name='Login In'/>
+        <LinkButton to='/registration' name='Registration'/>
       </div>
     </React.Fragment>
   } else {

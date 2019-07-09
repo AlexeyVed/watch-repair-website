@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 
 import RefactorCities from '../RefactorCities/RefactorCities.jsx'
 import RefactorClients from '../RefactorClients/RefactorClients.jsx'
@@ -10,18 +12,6 @@ import './AdminContent.less'
 
 class AdminContent extends React.Component {
   render () {
-    const { view } = this.props
-    let showComponent = null
-
-    if (view === 'city') {
-      showComponent = <RefactorCities/>
-    } else if (view === 'clock') {
-      showComponent = <RefactorClocks/>
-    } else if (view === 'worker') {
-      showComponent = <RefactorWorkers/>
-    } else if (view === 'client') {
-      showComponent = <RefactorClients/>
-    }
 
     return (
       <div className='admin-content'>
@@ -29,24 +19,12 @@ class AdminContent extends React.Component {
           Data from DB
         </div>
         <div className='work-space'>
-          {showComponent}
-        </div>
-        <div className='crud-button'>
-          <button
-            name='Add'
-            onClick={this.click}>
-            Add
-          </button>
-          <button
-            name='Update'
-            onClick={this.click}>
-            Update
-          </button>
-          <button
-            name='Delete'
-            onClick={this.click}>
-            Delete
-          </button>
+          <Switch>
+            <Route path="/admin/cities" component={RefactorCities}/>
+            <Route path="/admin/clients" component={RefactorClients}/>
+            <Route path="/admin/clocks" component={RefactorClocks} />
+            <Route path="/admin/workers" component={RefactorWorkers} />
+          </Switch>
         </div>
       </div>
 

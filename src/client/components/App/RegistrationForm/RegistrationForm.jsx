@@ -8,25 +8,24 @@ import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '
 import { register } from './logicForRegistration.js'
 
 import './RegistrationForm.less'
+import ReactDOM from "react-dom";
+import LinkButton from "../../LinkButton/LinkButton.jsx";
 
 class RegistrationForm extends Component {
   render () {
     const { handleSubmit, toggleModalRegister } = this.props
 
     return (
+      ReactDOM.createPortal(
       <div className='modal-window'>
         <form onSubmit={handleSubmit} className='registration-form'>
           <div className="registration-form__header">
                         Registration
-            <button
-              className='registration-form__header__right-button-close'
-              onClick = {toggleModalRegister}>
-                            &times;
-            </button>
+            <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
           </div>
           <Field
             label='Your email'
-            name='email'
+            name='email-reg'
             component={myInput}
             type='text'
             placeholder='Enter your email'
@@ -35,7 +34,7 @@ class RegistrationForm extends Component {
           />
           <Field
             label='Confirm your email'
-            name='confirm-email'
+            name='confirm-email-reg'
             component={myInput}
             type='text'
             placeholder='Confirm your email'
@@ -63,6 +62,7 @@ class RegistrationForm extends Component {
           <button type='submit' label='submit'>Submit</button>
         </form>
       </div>
+        , document.getElementById('modal-root'))
     )
   }
 }
