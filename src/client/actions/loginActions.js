@@ -3,7 +3,7 @@ import {
   SING_IN_FAILURE,
   SING_IN_STARTED,
   LOG_OUT,
-  REDIRECT_LOGIN_SUCCESS
+  REDIRECT_LOGOUT
 } from './types'
 
 import axios from 'axios'
@@ -15,9 +15,7 @@ export const loginToApp = (email, password) => {
     axios
       .post(`http://localhost:4000/login`, { email, password })
       .then(res => {
-        console.log(res.data)
         dispatch(singInSuccess(res.data))
-        dispatch(redirectLoginSuccess())
       })
       .catch(err => {
         dispatch(singInFailure(err.response.data))
@@ -25,7 +23,7 @@ export const loginToApp = (email, password) => {
   }
 }
 
-export const logOutApp = (email, password) => {
+export const logOutApp = () => {
   return (dispatch) => {
     dispatch(logOut())
   }
@@ -34,10 +32,6 @@ export const logOutApp = (email, password) => {
 const singInSuccess = user => ({
   type: SING_IN_SUCCESS,
   payload: user
-})
-
-const redirectLoginSuccess = () => ({
-  type: REDIRECT_LOGIN_SUCCESS
 })
 
 const singInStarted = () => ({

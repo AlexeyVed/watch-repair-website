@@ -1,11 +1,28 @@
 import React from 'react'
+import {connect} from "react-redux";
+import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+
 
 import AdminBar from '../Bar/AdminBar.jsx'
 import AdminContent from '../Content/AdminContent.jsx'
 import './MainAdmin.less'
 
-export default class MainAdmin extends React.Component {
+
+
+
+class MainAdmin extends React.Component {
+
+
+
+
   render () {
+
+    const { currentUser } = this.props
+
+    if (currentUser !== 'admin@example.com') {
+      return <Redirect to={{pathname: '/'}}/>
+    }
+
     return (
       <div className='admin-main'>
         <AdminBar/>
@@ -14,3 +31,15 @@ export default class MainAdmin extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.loginReducer.singInUser,
+  }
+}
+
+
+
+export default connect(
+  mapStateToProps
+)(MainAdmin)

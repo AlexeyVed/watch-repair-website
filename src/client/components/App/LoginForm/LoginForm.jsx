@@ -19,11 +19,9 @@ class LoginForm extends React.Component {
     const { handleSubmit, loginApp, pristine, submitting, currentUser } = this.props
 
     if (currentUser === 'admin@example.com') {
-      return <Redirect to={{pathname: '/admin',
-        state: { from: this.props.location }}}/>
+      return <Redirect to={{pathname: '/admin'}}/>
     } else if (currentUser) {
-      return <Redirect to={{pathname: '/',
-        state: { from: this.props.location }}}/>
+      return <Redirect to={{pathname: '/'}}/>
     }
 
     return (

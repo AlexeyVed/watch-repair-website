@@ -28,19 +28,6 @@ app.post('/login', function (req, res) {
     })
 })
 
-app.get('/api', function (req, res) {
-  res.send('/api')
-  console.log('/api') // proxy работает из браузера
-})
-
-app.get('/ad', function (req, res) {
-  console.log('/ad') // proxy не работает, так  должно быть!
-})
-
-app.get('/api/login', function (req, res) {
-  console.log('/api/login') // proxy работает
-})
-
 function checkUserInDataBase (email, password) {
   return new Promise((resolve, reject) => {
     if (loginValidation(email, password)) {
@@ -87,8 +74,19 @@ function loginValidation (mail, pass) {
   return false
 }
 
+app.get('/loadAllData', function (req, res) {
+  loadData()
+    .then(result => {
+      console.log(result)
+      res.send(result)
+    })
+    .catch(err => {
+      res.send(err)
+    })
+})
+
 app.get('/getData', function (req, res) {
-  getCitiesAndClocks()
+  getData()
     .then(result => {
       res.send(result)
     })
@@ -97,7 +95,7 @@ app.get('/getData', function (req, res) {
     })
 })
 
-function getCitiesAndClocks () {
+function getData () {
   const connectionDB = getConnection()
 
   const getCities = new Promise((resolve, reject) => {
@@ -122,6 +120,52 @@ function getCitiesAndClocks () {
   })
 
   return Promise.all([getCities, getClocks])
+}
+
+function loadData () {
+  const connectionDB = getConnection()
+
+  const getCities = new Promise((resolve, reject) => {
+    connectionDB.connect(() => {
+      connectionDB.query(`SELECT * FROM cities`, function (err, result) {
+        if (err) throw err
+        resolve(result)
+        reject('Error! Download cities!')
+      })
+    })
+  })
+
+  const getClocks = new Promise((resolve, reject) => {
+    connectionDB.connect(() => {
+      connectionDB.query(`SELECT * FROM clocks`, function (err, result) {
+        if (err) throw err
+        resolve(result)
+        reject('Error! Download clocks!')
+      })
+    })
+  })
+
+  const getClients = new Promise((resolve, reject) => {
+    connectionDB.connect(() => {
+      connectionDB.query(`SELECT * FROM login`, function (err, result) {
+        if (err) throw err
+        resolve(result)
+        reject('Error! Download clocks!')
+      })
+    })
+  })
+
+  const getWorkers = new Promise((resolve, reject) => {
+    connectionDB.connect(() => {
+      connectionDB.query(`SELECT * FROM workers`, function (err, result) {
+        if (err) throw err
+        resolve(result)
+        reject('Error! Download clocks!')
+      })
+    })
+  })
+
+  return Promise.all([getCities, getClocks, getClients, getWorkers])
 }
 
 /* app.post('/register', async (req, res) => {

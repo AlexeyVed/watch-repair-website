@@ -21,7 +21,7 @@ class OrderForm extends Component {
   }
 
   render () {
-    const { handleSubmit, chooseClock, chooseCities, showState } = this.props
+    const { handleSubmit, chooseClock, chooseCities } = this.props
 
     return (
       <div className='main-form'>
