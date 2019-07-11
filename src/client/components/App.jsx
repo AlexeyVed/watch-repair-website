@@ -1,29 +1,30 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
-import Header from './Header/Header.jsx'
-import Main from './Main'
-import MainAdmin from './AdminMain/MainAdmin.jsx'
-import Portal from './PortalAuthentication/PortalAuthentication.jsx'
+import Header from './App/Header/Header.jsx'
+import Main from './App/Main/Main'
+import MainAdmin from './Admin/Main/MainAdmin'
+import NoMatch from './NoMatch/NoMatch'
 
 class App extends React.Component {
   render () {
-    const { isAdmin } = this.props
-
     return (
       <div className = 'app'>
         <Header/>
-        {(isAdmin !== 'admin@example.com') ? <Main/> : <MainAdmin/>}
-        <Portal/>
+        <Switch>
+          <Route exact path='/' component={Main}/>
+          <Route path='/login' component={Main}/>
+          <Route path='/registration' component={Main}/>
+          <Route path='/admin' component={MainAdmin}/>
+          <Route component={NoMatch}/>
+        </Switch>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isAdmin: state.loginReducer.singInUser
-  }
-}
-
-export default connect(mapStateToProps)(App)
+export default connect(
+  null,
+  null
+)(App)

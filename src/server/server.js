@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const mysql = require('mysql')
 const cors = require('cors')
-const dbConnectionConfig = require('./db-connection-config.js')
+const dbConnectionConfig = require('./model/db-connection-config.js')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
@@ -74,8 +74,19 @@ function loginValidation (mail, pass) {
   return false
 }
 
+app.get('/loadAllData', function (req, res) {
+  loadData()
+    .then(result => {
+      console.log(result)
+      res.send(result)
+    })
+    .catch(err => {
+      res.send(err)
+    })
+})
+
 app.get('/getData', function (req, res) {
-  getCitiesAndClocks()
+  getData()
     .then(result => {
       res.send(result)
     })
@@ -84,7 +95,7 @@ app.get('/getData', function (req, res) {
     })
 })
 
-function getCitiesAndClocks () {
+function getData () {
   const connectionDB = getConnection()
 
   const getCities = new Promise((resolve, reject) => {
@@ -111,31 +122,50 @@ function getCitiesAndClocks () {
   return Promise.all([getCities, getClocks])
 }
 
-/* app.post('/register', async (req, res) => {
+function loadData () {
+  const connectionDB = getConnection()
 
-});
+  const getCities = new Promise((resolve, reject) => {
+    connectionDB.connect(() => {
+      connectionDB.query(`SELECT * FROM cities`, function (err, result) {
+        if (err) throw err
+        resolve(result)
+        reject('Error! Download cities!')
+      })
+    })
+  })
 
-function  saveUserInDB(req) {
-    return new Promise((resolve, reject) => {
-        const { mail, password } = req.body;
-        const connectionDB = getConnection();
+  const getClocks = new Promise((resolve, reject) => {
+    connectionDB.connect(() => {
+      connectionDB.query(`SELECT * FROM clocks`, function (err, result) {
+        if (err) throw err
+        resolve(result)
+        reject('Error! Download clocks!')
+      })
+    })
+  })
 
-        connectionDB.connect(function (err) {
-            if (err) {
-                return reject(err);
-            }
-            console.log("Connected!");
-            const sql = `INSERT INTO login (mail, password) VALUES (?, ?, '')`;
-            const values = [login, password];
-            connectionDB.query(sql, values, function (err, result) {
-                if (err) {
-                    return reject(err);
-                }
+  const getClients = new Promise((resolve, reject) => {
+    connectionDB.connect(() => {
+      connectionDB.query(`SELECT * FROM login`, function (err, result) {
+        if (err) throw err
+        resolve(result)
+        reject('Error! Download clocks!')
+      })
+    })
+  })
 
-                resolve(mail);
-            });
-        });
-    });
-} */
+  const getWorkers = new Promise((resolve, reject) => {
+    connectionDB.connect(() => {
+      connectionDB.query(`SELECT * FROM workers`, function (err, result) {
+        if (err) throw err
+        resolve(result)
+        reject('Error! Download clocks!')
+      })
+    })
+  })
+
+  return Promise.all([getCities, getClocks, getClients, getWorkers])
+}
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening on port ${process.env.PORT || 4000}!`))

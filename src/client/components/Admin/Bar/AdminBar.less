@@ -1,0 +1,54 @@
+.bar-choose-item {
+  width: 20vw;
+  height: 85vh;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 5px;
+  background-color: #f5f5eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    height: 80px;
+    text-align: center;
+    padding-top: 40px;
+    font-size: 18px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-collapse: collapse;
+    width: 100%;
+
+    a {
+      width: 100%;
+      heigth: 60px;
+    }
+
+
+    a > button {
+      height: 60px;
+      width: 100%;
+      padding: 0;
+      border: none;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      background-color: #f4f4f0;
+      outline: none;
+      border-bottom: 1px solid #e6e6e2;
+      border-top: 1px solid #e6e6e2;
+    }
+
+    a > button:hover {
+      border-color: #d7d7d7;
+      background-color: #f5f5f5;
+    }
+
+  }
+
+}
+

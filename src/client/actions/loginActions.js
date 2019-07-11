@@ -2,10 +2,9 @@ import {
   SING_IN_SUCCESS,
   SING_IN_FAILURE,
   SING_IN_STARTED,
-  LOG_OUT
+  LOG_OUT,
+  REDIRECT_LOGOUT
 } from './types'
-
-import { toggleModalLogin } from './appActions'
 
 import axios from 'axios'
 
@@ -17,7 +16,6 @@ export const loginToApp = (email, password) => {
       .post(`http://localhost:4000/login`, { email, password })
       .then(res => {
         dispatch(singInSuccess(res.data))
-        dispatch(toggleModalLogin())
       })
       .catch(err => {
         dispatch(singInFailure(err.response.data))
@@ -25,7 +23,7 @@ export const loginToApp = (email, password) => {
   }
 }
 
-export const logOutApp = (email, password) => {
+export const logOutApp = () => {
   return (dispatch) => {
     dispatch(logOut())
   }
