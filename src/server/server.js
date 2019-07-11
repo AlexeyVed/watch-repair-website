@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const mysql = require('mysql')
 const cors = require('cors')
-const dbConnectionConfig = require('./db-connection-config.js')
+const dbConnectionConfig = require('./model/db-connection-config.js')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
@@ -167,32 +167,5 @@ function loadData () {
 
   return Promise.all([getCities, getClocks, getClients, getWorkers])
 }
-
-/* app.post('/register', async (req, res) => {
-
-});
-
-function  saveUserInDB(req) {
-    return new Promise((resolve, reject) => {
-        const { mail, password } = req.body;
-        const connectionDB = getConnection();
-
-        connectionDB.connect(function (err) {
-            if (err) {
-                return reject(err);
-            }
-            console.log("Connected!");
-            const sql = `INSERT INTO login (mail, password) VALUES (?, ?, '')`;
-            const values = [login, password];
-            connectionDB.query(sql, values, function (err, result) {
-                if (err) {
-                    return reject(err);
-                }
-
-                resolve(mail);
-            });
-        });
-    });
-} */
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening on port ${process.env.PORT || 4000}!`))

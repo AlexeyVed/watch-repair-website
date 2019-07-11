@@ -1,8 +1,10 @@
 import React from 'react'
+import { connect } from "react-redux";
+
+import { changeAdminView } from "../../../actions";
 
 import './RefactorWorkers.less'
-import {changeAdminView} from "../../../actions";
-import {connect} from "react-redux";
+
 
 class RefactorWorkers extends React.Component {
 

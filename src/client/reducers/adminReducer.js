@@ -15,7 +15,6 @@ const initialState = {
     users: [],
     workers: []
   }
-
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -42,7 +41,6 @@ const adminReducer = (state = initialState, action) => {
           clocks: action.payload[1],
           users: action.payload[2],
           workers: action.payload[3]
-
         }
       }
 

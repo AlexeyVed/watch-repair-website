@@ -1,10 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { loadData } from '../../../actions/adminActions.js'
-
-
-
 
 import RefactorCities from '../RefactorCities/RefactorCities.jsx'
 import RefactorClients from '../RefactorClients/RefactorClients.jsx'
@@ -13,14 +10,11 @@ import RefactorWorkers from '../RefactorWorkers/RefactorWorkers.jsx'
 
 import './AdminContent.less'
 
-
 class AdminContent extends React.Component {
-
-  componentDidMount() {
+  componentDidMount () {
     this.props.loadData()
   }
   render () {
-
     return (
       <div className='admin-content'>
         <div className='work-space'>
@@ -40,7 +34,6 @@ class AdminContent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     view: state.adminReducer.view
-
   }
 }
 

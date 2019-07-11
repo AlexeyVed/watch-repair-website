@@ -1,16 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
+import { changeAdminView } from '../../../actions'
 
 import './RefactorClocks.less'
-import {changeAdminView} from "../../../actions";
-import {connect} from "react-redux";
+
+
 
 class RefactorClocks extends React.Component {
-
-  componentDidMount() {
+  componentDidMount () {
     this.props.changeView('clocks')
   }
   render () {
-
     const { clocks } = this.props
 
     return (
@@ -25,19 +26,19 @@ class RefactorClocks extends React.Component {
           </div>
         </div>
         <div className='table-clocks__bottom'>
-        { clocks.map(item => (
-          <div className='table-clocks__table'>
-            <div className='table-clocks__table__row'>
-              <div className='table-clocks__table__row__id'>{item.id}</div>
-              <div className='table-clocks__table__row__clock'>{item.typeClock}</div>
-              <div className='table-clocks__table__row__time'>{item.timeRepair}</div>
-              <div className='table-clocks__table__row__buttons'>
-                <button>Edit</button>
-                <button>Delete</button>
+          { clocks.map(item => (
+            <div className='table-clocks__table'>
+              <div className='table-clocks__table__row'>
+                <div className='table-clocks__table__row__id'>{item.id}</div>
+                <div className='table-clocks__table__row__clock'>{item.typeClock}</div>
+                <div className='table-clocks__table__row__time'>{item.timeRepair}</div>
+                <div className='table-clocks__table__row__buttons'>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
         </div>
         <div className='table-cities__bttn-add'>
           <button>Add</button>

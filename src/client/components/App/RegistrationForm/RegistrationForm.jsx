@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
-import { toggleModalRegister } from '../../../actions'
 import myInput from '../../FieldRedux'
 import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '../../../validation'
-import { register } from './logicForRegistration.js'
 
 import './RegistrationForm.less'
 import ReactDOM from "react-dom";
@@ -13,7 +11,7 @@ import LinkButton from "../../LinkButton/LinkButton.jsx";
 
 class RegistrationForm extends Component {
   render () {
-    const { handleSubmit, toggleModalRegister } = this.props
+    const { handleSubmit } = this.props
 
     return (
       ReactDOM.createPortal(
@@ -68,8 +66,7 @@ class RegistrationForm extends Component {
 }
 
 RegistrationForm = connect(
-  null,
-  { toggleModalRegister }
+  null
 )(RegistrationForm)
 
 export default reduxForm({

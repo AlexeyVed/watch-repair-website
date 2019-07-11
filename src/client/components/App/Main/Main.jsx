@@ -14,8 +14,8 @@ export default class Main extends Component {
       <div className='main'>
         <OrderForm/>
         <Content/>
-        {(pathname === '/login' ) ? <LoginForm/> :
-          (pathname === '/registration') ? <RegistrationForm/> : null}
+        { (pathname === '/login' ) ? <LoginForm/> :
+          (pathname === '/registration') ? <RegistrationForm/> : null }
       </div>
     )
   }

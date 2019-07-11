@@ -1,17 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
+import { changeAdminView } from '../../../actions'
 
 import './RefactorClients.less'
-import {changeAdminView} from "../../../actions";
-import {connect} from "react-redux";
+
 
 class RefactorClients extends React.Component {
-
-  componentDidMount() {
+  componentDidMount () {
     this.props.changeView('clients')
   }
 
   render () {
-
     const { users } = this.props
 
     return (
@@ -26,19 +26,19 @@ class RefactorClients extends React.Component {
           </div>
         </div>
         <div className='table-clients__bottom'>
-        { users.map(item => (
-          <div className='table-clients__table'>
-            <div className='table-clients__table__row'>
-              <div className='table-clients__table__row__id'>{item.idlogin}</div>
-              <div className='table-clients__table__row__email'>{item.email}</div>
-              <div className='table-clients__table__row__password'>{item.password}</div>
-              <div className='table-clients__table__row__buttons'>
-                <button>Edit</button>
-                <button>Delete</button>
+          { users.map(item => (
+            <div className='table-clients__table'>
+              <div className='table-clients__table__row'>
+                <div className='table-clients__table__row__id'>{item.idlogin}</div>
+                <div className='table-clients__table__row__email'>{item.email}</div>
+                <div className='table-clients__table__row__password'>{item.password}</div>
+                <div className='table-clients__table__row__buttons'>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
         </div>
         <div className='table-cities__bttn-add'>
           <button>Add</button>

@@ -10,10 +10,6 @@ import './AdminBar.less'
 
 class AdminBar extends React.Component {
 
-  componentDidMount() {
-    console.log(this.props.location)
-  }
-
   render () {
       return (
         <div className='bar-choose-item'>
@@ -30,12 +26,6 @@ class AdminBar extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-  return {
-
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     changeView: view => dispatch(changeAdminView(view))
@@ -43,6 +33,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(AdminBar)

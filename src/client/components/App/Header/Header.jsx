@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-
 import { logOutApp } from '../../../actions'
+
 import './header.less'
+
 
 class Header extends React.Component {
   state = {
@@ -14,18 +15,17 @@ class Header extends React.Component {
 
   handleClickLogOut = () => {
     this.props.logOut()
-    this.setState({redirect: true})
+    this.setState({ redirect: true })
   }
 
   render () {
     const { currentUser } = this.props
 
-
     let view = null
 
     if (this.state.redirect) {
-      this.setState({redirect: false})
-      return <Redirect to={{pathname: '/'}}/>
+      this.setState({ redirect: false })
+      return <Redirect to={{ pathname: '/' }}/>
     }
 
     if (!currentUser) {
@@ -63,7 +63,6 @@ class Header extends React.Component {
         </div>
         {view}
       </div>
-
     )
   }
 }
