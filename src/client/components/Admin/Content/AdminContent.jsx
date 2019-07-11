@@ -12,7 +12,7 @@ import RefactorClocks from '../RefactorClocks/RefactorClocks.jsx'
 import RefactorWorkers from '../RefactorWorkers/RefactorWorkers.jsx'
 
 import './AdminContent.less'
-import {changeAdminView} from "../../../actions/adminActions";
+
 
 class AdminContent extends React.Component {
 

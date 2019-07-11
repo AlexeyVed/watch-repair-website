@@ -36,7 +36,14 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         dataLoad: false,
-        data: action.payload
+        data: {
+          ...state.data,
+          cities: action.payload[0],
+          clocks: action.payload[1],
+          users: action.payload[2],
+          workers: action.payload[3]
+
+        }
       }
 
     case LOAD_DATA_FAILURE:

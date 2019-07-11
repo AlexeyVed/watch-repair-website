@@ -40,7 +40,7 @@ class Header extends React.Component {
     } else {
       view = <React.Fragment>
         <div className='container-user'>
-          Welcome, {currentUser}
+          Welcome,  {currentUser}
         </div>
         <div className='container-buttons'>
           <button

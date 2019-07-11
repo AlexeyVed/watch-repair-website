@@ -1,33 +1,63 @@
 import React from 'react'
 
-import { Field, reduxForm } from 'redux-form'
-import myInput from '../../FieldRedux'
 import './RefactorCities.less'
 import { connect } from 'react-redux'
+
+import {changeAdminView} from "../../../actions/adminActions";
 
 class RefactorCities extends React.Component {
 
   componentDidMount() {
-
+    this.props.changeView('cities')
   }
 
   render () {
-    const { handleSubmit } = this.props
+    const { cities } = this.props
 
     return (
-      <div className=''>
-
+      <div className='table-cities'>
+        <div className='table-cities__top'>
+          <div className='table-cities__title'>Town where we work</div>
+          <div className='table-cities__table-header'>
+            <div className='table-cities__table-header__header-id'>ID</div>
+            <div className='table-cities__table-header__header-name'>City</div>
+            <div className='table-cities__table-header__header-buttons'>Service</div>
+          </div>
+        </div>
+        <div className='table-cities__bottom'>
+        { cities.map(item => (
+          <div className='table-cities__table'>
+            <div className='table-cities__table__row'>
+              <div className='table-cities__table__row__id'>{item.id}</div>
+              <div className='table-cities__table__row__name'>{item.city}</div>
+              <div className='table-cities__table__row__buttons'>
+                <button>Edit</button>
+                <button>Delete</button>
+              </div>
+            </div>
+          </div>
+        ))}
+        </div>
+        <div className='table-cities__bttn-add'>
+          <button>Add</button>
+        </div>
       </div>
     )
   }
 }
 
-RefactorCities = connect(
-  null,
-  null
-)(RefactorCities)
+const mapStateToProps = (state) => {
+  return {
+    cities: state.adminReducer.data.cities
 
-export default reduxForm({
-  form: 'refactorCities',
-  onSubmit: values => console.log(values)
-})(RefactorCities)
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeView: (view) => dispatch(changeAdminView(view))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RefactorCities)
+
