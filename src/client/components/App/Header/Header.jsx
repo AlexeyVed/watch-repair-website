@@ -14,6 +14,7 @@ class Header extends React.Component {
   }
 
   handleClickLogOut = () => {
+    localStorage.removeItem('user')
     this.props.logOut()
     this.setState({ redirect: true })
   }

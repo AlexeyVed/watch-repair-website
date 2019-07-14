@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import { changeAdminView } from '../../../actions'
 
+import LinkButton from '../../LinkButton/LinkButton.jsx'
+
 import './RefactorClients.less'
 
 
@@ -33,15 +35,15 @@ class RefactorClients extends React.Component {
                 <div className='table-clients__table__row__email'>{item.email}</div>
                 <div className='table-clients__table__row__password'>{item.password}</div>
                 <div className='table-clients__table__row__buttons'>
-                  <button>Edit</button>
-                  <button>Delete</button>
+                  <LinkButton to='/admin/clients/edit' name='Edit'/>
+                  <LinkButton to={`/admin/cities/delete/${item.idlogin}`} name='Delete'/>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className='table-cities__bttn-add'>
-          <button>Add</button>
+        <div className='table-clients__bttn-add'>
+          <LinkButton to='/admin/clients/add' name='Add'/>
         </div>
       </div>
     )

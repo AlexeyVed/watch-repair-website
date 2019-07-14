@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { loadData } from '../../../actions/adminActions.js'
 
-import RefactorCities from '../RefactorCities/RefactorCities.jsx'
-import RefactorClients from '../RefactorClients/RefactorClients.jsx'
-import RefactorClocks from '../RefactorClocks/RefactorClocks.jsx'
-import RefactorWorkers from '../RefactorWorkers/RefactorWorkers.jsx'
+import RefactorCities from '../TableCities/RefactorCities.jsx'
+import RefactorClients from '../TableClients/RefactorClients.jsx'
+import RefactorClocks from '../TableClocks/RefactorClocks.jsx'
+import RefactorWorkers from '../TableWorkers/RefactorWorkers.jsx'
 
 import './AdminContent.less'
 

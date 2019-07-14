@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import { changeAdminView } from '../../../actions'
 
+import LinkButton from '../../LinkButton/LinkButton.jsx'
+
 import './RefactorClocks.less'
 
 
@@ -33,15 +35,15 @@ class RefactorClocks extends React.Component {
                 <div className='table-clocks__table__row__clock'>{item.typeClock}</div>
                 <div className='table-clocks__table__row__time'>{item.timeRepair}</div>
                 <div className='table-clocks__table__row__buttons'>
-                  <button>Edit</button>
-                  <button>Delete</button>
+                  <LinkButton to='/admin/clocks/edit' name='Edit'/>
+                  <LinkButton to={`/admin/clocks/delete/${item.id}`} name='Delete'/>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className='table-cities__bttn-add'>
-          <button>Add</button>
+        <div className='table-clocks__bttn-add'>
+          <LinkButton to='/admin/clocks/add' name='Add'/>
         </div>
       </div>
     )

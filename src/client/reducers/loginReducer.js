@@ -2,7 +2,8 @@ import {
   SING_IN_SUCCESS,
   SING_IN_FAILURE,
   SING_IN_STARTED,
-  LOG_OUT
+  LOG_OUT,
+  SING_IN_FROM_LOCAL_STORAGE
 } from '../actions/types'
 
 const initialState = {
@@ -31,6 +32,12 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         singInLoading: true
+      }
+
+    case SING_IN_FROM_LOCAL_STORAGE:
+      return {
+        ...state,
+        singInUser: action.payload
       }
 
     case LOG_OUT:
