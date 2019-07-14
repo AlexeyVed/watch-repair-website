@@ -18,7 +18,7 @@ export const loadData = () => {
   return (dispatch) => {
     dispatch(loadDataStarted())
     axios
-      .get(`http://localhost:4000/loadAllData`)
+      .get(`http://localhost:4000/data/getAll`)
       .then(res => {
         console.log('load data success')
         dispatch(loadDataSuccess(res.data))

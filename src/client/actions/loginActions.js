@@ -14,7 +14,7 @@ export const loginToApp = (email, password) => {
     dispatch(singInStarted())
 
     axios
-      .post(`http://localhost:4000/login`, { email, password })
+      .post(`http://localhost:4000/users/login`, { email, password })
       .then(res => {
         localStorage.setItem('user', res.data)
         dispatch(singInSuccess(res.data))

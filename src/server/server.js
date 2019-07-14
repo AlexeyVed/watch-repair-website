@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const mysql = require('mysql')
 const cors = require('cors')
-const dbConnectionConfig = require('./db/db-connection-config.js')
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
+
+const usersRouter = require('./routes/userRoutes.js')
+const citiesRouter = require('./routes/citiesRoutes.js')
+const workersRouter = require('./routes/workersRoutes.js')
+const clocksRouter = require('./routes/clocksRoutes.js')
+const combinationRouter = require('./routes/combinationRoutes.js')
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -13,11 +15,13 @@ app.options('*', cors())
 
 app.use(express.static('dist'))
 
-function getConnection () {
-  return mysql.createConnection(dbConnectionConfig)
-}
+app.use('/users', usersRouter)
+app.use('/cities', citiesRouter)
+app.use('/workers', workersRouter)
+app.use('/clocks', clocksRouter)
+app.use('/data', combinationRouter)
 
-app.post('/login', function (req, res) {
+/* app.post('/login', function (req, res) {
   checkUserInDataBase(req.body.email, req.body.password)
     .then(msg => {
       console.log('logining')
@@ -166,6 +170,6 @@ function loadData () {
   })
 
   return Promise.all([getCities, getClocks, getClients, getWorkers])
-}
+} */
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening on port ${process.env.PORT || 4000}!`))

@@ -1,8 +1,4 @@
-const dbConnectionConfig = require('../db/db-connection-config')
-
-function getConnection () {
-  return mysql.createConnection(dbConnectionConfig)
-}
+const requestToDB = require('../services/modules.js')
 
 module.exports = class User {
   constructor (email, password) {
@@ -10,11 +6,11 @@ module.exports = class User {
     this.password = password
   }
 
-  save () {
-    users.push(this)
+  login () {
+    return requestToDB('SELECT email, password FROM login where email=?', [this.email])
   }
 
   static getAll () {
-    return users
+    return requestToDB(`SELECT * FROM login`)
   }
 }

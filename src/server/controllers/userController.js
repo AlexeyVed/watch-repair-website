@@ -1,17 +1,21 @@
-const User = require('../models/user.js')
+const User = require('../models/users.js')
 
-exports.addUser = function (request, response) {
-  response.render('create.hbs')
+exports.getUsers = function (req, res) {
+  User.getAll()
+    .then(result => {
+      res.send(result)
+    })
 }
-exports.getUsers = function (request, response) {
-  response.render('users.hbs', {
-    users: User.getAll()
-  })
-}
-exports.postUser = function (request, response) {
-  const username = request.body.name
-  const userage = request.body.age
-  const user = new User(username, userage)
-  user.save()
-  response.redirect('/users')
+
+exports.login = function (req, res) {
+  const user = new User(req.body.email, req.body.password)
+  user.login()
+    .then(result => {
+      if (result) {
+        res.send(result[0].email)
+      }
+    })
+    .catch(error => {
+      res.status(404).send(error)
+    })
 }
