@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const mysql = require('mysql')
 const cors = require('cors')
-const dbConnectionConfig = require('./model/db-connection-config.js')
+const dbConnectionConfig = require('./db/db-connection-config.js')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 

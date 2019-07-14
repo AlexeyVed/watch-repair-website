@@ -55,9 +55,12 @@
     "classnames": "^2.2.6",
     "express": "^4.16.3",
     "mysql": "^2.16.0",
+    "passport": "^0.4.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "7.0.3",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
     "redux": "^4.0.1",
     "redux-form": "^8.2.3",
     "redux-thunk": "^2.3.0"
