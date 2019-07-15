@@ -11,10 +11,11 @@ module.exports = requestToDB = (query, ...rest) => {
     connectionDB.connect(() => {
       connectionDB.query(query, ...rest, function (err, result) {
         if (err) throw err
-        if (result.length) {
+        console.log(result)
+        if (result.length || result.protocol41) {
           resolve(result)
         } else {
-          reject('Error download data from DB!')
+          reject('Not Found!')
         }
       })
     })

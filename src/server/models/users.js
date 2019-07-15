@@ -6,6 +6,10 @@ module.exports = class User {
     this.password = password
   }
 
+  registration () {
+    return requestToDB(`INSERT INTO login (email, password) VALUES (?, ?)`, [this.email, this.password])
+  }
+
   login () {
     return requestToDB('SELECT email, password FROM login where email=?', [this.email])
   }

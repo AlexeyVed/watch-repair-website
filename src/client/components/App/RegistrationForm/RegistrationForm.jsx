@@ -1,29 +1,41 @@
 import React, { Component } from 'react'
+import ReactDOM from "react-dom";
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
+import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+
 
 import myInput from '../../FieldRedux'
-import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '../../../validation'
-
-import './RegistrationForm.less'
-import ReactDOM from "react-dom";
 import LinkButton from "../../LinkButton/LinkButton.jsx";
 
+import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '../../../validation'
+import {loginToApp, registrationToApp} from '../../../actions'
+
+import './RegistrationForm.less'
+
+
+
 class RegistrationForm extends Component {
+
   render () {
-    const { handleSubmit } = this.props
+
+    const { handleSubmit, registration, currentUser } = this.props
+
+    if (currentUser) {
+      return <Redirect to={{pathname: '/'}}/>
+    }
 
     return (
       ReactDOM.createPortal(
       <div className='modal-window'>
-        <form onSubmit={handleSubmit} className='registration-form'>
+        <form onSubmit={handleSubmit(registration)} className='registration-form'>
           <div className="registration-form__header">
                         Registration
             <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
           </div>
           <Field
             label='Your email'
-            name='email-reg'
+            name='emailReg'
             component={myInput}
             type='text'
             placeholder='Enter your email'
@@ -41,7 +53,7 @@ class RegistrationForm extends Component {
           />
           <Field
             label='Create a password'
-            name='password'
+            name='passwordReg'
             component={myInput}
             type='password'
             placeholder='Enter your password'
@@ -65,11 +77,23 @@ class RegistrationForm extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.loginReducer.singInUser
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    registration: values => dispatch(registrationToApp(values.emailReg, values.passwordReg))
+  }
+}
+
 RegistrationForm = connect(
-  null
+  mapStateToProps,
+  mapDispatchToProps
 )(RegistrationForm)
 
 export default reduxForm({
-  form: 'registration',
-  onSubmit: values => console.log(values)
+  form: 'registration'
 })(RegistrationForm)

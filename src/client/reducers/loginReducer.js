@@ -2,6 +2,9 @@ import {
   SING_IN_SUCCESS,
   SING_IN_FAILURE,
   SING_IN_STARTED,
+  REGISTRATION_STARTED,
+  REGISTRATION_SUCCESS,
+  REGISTRATION_FAILURE,
   LOG_OUT,
   SING_IN_FROM_LOCAL_STORAGE
 } from '../actions/types'
@@ -32,6 +35,26 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         singInLoading: true
+      }
+
+    case REGISTRATION_STARTED:
+      return {
+        ...state,
+        singInLoading: true
+      }
+
+    case REGISTRATION_SUCCESS:
+      return {
+        ...state,
+        singInUser: action.payload,
+        singInLoading: false
+      }
+
+    case REGISTRATION_FAILURE:
+      return {
+        ...state,
+        singInLoading: false,
+        singInError: action.payload
       }
 
     case SING_IN_FROM_LOCAL_STORAGE:

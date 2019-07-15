@@ -5,14 +5,15 @@ import { Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect} from 'react-router-dom';
 
 import myInput from '../../FieldRedux'
-import { loginToApp } from '../../../actions'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+
+import { loginToApp } from '../../../actions'
 import { validateEmail, validatePassword } from '../../../validation'
 
 import './LoginForm.less'
 
-class LoginForm extends React.Component {
 
+class LoginForm extends React.Component {
 
   render () {
 
