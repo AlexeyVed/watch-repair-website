@@ -63,3 +63,13 @@ exports.login = function (req, res) {
       res.status(404).send(error)
     })
 }
+
+exports.deleteUser = function (req, res) {
+  User.deleteUser(req.body.id)
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(400).send('Error delete user')
+    })
+}

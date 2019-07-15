@@ -6,5 +6,6 @@ usersRouter.use('/getAll', usersController.getUsers)
 usersRouter.use('/login', usersController.login)
 usersRouter.use('/registration', usersController.registration)
 usersRouter.use('/addUser', usersController.addUser)
+usersRouter.use('/deleteUser', usersController.deleteUser)
 
 module.exports = usersRouter

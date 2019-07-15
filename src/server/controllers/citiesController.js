@@ -17,3 +17,13 @@ exports.addCity = function (req, res) {
       res.status(400).send('Error add city')
     })
 }
+
+exports.deleteCity = function (req, res) {
+  City.deleteCity(req.body.id)
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(400).send('Error delete city')
+    })
+}

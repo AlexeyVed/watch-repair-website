@@ -4,7 +4,10 @@ import {
   LOAD_DATA_FAILURE,
   ADD_MODEL_STARTED,
   ADD_MODEL_SUCCESS,
-  ADD_MODEL_FAILURE
+  ADD_MODEL_FAILURE,
+  DELETE_MODEL_STARTED,
+  DELETE_MODEL_SUCCESS,
+  DELETE_MODEL_FAILURE
 } from '../actions/types'
 
 const initialState = {
@@ -60,11 +63,32 @@ const adminReducer = (state = initialState, action) => {
     case ADD_MODEL_SUCCESS:
       return {
         ...state,
+        refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true
       }
 
     case ADD_MODEL_FAILURE:
+      return {
+        ...state,
+        refactorModelError: action.payload,
+        refactorModelInProcess: false
+      }
+
+    case DELETE_MODEL_STARTED:
+      return {
+        ...state,
+        refactorModelInProcess: true
+      }
+
+    case DELETE_MODEL_SUCCESS:
+      return {
+        ...state,
+        refactorModelError: null,
+        refactorModelInProcess: false
+      }
+
+    case DELETE_MODEL_FAILURE:
       return {
         ...state,
         refactorModelError: action.payload,

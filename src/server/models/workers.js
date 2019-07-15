@@ -11,6 +11,10 @@ module.exports = class Worker {
     return service.requestToDB(`INSERT INTO workers (name, city, rating) VALUES (?, ?, ?)`, [this.name, this.city, this.rating])
   }
 
+  static deleteWorker (idworker) {
+    return service.requestToDB(`DELETE FROM workers WHERE idworker = ?`, [idworker])
+  }
+
   static getAll () {
     return service.requestToDB(`SELECT * FROM workers`)
   }

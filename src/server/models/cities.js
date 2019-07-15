@@ -9,6 +9,10 @@ module.exports = class City {
     return service.requestToDB(`INSERT INTO cities (city) VALUES (?)`, [this.city])
   }
 
+  static deleteCity (id) {
+    return service.requestToDB(`DELETE FROM cities WHERE id = ?`, [id])
+  }
+
   static getAll () {
     return service.requestToDB(`SELECT * FROM cities`)
   }

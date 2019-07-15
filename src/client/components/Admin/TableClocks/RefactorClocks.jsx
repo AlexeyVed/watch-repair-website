@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import { deleteClockFromDB } from '../../../actions'
 
 import './RefactorClocks.less'
 
@@ -11,7 +12,7 @@ import './RefactorClocks.less'
 class RefactorClocks extends React.Component {
 
   render () {
-    const { clocks } = this.props
+    const { clocks, deleteClock } = this.props
 
     return (
       <div className='table-clocks'>
@@ -33,7 +34,7 @@ class RefactorClocks extends React.Component {
                 <div className='table-clocks__table__row__time'>{item.timeRepair}</div>
                 <div className='table-clocks__table__row__buttons'>
                   <LinkButton to='/admin/clocks/edit' name='Edit'/>
-                  <LinkButton to={`/admin/clocks/delete/${item.id}`} name='Delete'/>
+                  <button onClick={ () => deleteClock(item.id) }>Delete</button>
                 </div>
               </div>
             </div>
@@ -56,7 +57,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    deleteClock: id => dispatch(deleteClockFromDB(id))
   }
 }
 

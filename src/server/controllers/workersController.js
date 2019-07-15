@@ -17,3 +17,13 @@ exports.addWorker = function (req, res) {
       res.status(400).send('Error add worker')
     })
 }
+
+exports.deleteWorker = function (req, res) {
+  Worker.deleteWorker(req.body.id)
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(400).send('Error delete worker')
+    })
+}

@@ -18,6 +18,10 @@ module.exports = class User {
     return service.requestToDB('SELECT email, password FROM login where email=?', [this.email])
   }
 
+  static deleteUser (idlogin) {
+    return service.requestToDB(`DELETE FROM login WHERE idlogin = ?`, [idlogin])
+  }
+
   static getAll () {
     return service.requestToDB(`SELECT * FROM login`)
   }

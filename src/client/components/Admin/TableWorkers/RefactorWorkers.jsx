@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from "react-redux";
 
-
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import { deleteWorkerFromDB } from '../../../actions'
 
 import './RefactorWorkers.less'
 
@@ -11,7 +11,7 @@ class RefactorWorkers extends React.Component {
 
   render () {
 
-    const { workers } = this.props
+    const { workers, deleteWorker } = this.props
 
     return (
       <div className='table-workers'>
@@ -35,7 +35,7 @@ class RefactorWorkers extends React.Component {
               <div className='table-workers__table__row__rating'>{item.rating}</div>
               <div className='table-workers__table__row__buttons'>
                 <LinkButton to='/admin/workers/edit' name='Edit'/>
-                <LinkButton to={`/admin/workers/delete/${item.idworker}`} name='Delete'/>
+                <button onClick={ () => deleteWorker(item.idworker) }>Delete</button>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    deleteWorker: id => dispatch(deleteWorkerFromDB(id))
   }
 }
 

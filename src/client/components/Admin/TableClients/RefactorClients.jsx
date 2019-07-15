@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import { deleteClientFromDB } from '../../../actions'
 
 import './RefactorClients.less'
 
@@ -10,7 +10,7 @@ import './RefactorClients.less'
 class RefactorClients extends React.Component {
 
   render () {
-    const { users } = this.props
+    const { users, deleteClient } = this.props
 
     return (
       <div className='table-clients'>
@@ -32,8 +32,7 @@ class RefactorClients extends React.Component {
                 <div className='table-clients__table__row__password'>{item.password}</div>
                 <div className='table-clients__table__row__buttons'>
                   <LinkButton to='/admin/clients/edit' name='Edit'/>
-                  <LinkButton to={`/admin/cities/delete/${item.idlogin}`} name='Delete'/>
-                </div>
+                  <button onClick={ () => deleteClient(item.idlogin) }>Delete</button>                </div>
               </div>
             </div>
           ))}
@@ -55,7 +54,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    deleteClient: id => dispatch(deleteClientFromDB(id))
   }
 }
 

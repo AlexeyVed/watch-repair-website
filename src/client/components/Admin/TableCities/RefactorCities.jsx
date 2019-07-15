@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { loadData } from '../../../actions/'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import { deleteCityFromDB } from '../../../actions'
 
 import './RefactorCities.less'
 
@@ -12,7 +12,7 @@ class RefactorCities extends React.Component {
 
 
   render () {
-    const { cities } = this.props
+    const { cities, deleteCity } = this.props
 
     return (
       <div className='table-cities'>
@@ -32,7 +32,7 @@ class RefactorCities extends React.Component {
                 <div className='table-cities__table__row__name'>{item.city}</div>
                 <div className='table-cities__table__row__buttons'>
                   <LinkButton to='/admin/cities/edit' name='Edit'/>
-                  <LinkButton to={`/admin/cities/delete/${item.id}`} name='Delete'/>
+                  <button onClick={ () => deleteCity(item.id) }>Delete</button>
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    deleteCity: id => dispatch(deleteCityFromDB(id))
   }
 }
 
