@@ -17,3 +17,13 @@ module.exports = class City {
     return service.requestToDB(`SELECT * FROM cities`)
   }
 }
+
+/*
+connectionDB.query('UPDATE tbperson SET firstName = ?, lastName = ?, age = ? WHERE personID = ? AND loginID = ?', values, function (err, result) {
+  if (err) {
+    console.log(err, 'err in 236')
+    return reject(err.sqlMessage);
+  }
+  resolve();
+  console.log(result);
+});*/

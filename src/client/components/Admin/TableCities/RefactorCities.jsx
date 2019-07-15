@@ -3,16 +3,24 @@ import { connect } from 'react-redux'
 
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteCityFromDB } from '../../../actions'
+import { deleteCityFromDB, redirectToEditMode } from '../../../actions'
 
 import './RefactorCities.less'
+import {Redirect} from "react-router";
 
 
 class RefactorCities extends React.Component {
 
+  redirected (id) {
+    this.props.redirectToEditMode(id)
+  }
 
   render () {
-    const { cities, deleteCity } = this.props
+    const { cities, deleteCity, redirect } = this.props
+
+    if (redirect) {
+      return <Redirect to={{ pathname: '/admin/cities/edit' }}/>
+    }
 
     return (
       <div className='table-cities'>
@@ -48,14 +56,15 @@ class RefactorCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    cities: state.adminReducer.data.cities
-
+    cities: state.adminReducer.data.cities,
+    redirect: state.adminReducer.redirectToEdit
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteCity: id => dispatch(deleteCityFromDB(id))
+    deleteCity: id => dispatch(deleteCityFromDB(id)),
+    redirectToEditMode: (id) => dispatch(redirectToEditMode(id))
   }
 }
 

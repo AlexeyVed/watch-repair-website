@@ -7,7 +7,11 @@ import {
   ADD_MODEL_FAILURE,
   DELETE_MODEL_STARTED,
   DELETE_MODEL_SUCCESS,
-  DELETE_MODEL_FAILURE
+  DELETE_MODEL_FAILURE,
+  EDIT_MODEL_STARTED,
+  EDIT_MODEL_SUCCESS,
+  EDIT_MODEL_FAILURE,
+  REDIRECT_TO_EDIT_MODE
 } from './types.js'
 
 import axios from 'axios'
@@ -90,6 +94,74 @@ export const addWorkerToDB = (name, city, rating) => {
       })
       .catch(err => {
         dispatch(addModelFailure(err))
+      })
+  }
+}
+
+export const editUserIntoDB = (email, password) => {
+  return (dispatch) => {
+    dispatch(editModelStarted())
+    axios
+      .post(`http://localhost:4000/users/editUser`, { email, password })
+      .then(res => {
+        dispatch(editModelSuccess())
+      })
+      .then(res => {
+        dispatch(loadDataAdmin())
+      })
+      .catch(err => {
+        dispatch(editModelFailure(err))
+      })
+  }
+}
+
+export const editCityIntoDB = (city) => {
+  return (dispatch) => {
+    dispatch(editModelStarted())
+    axios
+      .post(`http://localhost:4000/cities/editCity`, { city })
+      .then(res => {
+        dispatch(editModelSuccess())
+      })
+      .then(res => {
+        dispatch(loadDataAdmin())
+      })
+      .catch(err => {
+        dispatch(editModelFailure(err))
+      })
+  }
+}
+
+export const editClockIntoDB = (typeClock, timeRepair) => {
+  return (dispatch) => {
+    dispatch(editModelStarted())
+    axios
+      .post(`http://localhost:4000/clocks/editClock`, { typeClock, timeRepair })
+      .then(res => {
+        dispatch(editModelSuccess())
+      })
+      .then(res => {
+        dispatch(loadDataAdmin())
+      })
+      .catch(err => {
+        dispatch(editModelFailure(err))
+      })
+  }
+}
+
+export const editWorkerIntoDB = (name, city, rating) => {
+  return (dispatch) => {
+    dispatch(editModelStarted())
+    axios
+      .post(`http://localhost:4000/workers/editWorker`, { name, city, rating })
+      .then(res => {
+        dispatch(editModelSuccess())
+      })
+      .then(res => {
+        dispatch(loadDataAdmin())
+      })
+      .catch(err => {
+        dispatch(editModelFailure(err))
       })
   }
 }
@@ -201,3 +273,22 @@ const deleteModelSuccess = err => ({
   type: DELETE_MODEL_SUCCESS,
   payload: err
 })
+
+const editModelStarted = () => ({
+  type: EDIT_MODEL_STARTED
+})
+
+const editModelFailure = () => ({
+  type: EDIT_MODEL_FAILURE
+})
+
+const editModelSuccess = err => ({
+  type: EDIT_MODEL_SUCCESS,
+  payload: err
+})
+
+export const redirectToEditMode = (id) => ({
+  type: REDIRECT_TO_EDIT_MODE,
+  payload: id
+})
+

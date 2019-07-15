@@ -7,7 +7,11 @@ import {
   ADD_MODEL_FAILURE,
   DELETE_MODEL_STARTED,
   DELETE_MODEL_SUCCESS,
-  DELETE_MODEL_FAILURE
+  DELETE_MODEL_FAILURE,
+  EDIT_MODEL_STARTED,
+  EDIT_MODEL_SUCCESS,
+  EDIT_MODEL_FAILURE,
+  REDIRECT_TO_EDIT_MODE
 } from '../actions/types'
 
 const initialState = {
@@ -16,6 +20,8 @@ const initialState = {
   refactorModelInProcess: false,
   refactorModelError: null,
   redirectBackFromRefactor: false,
+  redirectToEdit: false,
+  idEdit: null,
   data: {
     clocks: [],
     cities: [],
@@ -93,6 +99,13 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         refactorModelError: action.payload,
         refactorModelInProcess: false
+      }
+
+    case REDIRECT_TO_EDIT_MODE:
+      return {
+        ...state,
+        redirectToEdit: true,
+        idEdit: action.payload
       }
 
     default:

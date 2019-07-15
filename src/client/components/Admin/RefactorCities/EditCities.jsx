@@ -33,7 +33,7 @@ class EditCities extends React.Component {
               name='email'
               component={myInput}
               type='text'
-              placeholder='Enter your email'
+              defaultValue='sfsdfsdf'
             />
             <button
               type='submit'
@@ -47,7 +47,7 @@ class EditCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    editId: state.adminReducer.idEdit
   }
 }
 
@@ -63,5 +63,8 @@ const exportEditCities = connect(
 )(EditCities)
 
 export default reduxForm({
-  form: 'editCity'
+  form: 'editCity',
+  initialValues: {
+    city: 'HAHAHAH'
+  }
 })(exportEditCities)
