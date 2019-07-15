@@ -17,3 +17,14 @@ exports.addClock = function (req, res) {
       res.status(400).send('Error add clock')
     })
 }
+
+exports.deleteClock = function (req, res) {
+  res.send(req)
+  /* Clock.deleteClock()
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(400).send('Error add clock')
+    }) */
+}

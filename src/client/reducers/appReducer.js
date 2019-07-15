@@ -1,34 +1,44 @@
 import {
-  SET_CLOCKS,
-  SET_CITIES
+  LOAD_DATA_USER_STARTED,
+  LOAD_DATA_USER_SUCCESS,
+  LOAD_DATA_USER_FAILURE
 } from '../actions/types'
 
 const initialState = {
-  orderFormData: {
+  data: {
     clocks: [],
-    cities: []
-  }
+    cities: [],
+    workers: []
+  },
+  dataLoad: false,
+  dataError: null
 }
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_CLOCKS:
+    case LOAD_DATA_USER_STARTED:
       return {
         ...state,
-        orderFormData: {
-          ...state.orderFormData,
-          clocks: action.payload
+        dataLoad: true
+      }
+
+    case LOAD_DATA_USER_SUCCESS:
+      return {
+        ...state,
+        dataLoad: false,
+        data: {
+          ...state.data,
+          clocks: action.payload[0],
+          cities: action.payload[1],
+          workers: action.payload[2]
         }
       }
 
-    case SET_CITIES:
+    case LOAD_DATA_USER_FAILURE:
       return {
         ...state,
-        orderFormData:
-                    {
-                      ...state.orderFormData,
-                      cities: action.payload
-                    }
+        dataLoad: false,
+        dataError: action.payload
       }
 
     default:

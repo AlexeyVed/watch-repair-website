@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { loadData } from '../../../actions/adminActions.js'
+import { loadDataAdmin } from '../../../actions/adminActions.js'
 
 import RefactorCities from '../TableCities/RefactorCities.jsx'
 import RefactorClients from '../TableClients/RefactorClients.jsx'
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadData: () => dispatch(loadData())
+    loadData: () => dispatch(loadDataAdmin())
   }
 }
 

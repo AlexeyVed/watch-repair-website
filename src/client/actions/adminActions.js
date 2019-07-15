@@ -9,7 +9,7 @@ import {
 
 import axios from 'axios'
 
-export const loadData = () => {
+export const loadDataAdmin = () => {
   return (dispatch) => {
     dispatch(loadDataStarted())
     axios
@@ -32,7 +32,7 @@ export const addUserToDB = (email, password) => {
         dispatch(addModelSuccess())
       })
       .then(res => {
-        dispatch(loadData())
+        dispatch(loadDataAdmin())
       })
       .catch(err => {
         dispatch(addModelFailure(err))
@@ -49,7 +49,7 @@ export const addCityToDB = (city) => {
         dispatch(addModelSuccess())
       })
       .then(res => {
-        dispatch(loadData())
+        dispatch(loadDataAdmin())
       })
       .catch(err => {
         dispatch(addModelFailure(err))
@@ -66,7 +66,7 @@ export const addClockToDB = (typeClock, timeRepair) => {
         dispatch(addModelSuccess())
       })
       .then(res => {
-        dispatch(loadData())
+        dispatch(loadDataAdmin())
       })
       .catch(err => {
         dispatch(addModelFailure(err))
@@ -83,7 +83,7 @@ export const addWorkerToDB = (name, city, rating) => {
         dispatch(addModelSuccess())
       })
       .then(res => {
-        dispatch(loadData())
+        dispatch(loadDataAdmin())
       })
       .catch(err => {
         dispatch(addModelFailure(err))

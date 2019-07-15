@@ -4,20 +4,15 @@ import { Field, reduxForm } from 'redux-form'
 import axios from 'axios'
 
 import myInput from '../../FieldRedux'
-import { setCitiesToState, setClocksToState } from '../../../actions'
+import {addUserToDB, loadDataUser} from '../../../actions'
 import { validateEmail } from '../../../validation'
 
 import './OrderForm.less'
 
 class OrderForm extends Component {
-  componentDidMount () {
-    const { setCities, setClock } = this.props
 
-    axios.get(`http://localhost:4000/getData`)
-      .then(res => {
-        setCities(res.data[0])
-        setClock(res.data[1])
-      })
+  componentDidMount() {
+    this.props.loadData()
   }
 
   render () {
@@ -68,8 +63,8 @@ class OrderForm extends Component {
             >
               <option key={0} value={false}>Choose your city</option>
               {
-                chooseCities.map((city, index) => (
-                  <option key={index}>{city}</option>
+                chooseCities.map((item, index) => (
+                  <option key={index}>{item.city}</option>
                 ))
               }
             </Field>
@@ -83,15 +78,14 @@ class OrderForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    chooseClock: state.appReducer.orderFormData.clocks,
-    chooseCities: state.appReducer.orderFormData.cities
+    chooseClock: state.appReducer.data.clocks,
+    chooseCities: state.appReducer.data.cities
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setCities: data => dispatch(setCitiesToState(data)),
-    setClock: data => dispatch(setClocksToState(data))
+    loadData: () => dispatch(loadDataUser())
   }
 }
 
