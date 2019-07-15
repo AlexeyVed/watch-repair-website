@@ -7,7 +7,8 @@ import {
   REGISTRATION_FAILURE,
   LOG_OUT,
   REDIRECT_LOGOUT,
-  SING_IN_FROM_LOCAL_STORAGE
+  SING_IN_FROM_LOCAL_STORAGE,
+  LOGIN_ERROR_NULL
 } from './types'
 
 import axios from 'axios'
@@ -29,7 +30,6 @@ export const loginToApp = (email, password) => {
 }
 
 export const registrationToApp = (email, password) => {
-  console.log(email, password)
   return (dispatch) => {
     dispatch(registrationStarted())
 
@@ -54,6 +54,12 @@ export const logOutApp = () => {
 export const singInFromLS = (user) => {
   return (dispatch) => {
     dispatch(singInLS(user))
+  }
+}
+
+export const missLoginError = () => {
+  return (dispatch) => {
+    dispatch(loginErrorNull())
   }
 }
 
@@ -93,4 +99,8 @@ const registrationFailure = error => ({
 const singInLS = (user) => ({
   type: SING_IN_FROM_LOCAL_STORAGE,
   payload: user
+})
+
+const loginErrorNull = () => ({
+  type: LOGIN_ERROR_NULL
 })

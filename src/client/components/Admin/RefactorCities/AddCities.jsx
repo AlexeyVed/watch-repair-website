@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Redirect} from 'react-router-dom';
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+ import { addCityToDB } from "../../../actions";
 
 import './RefactorCities.less'
 
@@ -15,7 +16,11 @@ class AddCities extends React.Component {
 
   render () {
 
-    const { handleSubmit, addCity } = this.props
+    const { handleSubmit, addCity, redirectBack } = this.props
+
+    if (redirectBack) {
+      return <Redirect to={{ pathname: '/admin/cities' }}/>
+    }
 
     return (
 
@@ -30,10 +35,10 @@ class AddCities extends React.Component {
             </div>
             <Field
               label='Enter city'
-              name='email'
+              name='city'
               component={myInput}
               type='text'
-              placeholder='Enter your email'
+              placeholder='Enter new city'
             />
             <button
               type='submit'
@@ -45,15 +50,15 @@ class AddCities extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.loginReducer.singInUser
-  }
-}
+ const mapStateToProps = (state) => {
+   return {
+     redirectBack: state.adminReducer.redirectBackFromRefactor
+   }
+ }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCity: values => console.log(values)
+    addCity: values => dispatch(addCityToDB(values.city)),
   }
 }
 

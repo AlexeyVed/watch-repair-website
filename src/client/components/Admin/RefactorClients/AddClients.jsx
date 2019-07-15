@@ -7,8 +7,10 @@ import { BrowserRouter as Router, Redirect} from 'react-router-dom';
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import {confirmEmail, confirmPassword, validateEmail, validatePassword} from "../../../validation";
+import { addUserToDB } from "../../../actions";
 
 import './RefactorClients.less'
+
 
 
 class AddClients extends React.Component {
@@ -16,14 +18,18 @@ class AddClients extends React.Component {
 
   render () {
 
-    const { handleSubmit, addCity } = this.props
+    const { handleSubmit, addUser, redirectBack } = this.props
+
+    if (redirectBack) {
+      return <Redirect to={{ pathname: '/admin/clients' }}/>
+    }
 
     return (
 
       ReactDOM.createPortal(
         <div className='modal-window'>
           <form
-            onSubmit={handleSubmit(addCity)}
+            onSubmit={handleSubmit(addUser)}
             className='refactor-clients'>
             <div className="refactor-clients__header">
               Add Clients
@@ -31,7 +37,7 @@ class AddClients extends React.Component {
             </div>
             <Field
               label='Your email'
-              name='email-reg'
+              name='emailReg'
               component={myInput}
               type='text'
               placeholder='Enter your email'
@@ -49,7 +55,7 @@ class AddClients extends React.Component {
             />
             <Field
               label='Create a password'
-              name='password'
+              name='passwordReg'
               component={myInput}
               type='password'
               placeholder='Enter your password'
@@ -77,13 +83,13 @@ class AddClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.loginReducer.singInUser
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCity: values => console.log(values)
+    addUser: values => dispatch(addUserToDB(values.emailReg, values.passwordReg)),
   }
 }
 
@@ -93,5 +99,5 @@ const exportAddClients = connect(
 )(AddClients)
 
 export default reduxForm({
-  form: 'addCity'
+  form: 'addUser'
 })(exportAddClients)

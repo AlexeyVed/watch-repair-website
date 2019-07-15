@@ -1,12 +1,16 @@
-const requestToDB = require('../services/modules.js')
+const service = require('../services/modules.js')
 
 module.exports = class Clock {
-  constructor (email, password) {
-    this.email = email
-    this.password = password
+  constructor (typeClock, timeRepair) {
+    this.typeClock = typeClock,
+    this.timeRepair = timeRepair
+  }
+
+  addClock () {
+    return service.requestToDB(`INSERT INTO clocks (typeClock, timeRepair) VALUES (?, ?)`, [this.typeClock, this.timeRepair])
   }
 
   static getAll () {
-    return requestToDB(`SELECT * FROM clocks`)
+    return service.requestToDB(`SELECT * FROM clocks`)
   }
 }

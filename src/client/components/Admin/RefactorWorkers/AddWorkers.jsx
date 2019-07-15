@@ -6,8 +6,10 @@ import { BrowserRouter as Router, Redirect} from 'react-router-dom';
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import { addWorkerToDB } from "../../../actions";
 
 import'./RefactorWorkers.less'
+
 
 
 class AddWorkers extends React.Component {
@@ -15,14 +17,18 @@ class AddWorkers extends React.Component {
 
   render () {
 
-    const { handleSubmit, addCity, chooseCities } = this.props
+    const { handleSubmit, addWorker, chooseCities, redirectBack } = this.props
+
+    if (redirectBack) {
+      return <Redirect to={{ pathname: '/admin/workers' }}/>
+    }
 
     return (
 
       ReactDOM.createPortal(
         <div className='modal-window'>
           <form
-            onSubmit={handleSubmit(addCity)}
+            onSubmit={handleSubmit(addWorker)}
             className='refactor-workers'>
             <div className="refactor-workers__header">
               Add Workers
@@ -77,13 +83,14 @@ class AddWorkers extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    chooseCities: state.adminReducer.data.cities
+    chooseCities: state.adminReducer.data.cities,
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCity: values => console.log(values)
+    addWorker: values => dispatch(addWorkerToDB(values.name, values.city, values.rating))
   }
 }
 
@@ -93,5 +100,5 @@ const exportAddWorkers = connect(
 )(AddWorkers)
 
 export default reduxForm({
-  form: 'addCity'
+  form: 'addWorker'
 })(exportAddWorkers)

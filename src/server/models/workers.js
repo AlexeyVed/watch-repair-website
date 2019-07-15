@@ -1,12 +1,17 @@
-const requestToDB = require('../services/modules.js')
+const service = require('../services/modules.js')
 
 module.exports = class Worker {
-  constructor (email, password) {
-    this.email = email
-    this.password = password
+  constructor (name, city, rating) {
+    this.name = name
+    this.city = city
+    this.rating = rating
+  }
+
+  addWorker () {
+    return service.requestToDB(`INSERT INTO workers (name, city, rating) VALUES (?, ?, ?)`, [this.name, this.city, this.rating])
   }
 
   static getAll () {
-    return requestToDB(`SELECT * FROM workers`)
+    return service.requestToDB(`SELECT * FROM workers`)
   }
 }

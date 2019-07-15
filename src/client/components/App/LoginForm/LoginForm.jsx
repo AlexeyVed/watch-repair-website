@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Redirect} from 'react-router-dom';
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
-import { loginToApp } from '../../../actions'
+import { loginToApp, missLoginError } from '../../../actions'
 import { validateEmail, validatePassword } from '../../../validation'
 
 import './LoginForm.less'
@@ -17,12 +17,23 @@ class LoginForm extends React.Component {
 
   render () {
 
-    const { handleSubmit, loginApp, pristine, submitting, currentUser } = this.props
+    const {
+      handleSubmit,
+      loginApp,
+      pristine,
+      submitting,
+      currentUser,
+      loginError,
+      missLoginError } = this.props
 
     if (currentUser === 'admin@example.com') {
       return <Redirect to={{pathname: '/admin'}}/>
     } else if (currentUser) {
       return <Redirect to={{pathname: '/'}}/>
+    }
+
+    if (loginError) {
+      setTimeout(missLoginError, 3000)
     }
 
     return (
@@ -44,6 +55,12 @@ class LoginForm extends React.Component {
               placeholder='Enter your email'
               validate={validateEmail}
             />
+            { loginError &&
+            !currentUser &&
+            <div className='login-form__input-error'>
+              {loginError}
+            </div>
+            }
             <Field
               label='Your password'
               name='password'
@@ -65,13 +82,15 @@ class LoginForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.loginReducer.singInUser
+    currentUser: state.loginReducer.singInUser,
+    loginError: state.loginReducer.singInError
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginApp: values => dispatch(loginToApp(values.email, values.password))
+    loginApp: values => dispatch(loginToApp(values.email, values.password)),
+    missLoginError: () => dispatch(missLoginError())
   }
 }
 

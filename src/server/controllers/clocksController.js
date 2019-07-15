@@ -6,3 +6,14 @@ exports.getClocks = function (req, res) {
       res.send(result)
     })
 }
+
+exports.addClock = function (req, res) {
+  const clock = new Clock(req.body.typeClock, req.body.timeRepair)
+  clock.addClock()
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(400).send('Error add clock')
+    })
+}

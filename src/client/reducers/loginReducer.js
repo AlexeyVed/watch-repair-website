@@ -6,7 +6,8 @@ import {
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE,
   LOG_OUT,
-  SING_IN_FROM_LOCAL_STORAGE
+  SING_IN_FROM_LOCAL_STORAGE,
+  LOGIN_ERROR_NULL
 } from '../actions/types'
 
 const initialState = {
@@ -21,7 +22,8 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         singInUser: action.payload,
-        singInLoading: false
+        singInLoading: false,
+        singInError: null
       }
 
     case SING_IN_FAILURE:
@@ -34,7 +36,8 @@ const loginReducer = (state = initialState, action) => {
     case SING_IN_STARTED:
       return {
         ...state,
-        singInLoading: true
+        singInLoading: true,
+        singInError: null
       }
 
     case REGISTRATION_STARTED:
@@ -47,7 +50,8 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         singInUser: action.payload,
-        singInLoading: false
+        singInLoading: false,
+        singInError: null
       }
 
     case REGISTRATION_FAILURE:
@@ -60,13 +64,20 @@ const loginReducer = (state = initialState, action) => {
     case SING_IN_FROM_LOCAL_STORAGE:
       return {
         ...state,
-        singInUser: action.payload
+        singInUser: action.payload,
+        singInError: null
       }
 
     case LOG_OUT:
       return {
         ...state,
         singInUser: action.payload
+      }
+
+    case LOGIN_ERROR_NULL:
+      return {
+        ...state,
+        singInError: null
       }
 
     default:

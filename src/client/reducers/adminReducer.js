@@ -1,14 +1,18 @@
 import {
-  CHANGE_ADMIN_VIEW,
   LOAD_DATA_STARTED,
   LOAD_DATA_SUCCESS,
-  LOAD_DATA_FAILURE
+  LOAD_DATA_FAILURE,
+  ADD_MODEL_STARTED,
+  ADD_MODEL_SUCCESS,
+  ADD_MODEL_FAILURE
 } from '../actions/types'
 
 const initialState = {
-  view: null,
   dataLoad: false,
   dataError: null,
+  refactorModelInProcess: false,
+  refactorModelError: null,
+  redirectBackFromRefactor: false,
   data: {
     clocks: [],
     cities: [],
@@ -19,12 +23,6 @@ const initialState = {
 
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CHANGE_ADMIN_VIEW:
-      return {
-        ...state,
-        view: action.payload
-      }
-
     case LOAD_DATA_STARTED:
       return {
         ...state,
@@ -35,6 +33,7 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         dataLoad: false,
+        redirectBackFromRefactor: false,
         data: {
           ...state.data,
           cities: action.payload[0],
@@ -49,6 +48,27 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         dataLoad: false,
         dataError: action.payload
+      }
+
+    case ADD_MODEL_STARTED:
+      return {
+        ...state,
+        refactorModelInProcess: true,
+        refactorModelError: null
+      }
+
+    case ADD_MODEL_SUCCESS:
+      return {
+        ...state,
+        refactorModelError: null,
+        redirectBackFromRefactor: true
+      }
+
+    case ADD_MODEL_FAILURE:
+      return {
+        ...state,
+        refactorModelError: action.payload,
+        refactorModelInProcess: false
       }
 
     default:

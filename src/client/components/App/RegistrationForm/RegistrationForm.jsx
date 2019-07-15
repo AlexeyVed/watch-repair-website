@@ -9,7 +9,7 @@ import myInput from '../../FieldRedux'
 import LinkButton from "../../LinkButton/LinkButton.jsx";
 
 import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '../../../validation'
-import {loginToApp, registrationToApp} from '../../../actions'
+import { missLoginError, registrationToApp } from '../../../actions'
 
 import './RegistrationForm.less'
 
@@ -19,10 +19,19 @@ class RegistrationForm extends Component {
 
   render () {
 
-    const { handleSubmit, registration, currentUser } = this.props
+    const {
+      handleSubmit,
+      registration,
+      currentUser,
+      loginError,
+      missLoginError } = this.props
 
     if (currentUser) {
       return <Redirect to={{pathname: '/'}}/>
+    }
+
+    if (loginError) {
+      setTimeout(missLoginError, 3000)
     }
 
     return (
@@ -42,6 +51,12 @@ class RegistrationForm extends Component {
             validate={[validateEmail]}
             required
           />
+          { loginError &&
+            !currentUser &&
+            <div className='registration-form__input-error'>
+              {loginError}
+            </div>
+          }
           <Field
             label='Confirm your email'
             name='confirm-email-reg'
@@ -79,13 +94,15 @@ class RegistrationForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.loginReducer.singInUser
+    currentUser: state.loginReducer.singInUser,
+    loginError: state.loginReducer.singInError
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    registration: values => dispatch(registrationToApp(values.emailReg, values.passwordReg))
+    registration: values => dispatch(registrationToApp(values.emailReg, values.passwordReg)),
+    missLoginError: () => dispatch(missLoginError())
   }
 }
 

@@ -1,4 +1,4 @@
-const requestToDB = require('../services/modules.js')
+const service = require('../services/modules.js')
 
 module.exports = class User {
   constructor (email, password) {
@@ -7,14 +7,18 @@ module.exports = class User {
   }
 
   registration () {
-    return requestToDB(`INSERT INTO login (email, password) VALUES (?, ?)`, [this.email, this.password])
+    return service.requestToDB(`INSERT INTO login (email, password) VALUES (?, ?)`, [this.email, this.password])
+  }
+
+  checkUser () {
+    return service.requestToDBCheck('SELECT email FROM login where email=?', [this.email])
   }
 
   login () {
-    return requestToDB('SELECT email, password FROM login where email=?', [this.email])
+    return service.requestToDB('SELECT email, password FROM login where email=?', [this.email])
   }
 
   static getAll () {
-    return requestToDB(`SELECT * FROM login`)
+    return service.requestToDB(`SELECT * FROM login`)
   }
 }

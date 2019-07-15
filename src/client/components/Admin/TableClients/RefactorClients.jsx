@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { changeAdminView } from '../../../actions'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
@@ -9,9 +8,6 @@ import './RefactorClients.less'
 
 
 class RefactorClients extends React.Component {
-  componentDidMount () {
-    this.props.changeView('clients')
-  }
 
   render () {
     const { users } = this.props
@@ -29,7 +25,7 @@ class RefactorClients extends React.Component {
         </div>
         <div className='table-clients__bottom'>
           { users.map(item => (
-            <div className='table-clients__table'>
+            <div className='table-clients__table' key={item.idlogin}>
               <div className='table-clients__table__row'>
                 <div className='table-clients__table__row__id'>{item.idlogin}</div>
                 <div className='table-clients__table__row__email'>{item.email}</div>
@@ -59,7 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeView: (view) => dispatch(changeAdminView(view))
+
   }
 }
 

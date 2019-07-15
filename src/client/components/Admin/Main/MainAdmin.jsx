@@ -18,7 +18,7 @@ import { loadData } from '../../../actions/adminActions.js'
 
 class MainAdmin extends React.Component {
   componentDidMount () {
-    loadData()
+
   }
 
   render () {

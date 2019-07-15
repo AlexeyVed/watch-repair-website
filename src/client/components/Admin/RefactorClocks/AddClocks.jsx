@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Redirect} from 'react-router-dom';
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import { addClockToDB } from "../../../actions";
 
 import './RefactorClocks.less'
 
@@ -15,14 +16,18 @@ class AddClocks extends React.Component {
 
   render () {
 
-    const { handleSubmit, addCity } = this.props
+    const { handleSubmit, addClock, redirectBack } = this.props
+
+    if (redirectBack) {
+      return <Redirect to={{ pathname: '/admin/clocks' }}/>
+    }
 
     return (
 
       ReactDOM.createPortal(
         <div className='modal-window'>
           <form
-            onSubmit={handleSubmit(addCity)}
+            onSubmit={handleSubmit(addClock)}
             className='refactor-clocks'>
             <div className="refactor-clocks__header">
               Add Clocks
@@ -30,14 +35,14 @@ class AddClocks extends React.Component {
             </div>
             <Field
               label='Enter type of clock'
-              name='type'
+              name='typeClock'
               component={myInput}
               type='text'
               placeholder='Enter type of clock'
             />
             <Field
               label='Enter time of repair clock'
-              name='time'
+              name='timeRepair'
               component={myInput}
               type='number'
               placeholder='Enter time repair clock'
@@ -54,13 +59,13 @@ class AddClocks extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.loginReducer.singInUser
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCity: values => console.log(values)
+    addClock: values => dispatch(addClockToDB(values.typeClock, values.timeRepair)),
   }
 }
 
@@ -70,5 +75,5 @@ const exportAddClocks = connect(
 )(AddClocks)
 
 export default reduxForm({
-  form: 'addCity'
+  form: 'addClock'
 })(exportAddClocks)

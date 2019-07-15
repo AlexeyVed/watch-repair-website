@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { changeAdminView } from '../../../actions/adminActions'
+import { loadData } from '../../../actions/'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
@@ -9,9 +9,7 @@ import './RefactorCities.less'
 
 
 class RefactorCities extends React.Component {
-  componentDidMount () {
-    this.props.changeView('cities')
-  }
+
 
   render () {
     const { cities } = this.props
@@ -28,7 +26,7 @@ class RefactorCities extends React.Component {
         </div>
         <div className='table-cities__bottom'>
           { cities.map(item => (
-            <div className='table-cities__table'>
+            <div className='table-cities__table' key={item.id}>
               <div className='table-cities__table__row'>
                 <div className='table-cities__table__row__id'>{item.id}</div>
                 <div className='table-cities__table__row__name'>{item.city}</div>
@@ -57,7 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeView: (view) => dispatch(changeAdminView(view))
+
   }
 }
 

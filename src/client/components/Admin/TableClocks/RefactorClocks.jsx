@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { changeAdminView } from '../../../actions'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
@@ -10,9 +9,7 @@ import './RefactorClocks.less'
 
 
 class RefactorClocks extends React.Component {
-  componentDidMount () {
-    this.props.changeView('clocks')
-  }
+
   render () {
     const { clocks } = this.props
 
@@ -29,7 +26,7 @@ class RefactorClocks extends React.Component {
         </div>
         <div className='table-clocks__bottom'>
           { clocks.map(item => (
-            <div className='table-clocks__table'>
+            <div className='table-clocks__table' key={item.id}>
               <div className='table-clocks__table__row'>
                 <div className='table-clocks__table__row__id'>{item.id}</div>
                 <div className='table-clocks__table__row__clock'>{item.typeClock}</div>
@@ -59,7 +56,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeView: (view) => dispatch(changeAdminView(view))
+
   }
 }
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from "react-redux";
 
-import { changeAdminView } from "../../../actions";
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
@@ -10,9 +9,6 @@ import './RefactorWorkers.less'
 
 class RefactorWorkers extends React.Component {
 
-  componentDidMount() {
-    this.props.changeView('workers')
-  }
   render () {
 
     const { workers } = this.props
@@ -31,7 +27,7 @@ class RefactorWorkers extends React.Component {
         </div>
         <div className='table-workers__bottom'>
         { workers.map(item => (
-          <div className='table-workers__table'>
+          <div className='table-workers__table' key={item.idworker}>
             <div className='table-workers__table__row'>
               <div className='table-workers__table__row__id'>{item.idworker}</div>
               <div className='table-workers__table__row__name'>{item.name}</div>
@@ -62,7 +58,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeView: (view) => dispatch(changeAdminView(view))
+
   }
 }
 
