@@ -1,38 +1,50 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { change, Field, reduxForm } from 'redux-form'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 
 import './RefactorClients.less'
-import {confirmEmail, confirmPassword, validateEmail, validatePassword} from "../../../validation";
+import { validateEmail, validatePassword} from "../../../validation";
 
 
 class EditClients extends React.Component {
 
+  componentDidMount() {
+    this.props.dispatch(change('editClient', 'id', this.props.match.params.idlogin));
+    this.props.dispatch(change('editClient', 'emailReg', this.props.match.params.email));
+    this.props.dispatch(change('editClient', 'password', this.props.match.params.password));
+  }
 
   render () {
 
-    const { handleSubmit, editCity } = this.props
+    const { handleSubmit, editClient } = this.props
 
     return (
 
       ReactDOM.createPortal(
         <div className='modal-window'>
           <form
-            onSubmit={handleSubmit(editCity)}
-            className='refactor-clients'>
+            onSubmit={handleSubmit(editClient)}
+            className='refactor-clients edit-client'>
             <div className="refactor-clients__header">
               Edit Clients
               <LinkButton to='/admin/clients' name='&times;' className='refactor-clients__header__right-button-close'/>
             </div>
             <Field
+              label='ID'
+              name='id'
+              component={myInput}
+              type='text'
+              placeholder={this.props.match.params.idlogin}
+              input={{ disabled: true }}
+            />
+            <Field
               label='Your email'
-              name='email-reg'
+              name='emailReg'
               component={myInput}
               type='text'
               placeholder='Enter your email'
@@ -40,30 +52,12 @@ class EditClients extends React.Component {
               required
             />
             <Field
-              label='Confirm your email'
-              name='confirm-email-reg'
-              component={myInput}
-              type='text'
-              placeholder='Confirm your email'
-              validate={[validateEmail, confirmEmail]}
-              required
-            />
-            <Field
               label='Create a password'
               name='password'
               component={myInput}
-              type='password'
+              type='text'
               placeholder='Enter your password'
               validate={validatePassword}
-              required
-            />
-            <Field
-              label='Confirm your password'
-              name='confirm-password'
-              component={myInput}
-              type='password'
-              placeholder='Confirm your password'
-              validate={[confirmPassword]}
               required
             />
             <button
@@ -84,7 +78,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editCity: values => console.log(values)
+    editClient: values => console.log(values)
   }
 }
 
@@ -94,5 +88,5 @@ const exportEditClients = connect(
 )(EditClients)
 
 export default reduxForm({
-  form: 'editCity'
+  form: 'editClient'
 })(exportEditClients)

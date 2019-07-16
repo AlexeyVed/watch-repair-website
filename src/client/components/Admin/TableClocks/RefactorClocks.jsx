@@ -1,11 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteClockFromDB } from '../../../actions'
+import AddClocks from "../RefactorClocks/AddClocks.jsx";
+import EditClocks from "../RefactorClocks/EditClocks.jsx";
 
 import './RefactorClocks.less'
+
+
 
 
 
@@ -33,7 +38,7 @@ class RefactorClocks extends React.Component {
                 <div className='table-clocks__table__row__clock'>{item.typeClock}</div>
                 <div className='table-clocks__table__row__time'>{item.timeRepair}</div>
                 <div className='table-clocks__table__row__buttons'>
-                  <LinkButton to='/admin/clocks/edit' name='Edit'/>
+                  <LinkButton to={`/admin/clocks/edit/${item.id}/${item.typeClock}/${item.timeRepair}`} name='Edit'/>
                   <button onClick={ () => deleteClock(item.id) }>Delete</button>
                 </div>
               </div>
@@ -43,6 +48,10 @@ class RefactorClocks extends React.Component {
         <div className='table-clocks__bttn-add'>
           <LinkButton to='/admin/clocks/add' name='Add'/>
         </div>
+        <Switch>
+          <Route path='/admin/clocks/add' component={AddClocks}/>
+          <Route path='/admin/clocks/edit/:id/:typeClock/:timeRepair' component={EditClocks}/>
+        </Switch>
       </div>
     )
   }

@@ -10,8 +10,7 @@ import {
   DELETE_MODEL_FAILURE,
   EDIT_MODEL_STARTED,
   EDIT_MODEL_SUCCESS,
-  EDIT_MODEL_FAILURE,
-  REDIRECT_TO_EDIT_MODE
+  EDIT_MODEL_FAILURE
 } from './types.js'
 
 import axios from 'axios'
@@ -285,10 +284,5 @@ const editModelFailure = () => ({
 const editModelSuccess = err => ({
   type: EDIT_MODEL_SUCCESS,
   payload: err
-})
-
-export const redirectToEditMode = (id) => ({
-  type: REDIRECT_TO_EDIT_MODE,
-  payload: id
 })
 

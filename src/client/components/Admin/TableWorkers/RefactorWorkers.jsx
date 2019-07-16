@@ -1,10 +1,15 @@
 import React from 'react'
 import { connect } from "react-redux";
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteWorkerFromDB } from '../../../actions'
+import AddWorkers from "../RefactorWorkers/AddWorkers.jsx";
+import EditWorkers from "../RefactorWorkers/EditWorkers.jsx";
 
 import './RefactorWorkers.less'
+
+
 
 
 class RefactorWorkers extends React.Component {
@@ -34,7 +39,7 @@ class RefactorWorkers extends React.Component {
               <div className='table-workers__table__row__city'>{item.city}</div>
               <div className='table-workers__table__row__rating'>{item.rating}</div>
               <div className='table-workers__table__row__buttons'>
-                <LinkButton to='/admin/workers/edit' name='Edit'/>
+                <LinkButton to={`/admin/workers/edit/${item.idworker}/${item.name}/${item.city}/${item.rating}`} name='Edit'/>
                 <button onClick={ () => deleteWorker(item.idworker) }>Delete</button>
               </div>
             </div>
@@ -44,6 +49,10 @@ class RefactorWorkers extends React.Component {
         <div className='table-workers__bttn-add'>
           <LinkButton to='/admin/workers/add' name='Add'/>
         </div>
+        <Switch>
+          <Route path='/admin/workers/add' component={AddWorkers}/>
+          <Route path='/admin/workers/edit/:idworker/:name/:city/:rating' component={EditWorkers}/>
+        </Switch>
       </div>
     )
   }

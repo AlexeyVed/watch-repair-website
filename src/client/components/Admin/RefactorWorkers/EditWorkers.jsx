@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { change, Field, reduxForm } from 'redux-form'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -12,31 +11,45 @@ import'./RefactorWorkers.less'
 
 class EditWorkers extends React.Component {
 
+  componentDidMount() {
+    this.props.dispatch(change('editWorker', 'id', this.props.match.params.idworker));
+    this.props.dispatch(change('editWorker', 'name', this.props.match.params.name));
+    this.props.dispatch(change('editWorker', 'city', this.props.match.params.city));
+    this.props.dispatch(change('editWorker', 'rating', this.props.match.params.rating));
+  }
 
   render () {
 
-    const { handleSubmit, editCity, chooseCities  } = this.props
+    const { handleSubmit, editWorker, chooseCities  } = this.props
 
     return (
 
       ReactDOM.createPortal(
         <div className='modal-window'>
           <form
-          onSubmit={handleSubmit(editCity)}
+          onSubmit={handleSubmit(editWorker)}
           className='refactor-workers'>
           <div className="refactor-workers__header">
             Add Workers
             <LinkButton to='/admin/workers' name='&times;' className='refactor-workers__header__right-button-close'/>
           </div>
           <Field
-            label='Enter workers name'
+            label='ID'
+            name='id'
+            component={myInput}
+            type='text'
+            placeholder={this.props.match.params.idworker}
+            input={{ disabled: true }}
+          />
+          <Field
+            label='Update worker name'
             name='name'
             component={myInput}
             type='text'
-            placeholder='Enter workers name'
+            placeholder='Update worker name'
           />
           <div className='refactor-workers__select'>
-            <label>Enter city</label>
+            <label>Update city</label>
             <Field
               name='city'
               component='select'
@@ -51,7 +64,7 @@ class EditWorkers extends React.Component {
             </Field>
           </div>
           <div className='refactor-workers__select'>
-            <label>Enter rating</label>
+            <label>Update rating</label>
             <Field
               name='rating'
               component='select'
@@ -83,7 +96,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editCity: values => console.log(values)
+    editWorker: values => console.log(values)
   }
 }
 
@@ -93,5 +106,5 @@ const exportEditWorkers = connect(
 )(EditWorkers)
 
 export default reduxForm({
-  form: 'editCity'
+  form: 'editWorker'
 })(exportEditWorkers)

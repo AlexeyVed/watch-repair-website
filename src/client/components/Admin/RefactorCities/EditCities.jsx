@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { Field, reduxForm, change  } from 'redux-form'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -12,13 +11,16 @@ import './RefactorCities.less'
 
 class EditCities extends React.Component {
 
+  componentDidMount() {
+    this.props.dispatch(change('editCity', 'id', this.props.match.params.id))
+    this.props.dispatch(change('editCity', 'city', this.props.match.params.city))
+  }
 
   render () {
 
     const { handleSubmit, editCity } = this.props
 
     return (
-
       ReactDOM.createPortal(
         <div className='modal-window'>
           <form
@@ -29,11 +31,18 @@ class EditCities extends React.Component {
               <LinkButton to='/admin/cities' name='&times;' className='refactor-city__header__right-button-close'/>
             </div>
             <Field
-              label='Enter city'
-              name='email'
+              label='ID'
+              name='id'
               component={myInput}
               type='text'
-              defaultValue='sfsdfsdf'
+              placeholder={this.props.match.params.id}
+              input={{ disabled: true }}
+            />
+            <Field
+              label='Enter city'
+              name='city'
+              component={myInput}
+              type='text'
             />
             <button
               type='submit'
@@ -47,7 +56,7 @@ class EditCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    editId: state.adminReducer.idEdit
+
   }
 }
 
@@ -63,8 +72,5 @@ const exportEditCities = connect(
 )(EditCities)
 
 export default reduxForm({
-  form: 'editCity',
-  initialValues: {
-    city: 'HAHAHAH'
-  }
+  form: 'editCity'
 })(exportEditCities)

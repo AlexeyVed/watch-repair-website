@@ -1,26 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteCityFromDB, redirectToEditMode } from '../../../actions'
+import AddCities from '../RefactorCities/AddCities.jsx'
+import EditCities from '../RefactorCities/EditCities.jsx'
+import { deleteCityFromDB } from '../../../actions'
 
 import './RefactorCities.less'
-import {Redirect} from "react-router";
 
 
 class RefactorCities extends React.Component {
 
-  redirected (id) {
-    this.props.redirectToEditMode(id)
-  }
 
   render () {
-    const { cities, deleteCity, redirect } = this.props
-
-    if (redirect) {
-      return <Redirect to={{ pathname: '/admin/cities/edit' }}/>
-    }
+    const { cities, deleteCity } = this.props
 
     return (
       <div className='table-cities'>
@@ -39,7 +33,7 @@ class RefactorCities extends React.Component {
                 <div className='table-cities__table__row__id'>{item.id}</div>
                 <div className='table-cities__table__row__name'>{item.city}</div>
                 <div className='table-cities__table__row__buttons'>
-                  <LinkButton to='/admin/cities/edit' name='Edit'/>
+                  <LinkButton to={`/admin/cities/edit/${item.id}/${item.city}`} name='Edit'/>
                   <button onClick={ () => deleteCity(item.id) }>Delete</button>
                 </div>
               </div>
@@ -49,6 +43,10 @@ class RefactorCities extends React.Component {
         <div className='table-cities__bttn-add'>
           <LinkButton to='/admin/cities/add' name='Add'/>
         </div>
+        <Switch>
+          <Route path='/admin/cities/add' component={AddCities}/>
+          <Route path='/admin/cities/edit/:id/:city' component={EditCities}/>
+        </Switch>
       </div>
     )
   }
@@ -56,15 +54,13 @@ class RefactorCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    cities: state.adminReducer.data.cities,
-    redirect: state.adminReducer.redirectToEdit
+    cities: state.adminReducer.data.cities
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteCity: id => dispatch(deleteCityFromDB(id)),
-    redirectToEditMode: (id) => dispatch(redirectToEditMode(id))
   }
 }
 
