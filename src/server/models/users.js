@@ -1,9 +1,14 @@
 const service = require('../services/modules.js')
 
 module.exports = class User {
-  constructor (email, password) {
+  constructor (email, password, idlogin) {
+    this.idlogin = idlogin || null
     this.email = email
     this.password = password
+  }
+
+  updateUser () {
+    return service.requestToDB(`UPDATE login SET email = ?, password = ?  WHERE idlogin = ?`, [this.email, this.password, this.idlogin])
   }
 
   registration () {

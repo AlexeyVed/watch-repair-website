@@ -1,21 +1,17 @@
- import React from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
- import { addCityToDB } from "../../../actions";
+import { addCityToDB } from '../../../actions'
 
 import './RefactorCities.less'
 
-
 class AddCities extends React.Component {
-
-
   render () {
-
     const { handleSubmit, addCity, redirectBack } = this.props
 
     if (redirectBack) {
@@ -50,15 +46,15 @@ class AddCities extends React.Component {
   }
 }
 
- const mapStateToProps = (state) => {
-   return {
-     redirectBack: state.adminReducer.redirectBackFromRefactor
-   }
- }
+const mapStateToProps = (state) => {
+  return {
+    redirectBack: state.adminReducer.redirectBackFromRefactor
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCity: values => dispatch(addCityToDB(values.city)),
+    addCity: values => dispatch(addCityToDB(values.city))
   }
 }
 

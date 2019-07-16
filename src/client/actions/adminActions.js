@@ -97,11 +97,11 @@ export const addWorkerToDB = (name, city, rating) => {
   }
 }
 
-export const editUserIntoDB = (email, password) => {
+export const editUserIntoDB = (email, password, id) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:4000/users/editUser`, { email, password })
+      .post(`http://localhost:4000/users/updateUser`, { email, password, id })
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -114,11 +114,11 @@ export const editUserIntoDB = (email, password) => {
   }
 }
 
-export const editCityIntoDB = (city) => {
+export const editCityIntoDB = (city, id) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:4000/cities/editCity`, { city })
+      .post(`http://localhost:4000/cities/updateCity`, { city, id })
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -131,15 +131,18 @@ export const editCityIntoDB = (city) => {
   }
 }
 
-export const editClockIntoDB = (typeClock, timeRepair) => {
+export const editClockIntoDB = (typeClock, timeRepair, id) => {
   return (dispatch) => {
+    console.log(typeClock, timeRepair, id)
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:4000/clocks/editClock`, { typeClock, timeRepair })
+      .post(`http://localhost:4000/clocks/updateClock`, { typeClock, timeRepair, id })
       .then(res => {
+        console.log(res)
         dispatch(editModelSuccess())
       })
       .then(res => {
+        console.log('load data')
         dispatch(loadDataAdmin())
       })
       .catch(err => {
@@ -148,11 +151,11 @@ export const editClockIntoDB = (typeClock, timeRepair) => {
   }
 }
 
-export const editWorkerIntoDB = (name, city, rating) => {
+export const editWorkerIntoDB = (name, city, rating, id) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:4000/workers/editWorker`, { name, city, rating })
+      .post(`http://localhost:4000/workers/updateWorker`, { name, city, rating, id })
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -285,4 +288,3 @@ const editModelSuccess = err => ({
   type: EDIT_MODEL_SUCCESS,
   payload: err
 })
-

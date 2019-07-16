@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { singInFromLS } from '../actions'
 
 import Header from './App/Header/Header.jsx'
@@ -9,8 +9,7 @@ import MainAdmin from './Admin/Main/MainAdmin'
 import NoMatch from './NoMatch/NoMatch'
 
 class App extends React.Component {
-
-  componentDidMount() {
+  componentDidMount () {
     const client = localStorage.getItem('user')
 
     if (client) {
@@ -39,7 +38,6 @@ const mapDispatchToProps = dispatch => {
     singInLS: user => dispatch(singInFromLS(user))
   }
 }
-
 
 export default connect(
   null,

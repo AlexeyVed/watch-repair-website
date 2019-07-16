@@ -2,21 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { addWorkerToDB } from "../../../actions";
+import { addWorkerToDB } from '../../../actions'
 
-import'./RefactorWorkers.less'
-
-
+import './RefactorWorkers.less'
 
 class AddWorkers extends React.Component {
-
-
   render () {
-
     const { handleSubmit, addWorker, chooseCities, redirectBack } = this.props
 
     if (redirectBack) {

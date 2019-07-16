@@ -2,26 +2,28 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { change, Field, reduxForm } from 'redux-form'
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-
+import { validateEmail, validatePassword } from '../../../validation'
+import { editUserIntoDB } from '../../../actions'
 
 import './RefactorClients.less'
-import { validateEmail, validatePassword} from "../../../validation";
-
 
 class EditClients extends React.Component {
-
-  componentDidMount() {
-    this.props.dispatch(change('editClient', 'id', this.props.match.params.idlogin));
-    this.props.dispatch(change('editClient', 'emailReg', this.props.match.params.email));
-    this.props.dispatch(change('editClient', 'password', this.props.match.params.password));
+  componentDidMount () {
+    this.props.dispatch(change('editClient', 'id', this.props.match.params.idlogin))
+    this.props.dispatch(change('editClient', 'emailReg', this.props.match.params.email))
+    this.props.dispatch(change('editClient', 'password', this.props.match.params.password))
   }
 
   render () {
+    const { handleSubmit, editClient, redirectBack } = this.props
 
-    const { handleSubmit, editClient } = this.props
+    if (redirectBack) {
+      return <Redirect to={{ pathname: '/admin/clients' }}/>
+    }
 
     return (
 
@@ -72,13 +74,13 @@ class EditClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editClient: values => console.log(values)
+    editClient: values => dispatch(editUserIntoDB(values.emailReg, values.password, values.id))
   }
 }
 

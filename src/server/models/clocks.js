@@ -1,9 +1,14 @@
 const service = require('../services/modules.js')
 
 module.exports = class Clock {
-  constructor (typeClock, timeRepair) {
+  constructor (typeClock, timeRepair, id) {
+    this.id = id || null
     this.typeClock = typeClock,
     this.timeRepair = timeRepair
+  }
+
+  updateClock () {
+    return service.requestToDB(`UPDATE clocks SET typeClock = ?, timeRepair = ?  WHERE id = ?`, [this.typeClock, this.timeRepair, this.id])
   }
 
   addClock () {
@@ -18,14 +23,3 @@ module.exports = class Clock {
     return service.requestToDB(`SELECT * FROM clocks`)
   }
 }
-
-/*
-connectionDB.query(`DELETE FROM tbperson WHERE personID = ? AND loginID = ?`, values, function (err, result) {
-  console.log(err, 'deleting errors')
-  if (err) {
-    return reject(err.sqlMessage)
-  }
-  resolve()
-  console.log(result)
-})
-*/

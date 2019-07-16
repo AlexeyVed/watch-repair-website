@@ -1,8 +1,13 @@
 const service = require('../services/modules.js')
 
 module.exports = class City {
-  constructor (city) {
+  constructor (city, id) {
+    this.id = id || null
     this.city = city
+  }
+
+  updateCity () {
+    return service.requestToDB(`UPDATE cities SET city = ? WHERE id = ?`, [this.city, this.id])
   }
 
   addCity () {
@@ -17,13 +22,3 @@ module.exports = class City {
     return service.requestToDB(`SELECT * FROM cities`)
   }
 }
-
-/*
-connectionDB.query('UPDATE tbperson SET firstName = ?, lastName = ?, age = ? WHERE personID = ? AND loginID = ?', values, function (err, result) {
-  if (err) {
-    console.log(err, 'err in 236')
-    return reject(err.sqlMessage);
-  }
-  resolve();
-  console.log(result);
-});*/

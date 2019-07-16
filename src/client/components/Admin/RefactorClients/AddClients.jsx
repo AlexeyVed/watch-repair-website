@@ -2,22 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import {confirmEmail, confirmPassword, validateEmail, validatePassword} from "../../../validation";
-import { addUserToDB } from "../../../actions";
+import { confirmEmail, confirmPassword, validateEmail, validatePassword } from '../../../validation'
+import { addUserToDB } from '../../../actions'
 
 import './RefactorClients.less'
 
-
-
 class AddClients extends React.Component {
-
-
   render () {
-
     const { handleSubmit, addUser, redirectBack } = this.props
 
     if (redirectBack) {
@@ -89,7 +84,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addUser: values => dispatch(addUserToDB(values.emailReg, values.passwordReg)),
+    addUser: values => dispatch(addUserToDB(values.emailReg, values.passwordReg))
   }
 }
 

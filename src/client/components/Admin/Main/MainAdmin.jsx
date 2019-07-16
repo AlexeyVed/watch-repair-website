@@ -1,16 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import AdminBar from '../Bar/AdminBar.jsx'
 import AdminContent from '../Content/AdminContent.jsx'
 
 import './MainAdmin.less'
 
-import { loadData } from '../../../actions/adminActions.js'
-
 class MainAdmin extends React.Component {
-
   render () {
     const { currentUser } = this.props
 

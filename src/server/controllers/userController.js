@@ -49,6 +49,17 @@ exports.addUser = function (req, res) {
     })
 }
 
+exports.updateUser = function (req, res) {
+  const user = new User(req.body.email, req.body.password, req.body.id)
+  user.updateUser()
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(400).send('Error update clock')
+    })
+}
+
 exports.login = function (req, res) {
   const user = new User(req.body.email, req.body.password)
   user.login()

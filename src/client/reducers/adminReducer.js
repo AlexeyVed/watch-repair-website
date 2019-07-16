@@ -78,6 +78,28 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false
       }
 
+    case EDIT_MODEL_STARTED:
+      return {
+        ...state,
+        refactorModelInProcess: true,
+        refactorModelError: null
+      }
+
+    case EDIT_MODEL_SUCCESS:
+      return {
+        ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true
+      }
+
+    case EDIT_MODEL_FAILURE:
+      return {
+        ...state,
+        refactorModelError: action.payload,
+        refactorModelInProcess: false
+      }
+
     case DELETE_MODEL_STARTED:
       return {
         ...state,

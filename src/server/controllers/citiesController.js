@@ -7,6 +7,17 @@ exports.getCities = function (req, res) {
     })
 }
 
+exports.updateCity = function (req, res) {
+  const city = new City(req.body.city, req.body.id)
+  city.updateCity()
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(400).send('Error update city')
+    })
+}
+
 exports.addCity = function (req, res) {
   const city = new City(req.body.city)
   city.addCity()

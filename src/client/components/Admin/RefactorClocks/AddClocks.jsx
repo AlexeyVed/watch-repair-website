@@ -2,20 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { addClockToDB } from "../../../actions";
+import { addClockToDB } from '../../../actions'
 
 import './RefactorClocks.less'
 
-
 class AddClocks extends React.Component {
-
-
   render () {
-
     const { handleSubmit, addClock, redirectBack } = this.props
 
     if (redirectBack) {
@@ -65,7 +61,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addClock: values => dispatch(addClockToDB(values.typeClock, values.timeRepair)),
+    addClock: values => dispatch(addClockToDB(values.typeClock, values.timeRepair))
   }
 }
 

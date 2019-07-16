@@ -1,10 +1,15 @@
 const service = require('../services/modules.js')
 
 module.exports = class Worker {
-  constructor (name, city, rating) {
+  constructor (name, city, rating, id) {
+    this.id = id || null
     this.name = name
     this.city = city
     this.rating = rating
+  }
+
+  updateWorker () {
+    return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE idworker = ?`, [this.name, this.city, this.rating, this.id])
   }
 
   addWorker () {

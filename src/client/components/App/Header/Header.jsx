@@ -7,7 +7,6 @@ import { logOutApp } from '../../../actions'
 
 import './header.less'
 
-
 class Header extends React.Component {
   state = {
     redirect: false

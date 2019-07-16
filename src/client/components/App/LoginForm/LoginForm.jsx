@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -12,11 +12,8 @@ import { validateEmail, validatePassword } from '../../../validation'
 
 import './LoginForm.less'
 
-
 class LoginForm extends React.Component {
-
   render () {
-
     const {
       handleSubmit,
       loginApp,
@@ -27,9 +24,9 @@ class LoginForm extends React.Component {
       missLoginError } = this.props
 
     if (currentUser === 'admin@example.com') {
-      return <Redirect to={{pathname: '/admin'}}/>
+      return <Redirect to={{ pathname: '/admin' }}/>
     } else if (currentUser) {
-      return <Redirect to={{pathname: '/'}}/>
+      return <Redirect to={{ pathname: '/' }}/>
     }
 
     if (loginError) {

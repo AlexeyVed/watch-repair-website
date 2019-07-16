@@ -1,24 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, reduxForm, change  } from 'redux-form'
+import { Field, reduxForm, change } from 'redux-form'
+import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import { editCityIntoDB } from '../../../actions'
 
 import './RefactorCities.less'
 
-
 class EditCities extends React.Component {
-
-  componentDidMount() {
+  componentDidMount () {
     this.props.dispatch(change('editCity', 'id', this.props.match.params.id))
     this.props.dispatch(change('editCity', 'city', this.props.match.params.city))
   }
 
   render () {
+    const { handleSubmit, editCity, redirectBack } = this.props
 
-    const { handleSubmit, editCity } = this.props
+    if (redirectBack) {
+      return <Redirect to={{ pathname: '/admin/cities' }}/>
+    }
 
     return (
       ReactDOM.createPortal(
@@ -56,13 +59,13 @@ class EditCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editCity: values => console.log(values)
+    editCity: values => dispatch(editCityIntoDB(values.city, values.id))
   }
 }
 

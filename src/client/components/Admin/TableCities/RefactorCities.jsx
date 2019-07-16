@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import AddCities from '../RefactorCities/AddCities.jsx'
@@ -9,10 +9,7 @@ import { deleteCityFromDB } from '../../../actions'
 
 import './RefactorCities.less'
 
-
 class RefactorCities extends React.Component {
-
-
   render () {
     const { cities, deleteCity } = this.props
 
@@ -60,7 +57,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteCity: id => dispatch(deleteCityFromDB(id)),
+    deleteCity: id => dispatch(deleteCityFromDB(id))
   }
 }
 

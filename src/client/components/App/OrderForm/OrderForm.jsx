@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import axios from 'axios'
 
 import myInput from '../../FieldRedux'
-import {addUserToDB, loadDataUser} from '../../../actions'
+import { loadDataUser } from '../../../actions'
 import { validateEmail } from '../../../validation'
 
 import './OrderForm.less'
 
 class OrderForm extends Component {
-
-  componentDidMount() {
+  componentDidMount () {
     this.props.loadData()
   }
 

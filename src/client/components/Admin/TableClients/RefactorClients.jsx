@@ -1,19 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteClientFromDB } from '../../../actions'
-import AddClients from "../RefactorClients/AddClients.jsx";
-import EditClients from "../RefactorClients/EditClients.jsx";
+import AddClients from '../RefactorClients/AddClients.jsx'
+import EditClients from '../RefactorClients/EditClients.jsx'
 
 import './RefactorClients.less'
 
-
-
-
 class RefactorClients extends React.Component {
-
   render () {
     const { users, deleteClient } = this.props
 

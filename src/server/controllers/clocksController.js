@@ -7,6 +7,17 @@ exports.getClocks = function (req, res) {
     })
 }
 
+exports.updateClock = function (req, res) {
+  const clock = new Clock(req.body.typeClock, req.body.timeRepair, req.body.id)
+  clock.updateClock()
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(400).send('Error update clock')
+    })
+}
+
 exports.addClock = function (req, res) {
   const clock = new Clock(req.body.typeClock, req.body.timeRepair)
   clock.addClock()
