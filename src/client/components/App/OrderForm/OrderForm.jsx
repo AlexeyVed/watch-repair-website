@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, change } from 'redux-form'
 
 import myInput from '../../FieldRedux'
-import { loadDataUser } from '../../../actions'
+import { loadDataUser, makeOrder } from '../../../actions'
 import { validateEmail } from '../../../validation'
 
 import './OrderForm.less'
@@ -14,24 +14,31 @@ class OrderForm extends Component {
   }
 
   render () {
-    const { handleSubmit, chooseClock, chooseCities } = this.props
+    const { handleSubmit, chooseClock, chooseCities, makeOrder, currentEmail } = this.props
+
+    if (currentEmail) {
+      this.props.dispatch(change('orderForm', 'clientEmail', currentEmail))
+    }
+
+    const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]
 
     return (
       <div className='main-form'>
         <div className='main-form__title'>Make you order</div>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(makeOrder)}
           className='main-form__order-form'>
           <Field
             label='Enter your name'
-            name='name'
+            name='clientName'
             component={myInput}
             type='text'
             placeholder='Enter your name'
+            required
           />
           <Field
             label='Enter your email'
-            name='email'
+            name='clientEmail'
             component={myInput}
             type='text'
             placeholder='Enter your email'
@@ -40,7 +47,7 @@ class OrderForm extends Component {
           <div className='main-form__order-select'>
             <label>Choose your clock</label>
             <Field
-              name='clock'
+              name='timeRepair'
               component='select'
               type='text'
             >
@@ -67,6 +74,28 @@ class OrderForm extends Component {
               }
             </Field>
           </div>
+          <Field
+            label='Choose date'
+            name='date'
+            component={myInput}
+            type='date'
+            placeholder='Enter your email'
+          />
+          <div className='main-form__order-select'>
+            <label>Choose convenient time</label>
+            <Field
+              name='time'
+              component='select'
+              type='text'
+            >
+              <option key={0}>Select time</option>
+              {
+                workHours.map((item) => {
+                  return <option key={item} value={`${item}:00`}>{item}:00</option>
+                })
+              }
+            </Field>
+          </div>
           <button type='submit' label='submit'>Submit</button>
         </form>
       </div>
@@ -77,22 +106,23 @@ class OrderForm extends Component {
 const mapStateToProps = (state) => {
   return {
     chooseClock: state.appReducer.data.clocks,
-    chooseCities: state.appReducer.data.cities
+    chooseCities: state.appReducer.data.cities,
+    currentEmail: state.loginReducer.singInUser
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadData: () => dispatch(loadDataUser())
+    loadData: () => dispatch(loadDataUser()),
+    makeOrder: values => dispatch(makeOrder(values))
   }
 }
 
-OrderForm = connect(
+const exportOrderForm = connect(
   mapStateToProps,
   mapDispatchToProps
 )(OrderForm)
 
 export default reduxForm({
-  form: 'order',
-  onSubmit: values => console.log(values)
-})(OrderForm)
+  form: 'orderForm'
+})(exportOrderForm)

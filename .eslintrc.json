@@ -28,10 +28,11 @@
             "jsx": true
         },
         "ecmaVersion": 2018,
-        "sourceType": "module"
+        "sourceType": "module",
+        "codeFrame": true
     },
     "plugins": [
-        "react"
+        "eslint-plugin-react"
     ],
     "rules": {
         "react/jsx-no-undef": 1,

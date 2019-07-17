@@ -7,8 +7,10 @@ import RefactorCities from '../TableCities/RefactorCities.jsx'
 import RefactorClients from '../TableClients/RefactorClients.jsx'
 import RefactorClocks from '../TableClocks/RefactorClocks.jsx'
 import RefactorWorkers from '../TableWorkers/RefactorWorkers.jsx'
+import RefactorOrders from '../TableOrders/RefactorOrders.jsx'
 
 import './AdminContent.less'
+import Main from '../../App/Main/Main'
 
 class AdminContent extends React.Component {
   componentDidMount () {
@@ -19,14 +21,15 @@ class AdminContent extends React.Component {
       <div className='admin-content'>
         <div className='work-space'>
           <Switch>
+            <Route exact path='/admin' render={ props => (<div>Welcome to Admin interface!</div>)}/>
             <Route path="/admin/cities" component={RefactorCities}/>
             <Route path="/admin/clients" component={RefactorClients}/>
-            <Route path="/admin/clocks" component={RefactorClocks} />
-            <Route path="/admin/workers" component={RefactorWorkers} />
+            <Route path="/admin/clocks" component={RefactorClocks}/>
+            <Route path="/admin/workers" component={RefactorWorkers}/>
+            <Route path="/admin/orders" component={RefactorOrders}/>
           </Switch>
         </div>
       </div>
-
     )
   }
 }

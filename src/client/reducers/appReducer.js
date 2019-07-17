@@ -1,7 +1,10 @@
 import {
   LOAD_DATA_USER_STARTED,
   LOAD_DATA_USER_SUCCESS,
-  LOAD_DATA_USER_FAILURE
+  LOAD_DATA_USER_FAILURE,
+  MAKE_ORDER_STARTED,
+  MAKE_ORDER_SUCCESS,
+  MAKE_ORDER_FAILURE
 } from '../actions/types'
 
 const initialState = {
@@ -11,7 +14,9 @@ const initialState = {
     workers: []
   },
   dataLoad: false,
-  dataError: null
+  dataError: null,
+  isMakeOrder: false,
+  makeOrderError: null
 }
 
 const appReducer = (state = initialState, action) => {
@@ -39,6 +44,25 @@ const appReducer = (state = initialState, action) => {
         ...state,
         dataLoad: false,
         dataError: action.payload
+      }
+
+    case MAKE_ORDER_STARTED:
+      return {
+        ...state,
+        isMakeOrder: true
+      }
+
+    case MAKE_ORDER_SUCCESS:
+      return {
+        ...state,
+        isMakeOrder: false
+      }
+
+    case MAKE_ORDER_FAILURE:
+      return {
+        ...state,
+        isMakeOrder: false,
+        makeOrderError: action.payload
       }
 
     default:

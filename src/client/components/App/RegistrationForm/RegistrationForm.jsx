@@ -101,11 +101,11 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-RegistrationForm = connect(
+const exportRegistrationForm = connect(
   mapStateToProps,
   mapDispatchToProps
 )(RegistrationForm)
 
 export default reduxForm({
   form: 'registration'
-})(RegistrationForm)
+})(exportRegistrationForm)

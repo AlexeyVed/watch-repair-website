@@ -23,7 +23,8 @@ const initialState = {
     clocks: [],
     cities: [],
     users: [],
-    workers: []
+    workers: [],
+    orders: []
   }
 }
 
@@ -45,7 +46,8 @@ const adminReducer = (state = initialState, action) => {
           cities: action.payload[0],
           clocks: action.payload[1],
           users: action.payload[2],
-          workers: action.payload[3]
+          workers: action.payload[3],
+          orders: action.payload[4]
         }
       }
 
@@ -123,7 +125,6 @@ const adminReducer = (state = initialState, action) => {
     default:
       return state
   }
-  return state
 }
 
 export default adminReducer

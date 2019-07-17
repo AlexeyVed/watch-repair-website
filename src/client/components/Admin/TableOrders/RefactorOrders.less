@@ -1,4 +1,4 @@
-.table-clocks {
+.table-orders {
   display: flex;
   flex-direction: column;
   font-size: 18px;
@@ -9,13 +9,13 @@
     flex-direction: column;
     flex: 1 6 40px;
 
-    .table-clocks__title {
+    .table-orders__title {
       text-align: center;
       height: 40px;
       margin-top: 20px;
     }
 
-    .table-clocks__table-header {
+    .table-orders__table-header {
       display: flex;
       flex-wrap: nowrap;
       height: 40px;
@@ -26,20 +26,38 @@
 
 
       &__header-id {
-        flex: 1 20px;
+        flex: 0.5 10px;
         text-align: center;
         border-right: 1px solid #0d5300;
       }
 
-      &__header-clock {
-        flex: 5;
-        padding-left: 25px;
+      &__header-name {
+        flex: 1.5 40px;
+        padding-left: 10px;
         border-right: 1px solid #0d5300;
       }
 
-      &__header-time {
-        flex: 5;
-        padding-left: 25px;
+      &__header-email {
+        flex: 3;
+        padding-left: 10px;
+        border-right: 1px solid #0d5300;
+      }
+
+      &__header-city {
+        flex: 1.5 20px;
+        text-align: center;
+        border-right: 1px solid #0d5300;
+      }
+
+      &__header-date {
+        flex: 2 25px;
+        text-align: center;
+        border-right: 1px solid #0d5300;
+      }
+
+      &__header-master-id {
+        flex: 1 30px;
+        text-align: center;
         border-right: 1px solid #0d5300;
       }
 
@@ -57,7 +75,7 @@
     overflow: auto;
     flex: 6 1 400px;
 
-    .table-clocks__table {
+    .table-orders__table {
       margin-top: 10px;
       font-size: 15px;
 
@@ -71,27 +89,45 @@
         margin-top: 3px;
 
         &__id {
-          flex: 1 20px;
+          flex: 0.5 10px;
           text-align: center;
           border-right: 1px solid #0d5300;
         }
 
-        &__clock {
-          flex: 5;
-          padding-left: 25px;
+        &__name {
+          flex: 1.5 40px;
+          padding-left: 10px;
           border-right: 1px solid #0d5300;
         }
 
-        &__time {
-          flex: 5;
-          padding-left: 25px;
+        &__email {
+          flex: 3;
+          padding-left: 10px;
+          border-right: 1px solid #0d5300;
+        }
+
+        &__city {
+          flex: 1.5 20px;
+          text-align: center;
+          border-right: 1px solid #0d5300;
+        }
+
+        &__date {
+          flex: 2 25px;
+          text-align: center;
+          border-right: 1px solid #0d5300;
+        }
+
+        &__master-id {
+          flex: 1 30px;
+          text-align: center;
           border-right: 1px solid #0d5300;
         }
 
         &__buttons {
           flex: 1 60px;
           text-align: center;
-          justify-content: center;
+          width: 100px;
 
           button {
             width: 50%;

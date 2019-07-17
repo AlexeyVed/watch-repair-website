@@ -1,16 +1,33 @@
 import {
   LOAD_DATA_USER_STARTED,
   LOAD_DATA_USER_SUCCESS,
-  LOAD_DATA_USER_FAILURE
+  LOAD_DATA_USER_FAILURE,
+  MAKE_ORDER_STARTED,
+  MAKE_ORDER_FAILURE,
+  MAKE_ORDER_SUCCESS
 } from './types.js'
 
 import axios from 'axios'
+
+export const makeOrder = (values) => {
+  return (dispatch) => {
+    dispatch(makeOrderStarted())
+    axios
+      .post(`http://localhost:3000/api/orders/addOrder`, values)
+      .then(res => {
+        dispatch(makeOrderSuccess())
+      })
+      .catch(err => {
+        dispatch(makeOrderFailure(err.response.data))
+      })
+  }
+}
 
 export const loadDataUser = () => {
   return (dispatch) => {
     dispatch(loadDataStarted())
     axios
-      .get(`http://localhost:4000/data/getData`)
+      .get(`http://localhost:3000/api/data/getData`)
       .then(res => {
         dispatch(loadDataSuccess(res.data))
       })
@@ -31,5 +48,19 @@ const loadDataSuccess = data => ({
 
 const loadDataFailure = err => ({
   type: LOAD_DATA_USER_FAILURE,
+  payload: err
+})
+
+const makeOrderStarted = () => ({
+  type: MAKE_ORDER_STARTED
+})
+
+const makeOrderSuccess = data => ({
+  type: MAKE_ORDER_SUCCESS,
+  payload: data
+})
+
+const makeOrderFailure = err => ({
+  type: MAKE_ORDER_FAILURE,
   payload: err
 })

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import OrderForm from '../OrderForm/OrderForm.jsx'
 import Content from '../Content/Content.jsx'
@@ -7,14 +8,14 @@ import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 
 export default class Main extends Component {
   render () {
-    const { pathname } = this.props.location
-
     return (
       <div className='main'>
         <OrderForm/>
         <Content/>
-        { (pathname === '/login') ? <LoginForm/>
-          : (pathname === '/registration') ? <RegistrationForm/> : null }
+        <Switch>
+          <Route path='/login' component={LoginForm}/>
+          <Route path='/registration' component={RegistrationForm}/>
+        </Switch>
       </div>
     )
   }
