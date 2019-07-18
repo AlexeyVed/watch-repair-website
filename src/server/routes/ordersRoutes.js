@@ -4,5 +4,6 @@ const ordersRouter = express.Router()
 
 ordersRouter.use('/getAll', ordersController.getOrders)
 ordersRouter.use('/addOrder', ordersController.addOrder)
+ordersRouter.use('/deleteOrder', ordersController.deleteOrder)
 
 module.exports = ordersRouter

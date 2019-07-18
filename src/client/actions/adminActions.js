@@ -133,10 +133,26 @@ export const editCityIntoDB = (city, id) => {
 
 export const editClockIntoDB = (typeClock, timeRepair, id) => {
   return (dispatch) => {
-    console.log(typeClock, timeRepair, id)
     dispatch(editModelStarted())
     axios
       .post(`http://localhost:3000/api/clocks/updateClock`, { typeClock, timeRepair, id })
+      .then(res => {
+        dispatch(editModelSuccess())
+      })
+      .then(res => {
+        dispatch(loadDataAdmin())
+      })
+      .catch(err => {
+        dispatch(editModelFailure(err))
+      })
+  }
+}
+
+export const editOrderIntoDB = (values) => {
+  return (dispatch) => {
+    dispatch(editModelStarted())
+    axios
+      .post(`http://localhost:3000/api/orders/updateOrder`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -171,6 +187,23 @@ export const deleteClockFromDB = (id) => {
     dispatch(deleteModelStarted())
     axios
       .post(`http://localhost:3000/api/clocks/deleteClock`, { id })
+      .then(res => {
+        dispatch(deleteModelSuccess())
+      })
+      .then(res => {
+        dispatch(loadDataAdmin())
+      })
+      .catch(err => {
+        dispatch(deleteModelFailure(err))
+      })
+  }
+}
+
+export const deleteOrderFromDB = (id) => {
+  return (dispatch) => {
+    dispatch(deleteModelStarted())
+    axios
+      .post(`http://localhost:3000/api/orders/deleteOrder`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
       })

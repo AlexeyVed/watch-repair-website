@@ -4,7 +4,10 @@ import {
   LOAD_DATA_USER_FAILURE,
   MAKE_ORDER_STARTED,
   MAKE_ORDER_FAILURE,
-  MAKE_ORDER_SUCCESS
+  MAKE_ORDER_SUCCESS,
+  MAKE_ORDER_WITH_MASTER_STARTED,
+  MAKE_ORDER_WITH_MASTER_SUCCESS,
+  MAKE_ORDER_WITH_MASTER_FAILURE
 } from './types.js'
 
 import axios from 'axios'
@@ -55,12 +58,26 @@ const makeOrderStarted = () => ({
   type: MAKE_ORDER_STARTED
 })
 
-const makeOrderSuccess = data => ({
+const makeOrderSuccess = (data) => ({
   type: MAKE_ORDER_SUCCESS,
   payload: data
 })
 
 const makeOrderFailure = err => ({
   type: MAKE_ORDER_FAILURE,
+  payload: err
+})
+
+const makeOrderMasterStarted = () => ({
+  type: MAKE_ORDER_WITH_MASTER_STARTED
+})
+
+const makeOrderMasterSuccess = data => ({
+  type: MAKE_ORDER_WITH_MASTER_SUCCESS,
+  payload: data
+})
+
+const makeOrderMasterFailure = err => ({
+  type: MAKE_ORDER_WITH_MASTER_FAILURE,
   payload: err
 })

@@ -24,7 +24,7 @@ class AddCities extends React.Component {
         <div className='modal-window'>
           <form
             onSubmit={handleSubmit(addCity)}
-            className='refactor-city'>
+            className='refactor-city add-city'>
             <div className="refactor-city__header">
               Add city
               <LinkButton to='/admin/cities' name='&times;' className='refactor-city__header__right-button-close'/>

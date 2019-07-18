@@ -3,15 +3,15 @@ import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteClockFromDB } from '../../../actions'
-import AddClocks from '../RefactorClocks/AddClocks.jsx'
-import EditClocks from '../RefactorClocks/EditClocks.jsx'
+import { deleteOrderFromDB } from '../../../actions'
+import AddOrder from '../RefactorOrders/AddOrder.jsx'
+import EditOrder from '../RefactorOrders/EditOrder.jsx'
 
 import './RefactorOrders.less'
 
 class RefactorClocks extends React.Component {
   render () {
-    const { orders, deleteClock } = this.props
+    const { orders, deleteOrder } = this.props
 
     return (
       <div className='table-orders'>
@@ -38,19 +38,19 @@ class RefactorClocks extends React.Component {
                 <div className='table-orders__table__row__date'>{item.date} / {item.time}</div>
                 <div className='table-orders__table__row__master-id'>{item.masterID}</div>
                 <div className='table-orders__table__row__buttons'>
-                  <LinkButton to={`/admin/orders/edit/${item.id}/${item.clientName}/${item.clientEmail}/${item.city}/${item.date}/${item.masterID}`} name='Edit'/>
-                  <button onClick={ () => console.log(item.id) }>Delete</button>
+                  <LinkButton to={`/admin/orders/edit/${item.id}/${item.clientName}/${item.clientEmail}/${item.city}/${item.date}/${item.time}/${item.masterID}/${item.timeRepair}`} name='Edit'/>
+                  <button onClick={ () => deleteOrder(item.id) }>Delete</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
         <div className='table-orders__bttn-add'>
-          <LinkButton to='/admin/clocks/add' name='Add'/>
+          <LinkButton to='/admin/orders/add' name='Add'/>
         </div>
         <Switch>
-          <Route path='/admin/clocks/add' component={AddClocks}/>
-          <Route path='/admin/clocks/edit/:id/:typeClock/:timeRepair' component={EditClocks}/>
+          <Route path='/admin/orders/add' component={AddOrder}/>
+          <Route path='/admin/orders/edit/:id/:clientName/:clientEmail/:city/:date/:time/:masterID/:timeRepair' component={EditOrder}/>
         </Switch>
       </div>
     )
@@ -65,7 +65,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteClock: id => dispatch(deleteClockFromDB(id))
+    deleteOrder: id => dispatch(deleteOrderFromDB(id))
   }
 }
 

@@ -32,7 +32,7 @@ class EditClocks extends React.Component {
             onSubmit={handleSubmit(editClock)}
             className='refactor-clocks'>
             <div className="refactor-clocks__header">
-              Edit Clocks
+              Edit Clock
               <LinkButton to='/admin/clocks' name='&times;' className='refactor-clocks__header__right-button-close'/>
             </div>
             <Field

@@ -33,7 +33,7 @@ class EditClients extends React.Component {
             onSubmit={handleSubmit(editClient)}
             className='refactor-clients edit-client'>
             <div className="refactor-clients__header">
-              Edit Clients
+              Edit Client
               <LinkButton to='/admin/clients' name='&times;' className='refactor-clients__header__right-button-close'/>
             </div>
             <Field

@@ -4,19 +4,24 @@ import {
   LOAD_DATA_USER_FAILURE,
   MAKE_ORDER_STARTED,
   MAKE_ORDER_SUCCESS,
-  MAKE_ORDER_FAILURE
+  MAKE_ORDER_FAILURE,
+  MAKE_ORDER_WITH_MASTER_STARTED,
+  MAKE_ORDER_WITH_MASTER_SUCCESS,
+  MAKE_ORDER_WITH_MASTER_FAILURE
 } from '../actions/types'
 
 const initialState = {
   data: {
     clocks: [],
     cities: [],
-    workers: []
+    workers: [],
+    freeWorkers: []
   },
   dataLoad: false,
   dataError: null,
   isMakeOrder: false,
-  makeOrderError: null
+  makeOrderError: null,
+  chooseWorker: false
 }
 
 const appReducer = (state = initialState, action) => {
@@ -55,10 +60,35 @@ const appReducer = (state = initialState, action) => {
     case MAKE_ORDER_SUCCESS:
       return {
         ...state,
-        isMakeOrder: false
+        isMakeOrder: false,
+        chooseWorker: true,
+        data: {
+          ...state.data,
+          freeWorkers: action.payload
+        }
       }
 
     case MAKE_ORDER_FAILURE:
+      return {
+        ...state,
+        isMakeOrder: false,
+        makeOrderError: action.payload
+      }
+
+    case MAKE_ORDER_WITH_MASTER_STARTED:
+      return {
+        ...state,
+        isMakeOrder: true
+      }
+
+    case MAKE_ORDER_WITH_MASTER_SUCCESS:
+      return {
+        ...state,
+        isMakeOrder: false,
+        chooseWorker: false
+      }
+
+    case MAKE_ORDER_WITH_MASTER_FAILURE:
       return {
         ...state,
         isMakeOrder: false,

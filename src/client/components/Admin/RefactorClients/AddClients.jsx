@@ -27,7 +27,7 @@ class AddClients extends React.Component {
             onSubmit={handleSubmit(addUser)}
             className='refactor-clients'>
             <div className="refactor-clients__header">
-              Add Clients
+              Add Client
               <LinkButton to='/admin/clients' name='&times;' className='refactor-clients__header__right-button-close'/>
             </div>
             <Field

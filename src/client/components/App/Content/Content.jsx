@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
+import {connect} from "react-redux";
 
 import HomePage from '../HomePage/HomePage.jsx'
 import ChooseWorker from '../ChooseWorker/ChooseWorker.jsx'
 
-export default class Content extends Component {
+class Content extends Component {
   render () {
-    const component = (!true) ? <HomePage/> : <ChooseWorker/>
+
+    const { chooseMaster } = this.props
+
+    const component = (!chooseMaster) ? <HomePage/> : <ChooseWorker/>
 
     return (
       <div className='content'>
@@ -14,3 +18,18 @@ export default class Content extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    chooseMaster: state.appReducer.chooseWorker
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Content)
+

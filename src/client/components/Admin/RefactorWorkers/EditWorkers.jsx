@@ -33,7 +33,7 @@ class EditWorkers extends React.Component {
             onSubmit={handleSubmit(editWorker)}
             className='refactor-workers'>
             <div className="refactor-workers__header">
-            Add Workers
+            Edit Worker
               <LinkButton to='/admin/workers' name='&times;' className='refactor-workers__header__right-button-close'/>
             </div>
             <Field

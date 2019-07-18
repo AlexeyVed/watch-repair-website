@@ -24,9 +24,9 @@ class AddClocks extends React.Component {
         <div className='modal-window'>
           <form
             onSubmit={handleSubmit(addClock)}
-            className='refactor-clocks'>
+            className='refactor-clocks add-clock'>
             <div className="refactor-clocks__header">
-              Add Clocks
+              Add Clock
               <LinkButton to='/admin/clocks' name='&times;' className='refactor-clocks__header__right-button-close'/>
             </div>
             <Field

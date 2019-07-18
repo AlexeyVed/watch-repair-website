@@ -24,9 +24,9 @@ class AddWorkers extends React.Component {
         <div className='modal-window'>
           <form
             onSubmit={handleSubmit(addWorker)}
-            className='refactor-workers'>
+            className='refactor-workers add-worker'>
             <div className="refactor-workers__header">
-              Add Workers
+              Add Worker
               <LinkButton to='/admin/workers' name='&times;' className='refactor-workers__header__right-button-close'/>
             </div>
             <Field

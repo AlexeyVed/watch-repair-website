@@ -3,24 +3,30 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, change } from 'redux-form'
 
 import myInput from '../../FieldRedux'
-import { loadDataUser, makeOrder } from '../../../actions'
+import { makeOrder } from '../../../actions'
 import { validateEmail } from '../../../validation'
 
 import './OrderForm.less'
 
 class OrderForm extends Component {
-  componentDidMount () {
-    this.props.loadData()
-  }
-
   render () {
-    const { handleSubmit, chooseClock, chooseCities, makeOrder, currentEmail } = this.props
+    const { handleSubmit, chooseClock, chooseCities, makeOrder, currentEmail, chooseMaster } = this.props
 
     if (currentEmail) {
       this.props.dispatch(change('orderForm', 'clientEmail', currentEmail))
     }
 
     const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]
+
+    if (chooseMaster) {
+      return (
+        <div className='main-form'>
+          <div className='choosing-master'>
+            <div> Please, choose free master.</div>
+          </div>
+        </div>
+      )
+    }
 
     return (
       <div className='main-form'>
@@ -79,7 +85,6 @@ class OrderForm extends Component {
             name='date'
             component={myInput}
             type='date'
-            placeholder='Enter your email'
           />
           <div className='main-form__order-select'>
             <label>Choose convenient time</label>
@@ -107,13 +112,13 @@ const mapStateToProps = (state) => {
   return {
     chooseClock: state.appReducer.data.clocks,
     chooseCities: state.appReducer.data.cities,
-    currentEmail: state.loginReducer.singInUser
+    currentEmail: state.loginReducer.singInUser,
+    chooseMaster: state.appReducer.chooseWorker
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadData: () => dispatch(loadDataUser()),
     makeOrder: values => dispatch(makeOrder(values))
   }
 }
