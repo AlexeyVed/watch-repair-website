@@ -7,11 +7,12 @@ import {
   MAKE_ORDER_SUCCESS,
   MAKE_ORDER_WITH_MASTER_STARTED,
   MAKE_ORDER_WITH_MASTER_SUCCESS,
-  MAKE_ORDER_WITH_MASTER_FAILURE
+  MAKE_ORDER_WITH_MASTER_FAILURE,
+  CHANGE_PAGE,
+  SET_CHOOSE_WORKER
 } from './types.js'
 
 import axios from 'axios'
-import {CHANGE_PAGE} from "./types";
 
 export const makeOrder = (values) => {
   return (dispatch) => {
@@ -19,12 +20,26 @@ export const makeOrder = (values) => {
     values.time = Number(values.time)
     dispatch(makeOrderStarted())
     axios
-      .post(`http://localhost:3000/api/orders/addOrder`, values)
+      .post(`http://localhost:3000/api/orders/makeOrder`, values)
       .then(res => {
         dispatch(makeOrderSuccess(res.data))
       })
       .catch(err => {
         dispatch(makeOrderFailure(err.response.data))
+      })
+  }
+}
+
+export const addOrder = (idMaster, id) => {
+  return (dispatch) => {
+    dispatch(makeOrderMasterStarted())
+    axios
+      .post(`http://localhost:3000/api/orders/addOrder`, { idMaster, id })
+      .then(res => {
+        dispatch(makeOrderMasterSuccess())
+      })
+      .catch(err => {
+        dispatch(makeOrderMasterFailure(err.response.data))
       })
   }
 }
@@ -48,6 +63,10 @@ export const changePage = data => ({
   payload: data
 })
 
+export const setChooseWorker = id => ({
+  type: SET_CHOOSE_WORKER,
+  payload: id
+})
 
 const loadDataStarted = () => ({
   type: LOAD_DATA_USER_STARTED
@@ -81,9 +100,8 @@ const makeOrderMasterStarted = () => ({
   type: MAKE_ORDER_WITH_MASTER_STARTED
 })
 
-const makeOrderMasterSuccess = data => ({
-  type: MAKE_ORDER_WITH_MASTER_SUCCESS,
-  payload: data
+const makeOrderMasterSuccess = () => ({
+  type: MAKE_ORDER_WITH_MASTER_SUCCESS
 })
 
 const makeOrderMasterFailure = err => ({

@@ -12,9 +12,13 @@ module.exports = class Order {
     this.time = time
   }
 
-  addOrder () {
+  addOrderWithoutMaster () {
     const values = [this.clientName, this.clientEmail, this.timeRepair, this.city, this.date, this.time]
     return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time) VALUES (?, ?, ?, ?, ?, ?)`, values)
+  }
+
+  static addOrder (masterID, id) {
+    return service.requestToDB(`UPDATE orders SET masterID = ? WHERE id = ?`, [masterID, id])
   }
 
   getIdBusyMasters () {

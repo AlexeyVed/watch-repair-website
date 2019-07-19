@@ -8,15 +8,20 @@ import {
   MAKE_ORDER_WITH_MASTER_STARTED,
   MAKE_ORDER_WITH_MASTER_SUCCESS,
   MAKE_ORDER_WITH_MASTER_FAILURE,
-  CHANGE_PAGE
+  CHANGE_PAGE,
+  SET_CHOOSE_WORKER
 } from '../actions/types'
 
 const initialState = {
   data: {
     clocks: [],
     cities: [],
-    workers: [],
-    freeWorkers: []
+    workers: []
+  },
+  forOrder: {
+    freWorkers: [],
+    insertId: null,
+    masterID: null
   },
   dataLoad: false,
   dataError: null,
@@ -64,10 +69,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         isMakeOrder: false,
         chooseWorker: true,
-        data: {
-          ...state.data,
-          freeWorkers: action.payload
-        }
+        forOrder: action.payload
       }
 
     case MAKE_ORDER_FAILURE:
@@ -87,13 +89,19 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         isMakeOrder: false,
-        chooseWorker: false
+        chooseWorker: false,
+        forOrder: {
+          freWorkers: [],
+          insertId: null,
+          masterID: null
+        }
       }
 
     case MAKE_ORDER_WITH_MASTER_FAILURE:
       return {
         ...state,
         isMakeOrder: false,
+        chooseWorker: false,
         makeOrderError: action.payload
       }
 
@@ -101,6 +109,15 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         page: action.payload
+      }
+
+    case SET_CHOOSE_WORKER:
+      return {
+        ...state,
+        forOrder: {
+          ...state.forOrder,
+          masterID: action.payload
+        }
       }
 
     default:

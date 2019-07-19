@@ -18,24 +18,24 @@ exports.deleteOrder = function (req, res) {
     })
 }
 
-exports.addOrder = function (req, res) {
+exports.makeOrder = function (req, res) {
   const {
     clientName, clientEmail, timeRepair, city, date, time } = req.body
-  console.log({
-    clientName: typeof clientName,
-    clientEmail: typeof clientEmail,
-    timeRepair: typeof timeRepair,
-    city: typeof city,
-    date: typeof date,
-    time: typeof time
-  })
   const order = new Order(null, clientName, clientEmail, timeRepair, city, date, time)
-  const obj = {}
+  const obj = {
+    freeWorkers: [],
+    insertId: null
+  }
   order.getIdBusyMasters()
     .then(result => {
       Worker.getWorkersWithoutBusy(result, city)
         .then(workers => {
-          res.send(workers)
+          obj.freeWorkers = workers
+          order.addOrderWithoutMaster()
+            .then((insert) => {
+              obj.insertId = insert.insertId
+              res.send(obj)
+            })
         })
         .catch(err => {
           res.status(500).send('Error get work without Busy')
@@ -43,5 +43,15 @@ exports.addOrder = function (req, res) {
     })
     .catch(err => {
       res.status(500).send('Error get id bussy masters')
+    })
+}
+
+exports.addOrder = function (req, res) {
+  Order.addOrder(req.body.idMaster, req.body.id)
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(400).send('Error add masters')
     })
 }
