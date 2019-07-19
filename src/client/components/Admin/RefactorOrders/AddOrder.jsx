@@ -6,14 +6,13 @@ import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { validateEmail } from '../../../validation'
-import { addUserToDB } from '../../../actions'
+import { addOrderToDB } from '../../../actions'
 
 import './RefactorOrders.less'
 
 class AddOrder extends React.Component {
   render () {
-    const { handleSubmit, addUser, redirectBack, chooseClock, chooseCities, chooseUsers } = this.props
+    const { handleSubmit, addOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
@@ -21,13 +20,12 @@ class AddOrder extends React.Component {
 
     const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]
 
-
     return (
 
       ReactDOM.createPortal(
         <div className='modal-window'>
           <form
-            onSubmit={handleSubmit(addUser)}
+            onSubmit={handleSubmit(addOrder)}
             className='refactor-orders'>
             <div className="refactor-orders__header">
               Add Order
@@ -53,6 +51,21 @@ class AddOrder extends React.Component {
                 {
                   chooseUsers.map((item, index) => (
                     <option key={index} value={item.email}>{item.email}</option>
+                  ))
+                }
+              </Field>
+            </div>
+            <div className='refactor-orders__order-select'>
+              <label>Choose master</label>
+              <Field
+                name='masterID'
+                component='select'
+                type='text'
+              >
+                <option key={0} value={false}>Choose master</option>
+                {
+                  chooseWorkers.map((item, index) => (
+                    <option key={index} value={item.idworker}>{item.name}</option>
                   ))
                 }
               </Field>
@@ -103,7 +116,7 @@ class AddOrder extends React.Component {
                 <option key={0}>Select time</option>
                 {
                   workHours.map((item) => {
-                    return <option key={item} value={`${item}:00`}>{item}:00</option>
+                    return <option key={item} value={item}>{item}:00</option>
                   })
                 }
               </Field>
@@ -123,13 +136,14 @@ const mapStateToProps = (state) => {
     chooseClock: state.adminReducer.data.clocks,
     chooseCities: state.adminReducer.data.cities,
     chooseUsers: state.adminReducer.data.users,
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.adminReducer.redirectBackFromRefactor,
+    chooseWorkers: state.adminReducer.data.workers
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addUser: values => dispatch(addUserToDB(values.emailReg, values.passwordReg))
+    addOrder: values => dispatch(addOrderToDB(values))
   }
 }
 

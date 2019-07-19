@@ -5,7 +5,6 @@ import './AllWorker.less'
 
 class AllWorker extends React.Component {
   render () {
-
     const { workers } = this.props
 
     return (
@@ -39,8 +38,7 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-
-  export default connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AllWorker)

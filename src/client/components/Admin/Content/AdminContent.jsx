@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { loadDataAdmin } from "../../../actions"
+import { loadDataAdmin } from '../../../actions'
 
 import RefactorCities from '../TableCities/RefactorCities.jsx'
 import RefactorClients from '../TableClients/RefactorClients.jsx'
@@ -11,8 +11,6 @@ import RefactorOrders from '../TableOrders/RefactorOrders.jsx'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 import './AdminContent.less'
-
-
 
 class AdminContent extends React.Component {
   componentDidMount () {
@@ -51,8 +49,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadData: () => dispatch(loadDataAdmin()),
-    page: data => dispatch(changePage(data))
+    loadData: () => dispatch(loadDataAdmin())
   }
 }
 

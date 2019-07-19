@@ -17,6 +17,16 @@ module.exports = class Order {
     return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time) VALUES (?, ?, ?, ?, ?, ?)`, values)
   }
 
+  addOrderAdmin () {
+    const values = [this.clientName, this.clientEmail, this.timeRepair, this.city, this.date, this.time, this.masterID]
+    return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?, ?)`, values)
+  }
+
+  updateOrder () {
+    const values = [this.clientName, this.clientEmail, this.timeRepair, this.city, this.date, this.time, this.masterID, this.id]
+    return service.requestToDB(`UPDATE orders SET clientName = ?, clientEmail = ?, timeRepair = ?, city = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, values)
+  }
+
   static addOrder (masterID, id) {
     return service.requestToDB(`UPDATE orders SET masterID = ? WHERE id = ?`, [masterID, id])
   }

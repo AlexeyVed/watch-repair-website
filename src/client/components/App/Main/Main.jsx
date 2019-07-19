@@ -1,28 +1,24 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
-import { connect } from "react-redux";
+import { connect } from 'react-redux'
 
-import { changePage, loadDataUser } from "../../../actions"
+import { changePage, loadDataUser } from '../../../actions'
 import LoginForm from '../LoginForm/LoginForm.jsx'
 import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
-
-
-
 class Main extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.loadData()
     this.props.page('main')
   }
 
   render () {
-
     const { currentUser } = this.props
 
     let adminLink
 
-    if(currentUser === 'admin@example.com') {
+    if (currentUser === 'admin@example.com') {
       adminLink = <LinkButton to='/admin' name='Admin interface' className=''/>
     } else {
       adminLink = null
@@ -66,5 +62,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
-
-

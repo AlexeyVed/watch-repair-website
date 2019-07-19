@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
-import {connect} from "react-redux";
+import { connect } from 'react-redux'
 
 import AllWorkers from '../AllWorkers/AllWorker.jsx'
 import ChooseWorker from '../ChooseWorker/ChooseWorker.jsx'
-import LinkButton from "../../LinkButton/LinkButton.jsx";
+import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 class Content extends Component {
   render () {
-
     const { chooseMaster, currentUser } = this.props
 
     let adminLink
 
-    if(currentUser === 'admin@example.com') {
+    if (currentUser === 'admin@example.com') {
       adminLink = <LinkButton to='/admin' name='Admin interface' className=''/>
     } else {
       adminLink = null
@@ -45,4 +44,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Content)
-

@@ -6,20 +6,18 @@ import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { addUserToDB } from '../../../actions'
+import { editOrderIntoDB } from '../../../actions'
 
 import './RefactorOrders.less'
 
 class EditOrder extends React.Component {
-
-  componentDidMount() {
+  componentDidMount () {
     this.props.dispatch(change('editOrder', 'id', this.props.match.params.id))
     this.props.dispatch(change('editOrder', 'clientName', this.props.match.params.clientName))
     this.props.dispatch(change('editOrder', 'clientEmail', this.props.match.params.clientEmail))
     this.props.dispatch(change('editOrder', 'timeRepair', this.props.match.params.timeRepair))
     this.props.dispatch(change('editOrder', 'city', this.props.match.params.city))
     this.props.dispatch(change('editOrder', 'time', this.props.match.params.time))
-
   }
 
   render () {
@@ -30,7 +28,6 @@ class EditOrder extends React.Component {
     }
 
     const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]
-
 
     return (
 
@@ -135,7 +132,7 @@ class EditOrder extends React.Component {
                 <option key={0} value={false}>Select time</option>
                 {
                   workHours.map((item) => (
-                    <option key={item}>{item}:00</option>
+                    <option key={item} value={item}>{item}:00</option>
                   ))
                 }
               </Field>
@@ -162,7 +159,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editOrder: values => console.log(values)
+    editOrder: values => dispatch(editOrderIntoDB(values))
   }
 }
 

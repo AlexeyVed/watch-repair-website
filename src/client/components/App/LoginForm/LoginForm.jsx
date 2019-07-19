@@ -91,7 +91,7 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     loginError: state.loginReducer.singInError,
-    page: state.appReducer.page,
+    page: state.appReducer.page
   }
 }
 

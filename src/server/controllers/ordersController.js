@@ -46,6 +46,32 @@ exports.makeOrder = function (req, res) {
     })
 }
 
+exports.addOrderAdmin = function (req, res) {
+  const {
+    clientName, clientEmail, timeRepair, city, date, time, masterID } = req.body
+  const order = new Order(masterID, clientName, clientEmail, timeRepair, city, date, time)
+  order.addOrderAdmin()
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(500).send('Error add order admin')
+    })
+}
+
+exports.updateOrder = function (req, res) {
+  const {
+    clientName, clientEmail, timeRepair, city, date, time, masterID, id } = req.body
+  const order = new Order(masterID, clientName, clientEmail, timeRepair, city, date, time, id)
+  order.updateOrder()
+    .then(result => {
+      res.send(result)
+    })
+    .catch(err => {
+      res.status(500).send('Error update order')
+    })
+}
+
 exports.addOrder = function (req, res) {
   Order.addOrder(req.body.idMaster, req.body.id)
     .then(result => {

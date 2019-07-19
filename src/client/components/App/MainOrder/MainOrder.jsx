@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { connect } from "react-redux";
+import { connect } from 'react-redux'
 
-import { changePage, loadDataUser } from "../../../actions";
+import { changePage, loadDataUser } from '../../../actions'
 import OrderForm from '../OrderForm/OrderForm.jsx'
 import Content from '../Content/Content.jsx'
 import LoginForm from '../LoginForm/LoginForm.jsx'
 import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 
-
-
 class MainOrder extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.loadData()
     this.props.page('order')
   }
@@ -44,5 +42,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainOrder)
-
-

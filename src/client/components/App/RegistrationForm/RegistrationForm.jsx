@@ -20,7 +20,7 @@ class RegistrationForm extends Component {
       currentUser,
       loginError,
       missLoginError,
-      page} = this.props
+      page } = this.props
 
     let bttnClose = null
 
@@ -100,7 +100,7 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     loginError: state.loginReducer.singInError,
-    page: state.appReducer.page,
+    page: state.appReducer.page
   }
 }
 

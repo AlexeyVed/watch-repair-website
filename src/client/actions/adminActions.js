@@ -97,6 +97,26 @@ export const addWorkerToDB = (name, city, rating) => {
   }
 }
 
+export const addOrderToDB = (values) => {
+  values.timeRepair = Number(values.timeRepair)
+  values.time = Number(values.time)
+  values.masterID = Number(values.masterID)
+  return (dispatch) => {
+    dispatch(addModelStarted())
+    axios
+      .post(`http://localhost:3000/api/orders/addOrderAdmin`, values)
+      .then(res => {
+        dispatch(addModelSuccess())
+      })
+      .then(res => {
+        dispatch(loadDataAdmin())
+      })
+      .catch(err => {
+        dispatch(addModelFailure(err))
+      })
+  }
+}
+
 export const editUserIntoDB = (email, password, id) => {
   return (dispatch) => {
     dispatch(editModelStarted())
@@ -149,6 +169,9 @@ export const editClockIntoDB = (typeClock, timeRepair, id) => {
 }
 
 export const editOrderIntoDB = (values) => {
+  values.timeRepair = Number(values.timeRepair)
+  values.time = Number(values.time)
+  values.id = Number(values.id)
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
