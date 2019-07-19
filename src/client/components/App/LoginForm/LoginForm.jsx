@@ -21,7 +21,11 @@ class LoginForm extends React.Component {
       submitting,
       currentUser,
       loginError,
-      missLoginError } = this.props
+      missLoginError,
+      page
+    } = this.props
+
+    let bttnClose = null
 
     if (currentUser === 'admin@example.com') {
       return <Redirect to={{ pathname: '/admin' }}/>
@@ -33,6 +37,12 @@ class LoginForm extends React.Component {
       setTimeout(missLoginError, 3000)
     }
 
+    if (page === 'order') {
+      bttnClose = <LinkButton to='/order' name='&times;' className='login-form__header__right-button-close'/>
+    } else {
+      bttnClose = <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
+    }
+
     return (
 
       ReactDOM.createPortal(
@@ -42,7 +52,7 @@ class LoginForm extends React.Component {
             className='login-form'>
             <div className="login-form__header">
               Member login
-              <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
+              {bttnClose}
             </div>
             <Field
               label='Your email'
@@ -80,7 +90,8 @@ class LoginForm extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
-    loginError: state.loginReducer.singInError
+    loginError: state.loginReducer.singInError,
+    page: state.appReducer.page,
   }
 }
 

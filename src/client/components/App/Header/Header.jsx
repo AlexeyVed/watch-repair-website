@@ -19,23 +19,33 @@ class Header extends React.Component {
   }
 
   render () {
-    const { currentUser } = this.props
+    const { currentUser, page } = this.props
 
     let view = null
+    let buttons = null
 
     if (this.state.redirect) {
       this.setState({ redirect: false })
       return <Redirect to={{ pathname: '/' }}/>
     }
 
+    if (page === 'order') {
+      buttons = <div className='container-buttons'>
+        <LinkButton to='/order/login' name='Login In'/>
+        <LinkButton to='/order/registration' name='Registration'/>
+      </div>
+    } else {
+      buttons = <div className='container-buttons'>
+        <LinkButton to='/login' name='Login In'/>
+        <LinkButton to='/registration' name='Registration'/>
+      </div>
+    }
+
     if (!currentUser) {
       view = <React.Fragment>
         <div className='container-user'>
         </div>
-        <div className='container-buttons'>
-          <LinkButton to='/login' name='Login In'/>
-          <LinkButton to='/registration' name='Registration'/>
-        </div>
+        {buttons}
       </React.Fragment>
     } else {
       view = <React.Fragment>
@@ -70,6 +80,7 @@ class Header extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
+    page: state.appReducer.page,
     redirectLogOut: state.loginReducer.redirectLogOut
   }
 }

@@ -5,6 +5,7 @@ import { singInFromLS } from '../actions'
 
 import Header from './App/Header/Header.jsx'
 import Main from './App/Main/Main'
+import MainOrder from './App/MainOrder/MainOrder.jsx'
 import MainAdmin from './Admin/Main/MainAdmin'
 import NoMatch from './NoMatch/NoMatch'
 
@@ -23,6 +24,7 @@ class App extends React.Component {
         <Header/>
         <Switch>
           <Route exact path='/' component={Main}/>
+          <Route path='/order' component={MainOrder}/>
           <Route path='/login' component={Main}/>
           <Route path='/registration' component={Main}/>
           <Route path='/admin' component={MainAdmin}/>

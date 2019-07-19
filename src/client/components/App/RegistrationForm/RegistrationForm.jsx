@@ -19,7 +19,10 @@ class RegistrationForm extends Component {
       registration,
       currentUser,
       loginError,
-      missLoginError } = this.props
+      missLoginError,
+      page} = this.props
+
+    let bttnClose = null
 
     if (currentUser) {
       return <Redirect to={{ pathname: '/' }}/>
@@ -29,13 +32,19 @@ class RegistrationForm extends Component {
       setTimeout(missLoginError, 3000)
     }
 
+    if (page === 'order') {
+      bttnClose = <LinkButton to='/order' name='&times;' className='login-form__header__right-button-close'/>
+    } else {
+      bttnClose = <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
+    }
+
     return (
       ReactDOM.createPortal(
         <div className='modal-window'>
           <form onSubmit={handleSubmit(registration)} className='registration-form'>
             <div className="registration-form__header">
                         Registration
-              <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
+              {bttnClose}
             </div>
             <Field
               label='Your email'
@@ -90,7 +99,8 @@ class RegistrationForm extends Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
-    loginError: state.loginReducer.singInError
+    loginError: state.loginReducer.singInError,
+    page: state.appReducer.page,
   }
 }
 

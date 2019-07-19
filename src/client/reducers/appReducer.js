@@ -7,7 +7,8 @@ import {
   MAKE_ORDER_FAILURE,
   MAKE_ORDER_WITH_MASTER_STARTED,
   MAKE_ORDER_WITH_MASTER_SUCCESS,
-  MAKE_ORDER_WITH_MASTER_FAILURE
+  MAKE_ORDER_WITH_MASTER_FAILURE,
+  CHANGE_PAGE
 } from '../actions/types'
 
 const initialState = {
@@ -21,7 +22,8 @@ const initialState = {
   dataError: null,
   isMakeOrder: false,
   makeOrderError: null,
-  chooseWorker: false
+  chooseWorker: false,
+  page: null
 }
 
 const appReducer = (state = initialState, action) => {
@@ -93,6 +95,12 @@ const appReducer = (state = initialState, action) => {
         ...state,
         isMakeOrder: false,
         makeOrderError: action.payload
+      }
+
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.payload
       }
 
     default:

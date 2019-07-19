@@ -9,12 +9,44 @@
   flex-direction: column;
   align-items: center;
   magrin: auto;
+  position: relative;
+
+  &__navigation {
+    position: absolute;
+    right: 0;
+    top: 10px;
+
+    a {
+      width: 130px;
+      height: 20px;
+      color: #7c7f7c;
+      display: flex;
+      justify-content: right;
+    }
+
+    a > button {
+      height: 100%;
+      width: 100%;
+      padding: 0;
+      border: none;
+      font: inherit;
+      color: inherit;
+      background-color: inherit;
+      cursor: pointer;
+      outline: none;
+    }
+  }
 
   .work-space {
     height: 90%;
     width: 90%;
+    margin-top: 2%;
     overflow: auto;
     magrin: auto;
-    margin-top: 3%;
+
+    &__welcome {
+      text-align: center;
+      padding-top: 20vh;
+    }
   }
 }

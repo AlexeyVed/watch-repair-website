@@ -55,12 +55,12 @@ class OrderForm extends Component {
             <Field
               name='timeRepair'
               component='select'
-              type='text'
+              type='number'
             >
               <option key={0} value={false}>Choose your clock</option>
               {
                 chooseClock.map((clock, index) => (
-                  <option key={index} value={clock.timeRepair}>{clock.typeClock}</option>
+                  <option key={index} value={Number(clock.timeRepair)}>{clock.typeClock}</option>
                 ))
               }
             </Field>
@@ -91,12 +91,12 @@ class OrderForm extends Component {
             <Field
               name='time'
               component='select'
-              type='text'
+              type='number'
             >
               <option key={0}>Select time</option>
               {
                 workHours.map((item) => {
-                  return <option key={item} value={`${item}:00`}>{item}:00</option>
+                  return <option key={item} value={Number(item)}>{item}:00</option>
                 })
               }
             </Field>

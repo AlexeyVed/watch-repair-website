@@ -23,9 +23,8 @@ module.exports = class Worker {
   static getWorkersWithoutBusy (arrayId, city) {
     let sql = ''
     for (let i = 0; i < arrayId.length; i++) {
-      sql += ` AND idworker != '${arrayId[i]}'`
+      sql += ` && idworker != '${arrayId[i]}'`
     }
-    console.log('sql в запросе рабочих', sql)
     return service.requestToDB(`SELECT * FROM workers WHERE city = '${city}'${sql}`)
   }
 

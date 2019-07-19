@@ -11,14 +11,17 @@ import {
 } from './types.js'
 
 import axios from 'axios'
+import {CHANGE_PAGE} from "./types";
 
 export const makeOrder = (values) => {
   return (dispatch) => {
+    values.timeRepair = Number(values.timeRepair)
+    values.time = Number(values.time)
     dispatch(makeOrderStarted())
     axios
       .post(`http://localhost:3000/api/orders/addOrder`, values)
       .then(res => {
-        dispatch(makeOrderSuccess())
+        dispatch(makeOrderSuccess(res.data))
       })
       .catch(err => {
         dispatch(makeOrderFailure(err.response.data))
@@ -39,6 +42,12 @@ export const loadDataUser = () => {
       })
   }
 }
+
+export const changePage = data => ({
+  type: CHANGE_PAGE,
+  payload: data
+})
+
 
 const loadDataStarted = () => ({
   type: LOAD_DATA_USER_STARTED

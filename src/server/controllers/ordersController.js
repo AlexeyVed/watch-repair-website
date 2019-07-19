@@ -21,23 +21,27 @@ exports.deleteOrder = function (req, res) {
 exports.addOrder = function (req, res) {
   const {
     clientName, clientEmail, timeRepair, city, date, time } = req.body
+  console.log({
+    clientName: typeof clientName,
+    clientEmail: typeof clientEmail,
+    timeRepair: typeof timeRepair,
+    city: typeof city,
+    date: typeof date,
+    time: typeof time
+  })
   const order = new Order(null, clientName, clientEmail, timeRepair, city, date, time)
   const obj = {}
   order.getIdBusyMasters()
     .then(result => {
-      console.log('get id busy masters', result)
       Worker.getWorkersWithoutBusy(result, city)
         .then(workers => {
-          console.log('get worker without busy', workers)
           res.send(workers)
         })
         .catch(err => {
-          console.log('catch')
           res.status(500).send('Error get work without Busy')
         })
     })
     .catch(err => {
-      console.log('catch')
       res.status(500).send('Error get id bussy masters')
     })
 }

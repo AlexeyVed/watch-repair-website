@@ -1,9 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Redirect } from 'react-router-dom'
-
-import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { logOutApp } from '../../../actions'
 
 import './ChooseWorker.less'
 
@@ -37,7 +33,7 @@ class ChooseWorker extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    workers: state.appReducer.data.workers
+    workers: state.appReducer.data.freeWorkers
   }
 }
 

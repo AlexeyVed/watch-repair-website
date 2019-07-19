@@ -40,7 +40,6 @@ module.exports = class Order {
         return busyMasters.map(master => master.masterID)
       })
       .then(idBusyMasters => {
-        console.log('idBusy masters before filter', idBusyMasters)
         const result = []
 
         nextInput:
@@ -53,8 +52,7 @@ module.exports = class Order {
         return result
       })
       .catch(err => {
-        console.log('catch')
-        console.log('cant get busy masters')
+        res.status(500).send('Error get id busy masters')
       })
   }
 
