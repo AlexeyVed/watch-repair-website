@@ -1,18 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import { changeAdminView } from '../../../actions'
+import LinkButton from '../../LinkButton/LinkButton.jsx'
+import { deleteClockFromDB } from '../../../actions'
+import AddClocks from '../RefactorClocks/AddClocks.jsx'
+import EditClocks from '../RefactorClocks/EditClocks.jsx'
 
 import './RefactorClocks.less'
 
-
-
 class RefactorClocks extends React.Component {
-  componentDidMount () {
-    this.props.changeView('clocks')
-  }
   render () {
-    const { clocks } = this.props
+    const { clocks, deleteClock } = this.props
 
     return (
       <div className='table-clocks'>
@@ -27,22 +26,26 @@ class RefactorClocks extends React.Component {
         </div>
         <div className='table-clocks__bottom'>
           { clocks.map(item => (
-            <div className='table-clocks__table'>
+            <div className='table-clocks__table' key={item.id}>
               <div className='table-clocks__table__row'>
                 <div className='table-clocks__table__row__id'>{item.id}</div>
                 <div className='table-clocks__table__row__clock'>{item.typeClock}</div>
                 <div className='table-clocks__table__row__time'>{item.timeRepair}</div>
                 <div className='table-clocks__table__row__buttons'>
-                  <button>Edit</button>
-                  <button>Delete</button>
+                  <LinkButton to={`/admin/clocks/edit/${item.id}/${item.typeClock}/${item.timeRepair}`} name='Edit'/>
+                  <button onClick={ () => deleteClock(item.id) }>Delete</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className='table-cities__bttn-add'>
-          <button>Add</button>
+        <div className='table-clocks__bttn-add'>
+          <LinkButton to='/admin/clocks/add' name='Add'/>
         </div>
+        <Switch>
+          <Route path='/admin/clocks/add' component={AddClocks}/>
+          <Route path='/admin/clocks/edit/:id/:typeClock/:timeRepair' component={EditClocks}/>
+        </Switch>
       </div>
     )
   }
@@ -57,7 +60,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeView: (view) => dispatch(changeAdminView(view))
+    deleteClock: id => dispatch(deleteClockFromDB(id))
   }
 }
 

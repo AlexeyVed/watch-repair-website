@@ -1,0 +1,147 @@
+.table-clocks {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  height: 100%;
+
+  &__top {
+    display: flex;
+    flex-direction: column;
+    flex: 1 6 40px;
+
+    .table-clocks__title {
+      text-align: center;
+      height: 40px;
+      margin-top: 20px;
+    }
+
+    .table-clocks__table-header {
+      display: flex;
+      flex-wrap: nowrap;
+      height: 40px;
+      align-items: center;
+      background-color: #e0e0d6;
+      border: 2px solid #e0e0d6;
+      border-radius: 4px;
+
+
+      &__header-id {
+        flex: 1 20px;
+        text-align: center;
+        border-right: 1px solid #0d5300;
+      }
+
+      &__header-clock {
+        flex: 5;
+        padding-left: 25px;
+        border-right: 1px solid #0d5300;
+      }
+
+      &__header-time {
+        flex: 5;
+        padding-left: 25px;
+        border-right: 1px solid #0d5300;
+      }
+
+      &__header-buttons {
+        flex: 1 60px;
+        text-align: center;
+        width: 100px;
+      }
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    flex: 6 1 400px;
+
+    .table-clocks__table {
+      margin-top: 10px;
+      font-size: 15px;
+
+      &__row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        height: 40px;
+        border-bottom: 1px solid #0d5300;
+        margin-top: 3px;
+
+        &__id {
+          flex: 1 20px;
+          text-align: center;
+          border-right: 1px solid #0d5300;
+        }
+
+        &__clock {
+          flex: 5;
+          padding-left: 25px;
+          border-right: 1px solid #0d5300;
+        }
+
+        &__time {
+          flex: 5;
+          padding-left: 25px;
+          border-right: 1px solid #0d5300;
+        }
+
+        &__buttons {
+          flex: 1 60px;
+          text-align: center;
+          justify-content: center;
+
+          button {
+            width: 50%;
+            height: 28px;
+            padding: 0;
+            border: none;
+            background-color: #f4f4f0;
+            font-size: 13px;
+            color: black;
+            cursor: pointer;
+            outline: none;
+            border-left: 1px solid #e6e6e2;
+            border-right: 1px solid #e6e6e2;
+          }
+
+          a > button {
+            width: 50%;
+            height: 28px;
+            padding: 0;
+            border: none;
+            background-color: #f4f4f0;
+            font-size: 13px;
+            color: black;
+            cursor: pointer;
+            outline: none;
+            border-left: 1px solid #e6e6e2;
+            border-right: 1px solid #e6e6e2;
+          }
+        }
+      }
+    }
+  }
+
+  &__bttn-add {
+    flex: 1 6 80px;
+    position: relative;
+    width: 100%;
+
+    a > button {
+      position: absolute;
+      right: 30px;
+      height: 100%;
+      width: 100px;
+      padding: 0;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      background-color: #e6e6e2;
+      outline: none;
+      border: 1px solid #b9b9b5;
+    }
+  }
+}

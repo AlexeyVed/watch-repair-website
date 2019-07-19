@@ -9,7 +9,33 @@
   border-radius: 5px;
   justify-content: center;
   align-items: center;
+  position: relative;
 
+  &__navigation {
+    position: absolute;
+    right: 0;
+    top: 10px;
+
+    a {
+      width: 130px;
+      height: 20px;
+      color: #7c7f7c;
+      display: flex;
+      justify-content: right;
+    }
+
+    a > button {
+      height: 100%;
+      width: 100%;
+      padding: 0;
+      border: none;
+      font: inherit;
+      color: inherit;
+      background-color: inherit;
+      cursor: pointer;
+      outline: none;
+    }
+  }
 
   &__logo {
     width: 80px;

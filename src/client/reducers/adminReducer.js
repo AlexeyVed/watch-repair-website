@@ -1,30 +1,35 @@
 import {
-  CHANGE_ADMIN_VIEW,
   LOAD_DATA_STARTED,
   LOAD_DATA_SUCCESS,
-  LOAD_DATA_FAILURE
+  LOAD_DATA_FAILURE,
+  ADD_MODEL_STARTED,
+  ADD_MODEL_SUCCESS,
+  ADD_MODEL_FAILURE,
+  DELETE_MODEL_STARTED,
+  DELETE_MODEL_SUCCESS,
+  DELETE_MODEL_FAILURE,
+  EDIT_MODEL_STARTED,
+  EDIT_MODEL_SUCCESS,
+  EDIT_MODEL_FAILURE
 } from '../actions/types'
 
 const initialState = {
-  view: null,
   dataLoad: false,
   dataError: null,
+  refactorModelInProcess: false,
+  refactorModelError: null,
+  redirectBackFromRefactor: false,
   data: {
     clocks: [],
     cities: [],
     users: [],
-    workers: []
+    workers: [],
+    orders: []
   }
 }
 
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CHANGE_ADMIN_VIEW:
-      return {
-        ...state,
-        view: action.payload
-      }
-
     case LOAD_DATA_STARTED:
       return {
         ...state,
@@ -35,12 +40,14 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         dataLoad: false,
+        redirectBackFromRefactor: false,
         data: {
           ...state.data,
           cities: action.payload[0],
           clocks: action.payload[1],
           users: action.payload[2],
-          workers: action.payload[3]
+          workers: action.payload[3],
+          orders: action.payload[4]
         }
       }
 
@@ -51,10 +58,73 @@ const adminReducer = (state = initialState, action) => {
         dataError: action.payload
       }
 
+    case ADD_MODEL_STARTED:
+      return {
+        ...state,
+        refactorModelInProcess: true,
+        refactorModelError: null
+      }
+
+    case ADD_MODEL_SUCCESS:
+      return {
+        ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true
+      }
+
+    case ADD_MODEL_FAILURE:
+      return {
+        ...state,
+        refactorModelError: action.payload,
+        refactorModelInProcess: false
+      }
+
+    case EDIT_MODEL_STARTED:
+      return {
+        ...state,
+        refactorModelInProcess: true,
+        refactorModelError: null
+      }
+
+    case EDIT_MODEL_SUCCESS:
+      return {
+        ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true
+      }
+
+    case EDIT_MODEL_FAILURE:
+      return {
+        ...state,
+        refactorModelError: action.payload,
+        refactorModelInProcess: false
+      }
+
+    case DELETE_MODEL_STARTED:
+      return {
+        ...state,
+        refactorModelInProcess: true
+      }
+
+    case DELETE_MODEL_SUCCESS:
+      return {
+        ...state,
+        refactorModelError: null,
+        refactorModelInProcess: false
+      }
+
+    case DELETE_MODEL_FAILURE:
+      return {
+        ...state,
+        refactorModelError: action.payload,
+        refactorModelInProcess: false
+      }
+
     default:
       return state
   }
-  return state
 }
 
 export default adminReducer

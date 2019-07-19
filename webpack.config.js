@@ -9,7 +9,8 @@ module.exports = {
   entry: ['babel-polyfill', './src/client/index.jsx'],
   output: {
     path: path.join(__dirname, outputDirectory),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/' || '/admin/'
   },
   module: {
     rules: [

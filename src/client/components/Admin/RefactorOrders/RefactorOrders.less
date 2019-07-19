@@ -1,0 +1,98 @@
+@widthLogin: 35vw;
+@heightLogin: 80vh;
+
+
+.refactor-orders {
+  position: absolute;
+  top: 3vh;
+  left: 50vw - @widthLogin/2;
+  width: @widthLogin;
+  height: @heightLogin;
+  z-index: 999;
+  background-color: white;
+  border: 2px solid #b5b5b5;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__header {
+    text-align: center;
+    width: 100%;
+    padding-top: 5vh;
+    margin-bottom: 3vh;
+    font-size: 20px;
+    position: relative;
+
+    a > &__right-button-close {
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      top: 15px;
+      right: 15px;
+      padding: 0;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      background-color: white;
+      outline: none;
+      font-size: 30px;
+      color: black;
+    }
+
+    a > &__right-button-close:active {
+      transform: translateY(2px);
+      filter: saturate(150%);
+      color: #5d0000;
+    }
+  }
+
+  & > .input-with-label > input {
+    width: 65%;
+    height: 4vh;
+    margin-top: 3vh;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding-left: 10px;
+  }
+
+  & > button {
+    margin-top: 10px;
+  }
+
+  &__order-select {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    height: 60px;
+
+    label {
+      font-size: 14px;
+      position: absolute;
+      left: 17%;
+      color: #212121;
+    }
+
+    select {
+      width: 68%;
+      height: 4.5vh;
+      margin-top: 3vh;
+      border-radius: 5px;
+      border: 1px solid gray;
+    }
+  }
+}
+
+.modal-window {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(32, 34, 33, 0.37);
+}
+
+.edit-order {
+  height: 93vh;
+}
+
+

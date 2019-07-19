@@ -1,18 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import { changeAdminView } from '../../../actions'
+import LinkButton from '../../LinkButton/LinkButton.jsx'
+import { deleteClientFromDB } from '../../../actions'
+import AddClients from '../RefactorClients/AddClients.jsx'
+import EditClients from '../RefactorClients/EditClients.jsx'
 
 import './RefactorClients.less'
 
-
 class RefactorClients extends React.Component {
-  componentDidMount () {
-    this.props.changeView('clients')
-  }
-
   render () {
-    const { users } = this.props
+    const { users, deleteClient } = this.props
 
     return (
       <div className='table-clients'>
@@ -27,22 +26,26 @@ class RefactorClients extends React.Component {
         </div>
         <div className='table-clients__bottom'>
           { users.map(item => (
-            <div className='table-clients__table'>
+            <div className='table-clients__table' key={item.idlogin}>
               <div className='table-clients__table__row'>
                 <div className='table-clients__table__row__id'>{item.idlogin}</div>
                 <div className='table-clients__table__row__email'>{item.email}</div>
                 <div className='table-clients__table__row__password'>{item.password}</div>
                 <div className='table-clients__table__row__buttons'>
-                  <button>Edit</button>
-                  <button>Delete</button>
+                  <LinkButton to={`/admin/clients/edit/${item.idlogin}/${item.email}/${item.password}`} name='Edit'/>
+                  <button onClick={ () => deleteClient(item.idlogin) }>Delete</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className='table-cities__bttn-add'>
-          <button>Add</button>
+        <div className='table-clients__bttn-add'>
+          <LinkButton to='/admin/clients/add' name='Add'/>
         </div>
+        <Switch>
+          <Route path='/admin/clients/add' component={AddClients}/>
+          <Route path='/admin/clients/edit/:idlogin/:email/:password' component={EditClients}/>
+        </Switch>
       </div>
     )
   }
@@ -57,7 +60,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeView: (view) => dispatch(changeAdminView(view))
+    deleteClient: id => dispatch(deleteClientFromDB(id))
   }
 }
 
