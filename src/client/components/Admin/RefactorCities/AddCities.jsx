@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCity: values => dispatch(addCityToDB(values.city))
+    addCity: values => dispatch(addCityToDB(values))
   }
 }
 

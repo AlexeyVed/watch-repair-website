@@ -61,7 +61,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addClock: values => dispatch(addClockToDB(values.typeClock, values.timeRepair))
+    addClock: values => dispatch(addClockToDB(values))
   }
 }
 

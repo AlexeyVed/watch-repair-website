@@ -75,7 +75,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editClock: values => dispatch(editClockIntoDB(values.typeClock, values.timeRepair, values.id))
+    editClock: values => dispatch(editClockIntoDB(values))
   }
 }
 

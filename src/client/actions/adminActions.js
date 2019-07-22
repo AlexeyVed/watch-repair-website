@@ -29,11 +29,11 @@ export const loadDataAdmin = () => {
   }
 }
 
-export const addUserToDB = (email, password) => {
+export const addUserToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/users/addUser`, { email, password })
+      .post(`http://localhost:3000/api/users/addUser`, values)
       .then(res => {
         dispatch(addModelSuccess())
       })
@@ -46,11 +46,11 @@ export const addUserToDB = (email, password) => {
   }
 }
 
-export const addCityToDB = (city) => {
+export const addCityToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/cities/addCity`, { city })
+      .post(`http://localhost:3000/api/cities/addCity`, values)
       .then(res => {
         dispatch(addModelSuccess())
       })
@@ -63,11 +63,11 @@ export const addCityToDB = (city) => {
   }
 }
 
-export const addClockToDB = (typeClock, timeRepair) => {
+export const addClockToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/clocks/addClock`, { typeClock, timeRepair })
+      .post(`http://localhost:3000/api/clocks/addClock`, values)
       .then(res => {
         dispatch(addModelSuccess())
       })
@@ -80,11 +80,11 @@ export const addClockToDB = (typeClock, timeRepair) => {
   }
 }
 
-export const addWorkerToDB = (name, city, rating) => {
+export const addWorkerToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/addWorker`, { name, city, rating })
+      .post(`http://localhost:3000/api/workers/addWorker`, values)
       .then(res => {
         dispatch(addModelSuccess())
       })
@@ -117,11 +117,11 @@ export const addOrderToDB = (values) => {
   }
 }
 
-export const editUserIntoDB = (email, password, id) => {
+export const editUserIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/users/updateUser`, { email, password, id })
+      .post(`http://localhost:3000/api/users/updateUser`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -134,11 +134,11 @@ export const editUserIntoDB = (email, password, id) => {
   }
 }
 
-export const editCityIntoDB = (city, id) => {
+export const editCityIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/cities/updateCity`, { city, id })
+      .post(`http://localhost:3000/api/cities/updateCity`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -151,11 +151,11 @@ export const editCityIntoDB = (city, id) => {
   }
 }
 
-export const editClockIntoDB = (typeClock, timeRepair, id) => {
+export const editClockIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/clocks/updateClock`, { typeClock, timeRepair, id })
+      .post(`http://localhost:3000/api/clocks/updateClock`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -188,11 +188,11 @@ export const editOrderIntoDB = (values) => {
   }
 }
 
-export const editWorkerIntoDB = (name, city, rating, id) => {
+export const editWorkerIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/updateWorker`, { name, city, rating, id })
+      .post(`http://localhost:3000/api/workers/updateWorker`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })

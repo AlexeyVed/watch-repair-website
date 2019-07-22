@@ -13,8 +13,8 @@ import './RefactorClients.less'
 
 class EditClients extends React.Component {
   componentDidMount () {
-    this.props.dispatch(change('editClient', 'id', this.props.match.params.idlogin))
-    this.props.dispatch(change('editClient', 'emailReg', this.props.match.params.email))
+    this.props.dispatch(change('editClient', 'idlogin', this.props.match.params.idlogin))
+    this.props.dispatch(change('editClient', 'email', this.props.match.params.email))
     this.props.dispatch(change('editClient', 'password', this.props.match.params.password))
   }
 
@@ -38,7 +38,7 @@ class EditClients extends React.Component {
             </div>
             <Field
               label='ID'
-              name='id'
+              name='idlogin'
               component={myInput}
               type='text'
               placeholder={this.props.match.params.idlogin}
@@ -46,7 +46,7 @@ class EditClients extends React.Component {
             />
             <Field
               label='Your email'
-              name='emailReg'
+              name='email'
               component={myInput}
               type='text'
               placeholder='Enter your email'
@@ -80,7 +80,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editClient: values => dispatch(editUserIntoDB(values.emailReg, values.password, values.id))
+    editClient: values => dispatch(editUserIntoDB(values))
   }
 }
 

@@ -28,12 +28,12 @@ export const loginToApp = (values) => {
   }
 }
 
-export const registrationToApp = (email, password) => {
+export const registrationToApp = (values) => {
   return (dispatch) => {
     dispatch(registrationStarted())
 
     axios
-      .post(`http://localhost:3000/api/users/registration`, { email, password })
+      .post(`http://localhost:3000/api/users/registration`, values)
       .then(res => {
         localStorage.setItem('user', res.data)
         dispatch(registrationSuccess(res.data))

@@ -65,7 +65,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editCity: values => dispatch(editCityIntoDB(values.city, values.id))
+    editCity: values => dispatch(editCityIntoDB(values))
   }
 }
 

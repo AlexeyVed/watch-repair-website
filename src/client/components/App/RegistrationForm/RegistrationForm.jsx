@@ -48,7 +48,7 @@ class RegistrationForm extends Component {
             </div>
             <Field
               label='Your email'
-              name='emailReg'
+              name='email'
               component={myInput}
               type='text'
               placeholder='Enter your email'
@@ -72,7 +72,7 @@ class RegistrationForm extends Component {
             />
             <Field
               label='Create a password'
-              name='passwordReg'
+              name='password'
               component={myInput}
               type='password'
               placeholder='Enter your password'
@@ -106,7 +106,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    registration: values => dispatch(registrationToApp(values.emailReg, values.passwordReg)),
+    registration: values => dispatch(registrationToApp(values)),
     missLoginError: () => dispatch(missLoginError())
   }
 }

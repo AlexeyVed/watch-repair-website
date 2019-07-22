@@ -32,7 +32,7 @@ class AddClients extends React.Component {
             </div>
             <Field
               label='Your email'
-              name='emailReg'
+              name='email'
               component={myInput}
               type='text'
               placeholder='Enter your email'
@@ -50,7 +50,7 @@ class AddClients extends React.Component {
             />
             <Field
               label='Create a password'
-              name='passwordReg'
+              name='password'
               component={myInput}
               type='password'
               placeholder='Enter your password'
@@ -84,7 +84,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addUser: values => dispatch(addUserToDB(values.emailReg, values.passwordReg))
+    addUser: values => dispatch(addUserToDB(values))
   }
 }
 

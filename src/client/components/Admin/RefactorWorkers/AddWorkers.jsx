@@ -85,7 +85,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addWorker: values => dispatch(addWorkerToDB(values.name, values.city, values.rating))
+    addWorker: values => dispatch(addWorkerToDB(values))
   }
 }
 

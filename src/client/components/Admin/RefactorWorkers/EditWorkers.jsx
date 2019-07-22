@@ -100,7 +100,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editWorker: values => dispatch(editWorkerIntoDB(values.name, values.city, values.rating, values.id))
+    editWorker: values => dispatch(editWorkerIntoDB(values))
   }
 }
 
