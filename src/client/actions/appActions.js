@@ -18,6 +18,7 @@ export const makeOrder = (values) => {
   return (dispatch) => {
     values.timeRepair = Number(values.timeRepair)
     values.time = Number(values.time)
+    console.log(values)
     dispatch(makeOrderStarted())
     axios
       .post(`http://localhost:3000/api/orders/makeOrder`, values)
@@ -30,11 +31,11 @@ export const makeOrder = (values) => {
   }
 }
 
-export const addOrder = (idMaster, id) => {
+export const addOrder = (values) => {
   return (dispatch) => {
     dispatch(makeOrderMasterStarted())
     axios
-      .post(`http://localhost:3000/api/orders/addOrder`, { idMaster, id })
+      .post(`http://localhost:3000/api/orders/addOrder`, values)
       .then(res => {
         dispatch(makeOrderMasterSuccess())
       })

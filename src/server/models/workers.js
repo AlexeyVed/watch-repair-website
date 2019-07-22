@@ -1,26 +1,28 @@
 const service = require('../services/modules.js')
 
 module.exports = class Worker {
-  constructor (name, city, rating, id) {
-    this.id = id || null
-    this.name = name
-    this.city = city
-    this.rating = rating
+  constructor (values) {
+    this.values = values
   }
 
   updateWorker () {
-    return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE idworker = ?`, [this.name, this.city, this.rating, this.id])
+    const { name, city, rating, id } = this.values
+    const values = [ name, city, rating, id ]
+    return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE idworker = ?`, values)
   }
 
   addWorker () {
-    return service.requestToDB(`INSERT INTO workers (name, city, rating) VALUES (?, ?, ?)`, [this.name, this.city, this.rating])
+    const { name, city, rating } = this.values
+    const values = [ name, city, rating ]
+    return service.requestToDB(`INSERT INTO workers (name, city, rating) VALUES (?, ?, ?)`, values)
   }
 
   static deleteWorker (idworker) {
     return service.requestToDB(`DELETE FROM workers WHERE idworker = ?`, [idworker])
   }
 
-  static getWorkersWithoutBusy (arrayId, city) {
+  static getWorkersWithoutBusy (arrayId, obj) {
+    const { city } = obj
     let sql = ''
     for (let i = 0; i < arrayId.length; i++) {
       sql += ` && idworker != '${arrayId[i]}'`

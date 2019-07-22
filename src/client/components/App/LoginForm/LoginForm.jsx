@@ -97,7 +97,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginApp: values => dispatch(loginToApp(values.email, values.password)),
+    loginApp: values => dispatch(loginToApp(values)),
     missLoginError: () => dispatch(missLoginError())
   }
 }

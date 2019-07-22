@@ -9,7 +9,7 @@ exports.getOrders = function (req, res) {
 }
 
 exports.deleteOrder = function (req, res) {
-  Order.deleteOrder(req.body.id)
+  Order.deleteOrder(req.body)
     .then(result => {
       res.send(result)
     })
@@ -19,16 +19,15 @@ exports.deleteOrder = function (req, res) {
 }
 
 exports.makeOrder = function (req, res) {
-  const {
-    clientName, clientEmail, timeRepair, city, date, time } = req.body
-  const order = new Order(null, clientName, clientEmail, timeRepair, city, date, time)
+  const order = new Order(req.body)
   const obj = {
     freeWorkers: [],
     insertId: null
   }
   order.getIdBusyMasters()
     .then(result => {
-      Worker.getWorkersWithoutBusy(result, city)
+      console.log(result)
+      Worker.getWorkersWithoutBusy(result, req.body)
         .then(workers => {
           obj.freeWorkers = workers
           order.addOrderWithoutMaster()
@@ -47,9 +46,7 @@ exports.makeOrder = function (req, res) {
 }
 
 exports.addOrderAdmin = function (req, res) {
-  const {
-    clientName, clientEmail, timeRepair, city, date, time, masterID } = req.body
-  const order = new Order(masterID, clientName, clientEmail, timeRepair, city, date, time)
+  const order = new Order(req.body)
   order.addOrderAdmin()
     .then(result => {
       res.send(result)
@@ -60,9 +57,7 @@ exports.addOrderAdmin = function (req, res) {
 }
 
 exports.updateOrder = function (req, res) {
-  const {
-    clientName, clientEmail, timeRepair, city, date, time, masterID, id } = req.body
-  const order = new Order(masterID, clientName, clientEmail, timeRepair, city, date, time, id)
+  const order = new Order(req.body)
   order.updateOrder()
     .then(result => {
       res.send(result)
@@ -73,7 +68,7 @@ exports.updateOrder = function (req, res) {
 }
 
 exports.addOrder = function (req, res) {
-  Order.addOrder(req.body.idMaster, req.body.id)
+  Order.addOrder(req.body)
     .then(result => {
       res.send(result)
     })

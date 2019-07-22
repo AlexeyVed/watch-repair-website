@@ -12,12 +12,12 @@ import {
 
 import axios from 'axios'
 
-export const loginToApp = (email, password) => {
+export const loginToApp = (values) => {
   return (dispatch) => {
     dispatch(singInStarted())
 
     axios
-      .post(`http://localhost:3000/api/users/login`, { email, password })
+      .post(`http://localhost:3000/api/users/login`, values)
       .then(res => {
         localStorage.setItem('user', res.data)
         dispatch(singInSuccess(res.data))

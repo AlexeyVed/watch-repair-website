@@ -1,30 +1,34 @@
 const service = require('../services/modules.js')
 
 module.exports = class User {
-  constructor (email, password, idlogin) {
-    this.idlogin = idlogin || null
-    this.email = email
-    this.password = password
+  constructor (values) {
+    this.values = values
   }
 
   updateUser () {
-    return service.requestToDB(`UPDATE login SET email = ?, password = ?  WHERE idlogin = ?`, [this.email, this.password, this.idlogin])
+    const { email, password, idlogin } = this.values
+    const values = [email, password, idlogin]
+    return service.requestToDB(`UPDATE login SET email = ?, password = ?  WHERE idlogin = ?`, values)
   }
 
   registration () {
-    return service.requestToDB(`INSERT INTO login (email, password) VALUES (?, ?)`, [this.email, this.password])
+    const { email, password } = this.values
+    const values = [email, password]
+    return service.requestToDB(`INSERT INTO login (email, password) VALUES (?, ?)`, values)
   }
 
   checkUser () {
-    return service.requestToDBCheck('SELECT email FROM login where email=?', [this.email])
+    const { email } = this.values
+    return service.requestToDBCheck(`SELECT email FROM login where email= "${email}"`)
   }
 
   login () {
-    return service.requestToDB('SELECT email, password FROM login where email=?', [this.email])
+    const { email } = this.values
+    return service.requestToDB(`SELECT email, password FROM login where email= "${email}"`)
   }
 
   static deleteUser (idlogin) {
-    return service.requestToDB(`DELETE FROM login WHERE idlogin = ?`, [idlogin])
+    return service.requestToDB(`DELETE FROM login WHERE idlogin = ${idlogin}`)
   }
 
   static getAll () {

@@ -1,18 +1,18 @@
 const service = require('../services/modules.js')
 
 module.exports = class Clock {
-  constructor (typeClock, timeRepair, id) {
-    this.id = id || null
-    this.typeClock = typeClock,
-    this.timeRepair = timeRepair
+  constructor (values) {
+    this.values = values
   }
 
   updateClock () {
-    return service.requestToDB(`UPDATE clocks SET typeClock = ?, timeRepair = ?  WHERE id = ?`, [this.typeClock, this.timeRepair, this.id])
+    const { typeClock, timeRepair, id } = this.values
+    return service.requestToDB(`UPDATE clocks SET typeClock = ?, timeRepair = ?  WHERE id = ?`, [typeClock, timeRepair, id])
   }
 
   addClock () {
-    return service.requestToDB(`INSERT INTO clocks (typeClock, timeRepair) VALUES (?, ?)`, [this.typeClock, this.timeRepair])
+    const { typeClock, timeRepair } = this.values
+    return service.requestToDB(`INSERT INTO clocks (typeClock, timeRepair) VALUES (?, ?)`, [typeClock, timeRepair])
   }
 
   static deleteClock (id) {

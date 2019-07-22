@@ -8,7 +8,7 @@ exports.getUsers = function (req, res) {
 }
 
 exports.registration = function (req, res) {
-  const user = new User(req.body.email, req.body.password)
+  const user = new User(req.body)
   user.checkUser()
     .then(() => {
       user.registration()
@@ -30,7 +30,7 @@ exports.registration = function (req, res) {
 }
 
 exports.addUser = function (req, res) {
-  const user = new User(req.body.email, req.body.password)
+  const user = new User(req.body)
   user.checkUser()
     .then(() => {
       user.registration()
@@ -50,7 +50,7 @@ exports.addUser = function (req, res) {
 }
 
 exports.updateUser = function (req, res) {
-  const user = new User(req.body.email, req.body.password, req.body.id)
+  const user = new User(req.body)
   user.updateUser()
     .then(result => {
       res.send(result)
@@ -61,7 +61,7 @@ exports.updateUser = function (req, res) {
 }
 
 exports.login = function (req, res) {
-  const user = new User(req.body.email, req.body.password)
+  const user = new User(req.body)
   user.login()
     .then(result => {
       if (result[0].password === req.body.password) {
