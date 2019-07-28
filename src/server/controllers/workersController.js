@@ -24,8 +24,11 @@ exports.add = function (req, res) {
   const worker = new Worker(req.body)
   worker.add()
     .then(result => {
-      const json = JSON.stringify(result)
-      res.send(json)
+      Worker.findOne(result.insertId)
+        .then((worker) => {
+          const json = JSON.stringify(worker[0])
+          res.status(201).send(json)
+        })
     })
     .catch(err => {
       res.status(400).send('Error add worker')

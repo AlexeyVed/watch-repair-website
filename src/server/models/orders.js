@@ -68,6 +68,10 @@ module.exports = class Order {
       })
   }
 
+  static findOne (id) {
+    return service.requestToDB(`SELECT * FROM orders WHERE id = ?`, [id])
+  }
+
   static delete (obj) {
     const { id } = obj
     return service.requestToDB(`DELETE FROM orders WHERE id = ?`, [id])

@@ -24,8 +24,11 @@ exports.add = function (req, res) {
   const clock = new Clock(req.body)
   clock.add()
     .then(result => {
-      const json = JSON.stringify(result)
-      res.send(json)
+      Clock.findOne(result.insertId)
+        .then(clocks => {
+          const json = JSON.stringify(clocks[0])
+          res.status(201).send(json)
+        })
     })
     .catch(err => {
       res.status(400).send('Error add clock')

@@ -51,8 +51,11 @@ exports.addAdmin = function (req, res) {
   const order = new Order(req.body)
   order.addAdmin()
     .then(result => {
-      const json = JSON.stringify(result)
-      res.send(json)
+      Order.findOne(result.insertId)
+        .then((orders) => {
+          const json = JSON.stringify(orders[0])
+          res.status(201).send(json)
+        })
     })
     .catch(err => {
       res.status(500).send('Error add order admin')

@@ -17,6 +17,11 @@ import {
   ADD_MODEL_STARTED,
   ADD_MODEL_SUCCESS,
   ADD_MODEL_FAILURE,
+  ADD_CITIES_TO_STATE,
+  ADD_CLIENTS_TO_STATE,
+  ADD_CLOCKS_TO_STATE,
+  ADD_ORDERS_TO_STATE,
+  ADD_WORKERS_TO_STATE,
   DELETE_MODEL_STARTED,
   DELETE_MODEL_SUCCESS,
   DELETE_MODEL_FAILURE,
@@ -189,6 +194,66 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true
+      }
+
+    case ADD_CLIENTS_TO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          users: [
+            ...state.data.users,
+            action.payload
+          ]
+        }
+      }
+
+    case ADD_ORDERS_TO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          orders: [
+            ...state.data.orders,
+            action.payload
+          ]
+        }
+      }
+
+    case ADD_CITIES_TO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          cities: [
+            ...state.data.cities,
+            action.payload
+          ]
+        }
+      }
+
+    case ADD_CLOCKS_TO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          clocks: [
+            ...state.data.clocks,
+            action.payload
+          ]
+        }
+      }
+
+    case ADD_WORKERS_TO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          workers: [
+            ...state.data.workers,
+            action.payload
+          ]
+        }
       }
 
     case ADD_MODEL_FAILURE:

@@ -17,6 +17,11 @@ import {
   ADD_MODEL_STARTED,
   ADD_MODEL_SUCCESS,
   ADD_MODEL_FAILURE,
+  ADD_CITIES_TO_STATE,
+  ADD_CLIENTS_TO_STATE,
+  ADD_CLOCKS_TO_STATE,
+  ADD_ORDERS_TO_STATE,
+  ADD_WORKERS_TO_STATE,
   DELETE_MODEL_STARTED,
   DELETE_MODEL_SUCCESS,
   DELETE_MODEL_FAILURE,
@@ -104,8 +109,8 @@ export const addUserToDB = (values) => {
     axios
       .post(`http://localhost:3000/api/users/add`, values)
       .then(res => {
-        console.log(res)
-        dispatch(addModelSuccess(res))
+        dispatch(addModelSuccess())
+        dispatch(addUserToState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -123,6 +128,7 @@ export const addCityToDB = (values) => {
       .post(`http://localhost:3000/api/cities/add`, values)
       .then(res => {
         dispatch(addModelSuccess())
+        dispatch(addCityToState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -140,6 +146,7 @@ export const addClockToDB = (values) => {
       .post(`http://localhost:3000/api/clocks/add`, values)
       .then(res => {
         dispatch(addModelSuccess())
+        dispatch(addClockToState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -157,6 +164,7 @@ export const addWorkerToDB = (values) => {
       .post(`http://localhost:3000/api/workers/add`, values)
       .then(res => {
         dispatch(addModelSuccess())
+        dispatch(addWorkerToState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -173,10 +181,12 @@ export const addOrderToDB = (values) => {
   values.masterID = Number(values.masterID)
   return (dispatch) => {
     dispatch(addModelStarted())
+
     axios
       .post(`http://localhost:3000/api/orders/addAdmin`, values)
       .then(res => {
         dispatch(addModelSuccess())
+        dispatch(addOrderToState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -456,4 +466,29 @@ const editModelSuccess = err => ({
 
 const redirectFromRefactor = () => ({
   type: REDIRECT_FROM_REFACTOR
+})
+
+const addUserToState = data => ({
+  type: ADD_CLIENTS_TO_STATE,
+  payload: data
+})
+
+const addWorkerToState = data => ({
+  type: ADD_WORKERS_TO_STATE,
+  payload: data
+})
+
+const addOrderToState = data => ({
+  type: ADD_ORDERS_TO_STATE,
+  payload: data
+})
+
+const addClockToState = data => ({
+  type: ADD_CLOCKS_TO_STATE,
+  payload: data
+})
+
+const addCityToState = data => ({
+  type: ADD_CITIES_TO_STATE,
+  payload: data
 })

@@ -33,14 +33,18 @@ exports.registration = function (req, res) {
 
 exports.add = function (req, res) {
   const user = new User(req.body)
+  console.log('before check')
   user.check()
     .then(() => {
       user.registration()
-        .then((res) => {
-          user.findOne(res.insertId)
-            .then(result => {
-              const json = JSON.stringify(result)
-              res.send(json)
+        .then((result) => {
+          User.findOne(result.insertId)
+            .then(client => {
+              const json = JSON.stringify(client[0])
+              res.status(201).send(json)
+            })
+            .catch(err => {
+              res.status(500).send('some broke')
             })
         })
         .catch(error => {

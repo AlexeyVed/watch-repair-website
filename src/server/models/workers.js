@@ -30,6 +30,10 @@ module.exports = class Worker {
     return service.requestToDB(`SELECT * FROM workers WHERE city = '${city}'${sql}`)
   }
 
+  static findOne (idworker) {
+    return service.requestToDB(`SELECT * FROM workers WHERE idworker = ?`, [idworker])
+  }
+
   static list () {
     return service.requestToDB(`SELECT * FROM workers`)
   }

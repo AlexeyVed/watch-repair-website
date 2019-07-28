@@ -20,6 +20,10 @@ module.exports = class City {
     return service.requestToDB(`DELETE FROM cities WHERE id = ?`, [id])
   }
 
+  static findOne (id) {
+    return service.requestToDB(`SELECT * FROM cities WHERE id = ?`, [id])
+  }
+
   static list () {
     return service.requestToDB(`SELECT * FROM cities`)
   }

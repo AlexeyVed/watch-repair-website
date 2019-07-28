@@ -15,6 +15,10 @@ module.exports = class Clock {
     return service.requestToDB(`INSERT INTO clocks (typeClock, timeRepair) VALUES (?, ?)`, [typeClock, timeRepair])
   }
 
+  static findOne (id) {
+    return service.requestToDB(`SELECT * FROM clocks WHERE id = ?`, [id])
+  }
+
   static delete (id) {
     return service.requestToDB(`DELETE FROM clocks WHERE id = ?`, [id])
   }
