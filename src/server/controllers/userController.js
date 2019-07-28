@@ -33,7 +33,6 @@ exports.registration = function (req, res) {
 
 exports.add = function (req, res) {
   const user = new User(req.body)
-  console.log('before check')
   user.check()
     .then(() => {
       user.registration()

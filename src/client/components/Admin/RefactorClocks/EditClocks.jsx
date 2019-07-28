@@ -9,6 +9,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { editClockIntoDB } from '../../../actions'
 
 import './RefactorClocks.less'
+import {Placeholder} from "react-preloading-screen";
 
 class EditClocks extends React.Component {
   componentDidMount () {
@@ -18,7 +19,19 @@ class EditClocks extends React.Component {
   }
 
   render () {
-    const { handleSubmit, editClock, redirectBack } = this.props
+    const { handleSubmit, editClock, redirectBack, isRefactor } = this.props
+    let loader
+
+    if (isRefactor) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clocks' }}/>
@@ -60,6 +73,7 @@ class EditClocks extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -69,7 +83,8 @@ class EditClocks extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.adminReducer.redirectBackFromRefactor,
+    isRefactor: state.adminReducer.refactorModelInProcess
   }
 }
 

@@ -10,10 +10,23 @@ import { confirmEmail, confirmPassword, validateEmail, validatePassword } from '
 import { addUserToDB } from '../../../actions'
 
 import './RefactorClients.less'
+import {Placeholder} from "react-preloading-screen";
 
 class AddClients extends React.Component {
   render () {
-    const { handleSubmit, addUser, redirectBack } = this.props
+    const { handleSubmit, addUser, redirectBack, isRefactor } = this.props
+    let loader
+
+    if (isRefactor) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clients' }}/>
@@ -69,6 +82,7 @@ class AddClients extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -78,7 +92,8 @@ class AddClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.adminReducer.redirectBackFromRefactor,
+    isRefactor: state.adminReducer.refactorModelInProcess
   }
 }
 

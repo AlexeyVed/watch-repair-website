@@ -9,10 +9,23 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addOrderToDB } from '../../../actions'
 
 import './RefactorOrders.less'
+import {Placeholder} from "react-preloading-screen";
 
 class AddOrder extends React.Component {
   render () {
-    const { handleSubmit, addOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
+    const { isRefactor, handleSubmit, addOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
+    let loader
+
+    if (isRefactor) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
@@ -124,6 +137,7 @@ class AddOrder extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -137,7 +151,8 @@ const mapStateToProps = (state) => {
     chooseCities: state.adminReducer.data.cities,
     chooseUsers: state.adminReducer.data.users,
     redirectBack: state.adminReducer.redirectBackFromRefactor,
-    chooseWorkers: state.adminReducer.data.workers
+    chooseWorkers: state.adminReducer.data.workers,
+    isRefactor: state.adminReducer.refactorModelInProcess
   }
 }
 
