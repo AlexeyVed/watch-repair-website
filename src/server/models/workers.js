@@ -5,23 +5,23 @@ module.exports = class Worker {
     this.values = values
   }
 
-  updateWorker () {
+  update () {
     const { name, city, rating, id } = this.values
     const values = [ name, city, rating, id ]
     return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE idworker = ?`, values)
   }
 
-  addWorker () {
+  add () {
     const { name, city, rating } = this.values
     const values = [ name, city, rating ]
     return service.requestToDB(`INSERT INTO workers (name, city, rating) VALUES (?, ?, ?)`, values)
   }
 
-  static deleteWorker (idworker) {
+  static delete (idworker) {
     return service.requestToDB(`DELETE FROM workers WHERE idworker = ?`, [idworker])
   }
 
-  static getWorkersWithoutBusy (arrayId, obj) {
+  static getWithoutBusy (arrayId, obj) {
     const { city } = obj
     let sql = ''
     for (let i = 0; i < arrayId.length; i++) {
@@ -30,7 +30,7 @@ module.exports = class Worker {
     return service.requestToDB(`SELECT * FROM workers WHERE city = '${city}'${sql}`)
   }
 
-  static getAll () {
+  static list () {
     return service.requestToDB(`SELECT * FROM workers`)
   }
 }

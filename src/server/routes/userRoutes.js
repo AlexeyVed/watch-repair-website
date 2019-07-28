@@ -2,11 +2,11 @@ const express = require('express')
 const usersController = require('../controllers/userController.js')
 const usersRouter = express.Router()
 
-usersRouter.use('/getAll', usersController.getUsers)
+usersRouter.use('/list', usersController.list)
 usersRouter.use('/login', usersController.login)
 usersRouter.use('/registration', usersController.registration)
-usersRouter.use('/addUser', usersController.addUser)
-usersRouter.use('/deleteUser', usersController.deleteUser)
-usersRouter.use('/updateUser', usersController.updateUser)
+usersRouter.use('/add', usersController.add)
+usersRouter.use('/delete', usersController.delete)
+usersRouter.use('/update', usersController.update)
 
 module.exports = usersRouter

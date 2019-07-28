@@ -7,6 +7,7 @@ import { makeOrder } from '../../../actions'
 import { validateEmail } from '../../../validation'
 
 import './OrderForm.less'
+import {Placeholder} from "react-preloading-screen";
 
 class OrderForm extends Component {
   render () {
@@ -22,7 +23,10 @@ class OrderForm extends Component {
       return (
         <div className='main-form'>
           <div className='choosing-master'>
-            <div> Please, choose free master.</div>
+            Please, choose a free master.
+              <div className='preloader-choose'>
+                <div className='loader-choose'></div>
+              </div>
           </div>
         </div>
       )

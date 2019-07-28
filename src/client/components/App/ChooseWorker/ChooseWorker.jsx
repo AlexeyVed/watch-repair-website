@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addOrder: (idMaster, id) => dispatch(addOrder(idMaster, id)),
+    addOrder: (idMaster, id) => dispatch(addOrder({idMaster, id})),
     setWorker: (idMaster) => dispatch(setChooseWorker(idMaster))
 
   }

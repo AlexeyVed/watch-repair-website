@@ -5,21 +5,21 @@ module.exports = class Clock {
     this.values = values
   }
 
-  updateClock () {
+  update () {
     const { typeClock, timeRepair, id } = this.values
     return service.requestToDB(`UPDATE clocks SET typeClock = ?, timeRepair = ?  WHERE id = ?`, [typeClock, timeRepair, id])
   }
 
-  addClock () {
+  add () {
     const { typeClock, timeRepair } = this.values
     return service.requestToDB(`INSERT INTO clocks (typeClock, timeRepair) VALUES (?, ?)`, [typeClock, timeRepair])
   }
 
-  static deleteClock (id) {
+  static delete (id) {
     return service.requestToDB(`DELETE FROM clocks WHERE id = ?`, [id])
   }
 
-  static getAll () {
+  static list () {
     return service.requestToDB(`SELECT * FROM clocks`)
   }
 }

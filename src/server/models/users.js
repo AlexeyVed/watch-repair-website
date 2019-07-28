@@ -5,7 +5,7 @@ module.exports = class User {
     this.values = values
   }
 
-  updateUser () {
+  update () {
     const { email, password, idlogin } = this.values
     const values = [email, password, idlogin]
     return service.requestToDB(`UPDATE login SET email = ?, password = ?  WHERE idlogin = ?`, values)
@@ -17,7 +17,7 @@ module.exports = class User {
     return service.requestToDB(`INSERT INTO login (email, password) VALUES (?, ?)`, values)
   }
 
-  checkUser () {
+  check () {
     const { email } = this.values
     return service.requestToDBCheck(`SELECT email FROM login where email= "${email}"`)
   }
@@ -27,11 +27,11 @@ module.exports = class User {
     return service.requestToDB(`SELECT email, password FROM login where email= "${email}"`)
   }
 
-  static deleteUser (idlogin) {
+  static delete (idlogin) {
     return service.requestToDB(`DELETE FROM login WHERE idlogin = ${idlogin}`)
   }
 
-  static getAll () {
+  static list () {
     return service.requestToDB(`SELECT * FROM login`)
   }
 }

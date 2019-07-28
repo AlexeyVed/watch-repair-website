@@ -19,7 +19,7 @@ export const loadDataAdmin = () => {
   return (dispatch) => {
     dispatch(loadDataStarted())
     axios
-      .get(`http://localhost:3000/api/data/getAll`)
+      .get(`http://localhost:3000/api/data/listAdmin`)
       .then(res => {
         dispatch(loadDataSuccess(res.data))
       })
@@ -33,7 +33,7 @@ export const addUserToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/users/addUser`, values)
+      .post(`http://localhost:3000/api/users/add`, values)
       .then(res => {
         dispatch(addModelSuccess())
       })
@@ -50,7 +50,7 @@ export const addCityToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/cities/addCity`, values)
+      .post(`http://localhost:3000/api/cities/add`, values)
       .then(res => {
         dispatch(addModelSuccess())
       })
@@ -67,7 +67,7 @@ export const addClockToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/clocks/addClock`, values)
+      .post(`http://localhost:3000/api/clocks/add`, values)
       .then(res => {
         dispatch(addModelSuccess())
       })
@@ -84,7 +84,7 @@ export const addWorkerToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/addWorker`, values)
+      .post(`http://localhost:3000/api/workers/add`, values)
       .then(res => {
         dispatch(addModelSuccess())
       })
@@ -104,7 +104,7 @@ export const addOrderToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/orders/addOrderAdmin`, values)
+      .post(`http://localhost:3000/api/orders/addAdmin`, values)
       .then(res => {
         dispatch(addModelSuccess())
       })
@@ -121,7 +121,7 @@ export const editUserIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/users/updateUser`, values)
+      .post(`http://localhost:3000/api/users/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -138,7 +138,7 @@ export const editCityIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/cities/updateCity`, values)
+      .post(`http://localhost:3000/api/cities/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -155,7 +155,7 @@ export const editClockIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/clocks/updateClock`, values)
+      .post(`http://localhost:3000/api/clocks/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -175,7 +175,7 @@ export const editOrderIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/orders/updateOrder`, values)
+      .post(`http://localhost:3000/api/orders/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -192,7 +192,7 @@ export const editWorkerIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/updateWorker`, values)
+      .post(`http://localhost:3000/api/workers/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
       })
@@ -209,7 +209,7 @@ export const deleteClockFromDB = (id) => {
   return (dispatch) => {
     dispatch(deleteModelStarted())
     axios
-      .post(`http://localhost:3000/api/clocks/deleteClock`, { id })
+      .post(`http://localhost:3000/api/clocks/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
       })
@@ -226,7 +226,7 @@ export const deleteOrderFromDB = (id) => {
   return (dispatch) => {
     dispatch(deleteModelStarted())
     axios
-      .post(`http://localhost:3000/api/orders/deleteOrder`, { id })
+      .post(`http://localhost:3000/api/orders/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
       })
@@ -243,7 +243,7 @@ export const deleteWorkerFromDB = (id) => {
   return (dispatch) => {
     dispatch(deleteModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/deleteWorker`, { id })
+      .post(`http://localhost:3000/api/workers/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
       })
@@ -260,7 +260,7 @@ export const deleteCityFromDB = (id) => {
   return (dispatch) => {
     dispatch(deleteModelStarted())
     axios
-      .post(`http://localhost:3000/api/cities/deleteCity`, { id })
+      .post(`http://localhost:3000/api/cities/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
       })
@@ -277,7 +277,7 @@ export const deleteClientFromDB = (id) => {
   return (dispatch) => {
     dispatch(deleteModelStarted())
     axios
-      .post(`http://localhost:3000/api/users/deleteUser`, { id })
+      .post(`http://localhost:3000/api/users/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
       })

@@ -1,38 +1,42 @@
 const Worker = require('../models/workers.js')
 
-exports.getWorkers = function (req, res) {
-  Worker.getAll()
+exports.list = function (req, res) {
+  Worker.list()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
 
-exports.updateWorker = function (req, res) {
+exports.update = function (req, res) {
   const worker = new Worker(req.body)
-  worker.updateWorker()
+  worker.update()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error update worker')
     })
 }
 
-exports.addWorker = function (req, res) {
+exports.add = function (req, res) {
   const worker = new Worker(req.body)
-  worker.addWorker()
+  worker.add()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error add worker')
     })
 }
 
-exports.deleteWorker = function (req, res) {
-  Worker.deleteWorker(req.body.id)
+exports.delete = function (req, res) {
+  Worker.delete(req.body.id)
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error delete worker')

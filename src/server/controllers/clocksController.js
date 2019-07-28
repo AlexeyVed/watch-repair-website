@@ -1,38 +1,42 @@
 const Clock = require('../models/clocks.js')
 
-exports.getClocks = function (req, res) {
-  Clock.getAll()
+exports.list = function (req, res) {
+  Clock.list()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
 
-exports.updateClock = function (req, res) {
+exports.update = function (req, res) {
   const clock = new Clock(req.body)
-  clock.updateClock()
+  clock.update()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error update clock')
     })
 }
 
-exports.addClock = function (req, res) {
+exports.add = function (req, res) {
   const clock = new Clock(req.body)
-  clock.addClock()
+  clock.add()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error add clock')
     })
 }
 
-exports.deleteClock = function (req, res) {
-  Clock.deleteClock(req.body.id)
+exports.delete = function (req, res) {
+  Clock.delete(req.body.id)
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error delete clock')

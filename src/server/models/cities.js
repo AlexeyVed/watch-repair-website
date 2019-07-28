@@ -5,22 +5,22 @@ module.exports = class City {
     this.values = values
   }
 
-  updateCity () {
+  update () {
     const { city, id } = this.values
     return service.requestToDB(`UPDATE cities SET city = ? WHERE id = ?`, [city, id])
   }
 
-  addCity () {
+  add () {
     const { city } = this.values
     return service.requestToDB(`INSERT INTO cities (city) VALUES (?)`, [city])
   }
 
-  deleteCity () {
+  delete () {
     const { id } = this.values
     return service.requestToDB(`DELETE FROM cities WHERE id = ?`, [id])
   }
 
-  static getAll () {
+  static list () {
     return service.requestToDB(`SELECT * FROM cities`)
   }
 }

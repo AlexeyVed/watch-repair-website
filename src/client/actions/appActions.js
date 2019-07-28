@@ -1,7 +1,13 @@
 import {
-  LOAD_DATA_USER_STARTED,
-  LOAD_DATA_USER_SUCCESS,
-  LOAD_DATA_USER_FAILURE,
+  LOAD_CITIES_STARTED,
+  LOAD_CITIES_SUCCESS,
+  LOAD_CITIES_FAILURE,
+  LOAD_CLOCKS_STARTED,
+  LOAD_CLOCKS_SUCCESS,
+  LOAD_CLOCKS_FAILURE,
+  LOAD_WORKERS_STARTED,
+  LOAD_WORKERS_SUCCESS,
+  LOAD_WORKERS_FAILURE,
   MAKE_ORDER_STARTED,
   MAKE_ORDER_FAILURE,
   MAKE_ORDER_SUCCESS,
@@ -21,7 +27,7 @@ export const makeOrder = (values) => {
     console.log(values)
     dispatch(makeOrderStarted())
     axios
-      .post(`http://localhost:3000/api/orders/makeOrder`, values)
+      .post(`http://localhost:3000/api/orders/make`, values)
       .then(res => {
         dispatch(makeOrderSuccess(res.data))
       })
@@ -35,7 +41,7 @@ export const addOrder = (values) => {
   return (dispatch) => {
     dispatch(makeOrderMasterStarted())
     axios
-      .post(`http://localhost:3000/api/orders/addOrder`, values)
+      .post(`http://localhost:3000/api/orders/add`, values)
       .then(res => {
         dispatch(makeOrderMasterSuccess())
       })
@@ -45,16 +51,46 @@ export const addOrder = (values) => {
   }
 }
 
-export const loadDataUser = () => {
+export const loadClocks = () => {
   return (dispatch) => {
-    dispatch(loadDataStarted())
+    dispatch(loadClocksStarted())
     axios
-      .get(`http://localhost:3000/api/data/getData`)
+      .get(`http://localhost:3000/api/clocks/list`)
       .then(res => {
-        dispatch(loadDataSuccess(res.data))
+        dispatch(loadClocksSuccess(res.data))
       })
       .catch(err => {
-        dispatch(loadDataFailure(err.response.data))
+        dispatch(loadClocksFailure(err.response.data))
+      })
+  }
+}
+
+
+export const loadCities = () => {
+  return (dispatch) => {
+    dispatch(loadCitiesStarted())
+    axios
+      .get(`http://localhost:3000/api/cities/list`)
+      .then(res => {
+        dispatch(loadCitiesSuccess(res.data))
+      })
+      .catch(err => {
+        dispatch(loadCitiesFailure(err.response.data))
+      })
+  }
+}
+
+
+export const loadWorkers = () => {
+  return (dispatch) => {
+    dispatch(loadWorkersStarted())
+    axios
+      .get(`http://localhost:3000/api/workers/list`)
+      .then(res => {
+        dispatch(loadWorkersSuccess(res.data))
+      })
+      .catch(err => {
+        dispatch(loadWorkersFailure(err.response.data))
       })
   }
 }
@@ -69,17 +105,46 @@ export const setChooseWorker = id => ({
   payload: id
 })
 
-const loadDataStarted = () => ({
-  type: LOAD_DATA_USER_STARTED
+const loadClocksStarted = () => ({
+  type: LOAD_CLOCKS_STARTED
 })
 
-const loadDataSuccess = data => ({
-  type: LOAD_DATA_USER_SUCCESS,
+const loadClocksSuccess = data => ({
+  type: LOAD_CLOCKS_SUCCESS,
   payload: data
 })
 
-const loadDataFailure = err => ({
-  type: LOAD_DATA_USER_FAILURE,
+const loadClocksFailure = err => ({
+  type: LOAD_CLOCKS_FAILURE,
+  payload: err
+})
+
+const loadCitiesStarted = () => ({
+  type: LOAD_CITIES_STARTED
+})
+
+const loadCitiesSuccess = data => ({
+  type: LOAD_CITIES_SUCCESS,
+  payload: data
+})
+
+const loadCitiesFailure = err => ({
+  type: LOAD_CITIES_FAILURE,
+  payload: err
+})
+
+
+const loadWorkersStarted = () => ({
+  type: LOAD_WORKERS_STARTED
+})
+
+const loadWorkersSuccess = data => ({
+  type: LOAD_WORKERS_SUCCESS,
+  payload: data
+})
+
+const loadWorkersFailure = err => ({
+  type: LOAD_WORKERS_FAILURE,
   payload: err
 })
 

@@ -1,22 +1,24 @@
 const User = require('../models/users.js')
 
-exports.getUsers = function (req, res) {
-  User.getAll()
+exports.list = function (req, res) {
+  User.list()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
 
 exports.registration = function (req, res) {
   const user = new User(req.body)
-  user.checkUser()
+  user.check()
     .then(() => {
       user.registration()
         .then(() => {
           user.login()
             .then(result => {
               if (result[0].password === req.body.password) {
-                res.send(result[0].email)
+                const json = JSON.stringify(result[0].email)
+                res.send(json)
               }
             })
         })
@@ -29,15 +31,16 @@ exports.registration = function (req, res) {
     })
 }
 
-exports.addUser = function (req, res) {
+exports.add = function (req, res) {
   const user = new User(req.body)
-  user.checkUser()
+  user.check()
     .then(() => {
       user.registration()
         .then(() => {
           user.login()
             .then(result => {
-              res.send(result[0].email)
+              const json = JSON.stringify(result[0].email)
+              res.send(json)
             })
         })
         .catch(error => {
@@ -49,11 +52,12 @@ exports.addUser = function (req, res) {
     })
 }
 
-exports.updateUser = function (req, res) {
+exports.update = function (req, res) {
   const user = new User(req.body)
-  user.updateUser()
+  user.update()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       console.log(err)
@@ -66,7 +70,8 @@ exports.login = function (req, res) {
   user.login()
     .then(result => {
       if (result[0].password === req.body.password) {
-        res.send(result[0].email)
+        const json = JSON.stringify(result[0].email)
+        res.send(json)
       } else {
         res.status(422).send('Invalid pass')
       }
@@ -76,10 +81,11 @@ exports.login = function (req, res) {
     })
 }
 
-exports.deleteUser = function (req, res) {
-  User.deleteUser(req.body.id)
+exports.delete = function (req, res) {
+  User.delete(req.body.id)
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error delete user')

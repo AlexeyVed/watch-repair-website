@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { changePage, loadDataUser } from '../../../actions'
+import { changePage } from '../../../actions'
 import LoginForm from '../LoginForm/LoginForm.jsx'
 import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 class Main extends Component {
   componentDidMount () {
-    this.props.loadData()
     this.props.page('main')
   }
 
@@ -56,7 +55,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadData: () => dispatch(loadDataUser()),
     page: data => dispatch(changePage(data))
   }
 }

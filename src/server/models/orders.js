@@ -5,27 +5,27 @@ module.exports = class Order {
     this.values = values
   }
 
-  addOrderWithoutMaster () {
+  addWithoutMaster () {
     const { clientName, clientEmail, timeRepair, city, date, time } = this.values
     const values = [clientName, clientEmail, timeRepair, city, date, time]
     return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time) VALUES (?, ?, ?, ?, ?, ?)`, values)
   }
 
-  addOrderAdmin () {
+  addAdmin () {
     const { clientName, clientEmail, timeRepair, city, date, time, masterID } = this.values
     const values = [clientName, clientEmail, timeRepair, city, date, time, masterID]
     return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?, ?)`, values)
   }
 
-  updateOrder () {
+  update () {
     const { clientName, clientEmail, timeRepair, city, date, time, masterID, id } = this.values
     const values = [clientName, clientEmail, timeRepair, city, date, time, masterID, id]
     return service.requestToDB(`UPDATE orders SET clientName = ?, clientEmail = ?, timeRepair = ?, city = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, values)
   }
 
-  static addOrder (values) {
-    const { masterID, id } = values
-    return service.requestToDB(`UPDATE orders SET masterID = ? WHERE id = ?`, [masterID, id])
+  static add (values) {
+    const { idMaster, id } = values
+    return service.requestToDB(`UPDATE orders SET masterID = ? WHERE id = ?`, [idMaster, id])
   }
 
   getIdBusyMasters () {
@@ -68,12 +68,12 @@ module.exports = class Order {
       })
   }
 
-  static deleteOrder (obj) {
+  static delete (obj) {
     const { id } = obj
     return service.requestToDB(`DELETE FROM orders WHERE id = ?`, [id])
   }
 
-  static getAll () {
+  static list () {
     return service.requestToDB(`SELECT * FROM orders`)
   }
 }

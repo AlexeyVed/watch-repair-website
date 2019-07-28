@@ -1,24 +1,26 @@
 const Order = require('../models/orders.js')
 const Worker = require('../models/workers.js')
 
-exports.getOrders = function (req, res) {
-  Order.getAll()
+exports.list = function (req, res) {
+  Order.list()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
 
-exports.deleteOrder = function (req, res) {
-  Order.deleteOrder(req.body)
+exports.delete = function (req, res) {
+  Order.delete(req.body)
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error delete order')
     })
 }
 
-exports.makeOrder = function (req, res) {
+exports.make = function (req, res) {
   const order = new Order(req.body)
   const obj = {
     freeWorkers: [],
@@ -26,14 +28,14 @@ exports.makeOrder = function (req, res) {
   }
   order.getIdBusyMasters()
     .then(result => {
-      console.log(result)
-      Worker.getWorkersWithoutBusy(result, req.body)
+      Worker.getWithoutBusy(result, req.body)
         .then(workers => {
           obj.freeWorkers = workers
-          order.addOrderWithoutMaster()
+          order.addWithoutMaster()
             .then((insert) => {
               obj.insertId = insert.insertId
-              res.send(obj)
+              const json = JSON.stringify(obj)
+              res.send(json)
             })
         })
         .catch(err => {
@@ -45,32 +47,35 @@ exports.makeOrder = function (req, res) {
     })
 }
 
-exports.addOrderAdmin = function (req, res) {
+exports.addAdmin = function (req, res) {
   const order = new Order(req.body)
-  order.addOrderAdmin()
+  order.addAdmin()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(500).send('Error add order admin')
     })
 }
 
-exports.updateOrder = function (req, res) {
+exports.update = function (req, res) {
   const order = new Order(req.body)
-  order.updateOrder()
+  order.update()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(500).send('Error update order')
     })
 }
 
-exports.addOrder = function (req, res) {
-  Order.addOrder(req.body)
+exports.add = function (req, res) {
+  Order.add(req.body)
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error add masters')

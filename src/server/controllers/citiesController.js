@@ -1,39 +1,43 @@
 const City = require('../models/cities.js')
 
-exports.getCities = function (req, res) {
-  City.getAll()
+exports.list = function (req, res) {
+  City.list()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
 
-exports.updateCity = function (req, res) {
+exports.update = function (req, res) {
   const city = new City(req.body)
-  city.updateCity()
+  city.update()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error update city')
     })
 }
 
-exports.addCity = function (req, res) {
+exports.add = function (req, res) {
   const city = new City(req.body)
-  city.addCity()
+  city.add()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error add city')
     })
 }
 
-exports.deleteCity = function (req, res) {
+exports.delete = function (req, res) {
   const city = new City(req.body)
-  city.deleteCity(req.body.id)
+  city.delete(req.body.id)
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error delete city')

@@ -4,16 +4,18 @@ const Clock = require('../models/clocks.js')
 const User = require('../models/users.js')
 const Order = require('../models/orders.js')
 
-exports.getDataAdmin = function (req, res) {
-  Promise.all([City.getAll(), Clock.getAll(), User.getAll(), Worker.getAll(), Order.getAll()])
+exports.listAdmin = function (req, res) {
+  Promise.all([City.list(), Clock.list(), User.list(), Worker.list(), Order.list()])
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
 
-exports.getData = function (req, res) {
-  Promise.all([Clock.getAll(), City.getAll(), Worker.getAll()])
+exports.list = function (req, res) {
+  Promise.all([Clock.list(), City.list(), Worker.list()])
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
