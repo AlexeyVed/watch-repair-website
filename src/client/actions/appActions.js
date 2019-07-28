@@ -24,7 +24,6 @@ export const makeOrder = (values) => {
   return (dispatch) => {
     values.timeRepair = Number(values.timeRepair)
     values.time = Number(values.time)
-    console.log(values)
     dispatch(makeOrderStarted())
     axios
       .post(`http://localhost:3000/api/orders/make`, values)
@@ -65,7 +64,6 @@ export const loadClocks = () => {
   }
 }
 
-
 export const loadCities = () => {
   return (dispatch) => {
     dispatch(loadCitiesStarted())
@@ -79,7 +77,6 @@ export const loadCities = () => {
       })
   }
 }
-
 
 export const loadWorkers = () => {
   return (dispatch) => {
@@ -132,7 +129,6 @@ const loadCitiesFailure = err => ({
   type: LOAD_CITIES_FAILURE,
   payload: err
 })
-
 
 const loadWorkersStarted = () => ({
   type: LOAD_WORKERS_STARTED

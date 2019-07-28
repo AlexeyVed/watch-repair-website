@@ -8,6 +8,7 @@ import Main from './App/Main/Main'
 import MainOrder from './App/MainOrder/MainOrder.jsx'
 import MainAdmin from './Admin/Main/MainAdmin'
 import NoMatch from './NoMatch/NoMatch'
+import {Circle2} from "react-preloaders";
 
 class App extends React.Component {
   componentDidMount () {

@@ -50,7 +50,6 @@ const appReducer = (state = initialState, action) => {
     case LOAD_CLOCKS_SUCCESS:
       return {
         ...state,
-        dataLoad: false,
         data: {
           ...state.data,
           clocks: action.payload,
@@ -61,7 +60,6 @@ const appReducer = (state = initialState, action) => {
     case LOAD_CLOCKS_FAILURE:
       return {
         ...state,
-        dataLoad: false,
         data: {
           ...state.data,
           clocks: [],
@@ -71,14 +69,12 @@ const appReducer = (state = initialState, action) => {
 
     case LOAD_CITIES_STARTED:
       return {
-        ...state,
-        dataLoad: true
+        ...state
       }
 
     case LOAD_CITIES_SUCCESS:
       return {
         ...state,
-        dataLoad: false,
         data: {
           ...state.data,
           cities: action.payload,
@@ -89,7 +85,6 @@ const appReducer = (state = initialState, action) => {
     case LOAD_CITIES_FAILURE:
       return {
         ...state,
-        dataLoad: false,
         data: {
           ...state.data,
           cities: [],
@@ -97,12 +92,9 @@ const appReducer = (state = initialState, action) => {
         }
       }
 
-
-
     case LOAD_WORKERS_STARTED:
       return {
-        ...state,
-        dataLoad: true
+        ...state
       }
 
     case LOAD_WORKERS_SUCCESS:

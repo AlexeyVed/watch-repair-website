@@ -10,13 +10,14 @@ import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 
 class MainOrder extends Component {
   componentDidMount () {
-    this.props.loadCities()
     this.props.loadClocks()
+    this.props.loadCities()
     this.props.loadWorkers()
     this.props.page('order')
   }
 
   render () {
+
     return (
       <div className='main'>
         <OrderForm/>

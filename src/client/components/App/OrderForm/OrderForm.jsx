@@ -24,9 +24,7 @@ class OrderForm extends Component {
         <div className='main-form'>
           <div className='choosing-master'>
             Please, choose a free master.
-              <div className='preloader-choose'>
-                <div className='loader-choose'></div>
-              </div>
+
           </div>
         </div>
       )

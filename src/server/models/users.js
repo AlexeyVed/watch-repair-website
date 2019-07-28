@@ -27,6 +27,10 @@ module.exports = class User {
     return service.requestToDB(`SELECT email, password FROM login where email= "${email}"`)
   }
 
+  static findOne (idlogin) {
+    return service.requestToDB(`SELECT * FROM login WHERE idlogin = ${idlogin}`)
+  }
+
   static delete (idlogin) {
     return service.requestToDB(`DELETE FROM login WHERE idlogin = ${idlogin}`)
   }

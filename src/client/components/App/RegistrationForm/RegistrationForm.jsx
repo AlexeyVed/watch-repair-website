@@ -11,6 +11,7 @@ import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '
 import { missLoginError, registrationToApp } from '../../../actions'
 
 import './RegistrationForm.less'
+import {Placeholder} from "react-preloading-screen";
 
 class RegistrationForm extends Component {
   render () {
@@ -20,9 +21,12 @@ class RegistrationForm extends Component {
       currentUser,
       loginError,
       missLoginError,
-      page } = this.props
+      page,
+      loading
+    } = this.props
 
     let bttnClose = null
+    let loader
 
     if (currentUser) {
       return <Redirect to={{ pathname: '/' }}/>
@@ -36,6 +40,17 @@ class RegistrationForm extends Component {
       bttnClose = <LinkButton to='/order' name='&times;' className='login-form__header__right-button-close'/>
     } else {
       bttnClose = <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
+    }
+
+    if (loading) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
     }
 
     return (
@@ -90,6 +105,7 @@ class RegistrationForm extends Component {
             />
             <button type='submit' label='submit'>Submit</button>
           </form>
+          {loader}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -100,7 +116,8 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     loginError: state.loginReducer.singInError,
-    page: state.appReducer.page
+    page: state.appReducer.page,
+    loading: state.loginReducer.singInLoading
   }
 }
 

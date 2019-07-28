@@ -36,10 +36,10 @@ exports.add = function (req, res) {
   user.check()
     .then(() => {
       user.registration()
-        .then(() => {
-          user.login()
+        .then((res) => {
+          user.findOne(res.insertId)
             .then(result => {
-              const json = JSON.stringify(result[0].email)
+              const json = JSON.stringify(result)
               res.send(json)
             })
         })

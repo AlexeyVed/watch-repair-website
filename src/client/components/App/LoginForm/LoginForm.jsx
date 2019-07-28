@@ -11,6 +11,7 @@ import { loginToApp, missLoginError } from '../../../actions'
 import { validateEmail, validatePassword } from '../../../validation'
 
 import './LoginForm.less'
+import { Placeholder } from "react-preloading-screen";
 
 class LoginForm extends React.Component {
   render () {
@@ -22,16 +23,12 @@ class LoginForm extends React.Component {
       currentUser,
       loginError,
       missLoginError,
-      page
+      page,
+      isSingIn
     } = this.props
 
     let bttnClose = null
-
-    if (currentUser === 'admin@example.com') {
-      return <Redirect to={{ pathname: '/admin' }}/>
-    } else if (currentUser) {
-      return <Redirect to={{ pathname: '/' }}/>
-    }
+    let loader
 
     if (loginError) {
       setTimeout(missLoginError, 3000)
@@ -41,6 +38,23 @@ class LoginForm extends React.Component {
       bttnClose = <LinkButton to='/order' name='&times;' className='login-form__header__right-button-close'/>
     } else {
       bttnClose = <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
+    }
+
+    if (isSingIn) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
+
+    if (currentUser === 'admin@example.com') {
+      return <Redirect to={{ pathname: '/admin' }}/>
+    } else if (currentUser) {
+      return <Redirect to={{ pathname: '/' }}/>
     }
 
     return (
@@ -81,6 +95,7 @@ class LoginForm extends React.Component {
               disabled={pristine || submitting}
               label='submit'>Submit</button>
           </form>
+          {loader}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -91,7 +106,8 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     loginError: state.loginReducer.singInError,
-    page: state.appReducer.page
+    page: state.appReducer.page,
+    isSingIn: state.loginReducer.singInLoading
   }
 }
 

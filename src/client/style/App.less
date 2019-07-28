@@ -133,12 +133,17 @@ body {
 
 }
 
-.preloader-choose {
+.preloader {
     width: 100%;
-    height: 40%;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    zIndex: 999;
+    background-color: rgba(156, 156, 156, 0.22);
 }
 
-.loader-choose {
+.loader {
     display: block;
     position: relative;
     left: 50%;
@@ -152,7 +157,7 @@ body {
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
 }
-.loader-choose:before {
+.loader:before {
     content: "";
     position: absolute;
     top: 5px;
@@ -165,7 +170,7 @@ body {
     -webkit-animation: spin 3s linear infinite;
     animation: spin 3s linear infinite;
 }
-.loader-choose:after {
+.loader:after {
     content: "";
     position: absolute;
     top: 15px;

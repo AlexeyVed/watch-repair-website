@@ -1,7 +1,19 @@
 import {
-  LOAD_DATA_STARTED,
-  LOAD_DATA_SUCCESS,
-  LOAD_DATA_FAILURE,
+  LOAD_CLOCKS_ADMIN_STARTED,
+  LOAD_CLOCKS_ADMIN_SUCCESS,
+  LOAD_CLOCKS_ADMIN_FAILURE,
+  LOAD_CITIES_ADMIN_STARTED,
+  LOAD_CITIES_ADMIN_SUCCESS,
+  LOAD_CITIES_ADMIN_FAILURE,
+  LOAD_ORDERS_ADMIN_STARTED,
+  LOAD_ORDERS_ADMIN_SUCCESS,
+  LOAD_ORDERS_ADMIN_FAILURE,
+  LOAD_CLIENTS_ADMIN_STARTED,
+  LOAD_CLIENTS_ADMIN_SUCCESS,
+  LOAD_CLIENTS_ADMIN_FAILURE,
+  LOAD_WORKERS_ADMIN_STARTED,
+  LOAD_WORKERS_ADMIN_SUCCESS,
+  LOAD_WORKERS_ADMIN_FAILURE,
   ADD_MODEL_STARTED,
   ADD_MODEL_SUCCESS,
   ADD_MODEL_FAILURE,
@@ -10,12 +22,12 @@ import {
   DELETE_MODEL_FAILURE,
   EDIT_MODEL_STARTED,
   EDIT_MODEL_SUCCESS,
-  EDIT_MODEL_FAILURE
+  EDIT_MODEL_FAILURE,
+  REDIRECT_FROM_REFACTOR
 } from '../actions/types'
 
 const initialState = {
   dataLoad: false,
-  dataError: null,
   refactorModelInProcess: false,
   refactorModelError: null,
   redirectBackFromRefactor: false,
@@ -24,38 +36,144 @@ const initialState = {
     cities: [],
     users: [],
     workers: [],
-    orders: []
+    orders: [],
+    clocksError: null,
+    citiesError: null,
+    usersError: null,
+    workersError: null,
+    ordersError: null
   }
 }
 
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_DATA_STARTED:
+    case LOAD_CLOCKS_ADMIN_STARTED:
       return {
         ...state,
         dataLoad: true
       }
 
-    case LOAD_DATA_SUCCESS:
+    case LOAD_CLOCKS_ADMIN_SUCCESS:
       return {
         ...state,
-        dataLoad: false,
-        redirectBackFromRefactor: false,
         data: {
           ...state.data,
-          cities: action.payload[0],
-          clocks: action.payload[1],
-          users: action.payload[2],
-          workers: action.payload[3],
-          orders: action.payload[4]
+          clocks: action.payload,
+          clocksError: null
         }
       }
 
-    case LOAD_DATA_FAILURE:
+    case LOAD_CLOCKS_ADMIN_FAILURE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          clocks: [],
+          clocksError: action.payload
+        }
+      }
+
+    case LOAD_CITIES_ADMIN_STARTED:
+      return {
+        ...state
+      }
+
+    case LOAD_CITIES_ADMIN_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          cities: action.payload,
+          citiesError: null
+        }
+      }
+
+    case LOAD_CITIES_ADMIN_FAILURE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          cities: [],
+          citiesError: action.payload
+        }
+      }
+
+    case LOAD_ORDERS_ADMIN_STARTED:
+      return {
+        ...state
+      }
+
+    case LOAD_ORDERS_ADMIN_SUCCESS:
       return {
         ...state,
         dataLoad: false,
-        dataError: action.payload
+        data: {
+          ...state.data,
+          orders: action.payload,
+          ordersError: null
+        }
+      }
+
+    case LOAD_ORDERS_ADMIN_FAILURE:
+      return {
+        ...state,
+        dataLoad: false,
+        data: {
+          ...state.data,
+          orders: [],
+          ordersError: action.payload
+        }
+      }
+
+    case LOAD_CLIENTS_ADMIN_STARTED:
+      return {
+        ...state
+      }
+
+    case LOAD_CLIENTS_ADMIN_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          users: action.payload,
+          usersError: null
+        }
+      }
+
+    case LOAD_CLIENTS_ADMIN_FAILURE:
+      return {
+        ...state,
+        dataLoad: false,
+        data: {
+          ...state.data,
+          users: [],
+          usersError: action.payload
+        }
+      }
+
+    case LOAD_WORKERS_ADMIN_STARTED:
+      return {
+        ...state
+      }
+
+    case LOAD_WORKERS_ADMIN_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          workers: action.payload,
+          workersError: null
+        }
+      }
+
+    case LOAD_WORKERS_ADMIN_FAILURE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          workers: [],
+          workersError: action.payload
+        }
       }
 
     case ADD_MODEL_STARTED:
@@ -120,6 +238,12 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         refactorModelError: action.payload,
         refactorModelInProcess: false
+      }
+
+    case REDIRECT_FROM_REFACTOR:
+      return {
+        ...state,
+        redirectBackFromRefactor: false
       }
 
     default:

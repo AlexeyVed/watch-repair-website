@@ -1,7 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { loadDataAdmin } from '../../../actions'
+import {
+  loadClocksAdmin,
+  loadCitiesAdmin,
+  loadClientsAdmin,
+  loadOrdersAdmin,
+  loadWorkersAdmin
+} from '../../../actions'
 
 import RefactorCities from '../TableCities/RefactorCities.jsx'
 import RefactorClients from '../TableClients/RefactorClients.jsx'
@@ -11,12 +17,42 @@ import RefactorOrders from '../TableOrders/RefactorOrders.jsx'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 import './AdminContent.less'
+import {Placeholder} from "react-preloading-screen";
 
 class AdminContent extends React.Component {
-  componentDidMount () {
-    this.props.loadData()
+  componentDidMount() {
+    const {
+      loadClocks,
+      loadCities,
+      loadClients,
+      loadOrders,
+      loadWorkers
+    } = this.props
+
+    loadClocks()
+    loadCities()
+    loadClients()
+    loadOrders()
+    loadWorkers()
+
   }
+
   render () {
+    const { isLoading } = this.props
+
+    let loader
+
+    if (isLoading) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
+
     return (
       <div className='admin-content'>
         <div className='admin-content__navigation'>
@@ -36,6 +72,7 @@ class AdminContent extends React.Component {
             <Route path="/admin/orders" component={RefactorOrders}/>
           </Switch>
         </div>
+        {loader}
       </div>
     )
   }
@@ -43,13 +80,18 @@ class AdminContent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    view: state.adminReducer.view
+    view: state.adminReducer.view,
+    isLoading: state.adminReducer.dataLoad
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadData: () => dispatch(loadDataAdmin())
+    loadClocks: () => dispatch(loadClocksAdmin()),
+    loadCities: () => dispatch(loadCitiesAdmin()),
+    loadClients: () => dispatch(loadClientsAdmin()),
+    loadOrders: () => dispatch(loadOrdersAdmin()),
+    loadWorkers: () => dispatch(loadWorkersAdmin())
   }
 }
 
