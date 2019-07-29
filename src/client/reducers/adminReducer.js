@@ -25,6 +25,11 @@ import {
   DELETE_MODEL_STARTED,
   DELETE_MODEL_SUCCESS,
   DELETE_MODEL_FAILURE,
+  DELETE_CITIES_FROM_STATE,
+  DELETE_CLIENTS_FROM_STATE,
+  DELETE_CLOCKS_FROM_STATE,
+  DELETE_ORDERS_FROM_STATE,
+  DELETE_WORKERS_FROM_STATE,
   EDIT_MODEL_STARTED,
   EDIT_MODEL_SUCCESS,
   EDIT_MODEL_FAILURE,
@@ -296,6 +301,51 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         refactorModelError: null,
         refactorModelInProcess: false
+      }
+
+    case DELETE_CITIES_FROM_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          cities: state.data.cities.filter(el => el.id !== action.payload.id)
+        }
+      }
+
+    case DELETE_CLOCKS_FROM_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          clocks: state.data.clocks.filter(el => el.id !== action.payload.id)
+        }
+      }
+
+    case DELETE_CLIENTS_FROM_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          users: state.data.users.filter(el => el.idlogin !== action.payload.id)
+        }
+      }
+
+    case DELETE_WORKERS_FROM_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          workers: state.data.workers.filter(el => el.idworker !== action.payload.id)
+        }
+      }
+
+    case DELETE_ORDERS_FROM_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          orders: state.data.orders.filter(el => el.id !== action.payload.id)
+        }
       }
 
     case DELETE_MODEL_FAILURE:

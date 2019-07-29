@@ -36,10 +36,9 @@ exports.add = function (req, res) {
 }
 
 exports.delete = function (req, res) {
-  const city = new City(req.body)
-  city.delete(req.body.id)
+  City.delete(req.body.id)
     .then(result => {
-      const json = JSON.stringify(result)
+      const json = JSON.stringify(req.body)
       res.send(json)
     })
     .catch(err => {

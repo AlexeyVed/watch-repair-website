@@ -25,6 +25,11 @@ import {
   DELETE_MODEL_STARTED,
   DELETE_MODEL_SUCCESS,
   DELETE_MODEL_FAILURE,
+  DELETE_CITIES_FROM_STATE,
+  DELETE_CLIENTS_FROM_STATE,
+  DELETE_CLOCKS_FROM_STATE,
+  DELETE_ORDERS_FROM_STATE,
+  DELETE_WORKERS_FROM_STATE,
   EDIT_MODEL_STARTED,
   EDIT_MODEL_SUCCESS,
   EDIT_MODEL_FAILURE,
@@ -292,6 +297,7 @@ export const deleteClockFromDB = (id) => {
       .post(`http://localhost:3000/api/clocks/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
+        dispatch(deleteClockFromState(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -306,6 +312,7 @@ export const deleteOrderFromDB = (id) => {
       .post(`http://localhost:3000/api/orders/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
+        dispatch(deleteOrderFromState(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -320,6 +327,7 @@ export const deleteWorkerFromDB = (id) => {
       .post(`http://localhost:3000/api/workers/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
+        dispatch(deleteWorkerFromState(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -334,6 +342,7 @@ export const deleteCityFromDB = (id) => {
       .post(`http://localhost:3000/api/cities/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
+        dispatch(deleteCityFromState(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -348,6 +357,7 @@ export const deleteClientFromDB = (id) => {
       .post(`http://localhost:3000/api/users/delete`, { id })
       .then(res => {
         dispatch(deleteModelSuccess())
+        dispatch(deleteClientFromState(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -490,5 +500,30 @@ const addClockToState = data => ({
 
 const addCityToState = data => ({
   type: ADD_CITIES_TO_STATE,
+  payload: data
+})
+
+const deleteClientFromState = data => ({
+  type: DELETE_CLIENTS_FROM_STATE,
+  payload: data
+})
+
+const deleteWorkerFromState = data => ({
+  type: DELETE_WORKERS_FROM_STATE,
+  payload: data
+})
+
+const deleteOrderFromState = data => ({
+  type: DELETE_ORDERS_FROM_STATE,
+  payload: data
+})
+
+const deleteClockFromState = data => ({
+  type: DELETE_CLOCKS_FROM_STATE,
+  payload: data
+})
+
+const deleteCityFromState = data => ({
+  type: DELETE_CITIES_FROM_STATE,
   payload: data
 })

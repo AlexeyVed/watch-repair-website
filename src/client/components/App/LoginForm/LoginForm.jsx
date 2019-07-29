@@ -94,8 +94,8 @@ class LoginForm extends React.Component {
               type='submit'
               disabled={pristine || submitting}
               label='submit'>Submit</button>
+            {loader}
           </form>
-          {loader}
         </div>
         , document.getElementById('modal-root'))
     )

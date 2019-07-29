@@ -72,8 +72,7 @@ module.exports = class Order {
     return service.requestToDB(`SELECT * FROM orders WHERE id = ?`, [id])
   }
 
-  static delete (obj) {
-    const { id } = obj
+  static delete (id) {
     return service.requestToDB(`DELETE FROM orders WHERE id = ?`, [id])
   }
 

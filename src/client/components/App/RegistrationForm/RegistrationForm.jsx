@@ -104,8 +104,8 @@ class RegistrationForm extends Component {
               required
             />
             <button type='submit' label='submit'>Submit</button>
+            {loader}
           </form>
-          {loader}
         </div>
         , document.getElementById('modal-root'))
     )

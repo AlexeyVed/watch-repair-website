@@ -15,8 +15,7 @@ module.exports = class City {
     return service.requestToDB(`INSERT INTO cities (city) VALUES (?)`, [city])
   }
 
-  delete () {
-    const { id } = this.values
+  static delete (id) {
     return service.requestToDB(`DELETE FROM cities WHERE id = ?`, [id])
   }
 

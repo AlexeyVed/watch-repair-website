@@ -87,7 +87,7 @@ exports.login = function (req, res) {
 exports.delete = function (req, res) {
   User.delete(req.body.id)
     .then(result => {
-      const json = JSON.stringify(result)
+      const json = JSON.stringify(req.body)
       res.send(json)
     })
     .catch(err => {
