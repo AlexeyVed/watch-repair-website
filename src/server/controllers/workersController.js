@@ -11,9 +11,7 @@ exports.list = function (req, res) {
 exports.update = function (req, res) {
   Worker.findOne(req.body.idworker)
     .then(workerFromDB => {
-      console.log(workerFromDB)
       const worker = new Worker(workerFromDB[0])
-      console.log(worker.values)
       worker.update(req.body)
         .then(result => {
           const json = JSON.stringify(req.body)

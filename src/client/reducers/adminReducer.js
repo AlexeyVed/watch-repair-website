@@ -355,7 +355,6 @@ const adminReducer = (state = initialState, action) => {
         data: {
           ...state.data,
           workers: state.data.workers.map(worker => {
-            console.log(worker, action.payload)
             if (worker.idworker === Number(action.payload.idworker)) {
               action.payload.idworker = Number(action.payload.idworker)
               action.payload.rating = Number(action.payload.rating)

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Placeholder, Preloader } from 'react-preloading-screen'
 
 import { changePage } from '../../../actions'
 import LoginForm from '../LoginForm/LoginForm.jsx'
 import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { styleLoader } from "../../../style/stylePreloader";
-import { Placeholder, Preloader } from "react-preloading-screen";
+import { styleLoader } from '../../../style/stylePreloader'
 
 class Main extends Component {
   componentDidMount () {

@@ -56,7 +56,6 @@ class RefactorWorkers extends React.Component {
 const mapStateToProps = (state) => {
   return {
     workers: state.adminReducer.data.workers
-
   }
 }
 

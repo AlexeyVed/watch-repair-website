@@ -65,7 +65,6 @@ exports.update = function (req, res) {
           res.send(json)
         })
         .catch(err => {
-          console.log(err)
           res.status(400).send('Error update clock')
         })
     })

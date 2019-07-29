@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 import {
   loadClocksAdmin,
   loadCitiesAdmin,
@@ -17,10 +18,9 @@ import RefactorOrders from '../TableOrders/RefactorOrders.jsx'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 import './AdminContent.less'
-import {Placeholder} from "react-preloading-screen";
 
 class AdminContent extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     const {
       loadClocks,
       loadCities,
@@ -34,7 +34,6 @@ class AdminContent extends React.Component {
     loadClients()
     loadOrders()
     loadWorkers()
-
   }
 
   render () {

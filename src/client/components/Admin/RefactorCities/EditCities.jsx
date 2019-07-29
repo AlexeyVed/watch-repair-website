@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm, change } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { editCityIntoDB } from '../../../actions'
+import { required } from '../../../validation'
 
 import './RefactorCities.less'
-import {Placeholder} from "react-preloading-screen"
-import {required} from "../../../validation"
 
 class EditCities extends React.Component {
   componentDidMount () {

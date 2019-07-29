@@ -17,7 +17,6 @@ class MainOrder extends Component {
   }
 
   render () {
-
     return (
       <div className='main'>
         <OrderForm/>

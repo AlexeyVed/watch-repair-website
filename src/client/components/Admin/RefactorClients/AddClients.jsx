@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -10,7 +11,6 @@ import { confirmEmail, confirmPassword, validateEmail, validatePassword, require
 import { addUserToDB } from '../../../actions'
 
 import './RefactorClients.less'
-import {Placeholder} from "react-preloading-screen";
 
 class AddClients extends React.Component {
   render () {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Placeholder } from 'react-preloading-screen'
 
 import AllWorkers from '../AllWorkers/AllWorker.jsx'
 import ChooseWorker from '../ChooseWorker/ChooseWorker.jsx'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import {Placeholder} from "react-preloading-screen";
 
 class Content extends Component {
   render () {
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
     chooseMaster: state.appReducer.chooseWorker,
     currentUser: state.loginReducer.singInUser,
     dataLoad: state.appReducer.dataLoad,
-    isMakeOrder: state.appReducer.isMakeOrder,
+    isMakeOrder: state.appReducer.isMakeOrder
   }
 }
 

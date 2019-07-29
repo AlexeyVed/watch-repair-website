@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addWorkerToDB } from '../../../actions'
+import { required } from '../../../validation'
 
 import './RefactorWorkers.less'
-import {Placeholder} from "react-preloading-screen";
-import {required} from "../../../validation";
 
 class AddWorkers extends React.Component {
   render () {

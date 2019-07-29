@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { change, Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { editWorkerIntoDB } from '../../../actions'
+import { required } from '../../../validation'
 
 import './RefactorWorkers.less'
-import {Placeholder} from "react-preloading-screen";
-import {required} from "../../../validation";
 
 class EditWorkers extends React.Component {
   componentDidMount () {
