@@ -15,27 +15,29 @@ class RefactorCities extends React.Component {
 
     return (
       <div className='table-cities'>
-        <div className='table-cities__top'>
-          <div className='table-cities__title'>Town where we work</div>
-          <div className='table-cities__table-header'>
-            <div className='table-cities__table-header__header-id'>ID</div>
-            <div className='table-cities__table-header__header-name'>City</div>
-            <div className='table-cities__table-header__header-buttons'>Service</div>
-          </div>
-        </div>
-        <div className='table-cities__bottom'>
-          { cities.map(item => (
-            <div className='table-cities__table' key={item.id}>
-              <div className='table-cities__table__row'>
-                <div className='table-cities__table__row__id'>{item.id}</div>
-                <div className='table-cities__table__row__name'>{item.city}</div>
-                <div className='table-cities__table__row__buttons'>
-                  <LinkButton to={`/admin/cities/edit/${item.id}/${item.city}`} name='Edit'/>
-                  <button onClick={ () => deleteCity(item.id) }>Delete</button>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className='table-cities__title'>Town where we work</div>
+        <div className='table-cities__table'>
+          <table>
+            <tbody>
+            <tr>
+              <th>ID</th>
+              <th>City</th>
+              <th>Service</th>
+            </tr>
+            { cities.map(item => (
+              <tr key={item.id}>
+
+                  <td>{item.id}</td>
+                  <td>{item.city}</td>
+                  <td>
+                    <LinkButton to={`/admin/cities/edit/${item.id}/${item.city}`} name='Edit'/>
+                    <button onClick={ () => deleteCity(item.id) }>Delete</button>
+                  </td>
+
+              </tr>
+            ))}
+            </tbody>
+          </table>
         </div>
         <div className='table-cities__bttn-add'>
           <LinkButton to='/admin/cities/add' name='Add'/>
