@@ -19,23 +19,21 @@ class RefactorCities extends React.Component {
         <div className='table-cities__table'>
           <table>
             <tbody>
-            <tr>
-              <th>ID</th>
-              <th>City</th>
-              <th>Service</th>
-            </tr>
-            { cities.map(item => (
-              <tr key={item.id}>
-
+              <tr>
+                <th>ID</th>
+                <th>City</th>
+                <th>Service</th>
+              </tr>
+              { cities.map(item => (
+                <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>{item.city}</td>
                   <td>
                     <LinkButton to={`/admin/cities/edit/${item.id}/${item.city}`} name='Edit'/>
                     <button onClick={ () => deleteCity(item.id) }>Delete</button>
                   </td>
-
-              </tr>
-            ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

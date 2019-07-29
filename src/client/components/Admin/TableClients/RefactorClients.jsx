@@ -15,29 +15,30 @@ class RefactorClients extends React.Component {
 
     return (
       <div className='table-clients'>
-        <div className='table-clients__top'>
-          <div className='table-clients__title'>Our Clients</div>
-          <div className='table-clients__table-header'>
-            <div className='table-clients__table-header__header-id'>ID</div>
-            <div className='table-clients__table-header__header-email'>Email</div>
-            <div className='table-clients__table-header__header-password'>Password</div>
-            <div className='table-clients__table-header__header-buttons'>Service</div>
-          </div>
-        </div>
-        <div className='table-clients__bottom'>
-          { users.map(item => (
-            <div className='table-clients__table' key={item.idlogin}>
-              <div className='table-clients__table__row'>
-                <div className='table-clients__table__row__id'>{item.idlogin}</div>
-                <div className='table-clients__table__row__email'>{item.email}</div>
-                <div className='table-clients__table__row__password'>{item.password}</div>
-                <div className='table-clients__table__row__buttons'>
-                  <LinkButton to={`/admin/clients/edit/${item.idlogin}/${item.email}/${item.password}`} name='Edit'/>
-                  <button onClick={ () => deleteClient(item.idlogin) }>Delete</button>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className='table-clients__title'>Our Clients</div>
+        <div className='table-clients__table'>
+          <table>
+            <tbody>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Service</th>
+              </tr>
+              { users.map(item => (
+                <tr key={item.idlogin}>
+                  <td>{item.idlogin}</td>
+                  <td>{item.email}</td>
+                  <td>{item.password}</td>
+                  <td>
+                    <LinkButton to={`/admin/clients/edit/${item.idlogin}/${item.email}/${item.password}`} name='Edit'/>
+                    <button onClick={ () => deleteClient(item.idlogin) }>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
         </div>
         <div className='table-clients__bttn-add'>
           <LinkButton to='/admin/clients/add' name='Add'/>

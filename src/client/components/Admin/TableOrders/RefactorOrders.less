@@ -1,183 +1,153 @@
 .table-orders {
   display: flex;
   flex-direction: column;
-  font-size: 18px;
+  font-size: 16px;
   height: 100%;
 
-  &__top {
-    display: flex;
-    flex-direction: column;
-    flex: 1 6 40px;
-
-    .table-orders__title {
-      text-align: center;
-      height: 40px;
-      margin-top: 20px;
-    }
-
-    .table-orders__table-header {
-      display: flex;
-      flex-wrap: nowrap;
-      height: 40px;
-      align-items: center;
-      background-color: #e0e0d6;
-      border: 2px solid #e0e0d6;
-      border-radius: 4px;
-
-
-      &__header-id {
-        flex: 0.5 10px;
-        text-align: center;
-        border-right: 1px solid #0d5300;
-      }
-
-      &__header-name {
-        flex: 1.5 40px;
-        padding-left: 10px;
-        border-right: 1px solid #0d5300;
-      }
-
-      &__header-email {
-        flex: 3;
-        padding-left: 10px;
-        border-right: 1px solid #0d5300;
-      }
-
-      &__header-city {
-        flex: 1.5 20px;
-        text-align: center;
-        border-right: 1px solid #0d5300;
-      }
-
-      &__header-date {
-        flex: 2 25px;
-        text-align: center;
-        border-right: 1px solid #0d5300;
-      }
-
-      &__header-master-id {
-        flex: 1 30px;
-        text-align: center;
-        border-right: 1px solid #0d5300;
-      }
-
-      &__header-buttons {
-        flex: 1 60px;
-        text-align: center;
-        width: 100px;
-      }
-    }
+  &__title {
+    text-align: center;
+    height: 40px;
+    margin-top: 30px;
+    font-weight: bold;
+    font-size: 20px;
   }
 
-  &__bottom {
-    display: flex;
-    flex-direction: column;
+  &__table {
+    flex: 1;
     overflow: auto;
-    flex: 6 1 400px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 
-    .table-orders__table {
-      margin-top: 10px;
-      font-size: 15px;
+    table {
+      border-collapse: collapse;
+      width: 98%;
 
-      &__row {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
+      flex: 1;
+
+      tr {
         height: 40px;
-        border-bottom: 1px solid #0d5300;
-        margin-top: 3px;
+        margin-top: 5px;
+        border-bottom: 1px solid grey;
+      }
 
-        &__id {
-          flex: 0.5 10px;
-          text-align: center;
-          border-right: 1px solid #0d5300;
+      tr:first-child {
+        background-color: #f1efe4;
+        height: 50px;
+        border-bottom: none;
+      }
+
+      th:nth-child(1) {
+        width: 50px;
+        border-right: 1px solid grey;
+      }
+
+      th:nth-child(2) {
+        border-right: 1px solid grey;
+      }
+
+      th:nth-child(3) {
+        border-right: 1px solid grey;
+      }
+
+      th:nth-child(4) {
+        border-right: 1px solid grey;
+      }
+
+      th:nth-child(5) {
+        border-right: 1px solid grey;
+      }
+
+      th:nth-child(6) {
+        border-right: 1px solid grey;
+      }
+
+      th:nth-child(7) {
+        width: 120px;
+      }
+
+      td {
+        text-align: center;
+      }
+
+      td:nth-child(1) {
+        border-right: 1px solid grey;
+      }
+
+      td:nth-child(2) {
+        text-align: left;
+        padding-left: 10px;
+        border-right: 1px solid grey;
+      }
+
+      td:nth-child(3) {
+        text-align: left;
+        padding-left: 10px;
+        border-right: 1px solid grey;
+      }
+
+      td:nth-child(4) {
+        border-right: 1px solid grey;
+      }
+
+      td:nth-child(5) {
+        border-right: 1px solid grey;
+      }
+
+      td:nth-child(6) {
+        border-right: 1px solid grey;
+      }
+
+      td:nth-child(7) {
+        button {
+          width: 50%;
+          height: 28px;
+          padding: 0;
+          border: none;
+          background-color: #f1efe4;
+          font-size: 13px;
+          color: black;
+          cursor: pointer;
+          outline: none;
+          border-right: 1px solid #e6e6e2;
         }
 
-        &__name {
-          flex: 1.5 40px;
-          padding-left: 10px;
-          border-right: 1px solid #0d5300;
-        }
-
-        &__email {
-          flex: 3;
-          padding-left: 10px;
-          border-right: 1px solid #0d5300;
-        }
-
-        &__city {
-          flex: 1.5 20px;
-          text-align: center;
-          border-right: 1px solid #0d5300;
-        }
-
-        &__date {
-          flex: 2 25px;
-          text-align: center;
-          border-right: 1px solid #0d5300;
-        }
-
-        &__master-id {
-          flex: 1 30px;
-          text-align: center;
-          border-right: 1px solid #0d5300;
-        }
-
-        &__buttons {
-          flex: 1 60px;
-          text-align: center;
-          width: 100px;
-
-          button {
-            width: 50%;
-            height: 28px;
-            padding: 0;
-            border: none;
-            background-color: #f4f4f0;
-            font-size: 13px;
-            color: black;
-            cursor: pointer;
-            outline: none;
-            border-left: 1px solid #e6e6e2;
-            border-right: 1px solid #e6e6e2;
-          }
-
-          a > button {
-            width: 50%;
-            height: 28px;
-            padding: 0;
-            border: none;
-            background-color: #f4f4f0;
-            font-size: 13px;
-            color: black;
-            cursor: pointer;
-            outline: none;
-            border-left: 1px solid #e6e6e2;
-            border-right: 1px solid #e6e6e2;
-          }
+        a > button {
+          width: 50%;
+          height: 28px;
+          padding: 0;
+          border: none;
+          background-color: #f1efe4;
+          font-size: 13px;
+          color: black;
+          cursor: pointer;
+          outline: none;
+          border-left: 1px solid #e6e6e2;
+          border-right: 1px solid #e6e6e2;
         }
       }
+
     }
   }
 
   &__bttn-add {
-    flex: 1 6 80px;
     position: relative;
     width: 100%;
+    height: 30px;
 
     a > button {
       position: absolute;
       right: 30px;
       height: 100%;
-      width: 100px;
+      width: 120px;
       padding: 0;
       border: none;
       color: inherit;
       cursor: pointer;
-      background-color: #e6e6e2;
+      background-color: #f1efe4;
       outline: none;
       border: 1px solid #b9b9b5;
+      color: black;
     }
   }
+
 }
