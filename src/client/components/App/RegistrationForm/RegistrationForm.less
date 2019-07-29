@@ -1,13 +1,9 @@
-@widthRegister: 35vw;
-@heightRegister: 64vh;
-
-
 .registration-form {
-  position: absolute;
-  top: 15vh;
-  left: 50vw - @widthRegister/2;
-  width: @widthRegister;
-  height: @heightRegister;
+  position: relative;
+  top: 13vh;
+  margin: auto;
+  width: 420px;
+  height: 475px;
   z-index: 999;
   background-color: white;
   border: 2px solid #b5b5b5;
@@ -19,8 +15,8 @@
   &__header {
     text-align: center;
     width: 100%;
-    padding-top: 5vh;
-    margin-bottom: 3vh;
+    padding-top: 35px;
+    margin-bottom: 35px;
     font-size: 20px;
     position: relative;
 
@@ -55,15 +51,31 @@
 
   & > .input-with-label > input {
     width: 65%;
-    height: 4vh;
-    margin-top: 3vh;
+    height: 29px;
+    margin-top: 20px;
     border-radius: 5px;
     border: 1px solid gray;
     padding-left: 10px;
   }
 
   & > button {
-    margin-top: 25px;
+    margin-top: 30px;
+    width: 100px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    color: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: rgba(221, 235, 200, 0.69);
+    outline: none;
+    border: 1px solid rgba(55, 69, 62, 0.49);
+    border-radius: 5px;
+  }
+
+  & > button:hover {
+    border: 1px solid rgba(55, 69, 62, 0.56);
+    background-color: rgba(234, 248, 213, 0.67);
   }
 }
 

@@ -82,7 +82,7 @@ exports.login = function (req, res) {
       }
     })
     .catch(error => {
-      res.status(404).send(error)
+      res.status(404).send('User not found!')
     })
 }
 
