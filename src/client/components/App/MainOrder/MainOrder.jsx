@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { changePage, loadDataUser } from '../../../actions'
+import { changePage, loadCities, loadClocks, loadWorkers } from '../../../actions'
 import OrderForm from '../OrderForm/OrderForm.jsx'
 import Content from '../Content/Content.jsx'
 import LoginForm from '../LoginForm/LoginForm.jsx'
@@ -10,7 +10,9 @@ import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 
 class MainOrder extends Component {
   componentDidMount () {
-    this.props.loadData()
+    this.props.loadClocks()
+    this.props.loadCities()
+    this.props.loadWorkers()
     this.props.page('order')
   }
 
@@ -36,7 +38,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadData: () => dispatch(loadDataUser()),
+    loadCities: () => dispatch(loadCities()),
+    loadClocks: () => dispatch(loadClocks()),
+    loadWorkers: () => dispatch(loadWorkers()),
     page: data => dispatch(changePage(data))
   }
 }

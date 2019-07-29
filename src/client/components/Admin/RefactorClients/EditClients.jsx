@@ -3,23 +3,36 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { change, Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { validateEmail, validatePassword } from '../../../validation'
+import { validateEmail, validatePassword, required } from '../../../validation'
 import { editUserIntoDB } from '../../../actions'
 
 import './RefactorClients.less'
 
 class EditClients extends React.Component {
   componentDidMount () {
-    this.props.dispatch(change('editClient', 'id', this.props.match.params.idlogin))
-    this.props.dispatch(change('editClient', 'emailReg', this.props.match.params.email))
+    this.props.dispatch(change('editClient', 'idlogin', this.props.match.params.idlogin))
+    this.props.dispatch(change('editClient', 'email', this.props.match.params.email))
     this.props.dispatch(change('editClient', 'password', this.props.match.params.password))
   }
 
   render () {
-    const { handleSubmit, editClient, redirectBack } = this.props
+    const { handleSubmit, editClient, redirectBack, isRefactor } = this.props
+    let loader
+
+    if (isRefactor) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clients' }}/>
@@ -38,7 +51,7 @@ class EditClients extends React.Component {
             </div>
             <Field
               label='ID'
-              name='id'
+              name='idlogin'
               component={myInput}
               type='text'
               placeholder={this.props.match.params.idlogin}
@@ -46,11 +59,11 @@ class EditClients extends React.Component {
             />
             <Field
               label='Your email'
-              name='emailReg'
+              name='email'
               component={myInput}
               type='text'
               placeholder='Enter your email'
-              validate={[validateEmail]}
+              validate={[validateEmail, required]}
               required
             />
             <Field
@@ -59,12 +72,13 @@ class EditClients extends React.Component {
               component={myInput}
               type='text'
               placeholder='Enter your password'
-              validate={validatePassword}
+              validate={[validatePassword, required]}
               required
             />
             <button
               type='submit'
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -74,13 +88,14 @@ class EditClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.adminReducer.redirectBackFromRefactor,
+    isRefactor: state.adminReducer.refactorModelInProcess
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editClient: values => dispatch(editUserIntoDB(values.emailReg, values.password, values.id))
+    editClient: values => dispatch(editUserIntoDB(values))
   }
 }
 

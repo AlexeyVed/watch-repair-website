@@ -1,24 +1,30 @@
 const service = require('../services/modules.js')
 
 module.exports = class City {
-  constructor (city, id) {
-    this.id = id || null
-    this.city = city
+  constructor (values) {
+    this.values = values
   }
 
-  updateCity () {
-    return service.requestToDB(`UPDATE cities SET city = ? WHERE id = ?`, [this.city, this.id])
+  update (values) {
+    this.values = values
+    const { city, id } = this.values
+    return service.requestToDB(`UPDATE cities SET city = ? WHERE id = ?`, [city, id])
   }
 
-  addCity () {
-    return service.requestToDB(`INSERT INTO cities (city) VALUES (?)`, [this.city])
+  add () {
+    const { city } = this.values
+    return service.requestToDB(`INSERT INTO cities (city) VALUES (?)`, [city])
   }
 
-  static deleteCity (id) {
+  static delete (id) {
     return service.requestToDB(`DELETE FROM cities WHERE id = ?`, [id])
   }
 
-  static getAll () {
+  static findOne (id) {
+    return service.requestToDB(`SELECT * FROM cities WHERE id = ?`, [id])
+  }
+
+  static list () {
     return service.requestToDB(`SELECT * FROM cities`)
   }
 }

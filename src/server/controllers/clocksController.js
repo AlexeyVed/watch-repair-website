@@ -1,38 +1,48 @@
 const Clock = require('../models/clocks.js')
 
-exports.getClocks = function (req, res) {
-  Clock.getAll()
+exports.list = function (req, res) {
+  Clock.list()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
 
-exports.updateClock = function (req, res) {
-  const clock = new Clock(req.body.typeClock, req.body.timeRepair, req.body.id)
-  clock.updateClock()
-    .then(result => {
-      res.send(result)
-    })
-    .catch(err => {
-      res.status(400).send('Error update clock')
+exports.update = function (req, res) {
+  Clock.findOne(req.body.id)
+    .then((clockFromDB) => {
+      const clock = new Clock(clockFromDB[0])
+      clock.update(req.body)
+        .then(result => {
+          const json = JSON.stringify(req.body)
+          res.send(json)
+        })
+        .catch(err => {
+          res.status(400).send('Error update clock')
+        })
     })
 }
 
-exports.addClock = function (req, res) {
-  const clock = new Clock(req.body.typeClock, req.body.timeRepair)
-  clock.addClock()
+exports.add = function (req, res) {
+  const clock = new Clock(req.body)
+  clock.add()
     .then(result => {
-      res.send(result)
+      Clock.findOne(result.insertId)
+        .then(clocks => {
+          const json = JSON.stringify(clocks[0])
+          res.status(201).send(json)
+        })
     })
     .catch(err => {
       res.status(400).send('Error add clock')
     })
 }
 
-exports.deleteClock = function (req, res) {
-  Clock.deleteClock(req.body.id)
+exports.delete = function (req, res) {
+  Clock.delete(req.body.id)
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(req.body)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error delete clock')

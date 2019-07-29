@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -22,16 +23,12 @@ class LoginForm extends React.Component {
       currentUser,
       loginError,
       missLoginError,
-      page
+      page,
+      isSingIn
     } = this.props
 
     let bttnClose = null
-
-    if (currentUser === 'admin@example.com') {
-      return <Redirect to={{ pathname: '/admin' }}/>
-    } else if (currentUser) {
-      return <Redirect to={{ pathname: '/' }}/>
-    }
+    let loader
 
     if (loginError) {
       setTimeout(missLoginError, 3000)
@@ -41,6 +38,23 @@ class LoginForm extends React.Component {
       bttnClose = <LinkButton to='/order' name='&times;' className='login-form__header__right-button-close'/>
     } else {
       bttnClose = <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
+    }
+
+    if (isSingIn) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
+
+    if (currentUser === 'admin@example.com') {
+      return <Redirect to={{ pathname: '/admin' }}/>
+    } else if (currentUser) {
+      return <Redirect to={{ pathname: '/' }}/>
     }
 
     return (
@@ -80,6 +94,7 @@ class LoginForm extends React.Component {
               type='submit'
               disabled={pristine || submitting}
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -91,13 +106,14 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     loginError: state.loginReducer.singInError,
-    page: state.appReducer.page
+    page: state.appReducer.page,
+    isSingIn: state.loginReducer.singInLoading
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginApp: values => dispatch(loginToApp(values.email, values.password)),
+    loginApp: values => dispatch(loginToApp(values)),
     missLoginError: () => dispatch(missLoginError())
   }
 }

@@ -1,7 +1,13 @@
 import {
-  LOAD_DATA_USER_STARTED,
-  LOAD_DATA_USER_SUCCESS,
-  LOAD_DATA_USER_FAILURE,
+  LOAD_CITIES_STARTED,
+  LOAD_CITIES_SUCCESS,
+  LOAD_CITIES_FAILURE,
+  LOAD_CLOCKS_STARTED,
+  LOAD_CLOCKS_SUCCESS,
+  LOAD_CLOCKS_FAILURE,
+  LOAD_WORKERS_STARTED,
+  LOAD_WORKERS_SUCCESS,
+  LOAD_WORKERS_FAILURE,
   MAKE_ORDER_STARTED,
   MAKE_ORDER_SUCCESS,
   MAKE_ORDER_FAILURE,
@@ -16,7 +22,10 @@ const initialState = {
   data: {
     clocks: [],
     cities: [],
-    workers: []
+    workers: [],
+    loadClockError: null,
+    loadCitiesError: null,
+    loadWorkersError: null
   },
   forOrder: {
     freWorkers: [],
@@ -24,7 +33,6 @@ const initialState = {
     masterID: null
   },
   dataLoad: false,
-  dataError: null,
   isMakeOrder: false,
   makeOrderError: null,
   chooseWorker: false,
@@ -33,29 +41,82 @@ const initialState = {
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_DATA_USER_STARTED:
+    case LOAD_CLOCKS_STARTED:
       return {
         ...state,
         dataLoad: true
       }
 
-    case LOAD_DATA_USER_SUCCESS:
+    case LOAD_CLOCKS_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          clocks: action.payload,
+          loadClockError: null
+        }
+      }
+
+    case LOAD_CLOCKS_FAILURE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          clocks: [],
+          loadClockError: action.payload
+        }
+      }
+
+    case LOAD_CITIES_STARTED:
+      return {
+        ...state
+      }
+
+    case LOAD_CITIES_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          cities: action.payload,
+          loadCitiesError: null
+        }
+      }
+
+    case LOAD_CITIES_FAILURE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          cities: [],
+          loadCitiesError: action.payload
+        }
+      }
+
+    case LOAD_WORKERS_STARTED:
+      return {
+        ...state
+      }
+
+    case LOAD_WORKERS_SUCCESS:
       return {
         ...state,
         dataLoad: false,
         data: {
           ...state.data,
-          clocks: action.payload[0],
-          cities: action.payload[1],
-          workers: action.payload[2]
+          workers: action.payload,
+          loadWorkersError: null
         }
       }
 
-    case LOAD_DATA_USER_FAILURE:
+    case LOAD_WORKERS_FAILURE:
       return {
         ...state,
         dataLoad: false,
-        dataError: action.payload
+        data: {
+          ...state.data,
+          workers: [],
+          loadWorkersError: action.payload
+        }
       }
 
     case MAKE_ORDER_STARTED:

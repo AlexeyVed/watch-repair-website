@@ -1,22 +1,24 @@
 const User = require('../models/users.js')
 
-exports.getUsers = function (req, res) {
-  User.getAll()
+exports.list = function (req, res) {
+  User.list()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
 
 exports.registration = function (req, res) {
-  const user = new User(req.body.email, req.body.password)
-  user.checkUser()
+  const user = new User(req.body)
+  user.check()
     .then(() => {
       user.registration()
         .then(() => {
           user.login()
             .then(result => {
               if (result[0].password === req.body.password) {
-                res.send(result[0].email)
+                const json = JSON.stringify(result[0].email)
+                res.send(json)
               }
             })
         })
@@ -29,15 +31,19 @@ exports.registration = function (req, res) {
     })
 }
 
-exports.addUser = function (req, res) {
-  const user = new User(req.body.email, req.body.password)
-  user.checkUser()
+exports.add = function (req, res) {
+  const user = new User(req.body)
+  user.check()
     .then(() => {
       user.registration()
-        .then(() => {
-          user.login()
-            .then(result => {
-              res.send(result[0].email)
+        .then((result) => {
+          User.findOne(result.insertId)
+            .then(client => {
+              const json = JSON.stringify(client[0])
+              res.status(201).send(json)
+            })
+            .catch(err => {
+              res.status(500).send('some broke')
             })
         })
         .catch(error => {
@@ -49,36 +55,42 @@ exports.addUser = function (req, res) {
     })
 }
 
-exports.updateUser = function (req, res) {
-  const user = new User(req.body.email, req.body.password, req.body.id)
-  user.updateUser()
-    .then(result => {
-      res.send(result)
-    })
-    .catch(err => {
-      res.status(400).send('Error update clock')
+exports.update = function (req, res) {
+  User.findOne(req.body.idlogin)
+    .then(userFromDB => {
+      const user = new User(userFromDB[0])
+      user.update(req.body)
+        .then(result => {
+          const json = JSON.stringify(req.body)
+          res.send(json)
+        })
+        .catch(err => {
+          res.status(400).send('Error update clock')
+        })
     })
 }
 
 exports.login = function (req, res) {
-  const user = new User(req.body.email, req.body.password)
+  const user = new User(req.body)
   user.login()
     .then(result => {
       if (result[0].password === req.body.password) {
-        res.send(result[0].email)
+        const json = JSON.stringify(result[0].email)
+        res.send(json)
       } else {
         res.status(422).send('Invalid pass')
       }
     })
     .catch(error => {
-      res.status(404).send(error)
+      res.status(404).send('User not found!')
     })
 }
 
-exports.deleteUser = function (req, res) {
-  User.deleteUser(req.body.id)
+exports.delete = function (req, res) {
+  User.delete(req.body.id)
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(req.body)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error delete user')

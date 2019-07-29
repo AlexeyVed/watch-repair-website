@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm, change } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { editCityIntoDB } from '../../../actions'
+import { required } from '../../../validation'
 
 import './RefactorCities.less'
 
@@ -17,7 +19,19 @@ class EditCities extends React.Component {
   }
 
   render () {
-    const { handleSubmit, editCity, redirectBack } = this.props
+    const { handleSubmit, editCity, redirectBack, isRefactor } = this.props
+    let loader
+
+    if (isRefactor) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/cities' }}/>
@@ -45,11 +59,13 @@ class EditCities extends React.Component {
               label='Enter city'
               name='city'
               component={myInput}
+              validate={required}
               type='text'
             />
             <button
               type='submit'
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -59,13 +75,14 @@ class EditCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.adminReducer.redirectBackFromRefactor,
+    isRefactor: state.adminReducer.refactorModelInProcess
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editCity: values => dispatch(editCityIntoDB(values.city, values.id))
+    editCity: values => dispatch(editCityIntoDB(values))
   }
 }
 

@@ -1,38 +1,48 @@
 const Worker = require('../models/workers.js')
 
-exports.getWorkers = function (req, res) {
-  Worker.getAll()
+exports.list = function (req, res) {
+  Worker.list()
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(result)
+      res.send(json)
     })
 }
 
-exports.updateWorker = function (req, res) {
-  const worker = new Worker(req.body.name, req.body.city, req.body.rating, req.body.id)
-  worker.updateWorker()
-    .then(result => {
-      res.send(result)
-    })
-    .catch(err => {
-      res.status(400).send('Error update worker')
+exports.update = function (req, res) {
+  Worker.findOne(req.body.idworker)
+    .then(workerFromDB => {
+      const worker = new Worker(workerFromDB[0])
+      worker.update(req.body)
+        .then(result => {
+          const json = JSON.stringify(req.body)
+          res.send(json)
+        })
+        .catch(err => {
+          res.status(400).send('Error update worker')
+        })
     })
 }
 
-exports.addWorker = function (req, res) {
-  const worker = new Worker(req.body.name, req.body.city, req.body.rating)
-  worker.addWorker()
+exports.add = function (req, res) {
+  const worker = new Worker(req.body)
+  worker.add()
     .then(result => {
-      res.send(result)
+      Worker.findOne(result.insertId)
+        .then((worker) => {
+          const json = JSON.stringify(worker[0])
+          res.status(201).send(json)
+        })
     })
     .catch(err => {
       res.status(400).send('Error add worker')
     })
 }
 
-exports.deleteWorker = function (req, res) {
-  Worker.deleteWorker(req.body.id)
+exports.delete = function (req, res) {
+  Worker.delete(req.body.id)
     .then(result => {
-      res.send(result)
+      const json = JSON.stringify(req.body)
+      res.send(json)
     })
     .catch(err => {
       res.status(400).send('Error delete worker')

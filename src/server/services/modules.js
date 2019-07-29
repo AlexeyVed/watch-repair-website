@@ -31,7 +31,7 @@ exports.requestToDB = (query, ...rest) => {
         if (result.length || result.protocol41) {
           resolve(result)
         } else {
-          reject('Not Found!')
+          resolve([])
         }
       })
     })

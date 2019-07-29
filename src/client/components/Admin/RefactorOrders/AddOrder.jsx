@@ -3,16 +3,30 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addOrderToDB } from '../../../actions'
+import { required } from '../../../validation'
 
 import './RefactorOrders.less'
 
 class AddOrder extends React.Component {
   render () {
-    const { handleSubmit, addOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
+    const { isRefactor, handleSubmit, addOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
+    let loader
+
+    if (isRefactor) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
@@ -36,6 +50,7 @@ class AddOrder extends React.Component {
               label='Enter client name'
               name='clientName'
               component={myInput}
+              validate={[required]}
               type='text'
               placeholder='Enter your name'
               required
@@ -45,6 +60,7 @@ class AddOrder extends React.Component {
               <Field
                 name='clientEmail'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose email</option>
@@ -60,6 +76,7 @@ class AddOrder extends React.Component {
               <Field
                 name='masterID'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose master</option>
@@ -75,6 +92,7 @@ class AddOrder extends React.Component {
               <Field
                 name='timeRepair'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose your clock</option>
@@ -90,6 +108,7 @@ class AddOrder extends React.Component {
               <Field
                 name='city'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose your city</option>
@@ -104,6 +123,7 @@ class AddOrder extends React.Component {
               label='Choose date'
               name='date'
               component={myInput}
+              validate={[required]}
               type='date'
             />
             <div className='refactor-orders__order-select'>
@@ -111,6 +131,7 @@ class AddOrder extends React.Component {
               <Field
                 name='time'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0}>Select time</option>
@@ -124,6 +145,7 @@ class AddOrder extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -137,7 +159,8 @@ const mapStateToProps = (state) => {
     chooseCities: state.adminReducer.data.cities,
     chooseUsers: state.adminReducer.data.users,
     redirectBack: state.adminReducer.redirectBackFromRefactor,
-    chooseWorkers: state.adminReducer.data.workers
+    chooseWorkers: state.adminReducer.data.workers,
+    isRefactor: state.adminReducer.refactorModelInProcess
   }
 }
 

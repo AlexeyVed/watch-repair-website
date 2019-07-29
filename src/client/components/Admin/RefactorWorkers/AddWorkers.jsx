@@ -3,16 +3,30 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addWorkerToDB } from '../../../actions'
+import { required } from '../../../validation'
 
 import './RefactorWorkers.less'
 
 class AddWorkers extends React.Component {
   render () {
-    const { handleSubmit, addWorker, chooseCities, redirectBack } = this.props
+    const { handleSubmit, addWorker, chooseCities, redirectBack, isRefactor } = this.props
+    let loader
+
+    if (isRefactor) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/workers' }}/>
@@ -33,6 +47,7 @@ class AddWorkers extends React.Component {
               label='Enter workers name'
               name='name'
               component={myInput}
+              validate={[required]}
               type='text'
               placeholder='Enter workers name'
             />
@@ -41,6 +56,7 @@ class AddWorkers extends React.Component {
               <Field
                 name='city'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose city</option>
@@ -56,6 +72,7 @@ class AddWorkers extends React.Component {
               <Field
                 name='rating'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose Rating</option>
@@ -69,6 +86,7 @@ class AddWorkers extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -79,13 +97,14 @@ class AddWorkers extends React.Component {
 const mapStateToProps = (state) => {
   return {
     chooseCities: state.adminReducer.data.cities,
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.adminReducer.redirectBackFromRefactor,
+    isRefactor: state.adminReducer.refactorModelInProcess
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addWorker: values => dispatch(addWorkerToDB(values.name, values.city, values.rating))
+    addWorker: values => dispatch(addWorkerToDB(values))
   }
 }
 

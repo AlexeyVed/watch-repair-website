@@ -3,17 +3,30 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { confirmEmail, confirmPassword, validateEmail, validatePassword } from '../../../validation'
+import { confirmEmail, confirmPassword, validateEmail, validatePassword, required } from '../../../validation'
 import { addUserToDB } from '../../../actions'
 
 import './RefactorClients.less'
 
 class AddClients extends React.Component {
   render () {
-    const { handleSubmit, addUser, redirectBack } = this.props
+    const { handleSubmit, addUser, redirectBack, isRefactor } = this.props
+    let loader
+
+    if (isRefactor) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clients' }}/>
@@ -32,11 +45,11 @@ class AddClients extends React.Component {
             </div>
             <Field
               label='Your email'
-              name='emailReg'
+              name='email'
               component={myInput}
               type='text'
               placeholder='Enter your email'
-              validate={[validateEmail]}
+              validate={[validateEmail, required]}
               required
             />
             <Field
@@ -45,16 +58,16 @@ class AddClients extends React.Component {
               component={myInput}
               type='text'
               placeholder='Confirm your email'
-              validate={[validateEmail, confirmEmail]}
+              validate={[validateEmail, confirmEmail, required]}
               required
             />
             <Field
               label='Create a password'
-              name='passwordReg'
+              name='password'
               component={myInput}
               type='password'
               placeholder='Enter your password'
-              validate={validatePassword}
+              validate={[validatePassword, required]}
               required
             />
             <Field
@@ -63,12 +76,13 @@ class AddClients extends React.Component {
               component={myInput}
               type='password'
               placeholder='Confirm your password'
-              validate={[confirmPassword]}
+              validate={[confirmPassword, required]}
               required
             />
             <button
               type='submit'
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -78,13 +92,14 @@ class AddClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.adminReducer.redirectBackFromRefactor,
+    isRefactor: state.adminReducer.refactorModelInProcess
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addUser: values => dispatch(addUserToDB(values.emailReg, values.passwordReg))
+    addUser: values => dispatch(addUserToDB(values))
   }
 }
 

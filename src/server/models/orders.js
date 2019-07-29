@@ -1,38 +1,37 @@
 const service = require('../services/modules.js')
 
 module.exports = class Order {
-  constructor (masterID, clientName, clientEmail, timeRepair, city, date, time, id) {
-    this.id = id
-    this.masterID = masterID
-    this.clientName = clientName
-    this.clientEmail = clientEmail
-    this.timeRepair = timeRepair
-    this.city = city
-    this.date = date
-    this.time = time
+  constructor (values) {
+    this.values = values
   }
 
-  addOrderWithoutMaster () {
-    const values = [this.clientName, this.clientEmail, this.timeRepair, this.city, this.date, this.time]
+  addWithoutMaster () {
+    const { clientName, clientEmail, timeRepair, city, date, time } = this.values
+    const values = [clientName, clientEmail, timeRepair, city, date, time]
     return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time) VALUES (?, ?, ?, ?, ?, ?)`, values)
   }
 
-  addOrderAdmin () {
-    const values = [this.clientName, this.clientEmail, this.timeRepair, this.city, this.date, this.time, this.masterID]
+  addAdmin () {
+    const { clientName, clientEmail, timeRepair, city, date, time, masterID } = this.values
+    const values = [clientName, clientEmail, timeRepair, city, date, time, masterID]
     return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?, ?)`, values)
   }
 
-  updateOrder () {
-    const values = [this.clientName, this.clientEmail, this.timeRepair, this.city, this.date, this.time, this.masterID, this.id]
-    return service.requestToDB(`UPDATE orders SET clientName = ?, clientEmail = ?, timeRepair = ?, city = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, values)
+  update (values) {
+    this.values = values
+    const { clientName, clientEmail, timeRepair, city, date, time, masterID, id } = this.values
+    const val = [clientName, clientEmail, timeRepair, city, date, time, masterID, id]
+    return service.requestToDB(`UPDATE orders SET clientName = ?, clientEmail = ?, timeRepair = ?, city = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, val)
   }
 
-  static addOrder (masterID, id) {
-    return service.requestToDB(`UPDATE orders SET masterID = ? WHERE id = ?`, [masterID, id])
+  static add (values) {
+    const { idMaster, id } = values
+    return service.requestToDB(`UPDATE orders SET masterID = ? WHERE id = ?`, [idMaster, id])
   }
 
   getIdBusyMasters () {
-    return service.requestToDB(`SELECT masterID, timeRepair, time FROM orders WHERE date = '${this.date}' AND city = '${this.city}'`)
+    const { date, city } = this.values
+    return service.requestToDB(`SELECT masterID, timeRepair, time FROM orders WHERE date = '${date}' AND city = '${city}'`)
       .then(workers => {
         return workers.filter(item => {
           if (item.time < this.time) {
@@ -70,11 +69,15 @@ module.exports = class Order {
       })
   }
 
-  static deleteOrder (id) {
+  static findOne (id) {
+    return service.requestToDB(`SELECT * FROM orders WHERE id = ?`, [id])
+  }
+
+  static delete (id) {
     return service.requestToDB(`DELETE FROM orders WHERE id = ?`, [id])
   }
 
-  static getAll () {
+  static list () {
     return service.requestToDB(`SELECT * FROM orders`)
   }
 }

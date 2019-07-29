@@ -15,29 +15,29 @@ class RefactorClocks extends React.Component {
 
     return (
       <div className='table-clocks'>
-        <div className='table-clocks__top'>
-          <div className='table-clocks__title'>Which clock we repair</div>
-          <div className='table-clocks__table-header'>
-            <div className='table-clocks__table-header__header-id'>ID</div>
-            <div className='table-clocks__table-header__header-clock'>Type of Clock</div>
-            <div className='table-clocks__table-header__header-time'>Time of repair</div>
-            <div className='table-clocks__table-header__header-buttons'>Service</div>
-          </div>
-        </div>
-        <div className='table-clocks__bottom'>
-          { clocks.map(item => (
-            <div className='table-clocks__table' key={item.id}>
-              <div className='table-clocks__table__row'>
-                <div className='table-clocks__table__row__id'>{item.id}</div>
-                <div className='table-clocks__table__row__clock'>{item.typeClock}</div>
-                <div className='table-clocks__table__row__time'>{item.timeRepair}</div>
-                <div className='table-clocks__table__row__buttons'>
-                  <LinkButton to={`/admin/clocks/edit/${item.id}/${item.typeClock}/${item.timeRepair}`} name='Edit'/>
-                  <button onClick={ () => deleteClock(item.id) }>Delete</button>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className='table-clocks__title'>Which clock we repair</div>
+        <div className='table-clocks__table'>
+          <table>
+            <tbody>
+              <tr>
+                <th>ID</th>
+                <th>Type of Clock</th>
+                <th>Time of repair</th>
+                <th>Service</th>
+              </tr>
+              { clocks.map(item => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.typeClock}</td>
+                  <td>{item.timeRepair}</td>
+                  <td>
+                    <LinkButton to={`/admin/clocks/edit/${item.id}/${item.typeClock}/${item.timeRepair}`} name='Edit'/>
+                    <button onClick={ () => deleteClock(item.id) }>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <div className='table-clocks__bttn-add'>
           <LinkButton to='/admin/clocks/add' name='Add'/>

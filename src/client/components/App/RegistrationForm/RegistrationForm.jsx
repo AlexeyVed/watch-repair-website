@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -20,9 +21,12 @@ class RegistrationForm extends Component {
       currentUser,
       loginError,
       missLoginError,
-      page } = this.props
+      page,
+      loading
+    } = this.props
 
     let bttnClose = null
+    let loader
 
     if (currentUser) {
       return <Redirect to={{ pathname: '/' }}/>
@@ -38,6 +42,17 @@ class RegistrationForm extends Component {
       bttnClose = <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
     }
 
+    if (loading) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
+
     return (
       ReactDOM.createPortal(
         <div className='modal-window'>
@@ -48,7 +63,7 @@ class RegistrationForm extends Component {
             </div>
             <Field
               label='Your email'
-              name='emailReg'
+              name='email'
               component={myInput}
               type='text'
               placeholder='Enter your email'
@@ -72,7 +87,7 @@ class RegistrationForm extends Component {
             />
             <Field
               label='Create a password'
-              name='passwordReg'
+              name='password'
               component={myInput}
               type='password'
               placeholder='Enter your password'
@@ -89,6 +104,7 @@ class RegistrationForm extends Component {
               required
             />
             <button type='submit' label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -100,13 +116,14 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     loginError: state.loginReducer.singInError,
-    page: state.appReducer.page
+    page: state.appReducer.page,
+    loading: state.loginReducer.singInLoading
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    registration: values => dispatch(registrationToApp(values.emailReg, values.passwordReg)),
+    registration: values => dispatch(registrationToApp(values)),
     missLoginError: () => dispatch(missLoginError())
   }
 }

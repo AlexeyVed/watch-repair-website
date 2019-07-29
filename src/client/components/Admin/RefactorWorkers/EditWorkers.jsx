@@ -3,23 +3,37 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { change, Field, reduxForm } from 'redux-form'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Placeholder } from 'react-preloading-screen'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { editWorkerIntoDB } from '../../../actions'
+import { required } from '../../../validation'
 
 import './RefactorWorkers.less'
 
 class EditWorkers extends React.Component {
   componentDidMount () {
-    this.props.dispatch(change('editWorker', 'id', this.props.match.params.idworker))
+    this.props.dispatch(change('editWorker', 'idworker', this.props.match.params.idworker))
     this.props.dispatch(change('editWorker', 'name', this.props.match.params.name))
     this.props.dispatch(change('editWorker', 'city', this.props.match.params.city))
     this.props.dispatch(change('editWorker', 'rating', this.props.match.params.rating))
   }
 
   render () {
-    const { handleSubmit, editWorker, chooseCities, redirectBack } = this.props
+    const { handleSubmit, editWorker, chooseCities, redirectBack, isRefactor } = this.props
+    let loader
+
+    if (isRefactor) {
+      loader = <Placeholder>
+        <div className='preloader'>
+          <div className='loader'>
+          </div>
+        </div>
+      </Placeholder>
+    } else {
+      loader = null
+    }
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/workers' }}/>
@@ -38,7 +52,7 @@ class EditWorkers extends React.Component {
             </div>
             <Field
               label='ID'
-              name='id'
+              name='idworker'
               component={myInput}
               type='text'
               placeholder={this.props.match.params.idworker}
@@ -48,6 +62,7 @@ class EditWorkers extends React.Component {
               label='Update worker name'
               name='name'
               component={myInput}
+              validate={[required]}
               type='text'
               placeholder='Update worker name'
             />
@@ -56,6 +71,7 @@ class EditWorkers extends React.Component {
               <Field
                 name='city'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose city</option>
@@ -71,6 +87,7 @@ class EditWorkers extends React.Component {
               <Field
                 name='rating'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose Rating</option>
@@ -84,6 +101,7 @@ class EditWorkers extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
+            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -94,13 +112,14 @@ class EditWorkers extends React.Component {
 const mapStateToProps = (state) => {
   return {
     chooseCities: state.adminReducer.data.cities,
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.adminReducer.redirectBackFromRefactor,
+    isRefactor: state.adminReducer.refactorModelInProcess
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editWorker: values => dispatch(editWorkerIntoDB(values.name, values.city, values.rating, values.id))
+    editWorker: values => dispatch(editWorkerIntoDB(values))
   }
 }
 

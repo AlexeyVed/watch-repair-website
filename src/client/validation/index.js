@@ -7,7 +7,7 @@ export const validateEmail = (input) => {
 }
 
 export const confirmEmail = (input, allInputs) => (
-  input === allInputs.emailReg ? '' : 'Email does not match'
+  input === allInputs.email ? '' : 'Email does not match'
 )
 
 export const validatePassword = (input) => (
@@ -15,5 +15,6 @@ export const validatePassword = (input) => (
 )
 
 export const confirmPassword = (input, allInputs) => (
-  input === allInputs.passwordReg ? void 0 : 'Password does not match'
+  input === allInputs.password ? void 0 : 'Password does not match'
 )
+export const required = value => value ? undefined : 'Required'
