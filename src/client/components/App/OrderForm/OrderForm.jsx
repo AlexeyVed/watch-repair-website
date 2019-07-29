@@ -4,10 +4,9 @@ import { Field, reduxForm, change } from 'redux-form'
 
 import myInput from '../../FieldRedux'
 import { makeOrder } from '../../../actions'
-import { validateEmail } from '../../../validation'
+import { validateEmail, required } from '../../../validation'
 
 import './OrderForm.less'
-import {Placeholder} from "react-preloading-screen";
 
 class OrderForm extends Component {
   render () {
@@ -42,7 +41,7 @@ class OrderForm extends Component {
             component={myInput}
             type='text'
             placeholder='Enter your name'
-            required
+            validate={required}
           />
           <Field
             label='Enter your email'
@@ -50,7 +49,7 @@ class OrderForm extends Component {
             component={myInput}
             type='text'
             placeholder='Enter your email'
-            validate={validateEmail}
+            validate={[validateEmail, required]}
           />
           <div className='main-form__order-select'>
             <label>Choose your clock</label>
@@ -58,8 +57,9 @@ class OrderForm extends Component {
               name='timeRepair'
               component='select'
               type='number'
+              validate={required}
             >
-              <option key={0} value={false}>Choose your clock</option>
+              <option key={0} value={undefined}>Choose your clock</option>
               {
                 chooseClock.map((clock, index) => (
                   <option key={index} value={Number(clock.timeRepair)}>{clock.typeClock}</option>
@@ -73,8 +73,9 @@ class OrderForm extends Component {
               name='city'
               component='select'
               type='text'
+              validate={required}
             >
-              <option key={0} value={false}>Choose your city</option>
+              <option key={0} value={undefined}>Choose your city</option>
               {
                 chooseCities.map((item, index) => (
                   <option key={index}>{item.city}</option>
@@ -87,6 +88,7 @@ class OrderForm extends Component {
             name='date'
             component={myInput}
             type='date'
+            validate={required}
           />
           <div className='main-form__order-select'>
             <label>Choose convenient time</label>
@@ -94,8 +96,9 @@ class OrderForm extends Component {
               name='time'
               component='select'
               type='number'
+              validate={required}
             >
-              <option key={0}>Select time</option>
+              <option key={0} value={undefined}>Select time</option>
               {
                 workHours.map((item) => {
                   return <option key={item} value={Number(item)}>{item}:00</option>

@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { confirmEmail, confirmPassword, validateEmail, validatePassword } from '../../../validation'
+import { confirmEmail, confirmPassword, validateEmail, validatePassword, required } from '../../../validation'
 import { addUserToDB } from '../../../actions'
 
 import './RefactorClients.less'
@@ -49,7 +49,7 @@ class AddClients extends React.Component {
               component={myInput}
               type='text'
               placeholder='Enter your email'
-              validate={[validateEmail]}
+              validate={[validateEmail, required]}
               required
             />
             <Field
@@ -58,7 +58,7 @@ class AddClients extends React.Component {
               component={myInput}
               type='text'
               placeholder='Confirm your email'
-              validate={[validateEmail, confirmEmail]}
+              validate={[validateEmail, confirmEmail, required]}
               required
             />
             <Field
@@ -67,7 +67,7 @@ class AddClients extends React.Component {
               component={myInput}
               type='password'
               placeholder='Enter your password'
-              validate={validatePassword}
+              validate={[validatePassword, required]}
               required
             />
             <Field
@@ -76,7 +76,7 @@ class AddClients extends React.Component {
               component={myInput}
               type='password'
               placeholder='Confirm your password'
-              validate={[confirmPassword]}
+              validate={[confirmPassword, required]}
               required
             />
             <button

@@ -9,7 +9,8 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { editCityIntoDB } from '../../../actions'
 
 import './RefactorCities.less'
-import {Placeholder} from "react-preloading-screen";
+import {Placeholder} from "react-preloading-screen"
+import {required} from "../../../validation"
 
 class EditCities extends React.Component {
   componentDidMount () {
@@ -58,6 +59,7 @@ class EditCities extends React.Component {
               label='Enter city'
               name='city'
               component={myInput}
+              validate={required}
               type='text'
             />
             <button

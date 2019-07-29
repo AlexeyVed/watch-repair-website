@@ -10,10 +10,11 @@ import { editWorkerIntoDB } from '../../../actions'
 
 import './RefactorWorkers.less'
 import {Placeholder} from "react-preloading-screen";
+import {required} from "../../../validation";
 
 class EditWorkers extends React.Component {
   componentDidMount () {
-    this.props.dispatch(change('editWorker', 'id', this.props.match.params.idworker))
+    this.props.dispatch(change('editWorker', 'idworker', this.props.match.params.idworker))
     this.props.dispatch(change('editWorker', 'name', this.props.match.params.name))
     this.props.dispatch(change('editWorker', 'city', this.props.match.params.city))
     this.props.dispatch(change('editWorker', 'rating', this.props.match.params.rating))
@@ -51,7 +52,7 @@ class EditWorkers extends React.Component {
             </div>
             <Field
               label='ID'
-              name='id'
+              name='idworker'
               component={myInput}
               type='text'
               placeholder={this.props.match.params.idworker}
@@ -61,6 +62,7 @@ class EditWorkers extends React.Component {
               label='Update worker name'
               name='name'
               component={myInput}
+              validate={[required]}
               type='text'
               placeholder='Update worker name'
             />
@@ -69,6 +71,7 @@ class EditWorkers extends React.Component {
               <Field
                 name='city'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose city</option>
@@ -84,6 +87,7 @@ class EditWorkers extends React.Component {
               <Field
                 name='rating'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose Rating</option>

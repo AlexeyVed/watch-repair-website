@@ -5,7 +5,8 @@ module.exports = class City {
     this.values = values
   }
 
-  update () {
+  update (values) {
+    this.values = values
     const { city, id } = this.values
     return service.requestToDB(`UPDATE cities SET city = ? WHERE id = ?`, [city, id])
   }

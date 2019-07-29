@@ -9,14 +9,19 @@ exports.list = function (req, res) {
 }
 
 exports.update = function (req, res) {
-  const worker = new Worker(req.body)
-  worker.update()
-    .then(result => {
-      const json = JSON.stringify(result)
-      res.send(json)
-    })
-    .catch(err => {
-      res.status(400).send('Error update worker')
+  Worker.findOne(req.body.idworker)
+    .then(workerFromDB => {
+      console.log(workerFromDB)
+      const worker = new Worker(workerFromDB[0])
+      console.log(worker.values)
+      worker.update(req.body)
+        .then(result => {
+          const json = JSON.stringify(req.body)
+          res.send(json)
+        })
+        .catch(err => {
+          res.status(400).send('Error update worker')
+        })
     })
 }
 

@@ -5,10 +5,11 @@ module.exports = class User {
     this.values = values
   }
 
-  update () {
+  update (values) {
+    this.values = values
     const { email, password, idlogin } = this.values
-    const values = [email, password, idlogin]
-    return service.requestToDB(`UPDATE login SET email = ?, password = ?  WHERE idlogin = ?`, values)
+    const val = [email, password, idlogin]
+    return service.requestToDB(`UPDATE login SET email = ?, password = ?  WHERE idlogin = ?`, val)
   }
 
   registration () {

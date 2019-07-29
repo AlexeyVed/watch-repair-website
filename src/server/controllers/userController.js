@@ -56,15 +56,18 @@ exports.add = function (req, res) {
 }
 
 exports.update = function (req, res) {
-  const user = new User(req.body)
-  user.update()
-    .then(result => {
-      const json = JSON.stringify(result)
-      res.send(json)
-    })
-    .catch(err => {
-      console.log(err)
-      res.status(400).send('Error update clock')
+  User.findOne(req.body.idlogin)
+    .then(userFromDB => {
+      const user = new User(userFromDB[0])
+      user.update(req.body)
+        .then(result => {
+          const json = JSON.stringify(req.body)
+          res.send(json)
+        })
+        .catch(err => {
+          console.log(err)
+          res.status(400).send('Error update clock')
+        })
     })
 }
 

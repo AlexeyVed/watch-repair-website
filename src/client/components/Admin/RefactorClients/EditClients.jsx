@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { validateEmail, validatePassword } from '../../../validation'
+import { validateEmail, validatePassword, required } from '../../../validation'
 import { editUserIntoDB } from '../../../actions'
 
 import './RefactorClients.less'
@@ -63,7 +63,7 @@ class EditClients extends React.Component {
               component={myInput}
               type='text'
               placeholder='Enter your email'
-              validate={[validateEmail]}
+              validate={[validateEmail, required]}
               required
             />
             <Field
@@ -72,7 +72,7 @@ class EditClients extends React.Component {
               component={myInput}
               type='text'
               placeholder='Enter your password'
-              validate={validatePassword}
+              validate={[validatePassword, required]}
               required
             />
             <button

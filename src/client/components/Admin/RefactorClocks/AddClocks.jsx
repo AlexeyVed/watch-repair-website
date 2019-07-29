@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addClockToDB } from '../../../actions'
+import { required } from '../../../validation'
 
 import './RefactorClocks.less'
 import {Placeholder} from "react-preloading-screen";
@@ -46,6 +47,7 @@ class AddClocks extends React.Component {
               label='Enter type of clock'
               name='typeClock'
               component={myInput}
+              validate={[required]}
               type='text'
               placeholder='Enter type of clock'
             />
@@ -53,6 +55,7 @@ class AddClocks extends React.Component {
               label='Enter time of repair clock'
               name='timeRepair'
               component={myInput}
+              validate={[required]}
               type='number'
               placeholder='Enter time repair clock'
             />

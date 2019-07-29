@@ -17,10 +17,11 @@ module.exports = class Order {
     return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?, ?)`, values)
   }
 
-  update () {
+  update (values) {
+    this.values = values
     const { clientName, clientEmail, timeRepair, city, date, time, masterID, id } = this.values
-    const values = [clientName, clientEmail, timeRepair, city, date, time, masterID, id]
-    return service.requestToDB(`UPDATE orders SET clientName = ?, clientEmail = ?, timeRepair = ?, city = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, values)
+    const val = [clientName, clientEmail, timeRepair, city, date, time, masterID, id]
+    return service.requestToDB(`UPDATE orders SET clientName = ?, clientEmail = ?, timeRepair = ?, city = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, val)
   }
 
   static add (values) {

@@ -9,14 +9,17 @@ exports.list = function (req, res) {
 }
 
 exports.update = function (req, res) {
-  const clock = new Clock(req.body)
-  clock.update()
-    .then(result => {
-      const json = JSON.stringify(result)
-      res.send(json)
-    })
-    .catch(err => {
-      res.status(400).send('Error update clock')
+  Clock.findOne(req.body.id)
+    .then((clockFromDB) => {
+      const clock = new Clock(clockFromDB[0])
+      clock.update(req.body)
+        .then(result => {
+          const json = JSON.stringify(req.body)
+          res.send(json)
+        })
+        .catch(err => {
+          res.status(400).send('Error update clock')
+        })
     })
 }
 

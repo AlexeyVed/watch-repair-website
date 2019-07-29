@@ -33,6 +33,11 @@ import {
   EDIT_MODEL_STARTED,
   EDIT_MODEL_SUCCESS,
   EDIT_MODEL_FAILURE,
+  EDIT_CITIES_INTO_STATE,
+  EDIT_CLIENTS_INTO_STATE,
+  EDIT_CLOCKS_INTO_STATE,
+  EDIT_ORDERS_INTO_STATE,
+  EDIT_WORKERS_INTO_STATE,
   REDIRECT_FROM_REFACTOR
 } from '../actions/types'
 
@@ -281,6 +286,84 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true
+      }
+
+    case EDIT_CITIES_INTO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          cities: state.data.cities.map(city => {
+            if (city.id === Number(action.payload.id)) {
+              action.payload.id = Number(action.payload.id)
+              return action.payload
+            }
+            return city
+          })
+        }
+      }
+
+    case EDIT_CLOCKS_INTO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          clocks: state.data.clocks.map(clock => {
+            if (clock.id === Number(action.payload.id)) {
+              action.payload.id = Number(action.payload.id)
+              action.payload.timeRepair = Number(action.payload.timeRepair)
+              return action.payload
+            }
+            return clock
+          })
+        }
+      }
+
+    case EDIT_CLIENTS_INTO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          users: state.data.users.map(user => {
+            if (user.idlogin === Number(action.payload.idlogin)) {
+              action.payload.idlogin = Number(action.payload.idlogin)
+              return action.payload
+            }
+            return user
+          })
+        }
+      }
+
+    case EDIT_ORDERS_INTO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          orders: state.data.orders.map(order => {
+            if (order.id === Number(action.payload.id)) {
+              action.payload.masterID = Number(action.payload.masterID)
+              return action.payload
+            }
+            return order
+          })
+        }
+      }
+
+    case EDIT_WORKERS_INTO_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          workers: state.data.workers.map(worker => {
+            console.log(worker, action.payload)
+            if (worker.idworker === Number(action.payload.idworker)) {
+              action.payload.idworker = Number(action.payload.idworker)
+              action.payload.rating = Number(action.payload.rating)
+              return action.payload
+            }
+            return worker
+          })
+        }
       }
 
     case EDIT_MODEL_FAILURE:

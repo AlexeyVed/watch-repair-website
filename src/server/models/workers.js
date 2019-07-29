@@ -5,10 +5,11 @@ module.exports = class Worker {
     this.values = values
   }
 
-  update () {
-    const { name, city, rating, id } = this.values
-    const values = [ name, city, rating, id ]
-    return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE idworker = ?`, values)
+  update (values) {
+    this.values = values
+    const { name, city, rating, idworker } = this.values
+    const val = [ name, city, rating, idworker ]
+    return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE idworker = ?`, val)
   }
 
   add () {

@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addCityToDB } from '../../../actions'
+import { required } from '../../../validation'
 
 import './RefactorCities.less'
 import {Placeholder} from "react-preloading-screen";
@@ -46,6 +47,7 @@ class AddCities extends React.Component {
               label='Enter city'
               name='city'
               component={myInput}
+              validate={required}
               type='text'
               placeholder='Enter new city'
             />

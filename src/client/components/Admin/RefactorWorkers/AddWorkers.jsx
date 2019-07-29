@@ -10,6 +10,7 @@ import { addWorkerToDB } from '../../../actions'
 
 import './RefactorWorkers.less'
 import {Placeholder} from "react-preloading-screen";
+import {required} from "../../../validation";
 
 class AddWorkers extends React.Component {
   render () {
@@ -46,6 +47,7 @@ class AddWorkers extends React.Component {
               label='Enter workers name'
               name='name'
               component={myInput}
+              validate={[required]}
               type='text'
               placeholder='Enter workers name'
             />
@@ -54,6 +56,7 @@ class AddWorkers extends React.Component {
               <Field
                 name='city'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose city</option>
@@ -69,6 +72,7 @@ class AddWorkers extends React.Component {
               <Field
                 name='rating'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose Rating</option>

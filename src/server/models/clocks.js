@@ -5,7 +5,8 @@ module.exports = class Clock {
     this.values = values
   }
 
-  update () {
+  update (values) {
+    this.values = values
     const { typeClock, timeRepair, id } = this.values
     return service.requestToDB(`UPDATE clocks SET typeClock = ?, timeRepair = ?  WHERE id = ?`, [typeClock, timeRepair, id])
   }

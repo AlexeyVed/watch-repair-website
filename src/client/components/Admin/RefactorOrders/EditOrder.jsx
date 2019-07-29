@@ -10,6 +10,7 @@ import { editOrderIntoDB } from '../../../actions'
 
 import './RefactorOrders.less'
 import {Placeholder} from "react-preloading-screen";
+import {required} from "../../../validation";
 
 class EditOrder extends React.Component {
   componentDidMount () {
@@ -65,6 +66,7 @@ class EditOrder extends React.Component {
               label='Enter client name'
               name='clientName'
               component={myInput}
+              validate={[required]}
               type='text'
               placeholder='Enter your name'
               required
@@ -74,6 +76,7 @@ class EditOrder extends React.Component {
               <Field
                 name='clientEmail'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose email</option>
@@ -89,6 +92,7 @@ class EditOrder extends React.Component {
               <Field
                 name='masterID'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose master</option>
@@ -104,6 +108,7 @@ class EditOrder extends React.Component {
               <Field
                 name='timeRepair'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose time repair</option>
@@ -119,6 +124,7 @@ class EditOrder extends React.Component {
               <Field
                 name='city'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Choose your city</option>
@@ -133,6 +139,7 @@ class EditOrder extends React.Component {
               label='Choose date'
               name='date'
               component={myInput}
+              validate={[required]}
               type='date'
             />
             <div className='refactor-orders__order-select'>
@@ -140,6 +147,7 @@ class EditOrder extends React.Component {
               <Field
                 name='time'
                 component='select'
+                validate={[required]}
                 type='text'
               >
                 <option key={0} value={false}>Select time</option>

@@ -17,3 +17,4 @@ export const validatePassword = (input) => (
 export const confirmPassword = (input, allInputs) => (
   input === allInputs.password ? void 0 : 'Password does not match'
 )
+export const required = value => value ? undefined : 'Required'

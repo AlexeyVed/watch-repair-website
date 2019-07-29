@@ -9,14 +9,17 @@ exports.list = function (req, res) {
 }
 
 exports.update = function (req, res) {
-  const city = new City(req.body)
-  city.update()
-    .then(result => {
-      const json = JSON.stringify(result)
-      res.send(json)
-    })
-    .catch(err => {
-      res.status(400).send('Error update city')
+  City.findOne(req.body.id)
+    .then((cityFromDB) => {
+      const city = new City(cityFromDB[0])
+      city.update(req.body)
+        .then(result => {
+          const json = JSON.stringify(req.body)
+          res.send(json)
+        })
+        .catch(err => {
+          res.status(400).send('Error update city')
+        })
     })
 }
 

@@ -33,6 +33,11 @@ import {
   EDIT_MODEL_STARTED,
   EDIT_MODEL_SUCCESS,
   EDIT_MODEL_FAILURE,
+  EDIT_CITIES_INTO_STATE,
+  EDIT_CLIENTS_INTO_STATE,
+  EDIT_CLOCKS_INTO_STATE,
+  EDIT_ORDERS_INTO_STATE,
+  EDIT_WORKERS_INTO_STATE,
   REDIRECT_FROM_REFACTOR
 } from './types.js'
 
@@ -209,6 +214,7 @@ export const editUserIntoDB = (values) => {
       .post(`http://localhost:3000/api/users/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
+        dispatch(editUserIntoState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -226,6 +232,7 @@ export const editCityIntoDB = (values) => {
       .post(`http://localhost:3000/api/cities/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
+        dispatch(editCityIntoState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -243,6 +250,7 @@ export const editClockIntoDB = (values) => {
       .post(`http://localhost:3000/api/clocks/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
+        dispatch(editClockIntoState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -263,6 +271,7 @@ export const editOrderIntoDB = (values) => {
       .post(`http://localhost:3000/api/orders/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
+        dispatch(editOrderIntoState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -280,6 +289,7 @@ export const editWorkerIntoDB = (values) => {
       .post(`http://localhost:3000/api/workers/update`, values)
       .then(res => {
         dispatch(editModelSuccess())
+        dispatch(editWorkerIntoState(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -525,5 +535,30 @@ const deleteClockFromState = data => ({
 
 const deleteCityFromState = data => ({
   type: DELETE_CITIES_FROM_STATE,
+  payload: data
+})
+
+const editUserIntoState = data => ({
+  type: EDIT_CLIENTS_INTO_STATE,
+  payload: data
+})
+
+const editWorkerIntoState = data => ({
+  type: EDIT_WORKERS_INTO_STATE,
+  payload: data
+})
+
+const editOrderIntoState = data => ({
+  type: EDIT_ORDERS_INTO_STATE,
+  payload: data
+})
+
+const editClockIntoState = data => ({
+  type: EDIT_CLOCKS_INTO_STATE,
+  payload: data
+})
+
+const editCityIntoState = data => ({
+  type: EDIT_CITIES_INTO_STATE,
   payload: data
 })
