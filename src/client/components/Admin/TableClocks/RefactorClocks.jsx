@@ -3,13 +3,17 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteClockFromDB } from '../../../actions'
+import { deleteClockFromDB, loadClocksAdmin } from '../../../actions'
 import AddClocks from '../RefactorClocks/AddClocks.jsx'
 import EditClocks from '../RefactorClocks/EditClocks.jsx'
 
 import './RefactorClocks.less'
 
 class RefactorClocks extends React.Component {
+
+  componentDidMount () {
+    this.props.loadClocks()
+  }
   render () {
     const { clocks, deleteClock } = this.props
 
@@ -60,7 +64,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteClock: id => dispatch(deleteClockFromDB(id))
+    deleteClock: id => dispatch(deleteClockFromDB(id)),
+    loadClocks: () => dispatch(loadClocksAdmin())
   }
 }
 

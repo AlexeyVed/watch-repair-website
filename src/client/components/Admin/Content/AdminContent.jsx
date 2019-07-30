@@ -1,13 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import {
-  loadClocksAdmin,
-  loadCitiesAdmin,
-  loadClientsAdmin,
-  loadOrdersAdmin,
-  loadWorkersAdmin
-} from '../../../actions'
 
 import RefactorCities from '../TableCities/RefactorCities.jsx'
 import RefactorClients from '../TableClients/RefactorClients.jsx'
@@ -19,21 +12,6 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import './AdminContent.less'
 
 class AdminContent extends React.Component {
-  componentDidMount () {
-    const {
-      loadClocks,
-      loadCities,
-      loadClients,
-      loadOrders,
-      loadWorkers
-    } = this.props
-
-    loadClocks()
-    loadCities()
-    loadClients()
-    loadOrders()
-    loadWorkers()
-  }
 
   render () {
     return (
@@ -68,11 +46,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadClocks: () => dispatch(loadClocksAdmin()),
-    loadCities: () => dispatch(loadCitiesAdmin()),
-    loadClients: () => dispatch(loadClientsAdmin()),
-    loadOrders: () => dispatch(loadOrdersAdmin()),
-    loadWorkers: () => dispatch(loadWorkersAdmin())
   }
 }
 

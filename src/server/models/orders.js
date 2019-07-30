@@ -30,18 +30,18 @@ module.exports = class Order {
   }
 
   getIdBusyMasters () {
-    const { date, city } = this.values
+    const { date, city, time, timeRepair } = this.values
     return service.requestToDB(`SELECT masterID, timeRepair, time FROM orders WHERE date = '${date}' AND city = '${city}'`)
       .then(workers => {
         return workers.filter(item => {
-          if (item.time < this.time) {
-            if ((item.time + item.timeRepair) < this.time) {
+          if (item.time < time) {
+            if ((item.time + item.timeRepair) < time) {
               return false
             } else {
               return true
             }
           } else {
-            if ((this.time + this.timeRepair) >= item.time) {
+            if ((time + timeRepair) >= item.time) {
               return true
             } else {
               return false

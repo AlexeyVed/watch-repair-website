@@ -3,13 +3,17 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteOrderFromDB } from '../../../actions'
+import { deleteOrderFromDB, loadOrdersAdmin } from '../../../actions'
 import AddOrder from '../RefactorOrders/AddOrder.jsx'
 import EditOrder from '../RefactorOrders/EditOrder.jsx'
 
 import './RefactorOrders.less'
 
-class RefactorClocks extends React.Component {
+class RefactorOrders extends React.Component {
+
+  componentDidMount () {
+    this.props.loadOrders()
+  }
   render () {
     const { orders, deleteOrder } = this.props
 
@@ -66,8 +70,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteOrder: id => dispatch(deleteOrderFromDB(id))
+    deleteOrder: id => dispatch(deleteOrderFromDB(id)),
+    loadOrders: () => dispatch(loadOrdersAdmin())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RefactorClocks)
+export default connect(mapStateToProps, mapDispatchToProps)(RefactorOrders)

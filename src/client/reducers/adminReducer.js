@@ -71,6 +71,7 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_CLOCKS_ADMIN_SUCCESS:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           clocks: action.payload,
@@ -81,6 +82,7 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_CLOCKS_ADMIN_FAILURE:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           clocks: [],
@@ -90,12 +92,14 @@ const adminReducer = (state = initialState, action) => {
 
     case LOAD_CITIES_ADMIN_STARTED:
       return {
-        ...state
+        ...state,
+        dataLoad: true
       }
 
     case LOAD_CITIES_ADMIN_SUCCESS:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           cities: action.payload,
@@ -106,6 +110,7 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_CITIES_ADMIN_FAILURE:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           cities: [],
@@ -115,7 +120,8 @@ const adminReducer = (state = initialState, action) => {
 
     case LOAD_ORDERS_ADMIN_STARTED:
       return {
-        ...state
+        ...state,
+        dataLoad: true
       }
 
     case LOAD_ORDERS_ADMIN_SUCCESS:
@@ -142,12 +148,14 @@ const adminReducer = (state = initialState, action) => {
 
     case LOAD_CLIENTS_ADMIN_STARTED:
       return {
-        ...state
+        ...state,
+        dataLoad: true
       }
 
     case LOAD_CLIENTS_ADMIN_SUCCESS:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           users: action.payload,
@@ -168,12 +176,14 @@ const adminReducer = (state = initialState, action) => {
 
     case LOAD_WORKERS_ADMIN_STARTED:
       return {
-        ...state
+        ...state,
+        dataLoad: true
       }
 
     case LOAD_WORKERS_ADMIN_SUCCESS:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           workers: action.payload,
@@ -184,6 +194,7 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_WORKERS_ADMIN_FAILURE:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           workers: [],

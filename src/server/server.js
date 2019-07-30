@@ -20,5 +20,8 @@ app.use('/api/cities', citiesRouter)
 app.use('/api/workers', workersRouter)
 app.use('/api/clocks', clocksRouter)
 app.use('/api/orders', ordersRouter)
+app.use((err, req, res, next) => {
+  console.log('here', err)
+})
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening on port ${process.env.PORT || 4000}!`))
