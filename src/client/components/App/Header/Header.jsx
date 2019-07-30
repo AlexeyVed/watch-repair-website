@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { logOutApp } from '../../../actions'

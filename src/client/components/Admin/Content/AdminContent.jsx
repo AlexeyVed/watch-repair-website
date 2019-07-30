@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Placeholder } from 'react-preloading-screen'
+import { Route, Switch } from 'react-router-dom'
 import {
   loadClocksAdmin,
   loadCitiesAdmin,
@@ -37,21 +36,6 @@ class AdminContent extends React.Component {
   }
 
   render () {
-    const { isLoading } = this.props
-
-    let loader
-
-    if (isLoading) {
-      loader = <Placeholder>
-        <div className='preloader'>
-          <div className='loader'>
-          </div>
-        </div>
-      </Placeholder>
-    } else {
-      loader = null
-    }
-
     return (
       <div className='admin-content'>
         <div className='admin-content__navigation'>
@@ -71,7 +55,6 @@ class AdminContent extends React.Component {
             <Route path="/admin/orders" component={RefactorOrders}/>
           </Switch>
         </div>
-        {loader}
       </div>
     )
   }
@@ -79,8 +62,7 @@ class AdminContent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    view: state.adminReducer.view,
-    isLoading: state.adminReducer.dataLoad
+    view: state.adminReducer.view
   }
 }
 

@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { singInFromLS } from '../actions'
 
+import Preloader from './App/Preloader/Preloader.jsx'
 import Header from './App/Header/Header.jsx'
 import Main from './App/Main/Main'
 import MainOrder from './App/MainOrder/MainOrder.jsx'
@@ -19,6 +20,14 @@ class App extends React.Component {
   }
 
   render () {
+    const { isRefactor, isLoad, isLoadData, isLogin } = this.props
+    let preloader
+
+    if (isRefactor || isLoad || isLoadData || isLogin) {
+      preloader = <Preloader/>
+    } else {
+      preloader = null
+    }
     return (
       <div className = 'app'>
         <Header/>
@@ -30,8 +39,18 @@ class App extends React.Component {
           <Route path='/admin' component={MainAdmin}/>
           <Route component={NoMatch}/>
         </Switch>
+        {preloader}
       </div>
     )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    isRefactor: state.adminReducer.refactorModelInProcess,
+    isLoad: state.adminReducer.dataLoad,
+    isLoadData: state.appReducer.dataLoad,
+    isLogin: state.loginReducer.singInLoading
   }
 }
 
@@ -42,6 +61,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App)
