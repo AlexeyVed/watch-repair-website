@@ -15,35 +15,32 @@ import {
   LOAD_WORKERS_ADMIN_SUCCESS,
   LOAD_WORKERS_ADMIN_FAILURE,
   ADD_MODEL_STARTED,
-  ADD_MODEL_SUCCESS,
   ADD_MODEL_FAILURE,
-  ADD_CITIES_TO_STATE,
-  ADD_CLIENTS_TO_STATE,
-  ADD_CLOCKS_TO_STATE,
-  ADD_ORDERS_TO_STATE,
-  ADD_WORKERS_TO_STATE,
+  ADD_CITIES_SUCCESS,
+  ADD_CLIENTS_SUCCESS,
+  ADD_CLOCKS_SUCCESS,
+  ADD_ORDERS_SUCCESS,
+  ADD_WORKERS_SUCCESS,
   DELETE_MODEL_STARTED,
-  DELETE_MODEL_SUCCESS,
   DELETE_MODEL_FAILURE,
-  DELETE_CITIES_FROM_STATE,
-  DELETE_CLIENTS_FROM_STATE,
-  DELETE_CLOCKS_FROM_STATE,
-  DELETE_ORDERS_FROM_STATE,
-  DELETE_WORKERS_FROM_STATE,
+  DELETE_CITIES_SUCCESS,
+  DELETE_CLIENTS_SUCCESS,
+  DELETE_CLOCKS_SUCCESS,
+  DELETE_ORDERS_SUCCESS,
+  DELETE_WORKERS_SUCCESS,
   EDIT_MODEL_STARTED,
-  EDIT_MODEL_SUCCESS,
   EDIT_MODEL_FAILURE,
-  EDIT_CITIES_INTO_STATE,
-  EDIT_CLIENTS_INTO_STATE,
-  EDIT_CLOCKS_INTO_STATE,
-  EDIT_ORDERS_INTO_STATE,
-  EDIT_WORKERS_INTO_STATE,
+  EDIT_CITIES_SUCCESS,
+  EDIT_CLIENTS_SUCCESS,
+  EDIT_CLOCKS_SUCCESS,
+  EDIT_ORDERS_SUCCESS,
+  EDIT_WORKERS_SUCCESS,
   REDIRECT_FROM_REFACTOR
 } from './types.js'
 
 import axios from 'axios'
 
-export const loadClocksAdmin = () => {
+export const loadClocks = () => {
   return (dispatch) => {
     dispatch(loadClocksStarted())
     axios
@@ -57,7 +54,7 @@ export const loadClocksAdmin = () => {
   }
 }
 
-export const loadCitiesAdmin = () => {
+export const loadCities = () => {
   return (dispatch) => {
     dispatch(loadCitiesStarted())
     axios
@@ -85,7 +82,7 @@ export const loadOrdersAdmin = () => {
   }
 }
 
-export const loadWorkersAdmin = () => {
+export const loadWorkers = () => {
   return (dispatch) => {
     dispatch(loadWorkersStarted())
     axios
@@ -119,8 +116,7 @@ export const addUserToDB = (values) => {
     axios
       .post(`http://localhost:3000/api/users/add`, values)
       .then(res => {
-        dispatch(addModelSuccess())
-        dispatch(addUserToState(res.data))
+        dispatch(addUserSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -137,8 +133,7 @@ export const addCityToDB = (values) => {
     axios
       .post(`http://localhost:3000/api/cities/add`, values)
       .then(res => {
-        dispatch(addModelSuccess())
-        dispatch(addCityToState(res.data))
+        dispatch(addCitySuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -155,8 +150,7 @@ export const addClockToDB = (values) => {
     axios
       .post(`http://localhost:3000/api/clocks/add`, values)
       .then(res => {
-        dispatch(addModelSuccess())
-        dispatch(addClockToState(res.data))
+        dispatch(addClockSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -173,8 +167,7 @@ export const addWorkerToDB = (values) => {
     axios
       .post(`http://localhost:3000/api/workers/add`, values)
       .then(res => {
-        dispatch(addModelSuccess())
-        dispatch(addWorkerToState(res.data))
+        dispatch(addWorkerSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -195,8 +188,7 @@ export const addOrderToDB = (values) => {
     axios
       .post(`http://localhost:3000/api/orders/addAdmin`, values)
       .then(res => {
-        dispatch(addModelSuccess())
-        dispatch(addOrderToState(res.data))
+        dispatch(addOrderSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -213,8 +205,7 @@ export const editUserIntoDB = (values) => {
     axios
       .post(`http://localhost:3000/api/users/update`, values)
       .then(res => {
-        dispatch(editModelSuccess())
-        dispatch(editUserIntoState(res.data))
+        dispatch(editUserSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -231,8 +222,7 @@ export const editCityIntoDB = (values) => {
     axios
       .post(`http://localhost:3000/api/cities/update`, values)
       .then(res => {
-        dispatch(editModelSuccess())
-        dispatch(editCityIntoState(res.data))
+        dispatch(editCitySuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -249,8 +239,7 @@ export const editClockIntoDB = (values) => {
     axios
       .post(`http://localhost:3000/api/clocks/update`, values)
       .then(res => {
-        dispatch(editModelSuccess())
-        dispatch(editClockIntoState(res.data))
+        dispatch(editClockSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -270,8 +259,7 @@ export const editOrderIntoDB = (values) => {
     axios
       .post(`http://localhost:3000/api/orders/update`, values)
       .then(res => {
-        dispatch(editModelSuccess())
-        dispatch(editOrderIntoState(res.data))
+        dispatch(editOrderSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -288,8 +276,7 @@ export const editWorkerIntoDB = (values) => {
     axios
       .post(`http://localhost:3000/api/workers/update`, values)
       .then(res => {
-        dispatch(editModelSuccess())
-        dispatch(editWorkerIntoState(res.data))
+        dispatch(editWorkerSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -306,8 +293,7 @@ export const deleteClockFromDB = (id) => {
     axios
       .post(`http://localhost:3000/api/clocks/delete`, { id })
       .then(res => {
-        dispatch(deleteModelSuccess())
-        dispatch(deleteClockFromState(res.data))
+        dispatch(deleteClockSuccess(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -321,8 +307,7 @@ export const deleteOrderFromDB = (id) => {
     axios
       .post(`http://localhost:3000/api/orders/delete`, { id })
       .then(res => {
-        dispatch(deleteModelSuccess())
-        dispatch(deleteOrderFromState(res.data))
+        dispatch(deleteOrderSuccess(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -336,8 +321,7 @@ export const deleteWorkerFromDB = (id) => {
     axios
       .post(`http://localhost:3000/api/workers/delete`, { id })
       .then(res => {
-        dispatch(deleteModelSuccess())
-        dispatch(deleteWorkerFromState(res.data))
+        dispatch(deleteWorkerSuccess(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -351,8 +335,7 @@ export const deleteCityFromDB = (id) => {
     axios
       .post(`http://localhost:3000/api/cities/delete`, { id })
       .then(res => {
-        dispatch(deleteModelSuccess())
-        dispatch(deleteCityFromState(res.data))
+        dispatch(deleteCitySuccess(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -366,8 +349,7 @@ export const deleteClientFromDB = (id) => {
     axios
       .post(`http://localhost:3000/api/users/delete`, { id })
       .then(res => {
-        dispatch(deleteModelSuccess())
-        dispatch(deleteClientFromState(res.data))
+        dispatch(deleteClientSuccess(res.data))
       })
       .catch(err => {
         dispatch(deleteModelFailure(err))
@@ -453,21 +435,12 @@ const addModelFailure = () => ({
   type: ADD_MODEL_FAILURE
 })
 
-const addModelSuccess = err => ({
-  type: ADD_MODEL_SUCCESS,
-  payload: err
-})
-
 const deleteModelStarted = () => ({
   type: DELETE_MODEL_STARTED
 })
 
-const deleteModelFailure = () => ({
-  type: DELETE_MODEL_FAILURE
-})
-
-const deleteModelSuccess = err => ({
-  type: DELETE_MODEL_SUCCESS,
+const deleteModelFailure = (err) => ({
+  type: DELETE_MODEL_FAILURE,
   payload: err
 })
 
@@ -479,86 +452,81 @@ const editModelFailure = () => ({
   type: EDIT_MODEL_FAILURE
 })
 
-const editModelSuccess = err => ({
-  type: EDIT_MODEL_SUCCESS,
-  payload: err
-})
-
 const redirectFromRefactor = () => ({
   type: REDIRECT_FROM_REFACTOR
 })
 
-const addUserToState = data => ({
-  type: ADD_CLIENTS_TO_STATE,
+const addUserSuccess = data => ({
+  type: ADD_CLIENTS_SUCCESS,
   payload: data
 })
 
-const addWorkerToState = data => ({
-  type: ADD_WORKERS_TO_STATE,
+const addWorkerSuccess = data => ({
+  type: ADD_WORKERS_SUCCESS,
   payload: data
 })
 
-const addOrderToState = data => ({
-  type: ADD_ORDERS_TO_STATE,
+const addOrderSuccess = data => ({
+  type: ADD_ORDERS_SUCCESS,
   payload: data
 })
 
-const addClockToState = data => ({
-  type: ADD_CLOCKS_TO_STATE,
+const addClockSuccess = data => ({
+  type: ADD_CLOCKS_SUCCESS,
   payload: data
 })
 
-const addCityToState = data => ({
-  type: ADD_CITIES_TO_STATE,
+const addCitySuccess = data => ({
+  type: ADD_CITIES_SUCCESS,
   payload: data
 })
 
-const deleteClientFromState = data => ({
-  type: DELETE_CLIENTS_FROM_STATE,
+const deleteClientSuccess = data => ({
+  type: DELETE_CLIENTS_SUCCESS,
   payload: data
 })
 
-const deleteWorkerFromState = data => ({
-  type: DELETE_WORKERS_FROM_STATE,
+const deleteWorkerSuccess = data => ({
+  type: DELETE_WORKERS_SUCCESS,
   payload: data
 })
 
-const deleteOrderFromState = data => ({
-  type: DELETE_ORDERS_FROM_STATE,
+const deleteOrderSuccess = data => ({
+  type: DELETE_ORDERS_SUCCESS,
   payload: data
 })
 
-const deleteClockFromState = data => ({
-  type: DELETE_CLOCKS_FROM_STATE,
+const deleteClockSuccess = data => ({
+  type: DELETE_CLOCKS_SUCCESS,
   payload: data
 })
 
-const deleteCityFromState = data => ({
-  type: DELETE_CITIES_FROM_STATE,
+const deleteCitySuccess = data => ({
+  type: DELETE_CITIES_SUCCESS,
   payload: data
 })
 
-const editUserIntoState = data => ({
-  type: EDIT_CLIENTS_INTO_STATE,
+const editUserSuccess = data => ({
+  type: EDIT_CLIENTS_SUCCESS,
   payload: data
 })
 
-const editWorkerIntoState = data => ({
-  type: EDIT_WORKERS_INTO_STATE,
+const editWorkerSuccess = data => ({
+  type: EDIT_WORKERS_SUCCESS,
   payload: data
 })
 
-const editOrderIntoState = data => ({
-  type: EDIT_ORDERS_INTO_STATE,
+const editOrderSuccess = data => ({
+  type: EDIT_ORDERS_SUCCESS,
   payload: data
 })
 
-const editClockIntoState = data => ({
-  type: EDIT_CLOCKS_INTO_STATE,
+const editClockSuccess = data => ({
+  type: EDIT_CLOCKS_SUCCESS,
   payload: data
 })
 
-const editCityIntoState = data => ({
-  type: EDIT_CITIES_INTO_STATE,
+const editCitySuccess = data => ({
+  type: EDIT_CITIES_SUCCESS,
   payload: data
 })

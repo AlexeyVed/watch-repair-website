@@ -30,7 +30,7 @@ class AllWorker extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    workers: state.appReducer.data.workers
+    workers: state.adminReducer.data.workers
   }
 }
 

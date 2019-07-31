@@ -6,8 +6,7 @@ import { addOrder, setChooseWorker } from '../../../actions'
 import './ChooseWorker.less'
 
 class ChooseWorker extends React.Component {
-
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState) {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
       if (+worker.id === this.props.masterID) {

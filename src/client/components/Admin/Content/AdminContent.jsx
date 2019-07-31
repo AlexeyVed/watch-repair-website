@@ -12,7 +12,6 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import './AdminContent.less'
 
 class AdminContent extends React.Component {
-
   render () {
     return (
       <div className='admin-content'>

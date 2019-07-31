@@ -49,7 +49,6 @@ const mapStateToProps = (state) => {
   return {
     isRefactor: state.adminReducer.refactorModelInProcess,
     isLoad: state.adminReducer.dataLoad,
-    isLoadData: state.appReducer.dataLoad,
     isLogin: state.loginReducer.singInLoading
   }
 }

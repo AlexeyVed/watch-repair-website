@@ -10,7 +10,6 @@ import EditClients from '../RefactorClients/EditClients.jsx'
 import './RefactorClients.less'
 
 class RefactorClients extends React.Component {
-
   componentDidMount () {
     this.props.loadClients()
   }
