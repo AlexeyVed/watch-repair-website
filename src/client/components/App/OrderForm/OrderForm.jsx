@@ -9,6 +9,12 @@ import { validateEmail, required } from '../../../validation'
 import './OrderForm.less'
 
 class OrderForm extends Component {
+  componentDidMount() {
+    const now = new Date()
+    const hours = now.getHours() + 1
+    this.props.dispatch(change('orderForm', 'time', hours))
+  }
+
   render () {
     const { handleSubmit, chooseClock, chooseCities, makeOrder, currentEmail, chooseMaster } = this.props
 
@@ -88,7 +94,6 @@ class OrderForm extends Component {
             name='date'
             component={myInput}
             type='date'
-            validate={required}
           />
           <div className='main-form__order-select'>
             <label>Choose convenient time</label>
@@ -98,7 +103,6 @@ class OrderForm extends Component {
               type='number'
               validate={required}
             >
-              <option key={0} value={undefined}>Select time</option>
               {
                 workHours.map((item) => {
                   return <option key={item} value={Number(item)}>{item}:00</option>
