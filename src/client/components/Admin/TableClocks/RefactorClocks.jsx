@@ -34,7 +34,7 @@ class RefactorClocks extends React.Component {
                   <td>{item.typeClock}</td>
                   <td>{item.timeRepair}</td>
                   <td>
-                    <LinkButton to={`/admin/clocks/edit/${item.id}/${item.typeClock}/${item.timeRepair}`} name='Edit'/>
+                    <LinkButton to={`/admin/clocks/edit/${item.id}`} name='Edit'/>
                     <button onClick={ () => deleteClock(item.id) }>Delete</button>
                   </td>
                 </tr>
@@ -47,7 +47,7 @@ class RefactorClocks extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/clocks/add' component={AddClocks}/>
-          <Route path='/admin/clocks/edit/:id/:typeClock/:timeRepair' component={EditClocks}/>
+          <Route path='/admin/clocks/edit/:id' component={EditClocks}/>
         </Switch>
       </div>
     )

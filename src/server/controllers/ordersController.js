@@ -77,6 +77,14 @@ exports.update = function (req, res) {
     })
 }
 
+exports.get = function (req, res) {
+  Order.findOne(req.body.id)
+    .then((order) => {
+      const json = JSON.stringify(order[0])
+      res.send(json)
+    })
+}
+
 exports.add = function (req, res) {
   Order.add(req.body)
     .then(result => {

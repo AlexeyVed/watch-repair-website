@@ -51,7 +51,7 @@ class RefactorOrders extends React.Component {
                   <td>{item.date} / {item.time}</td>
                   <td>{item.masterID}</td>
                   <td>
-                    <LinkButton to={`/admin/orders/edit/${item.id}/${item.clientName}/${item.clientEmail}/${item.city}/${item.date}/${item.time}/${item.masterID}/${item.timeRepair}`} name='Edit'/>
+                    <LinkButton to={`/admin/orders/edit/${item.id}`} name='Edit'/>
                     <button onClick={ () => deleteOrder(item.id) }>Delete</button>
                   </td>
                 </tr>
@@ -65,7 +65,7 @@ class RefactorOrders extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/orders/add' component={AddOrder}/>
-          <Route path='/admin/orders/edit/:id/:clientName/:clientEmail/:city/:date/:time/:masterID/:timeRepair' component={EditOrder}/>
+          <Route path='/admin/orders/edit/:id' component={EditOrder}/>
         </Switch>
       </div>
     )

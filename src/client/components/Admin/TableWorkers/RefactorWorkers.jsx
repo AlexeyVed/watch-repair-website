@@ -37,7 +37,7 @@ class RefactorWorkers extends React.Component {
                   <td>{item.city}</td>
                   <td>{item.rating}</td>
                   <td>
-                    <LinkButton to={`/admin/workers/edit/${item.idworker}/${item.name}/${item.city}/${item.rating}`} name='Edit'/>
+                    <LinkButton to={`/admin/workers/edit/${item.idworker}`} name='Edit'/>
                     <button onClick={ () => deleteWorker(item.idworker) }>Delete</button>
                   </td>
                 </tr>
@@ -50,7 +50,7 @@ class RefactorWorkers extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/workers/add' component={AddWorkers}/>
-          <Route path='/admin/workers/edit/:idworker/:name/:city/:rating' component={EditWorkers}/>
+          <Route path='/admin/workers/edit/:idworker' component={EditWorkers}/>
         </Switch>
       </div>
     )

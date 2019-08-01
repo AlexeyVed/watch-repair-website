@@ -6,5 +6,6 @@ workersRouter.use('/list', workersController.list)
 workersRouter.use('/add', workersController.add)
 workersRouter.use('/delete', workersController.delete)
 workersRouter.use('/update', workersController.update)
+workersRouter.use('/get', workersController.get)
 
 module.exports = workersRouter

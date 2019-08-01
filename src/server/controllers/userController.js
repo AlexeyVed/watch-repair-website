@@ -70,6 +70,14 @@ exports.update = function (req, res) {
     })
 }
 
+exports.get = function (req, res) {
+  User.findOne(req.body.id)
+    .then((user) => {
+      const json = JSON.stringify(user[0])
+      res.send(json)
+    })
+}
+
 exports.login = function (req, res) {
   const user = new User(req.body)
   user.login()

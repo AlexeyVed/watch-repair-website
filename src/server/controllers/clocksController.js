@@ -23,6 +23,14 @@ exports.update = function (req, res) {
     })
 }
 
+exports.get = function (req, res) {
+  Clock.findOne(req.body.id)
+    .then((clock) => {
+      const json = JSON.stringify(clock[0])
+      res.send(json)
+    })
+}
+
 exports.add = function (req, res) {
   const clock = new Clock(req.body)
   clock.add()

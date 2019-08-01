@@ -32,7 +32,7 @@ class RefactorCities extends React.Component {
                   <td>{item.id}</td>
                   <td>{item.city}</td>
                   <td>
-                    <LinkButton to={`/admin/cities/edit/${item.id}/${item.city}`} name='Edit'/>
+                    <LinkButton to={`/admin/cities/edit/${item.id}`} name='Edit'/>
                     <button onClick={ () => deleteCity(item.id) }>Delete</button>
                   </td>
                 </tr>
@@ -45,7 +45,7 @@ class RefactorCities extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/cities/add' component={AddCities}/>
-          <Route path='/admin/cities/edit/:id/:city' component={EditCities}/>
+          <Route path='/admin/cities/edit/:id' component={EditCities}/>
         </Switch>
       </div>
     )

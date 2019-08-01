@@ -6,23 +6,46 @@ import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editClockIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorClocks.less'
+import axios from 'axios'
 
 class EditClocks extends React.Component {
-  componentDidMount () {
-    this.props.dispatch(change('editClock', 'id', this.props.match.params.id))
-    this.props.dispatch(change('editClock', 'typeClock', this.props.match.params.typeClock))
-    this.props.dispatch(change('editClock', 'timeRepair', this.props.match.params.timeRepair))
+  state = {
+    editModel: false,
+    load: true
   }
 
+  componentDidMount () {
+    const id = +this.props.match.params.id
+    axios
+      .post(`http://localhost:3000/api/clocks/get`, { id })
+      .then(res => {
+        this.setState(() => ({
+          editModel: res.data,
+          load: false
+        }
+        ))
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
   render () {
-    const { handleSubmit, editClock, redirectBack } = this.props
+    const { handleSubmit, editClock, redirectBack, dispatch } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clocks' }}/>
+    }
+
+    if (this.state.editModel) {
+      const { id, typeClock, timeRepair } = this.state.editModel
+      dispatch(change('editClock', 'id', id))
+      dispatch(change('editClock', 'typeClock', typeClock))
+      dispatch(change('editClock', 'timeRepair', timeRepair))
     }
 
     return (
@@ -64,6 +87,7 @@ class EditClocks extends React.Component {
               type='submit'
               label='submit'>Submit</button>
           </form>
+          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )

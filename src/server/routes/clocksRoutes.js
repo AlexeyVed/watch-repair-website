@@ -6,5 +6,6 @@ clocksRouter.use('/list', clocksController.list)
 clocksRouter.use('/add', clocksController.add)
 clocksRouter.use('/delete', clocksController.delete)
 clocksRouter.use('/update', clocksController.update)
+clocksRouter.use('/get', clocksController.get)
 
 module.exports = clocksRouter

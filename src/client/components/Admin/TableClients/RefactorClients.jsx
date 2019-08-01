@@ -34,7 +34,7 @@ class RefactorClients extends React.Component {
                   <td>{item.email}</td>
                   <td>{item.password}</td>
                   <td>
-                    <LinkButton to={`/admin/clients/edit/${item.idlogin}/${item.email}/${item.password}`} name='Edit'/>
+                    <LinkButton to={`/admin/clients/edit/${item.idlogin}`} name='Edit'/>
                     <button onClick={ () => deleteClient(item.idlogin) }>Delete</button>
                   </td>
                 </tr>
@@ -48,7 +48,7 @@ class RefactorClients extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/clients/add' component={AddClients}/>
-          <Route path='/admin/clients/edit/:idlogin/:email/:password' component={EditClients}/>
+          <Route path='/admin/clients/edit/:idlogin' component={EditClients}/>
         </Switch>
       </div>
     )

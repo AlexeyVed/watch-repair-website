@@ -6,24 +6,48 @@ import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editWorkerIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorWorkers.less'
+import axios from 'axios'
 
 class EditWorkers extends React.Component {
+  state = {
+    editModel: false,
+    load: true
+  }
+
   componentDidMount () {
-    this.props.dispatch(change('editWorker', 'idworker', this.props.match.params.idworker))
-    this.props.dispatch(change('editWorker', 'name', this.props.match.params.name))
-    this.props.dispatch(change('editWorker', 'city', this.props.match.params.city))
-    this.props.dispatch(change('editWorker', 'rating', this.props.match.params.rating))
+    const id = +this.props.match.params.idworker
+    axios
+      .post(`http://localhost:3000/api/workers/get`, { id })
+      .then(res => {
+        this.setState(() => ({
+          editModel: res.data,
+          load: false
+        }
+        ))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render () {
-    const { handleSubmit, editWorker, chooseCities, redirectBack } = this.props
+    const { handleSubmit, editWorker, chooseCities, redirectBack, dispatch } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/workers' }}/>
+    }
+
+    if (this.state.editModel) {
+      const { idworker, name, city, rating } = this.state.editModel
+      dispatch(change('editWorker', 'idworker', idworker))
+      dispatch(change('editWorker', 'name', name))
+      dispatch(change('editWorker', 'city', city))
+      dispatch(change('editWorker', 'rating', rating))
     }
 
     return (
@@ -89,6 +113,7 @@ class EditWorkers extends React.Component {
               type='submit'
               label='submit'>Submit</button>
           </form>
+          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )

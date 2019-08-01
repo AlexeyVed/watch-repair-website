@@ -8,5 +8,6 @@ usersRouter.use('/registration', usersController.registration)
 usersRouter.use('/add', usersController.add)
 usersRouter.use('/delete', usersController.delete)
 usersRouter.use('/update', usersController.update)
+usersRouter.use('/get', usersController.get)
 
 module.exports = usersRouter

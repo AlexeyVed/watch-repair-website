@@ -23,6 +23,14 @@ exports.update = function (req, res) {
     })
 }
 
+exports.get = function (req, res) {
+  Worker.findOne(req.body.id)
+    .then((worker) => {
+      const json = JSON.stringify(worker[0])
+      res.send(json)
+    })
+}
+
 exports.add = function (req, res) {
   const worker = new Worker(req.body)
   worker.add()

@@ -6,23 +6,47 @@ import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import Preloader from '../../App/Preloader/Preloader.jsx'
 import { validateEmail, validatePassword, required } from '../../../validation'
 import { editUserIntoDB } from '../../../actions'
 
 import './RefactorClients.less'
+import axios from 'axios'
 
 class EditClients extends React.Component {
+  state = {
+    editModel: false,
+    load: true
+  }
+
   componentDidMount () {
-    this.props.dispatch(change('editClient', 'idlogin', this.props.match.params.idlogin))
-    this.props.dispatch(change('editClient', 'email', this.props.match.params.email))
-    this.props.dispatch(change('editClient', 'password', this.props.match.params.password))
+    const id = +this.props.match.params.idlogin
+    axios
+      .post(`http://localhost:3000/api/users/get`, { id })
+      .then(res => {
+        this.setState(() => ({
+          editModel: res.data,
+          load: false
+        }
+        ))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render () {
-    const { handleSubmit, editClient, redirectBack } = this.props
+    const { handleSubmit, editClient, redirectBack, dispatch } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clients' }}/>
+    }
+
+    if (this.state.editModel) {
+      const { idlogin, email, password } = this.state.editModel
+      dispatch(change('editClient', 'idlogin', idlogin))
+      dispatch(change('editClient', 'email', email))
+      dispatch(change('editClient', 'password', password))
     }
 
     return (
@@ -66,6 +90,7 @@ class EditClients extends React.Component {
               type='submit'
               label='submit'>Submit</button>
           </form>
+          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )

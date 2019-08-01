@@ -23,6 +23,14 @@ exports.update = function (req, res) {
     })
 }
 
+exports.get = function (req, res) {
+  City.findOne(req.body.id)
+    .then((city) => {
+      const json = JSON.stringify(city[0])
+      res.send(json)
+    })
+}
+
 exports.add = function (req, res) {
   const city = new City(req.body)
   city.add()

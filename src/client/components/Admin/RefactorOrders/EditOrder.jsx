@@ -6,26 +6,50 @@ import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editOrderIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorOrders.less'
+import axios from 'axios'
 
 class EditOrder extends React.Component {
+  state = {
+    editModel: false,
+    load: true
+  }
+
   componentDidMount () {
-    this.props.dispatch(change('editOrder', 'id', this.props.match.params.id))
-    this.props.dispatch(change('editOrder', 'clientName', this.props.match.params.clientName))
-    this.props.dispatch(change('editOrder', 'clientEmail', this.props.match.params.clientEmail))
-    this.props.dispatch(change('editOrder', 'timeRepair', this.props.match.params.timeRepair))
-    this.props.dispatch(change('editOrder', 'city', this.props.match.params.city))
-    this.props.dispatch(change('editOrder', 'time', this.props.match.params.time))
+    const id = +this.props.match.params.id
+    axios
+      .post(`http://localhost:3000/api/orders/get`, { id })
+      .then(res => {
+        this.setState(() => ({
+          editModel: res.data,
+          load: false
+        }
+        ))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render () {
-    const { handleSubmit, editOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
+    const { handleSubmit, editOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers, dispatch } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
+    }
+
+    if (this.state.editModel) {
+      const { id, clientName, clientEmail, timeRepair, city, time } = this.state.editModel
+      dispatch(change('editOrder', 'id', id))
+      dispatch(change('editOrder', 'clientName', clientName))
+      dispatch(change('editOrder', 'clientEmail', clientEmail))
+      dispatch(change('editOrder', 'timeRepair', timeRepair))
+      dispatch(change('editOrder', 'city', city))
+      dispatch(change('editOrder', 'time', time))
     }
 
     const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]
@@ -149,6 +173,7 @@ class EditOrder extends React.Component {
               type='submit'
               label='submit'>Submit</button>
           </form>
+          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )

@@ -6,5 +6,6 @@ citiesRouter.use('/list', citiesController.list)
 citiesRouter.use('/add', citiesController.add)
 citiesRouter.use('/delete', citiesController.delete)
 citiesRouter.use('/update', citiesController.update)
+citiesRouter.use('/get', citiesController.get)
 
 module.exports = citiesRouter
