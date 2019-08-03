@@ -6,7 +6,6 @@ import { changePage, loadCities, loadClocks, loadWorkers } from '../../../action
 import OrderForm from '../OrderForm/OrderForm.jsx'
 import Content from '../Content/Content.jsx'
 import LoginForm from '../LoginForm/LoginForm.jsx'
-import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 
 class MainOrder extends Component {
   componentDidMount () {
@@ -23,7 +22,6 @@ class MainOrder extends Component {
         <Content/>
         <Switch>
           <Route path='/order/login' component={LoginForm}/>
-          <Route path='/order/registration' component={RegistrationForm}/>
         </Switch>
       </div>
     )

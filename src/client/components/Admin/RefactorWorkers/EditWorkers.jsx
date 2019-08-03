@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { change, Field, reduxForm } from 'redux-form'
+import { Field, initialize, reduxForm} from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
@@ -15,7 +15,6 @@ import axios from 'axios'
 
 class EditWorkers extends React.Component {
   state = {
-    editModel: false,
     load: true
   }
 
@@ -25,10 +24,10 @@ class EditWorkers extends React.Component {
       .post(`http://localhost:3000/api/workers/get`, { id })
       .then(res => {
         this.setState(() => ({
-          editModel: res.data,
-          load: false
-        }
+            load: false
+          }
         ))
+        this.props.dispatch(initialize('editWorker', res.data, ['idworker', 'name', 'city', 'rating']))
       })
       .catch(err => {
         console.log(err)
@@ -36,18 +35,10 @@ class EditWorkers extends React.Component {
   }
 
   render () {
-    const { handleSubmit, editWorker, chooseCities, redirectBack, dispatch } = this.props
+    const { handleSubmit, editWorker, chooseCities, redirectBack } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/workers' }}/>
-    }
-
-    if (this.state.editModel) {
-      const { idworker, name, city, rating } = this.state.editModel
-      dispatch(change('editWorker', 'idworker', idworker))
-      dispatch(change('editWorker', 'name', name))
-      dispatch(change('editWorker', 'city', city))
-      dispatch(change('editWorker', 'rating', rating))
     }
 
     return (

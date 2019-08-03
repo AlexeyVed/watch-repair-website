@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { change, Field, reduxForm } from 'redux-form'
+import { Field, initialize, reduxForm} from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
@@ -15,7 +15,6 @@ import axios from 'axios'
 
 class EditOrder extends React.Component {
   state = {
-    editModel: false,
     load: true
   }
 
@@ -25,10 +24,10 @@ class EditOrder extends React.Component {
       .post(`http://localhost:3000/api/orders/get`, { id })
       .then(res => {
         this.setState(() => ({
-          editModel: res.data,
-          load: false
-        }
+            load: false
+          }
         ))
+        this.props.dispatch(initialize('editOrder', res.data, ['id', 'clientName', 'clientEmail', 'city', 'time']))
       })
       .catch(err => {
         console.log(err)
@@ -36,20 +35,10 @@ class EditOrder extends React.Component {
   }
 
   render () {
-    const { handleSubmit, editOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers, dispatch } = this.props
+    const { handleSubmit, editOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
-    }
-
-    if (this.state.editModel) {
-      const { id, clientName, clientEmail, timeRepair, city, time } = this.state.editModel
-      dispatch(change('editOrder', 'id', id))
-      dispatch(change('editOrder', 'clientName', clientName))
-      dispatch(change('editOrder', 'clientEmail', clientEmail))
-      dispatch(change('editOrder', 'timeRepair', timeRepair))
-      dispatch(change('editOrder', 'city', city))
-      dispatch(change('editOrder', 'time', time))
     }
 
     const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]

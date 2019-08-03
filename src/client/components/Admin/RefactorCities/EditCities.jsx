@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, reduxForm, change } from 'redux-form'
+import { Field, reduxForm, initialize } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
@@ -15,7 +15,6 @@ import './RefactorCities.less'
 
 class EditCities extends React.Component {
   state = {
-    editModel: false,
     load: true
   }
 
@@ -25,10 +24,10 @@ class EditCities extends React.Component {
       .post(`http://localhost:3000/api/cities/get`, { id })
       .then(res => {
         this.setState(() => ({
-          editModel: res.data,
-          load: false
-        }
+            load: false
+          }
         ))
+        this.props.dispatch(initialize('editCity', res.data, ['id', 'city']))
       })
       .catch(err => {
         console.log(err)
@@ -36,16 +35,10 @@ class EditCities extends React.Component {
   }
 
   render () {
-    const { handleSubmit, editCity, redirectBack, dispatch } = this.props
+    const { handleSubmit, editCity, redirectBack } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/cities' }}/>
-    }
-
-    if (this.state.editModel) {
-      const { id, city } = this.state.editModel
-      dispatch(change('editCity', 'id', id))
-      dispatch(change('editCity', 'city', city))
     }
 
     return (

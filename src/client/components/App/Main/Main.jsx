@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import { changePage } from '../../../actions'
 import LoginForm from '../LoginForm/LoginForm.jsx'
-import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 class Main extends Component {
@@ -40,7 +39,6 @@ class Main extends Component {
         </div>
         <Switch>
           <Route path='/login' component={LoginForm}/>
-          <Route path='/registration' component={RegistrationForm}/>
         </Switch>
       </div>
     )

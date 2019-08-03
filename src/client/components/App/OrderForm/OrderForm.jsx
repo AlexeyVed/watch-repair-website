@@ -1,28 +1,41 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm, change } from 'redux-form'
+import { Field, reduxForm, initialize, change } from 'redux-form'
 
 import myInput from '../../FieldRedux'
 import { makeOrder } from '../../../actions'
 import { validateEmail, required } from '../../../validation'
+import { getDate } from './logic.js'
 
 import './OrderForm.less'
 
 class OrderForm extends Component {
+  state = {
+    workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17]
+  }
+
   componentDidMount() {
-    const now = new Date()
-    const hours = now.getHours() + 1
-    this.props.dispatch(change('orderForm', 'time', hours))
+    const date = getDate()
+
+    this.setState(() => ({
+      workHours: this.state.workHours.filter(item => {
+        if (item >= date.time) {
+          return true
+        } else {
+          return false
+        }
+          })
+    }))
+    const initialValues = {
+      date: date.date,
+      time: date.time
+    }
+    this.props.dispatch(initialize('orderForm', initialValues, ['date', 'time']))
+
   }
 
   render () {
-    const { handleSubmit, chooseClock, chooseCities, makeOrder, currentEmail, chooseMaster } = this.props
-
-    if (currentEmail) {
-      this.props.dispatch(change('orderForm', 'clientEmail', currentEmail))
-    }
-
-    const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]
+    const { handleSubmit, chooseClock, chooseCities, makeOrder, chooseMaster, currentEmail } = this.props
 
     if (chooseMaster) {
       return (
@@ -34,6 +47,8 @@ class OrderForm extends Component {
         </div>
       )
     }
+
+    this.props.dispatch(change('orderForm', 'clientEmail', currentEmail))
 
     return (
       <div className='main-form'>
@@ -104,7 +119,7 @@ class OrderForm extends Component {
               validate={required}
             >
               {
-                workHours.map((item) => {
+                this.state.workHours.map((item) => {
                   return <option key={item} value={Number(item)}>{item}:00</option>
                 })
               }

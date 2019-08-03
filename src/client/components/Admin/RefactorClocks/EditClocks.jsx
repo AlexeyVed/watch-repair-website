@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { change, Field, reduxForm } from 'redux-form'
+import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
@@ -15,7 +15,6 @@ import axios from 'axios'
 
 class EditClocks extends React.Component {
   state = {
-    editModel: false,
     load: true
   }
 
@@ -25,27 +24,20 @@ class EditClocks extends React.Component {
       .post(`http://localhost:3000/api/clocks/get`, { id })
       .then(res => {
         this.setState(() => ({
-          editModel: res.data,
-          load: false
-        }
+            load: false
+          }
         ))
+        this.props.dispatch(initialize('editClock', res.data, ['id', 'typeClock', 'timeRepair']))
       })
       .catch(err => {
         console.log(err)
       })
   }
   render () {
-    const { handleSubmit, editClock, redirectBack, dispatch } = this.props
+    const { handleSubmit, editClock, redirectBack } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clocks' }}/>
-    }
-
-    if (this.state.editModel) {
-      const { id, typeClock, timeRepair } = this.state.editModel
-      dispatch(change('editClock', 'id', id))
-      dispatch(change('editClock', 'typeClock', typeClock))
-      dispatch(change('editClock', 'timeRepair', timeRepair))
     }
 
     return (

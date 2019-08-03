@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { change, Field, reduxForm } from 'redux-form'
+import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
@@ -15,7 +15,6 @@ import axios from 'axios'
 
 class EditClients extends React.Component {
   state = {
-    editModel: false,
     load: true
   }
 
@@ -25,10 +24,10 @@ class EditClients extends React.Component {
       .post(`http://localhost:3000/api/users/get`, { id })
       .then(res => {
         this.setState(() => ({
-          editModel: res.data,
-          load: false
-        }
+            load: false
+          }
         ))
+        this.props.dispatch(initialize('editClient', res.data, ['idlogin', 'email', 'password']))
       })
       .catch(err => {
         console.log(err)
@@ -40,13 +39,6 @@ class EditClients extends React.Component {
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clients' }}/>
-    }
-
-    if (this.state.editModel) {
-      const { idlogin, email, password } = this.state.editModel
-      dispatch(change('editClient', 'idlogin', idlogin))
-      dispatch(change('editClient', 'email', email))
-      dispatch(change('editClient', 'password', password))
     }
 
     return (
