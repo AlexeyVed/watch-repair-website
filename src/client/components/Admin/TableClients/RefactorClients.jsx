@@ -29,13 +29,13 @@ class RefactorClients extends React.Component {
                 <th>Service</th>
               </tr>
               { users.map(item => (
-                <tr key={item.idlogin}>
-                  <td>{item.idlogin}</td>
+                <tr key={item.id}>
+                  <td>{item.id}</td>
                   <td>{item.email}</td>
                   <td>{item.password}</td>
                   <td>
-                    <LinkButton to={`/admin/clients/edit/${item.idlogin}`} name='Edit'/>
-                    <button onClick={ () => deleteClient(item.idlogin) }>Delete</button>
+                    <LinkButton to={`/admin/clients/edit/${item.id}`} name='Edit'/>
+                    <button onClick={ () => deleteClient(item.id) }>Delete</button>
                   </td>
                 </tr>
               ))}
@@ -48,7 +48,7 @@ class RefactorClients extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/clients/add' component={AddClients}/>
-          <Route path='/admin/clients/edit/:idlogin' component={EditClients}/>
+          <Route path='/admin/clients/edit/:id' component={EditClients}/>
         </Switch>
       </div>
     )

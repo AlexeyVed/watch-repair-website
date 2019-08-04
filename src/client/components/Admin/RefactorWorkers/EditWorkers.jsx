@@ -19,7 +19,7 @@ class EditWorkers extends React.Component {
   }
 
   componentDidMount () {
-    const id = +this.props.match.params.idworker
+    const id = +this.props.match.params.id
     axios
       .post(`http://localhost:3000/api/workers/get`, { id })
       .then(res => {
@@ -27,7 +27,8 @@ class EditWorkers extends React.Component {
             load: false
           }
         ))
-        this.props.dispatch(initialize('editWorker', res.data, ['idworker', 'name', 'city', 'rating']))
+        console.log(res.data)
+        this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'city', 'rating']))
       })
       .catch(err => {
         console.log(err)
@@ -54,10 +55,10 @@ class EditWorkers extends React.Component {
             </div>
             <Field
               label='ID'
-              name='idworker'
+              name='id'
               component={myInput}
               type='text'
-              placeholder={this.props.match.params.idworker}
+              placeholder={this.props.match.params.id}
               input={{ disabled: true }}
             />
             <Field

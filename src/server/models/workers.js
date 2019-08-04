@@ -7,9 +7,9 @@ module.exports = class Worker {
 
   update (values) {
     this.values = values
-    const { name, city, rating, idworker } = this.values
-    const val = [ name, city, rating, idworker ]
-    return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE idworker = ?`, val)
+    const { name, city, rating, id } = this.values
+    const val = [ name, city, rating, id ]
+    return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE id = ?`, val)
   }
 
   add () {
@@ -18,21 +18,21 @@ module.exports = class Worker {
     return service.requestToDB(`INSERT INTO workers (name, city, rating) VALUES (?, ?, ?)`, values)
   }
 
-  static delete (idworker) {
-    return service.requestToDB(`DELETE FROM workers WHERE idworker = ?`, [idworker])
+  static delete (id) {
+    return service.requestToDB(`DELETE FROM workers WHERE id = ?`, [id])
   }
 
   static getWithoutBusy (arrayId, obj) {
     const { city } = obj
     let sql = ''
     for (let i = 0; i < arrayId.length; i++) {
-      sql += ` && idworker != '${arrayId[i]}'`
+      sql += ` && id != '${arrayId[i]}'`
     }
     return service.requestToDB(`SELECT * FROM workers WHERE city = '${city}'${sql}`)
   }
 
-  static findOne (idworker) {
-    return service.requestToDB(`SELECT * FROM workers WHERE idworker = ?`, [idworker])
+  static findOne (id) {
+    return service.requestToDB(`SELECT * FROM workers WHERE id = ?`, [id])
   }
 
   static list () {

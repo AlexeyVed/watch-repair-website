@@ -9,7 +9,7 @@ exports.list = function (req, res) {
 }
 
 exports.update = function (req, res) {
-  Worker.findOne(req.body.idworker)
+  Worker.findOne(req.body.id)
     .then(workerFromDB => {
       const worker = new Worker(workerFromDB[0])
       worker.update(req.body)

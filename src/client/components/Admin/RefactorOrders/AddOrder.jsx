@@ -69,7 +69,7 @@ class AddOrder extends React.Component {
                 <option key={0} value={false}>Choose master</option>
                 {
                   chooseWorkers.map((item, index) => (
-                    <option key={index} value={item.idworker}>{item.name}</option>
+                    <option key={index} value={item.id}>{item.name}</option>
                   ))
                 }
               </Field>

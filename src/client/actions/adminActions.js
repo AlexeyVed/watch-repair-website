@@ -272,6 +272,7 @@ export const editOrderIntoDB = (values) => {
 
 export const editWorkerIntoDB = (values) => {
   return (dispatch) => {
+    console.log(values)
     dispatch(editModelStarted())
     axios
       .post(`http://localhost:3000/api/workers/update`, values)

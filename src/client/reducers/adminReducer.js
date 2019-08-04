@@ -341,8 +341,8 @@ const adminReducer = (state = initialState, action) => {
         data: {
           ...state.data,
           users: state.data.users.map(user => {
-            if (user.idlogin === Number(action.payload.idlogin)) {
-              action.payload.idlogin = Number(action.payload.idlogin)
+            if (user.id === Number(action.payload.id)) {
+              action.payload.id = Number(action.payload.id)
               return action.payload
             }
             return user
@@ -377,8 +377,8 @@ const adminReducer = (state = initialState, action) => {
         data: {
           ...state.data,
           workers: state.data.workers.map(worker => {
-            if (worker.idworker === Number(action.payload.idworker)) {
-              action.payload.idworker = Number(action.payload.idworker)
+            if (worker.id === Number(action.payload.id)) {
+              action.payload.id = Number(action.payload.id)
               action.payload.rating = Number(action.payload.rating)
               return action.payload
             }
@@ -429,7 +429,7 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         data: {
           ...state.data,
-          users: state.data.users.filter(el => el.idlogin !== action.payload.id)
+          users: state.data.users.filter(el => el.id !== action.payload.id)
         }
       }
 
@@ -440,7 +440,7 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         data: {
           ...state.data,
-          workers: state.data.workers.filter(el => el.idworker !== action.payload.id)
+          workers: state.data.workers.filter(el => el.id !== action.payload.id)
         }
       }
 

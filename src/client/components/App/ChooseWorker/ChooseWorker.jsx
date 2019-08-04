@@ -32,7 +32,7 @@ class ChooseWorker extends React.Component {
         <div className='choose-worker__header'>Choose Free Worker</div>
         <div className='choose-worker__table'>
           { workers.map(item => (
-            <div className='choose-worker__table__worker' id={item.idworker} key={item.idworker} onClick={() => { setWorker(item.idworker) }}>
+            <div className='choose-worker__table__worker' id={item.id} key={item.id} onClick={() => { setWorker(item.id) }}>
               <div className='worker-image'></div>
               <div className='worker-info'>
                 <div className='worker-info__name'>{item.name}</div>

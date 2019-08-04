@@ -19,7 +19,7 @@ class EditClients extends React.Component {
   }
 
   componentDidMount () {
-    const id = +this.props.match.params.idlogin
+    const id = +this.props.match.params.id
     axios
       .post(`http://localhost:3000/api/users/get`, { id })
       .then(res => {
@@ -27,7 +27,7 @@ class EditClients extends React.Component {
             load: false
           }
         ))
-        this.props.dispatch(initialize('editClient', res.data, ['idlogin', 'email', 'password']))
+        this.props.dispatch(initialize('editClient', res.data, ['id', 'email', 'password']))
       })
       .catch(err => {
         console.log(err)
@@ -35,7 +35,7 @@ class EditClients extends React.Component {
   }
 
   render () {
-    const { handleSubmit, editClient, redirectBack, dispatch } = this.props
+    const { handleSubmit, editClient, redirectBack } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clients' }}/>
@@ -54,10 +54,10 @@ class EditClients extends React.Component {
             </div>
             <Field
               label='ID'
-              name='idlogin'
+              name='id'
               component={myInput}
               type='text'
-              placeholder={this.props.match.params.idlogin}
+              placeholder={this.props.match.params.id}
               input={{ disabled: true }}
             />
             <Field

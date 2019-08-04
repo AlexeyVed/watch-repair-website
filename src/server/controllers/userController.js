@@ -56,7 +56,7 @@ exports.add = function (req, res) {
 }
 
 exports.update = function (req, res) {
-  User.findOne(req.body.idlogin)
+  User.findOne(req.body.id)
     .then(userFromDB => {
       const user = new User(userFromDB[0])
       user.update(req.body)

@@ -1,6 +1,6 @@
 const getDate = () => {
-  const now = new Date('December 4, 2019 13:00:00')
-  const tomorrowDate = new Date(new Date('December 4, 2019 13:00:00').getTime() + 24 * 60 * 60 * 1000)
+  const now = new Date()
+  const tomorrowDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
 
   const date = {
     year: now.getFullYear(),

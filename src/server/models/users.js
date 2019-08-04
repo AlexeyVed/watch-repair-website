@@ -7,9 +7,9 @@ module.exports = class User {
 
   update (values) {
     this.values = values
-    const { email, password, idlogin } = this.values
-    const val = [email, password, idlogin]
-    return service.requestToDB(`UPDATE login SET email = ?, password = ?  WHERE idlogin = ?`, val)
+    const { email, password, id } = this.values
+    const val = [email, password, id]
+    return service.requestToDB(`UPDATE login SET email = ?, password = ?  WHERE id = ?`, val)
   }
 
   registration () {
@@ -28,12 +28,12 @@ module.exports = class User {
     return service.requestToDB(`SELECT email, password FROM login where email= "${email}"`)
   }
 
-  static findOne (idlogin) {
-    return service.requestToDB(`SELECT * FROM login WHERE idlogin = ${idlogin}`)
+  static findOne (id) {
+    return service.requestToDB(`SELECT * FROM login WHERE id = ${id}`)
   }
 
-  static delete (idlogin) {
-    return service.requestToDB(`DELETE FROM login WHERE idlogin = ${idlogin}`)
+  static delete (id) {
+    return service.requestToDB(`DELETE FROM login WHERE id = ${id}`)
   }
 
   static list () {

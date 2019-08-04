@@ -27,7 +27,8 @@ class EditOrder extends React.Component {
             load: false
           }
         ))
-        this.props.dispatch(initialize('editOrder', res.data, ['id', 'clientName', 'clientEmail', 'city', 'time']))
+        console.log(typeof res.data.masterID)
+        this.props.dispatch(initialize('editOrder', res.data, ['id', 'clientName', 'clientEmail', 'masterID', 'city', 'time']))
       })
       .catch(err => {
         console.log(err)
@@ -98,7 +99,7 @@ class EditOrder extends React.Component {
                 <option key={0} value={false}>Choose master</option>
                 {
                   chooseWorkers.map((item, index) => (
-                    <option key={index} value={item.idworker}>{item.name}</option>
+                    <option key={index} value={item.id}>{item.name}</option>
                   ))
                 }
               </Field>

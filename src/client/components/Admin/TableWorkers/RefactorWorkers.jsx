@@ -31,14 +31,14 @@ class RefactorWorkers extends React.Component {
                 <th>Service</th>
               </tr>
               { workers.map(item => (
-                <tr key={item.idworker}>
-                  <td>{item.idworker}</td>
+                <tr key={item.id}>
+                  <td>{item.id}</td>
                   <td>{item.name}</td>
                   <td>{item.city}</td>
                   <td>{item.rating}</td>
                   <td>
-                    <LinkButton to={`/admin/workers/edit/${item.idworker}`} name='Edit'/>
-                    <button onClick={ () => deleteWorker(item.idworker) }>Delete</button>
+                    <LinkButton to={`/admin/workers/edit/${item.id}`} name='Edit'/>
+                    <button onClick={ () => deleteWorker(item.id) }>Delete</button>
                   </td>
                 </tr>
               ))}
@@ -50,7 +50,7 @@ class RefactorWorkers extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/workers/add' component={AddWorkers}/>
-          <Route path='/admin/workers/edit/:idworker' component={EditWorkers}/>
+          <Route path='/admin/workers/edit/:id' component={EditWorkers}/>
         </Switch>
       </div>
     )
