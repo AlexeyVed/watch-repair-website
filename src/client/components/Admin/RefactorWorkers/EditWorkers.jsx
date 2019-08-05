@@ -27,8 +27,7 @@ class EditWorkers extends React.Component {
             load: false
           }
         ))
-        console.log(res.data)
-        this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'city', 'rating']))
+        this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'rating', 'city']))
       })
       .catch(err => {
         console.log(err)
@@ -77,7 +76,7 @@ class EditWorkers extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose city</option>
+                <option key={0} value={0}>Choose city</option>
                 {
                   chooseCities.map(item => (
                     <option key={item.id}>{item.city}</option>
@@ -121,6 +120,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+/*    editWorker: values => console.log(values),*/
     editWorker: values => dispatch(editWorkerIntoDB(values))
   }
 }

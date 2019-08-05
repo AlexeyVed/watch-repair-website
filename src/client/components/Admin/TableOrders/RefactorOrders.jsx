@@ -37,19 +37,21 @@ class RefactorOrders extends React.Component {
                 <th>ID</th>
                 <th>Client name</th>
                 <th>Client email</th>
+                <th>Type clock</th>
                 <th>City</th>
                 <th>Date</th>
-                <th>ID work</th>
+                <th>Master</th>
                 <th>Service</th>
               </tr>
               { orders.map(item => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
-                  <td>{item.clientName}</td>
-                  <td>{item.clientEmail}</td>
+                  <td>{item.customerName}</td>
+                  <td>{item.customerEmail}</td>
+                  <td>{item.typeClock}</td>
                   <td>{item.city}</td>
                   <td>{item.date} / {item.time}</td>
-                  <td>{item.masterID}</td>
+                  <td>{item.workerName}</td>
                   <td>
                     <LinkButton to={`/admin/orders/edit/${item.id}`} name='Edit'/>
                     <button onClick={ () => deleteOrder(item.id) }>Delete</button>

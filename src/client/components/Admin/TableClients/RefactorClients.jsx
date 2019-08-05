@@ -14,7 +14,7 @@ class RefactorClients extends React.Component {
     this.props.loadClients()
   }
   render () {
-    const { users, deleteClient } = this.props
+    const { customers, deleteClient } = this.props
 
     return (
       <div className='table-clients'>
@@ -25,14 +25,14 @@ class RefactorClients extends React.Component {
               <tr>
                 <th>ID</th>
                 <th>Email</th>
-                <th>Password</th>
+                <th>Name</th>
                 <th>Service</th>
               </tr>
-              { users.map(item => (
+              { customers.map(item => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>{item.email}</td>
-                  <td>{item.password}</td>
+                  <td>{item.name}</td>
                   <td>
                     <LinkButton to={`/admin/clients/edit/${item.id}`} name='Edit'/>
                     <button onClick={ () => deleteClient(item.id) }>Delete</button>
@@ -57,7 +57,7 @@ class RefactorClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.adminReducer.data.users
+    customers: state.adminReducer.data.customers
 
   }
 }

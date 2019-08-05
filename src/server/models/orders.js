@@ -70,7 +70,18 @@ module.exports = class Order {
   }
 
   static findOne (id) {
-    return service.requestToDB(`SELECT * FROM orders WHERE id = ?`, [id])
+    return service.requestToDB(`SELECT
+    orders.id, orders.date, orders.time,
+    customers.name as customerName, customers.email as customerEmail,
+    workers.id as workerID,
+    cities.city
+    FROM
+     orders
+    LEFT JOIN customers ON orders.customerID = customers.id
+    LEFT JOIN clocks ON orders.clockID = clocks.id
+    LEFT JOIN cities ON orders.cityID = cities.id
+    LEFT JOIN workers ON orders.masterID = workers.id
+    WHERE orders.id = ?`, [id])
   }
 
   static delete (id) {
@@ -78,6 +89,18 @@ module.exports = class Order {
   }
 
   static list () {
-    return service.requestToDB(`SELECT * FROM orders`)
+    return service.requestToDB(`
+    SELECT
+    orders.id, orders.date, orders.time,
+    customers.name as customerName, customers.email as customerEmail,
+    workers.name as workerName,
+    clocks.typeClock,
+    cities.city
+    FROM
+     orders
+    LEFT JOIN customers ON orders.customerID = customers.id
+    LEFT JOIN clocks ON orders.clockID = clocks.id
+    LEFT JOIN cities ON orders.cityID = cities.id
+    LEFT JOIN workers ON orders.masterID = workers.id`)
   }
 }

@@ -8,9 +8,9 @@ import {
   LOAD_ORDERS_ADMIN_STARTED,
   LOAD_ORDERS_ADMIN_SUCCESS,
   LOAD_ORDERS_ADMIN_FAILURE,
-  LOAD_CLIENTS_ADMIN_STARTED,
-  LOAD_CLIENTS_ADMIN_SUCCESS,
-  LOAD_CLIENTS_ADMIN_FAILURE,
+  LOAD_CUSTOMERS_ADMIN_STARTED,
+  LOAD_CUSTOMERS_ADMIN_SUCCESS,
+  LOAD_CUSTOMERS_ADMIN_FAILURE,
   LOAD_WORKERS_ADMIN_STARTED,
   LOAD_WORKERS_ADMIN_SUCCESS,
   LOAD_WORKERS_ADMIN_FAILURE,
@@ -100,7 +100,7 @@ export const loadClientsAdmin = () => {
   return (dispatch) => {
     dispatch(loadClientsStarted())
     axios
-      .get(`http://localhost:3000/api/users/list`)
+      .get(`http://localhost:3000/api/customers/list`)
       .then(res => {
         dispatch(loadClientsSuccess(res.data))
       })
@@ -272,7 +272,6 @@ export const editOrderIntoDB = (values) => {
 
 export const editWorkerIntoDB = (values) => {
   return (dispatch) => {
-    console.log(values)
     dispatch(editModelStarted())
     axios
       .post(`http://localhost:3000/api/workers/update`, values)
@@ -401,16 +400,16 @@ const loadOrdersSuccess = data => ({
 })
 
 const loadClientsStarted = () => ({
-  type: LOAD_CLIENTS_ADMIN_STARTED
+  type: LOAD_CUSTOMERS_ADMIN_STARTED
 })
 
 const loadClientsFailure = err => ({
-  type: LOAD_CLIENTS_ADMIN_FAILURE,
+  type: LOAD_CUSTOMERS_ADMIN_FAILURE,
   payload: err
 })
 
 const loadClientsSuccess = data => ({
-  type: LOAD_CLIENTS_ADMIN_SUCCESS,
+  type: LOAD_CUSTOMERS_ADMIN_SUCCESS,
   payload: data
 })
 

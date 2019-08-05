@@ -4,6 +4,7 @@ const Worker = require('../models/workers.js')
 exports.list = function (req, res) {
   Order.list()
     .then(result => {
+      console.log(result)
       const json = JSON.stringify(result)
       res.send(json)
     })

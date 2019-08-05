@@ -8,9 +8,15 @@ function getConnection () {
 exports.requestToDBCheck = (query, ...rest) => {
   const connectionDB = getConnection()
   return new Promise((resolve, reject) => {
-    connectionDB.connect(() => {
+    connectionDB.connect((err) => {
+      if (err) {
+        console.log(err)
+      }
       connectionDB.query(query, ...rest, function (err, result) {
-        if (err) throw err
+        if (err) {
+          console.log(err)
+          throw err
+        }
 
         if (result.length) {
           reject()
@@ -25,9 +31,16 @@ exports.requestToDBCheck = (query, ...rest) => {
 exports.requestToDB = (query, ...rest) => {
   const connectionDB = getConnection()
   return new Promise((resolve, reject) => {
-    connectionDB.connect(() => {
+    connectionDB.connect((err) => {
+      if (err) {
+        console.log(err)
+      }
       connectionDB.query(query, ...rest, function (err, result) {
-        if (err) throw err
+        if (err) {
+          console.log(err)
+          throw err
+        }
+
         if (result.length || result.protocol41) {
           resolve(result)
         } else {

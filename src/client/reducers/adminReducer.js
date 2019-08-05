@@ -8,9 +8,9 @@ import {
   LOAD_ORDERS_ADMIN_STARTED,
   LOAD_ORDERS_ADMIN_SUCCESS,
   LOAD_ORDERS_ADMIN_FAILURE,
-  LOAD_CLIENTS_ADMIN_STARTED,
-  LOAD_CLIENTS_ADMIN_SUCCESS,
-  LOAD_CLIENTS_ADMIN_FAILURE,
+  LOAD_CUSTOMERS_ADMIN_STARTED,
+  LOAD_CUSTOMERS_ADMIN_SUCCESS,
+  LOAD_CUSTOMERS_ADMIN_FAILURE,
   LOAD_WORKERS_ADMIN_STARTED,
   LOAD_WORKERS_ADMIN_SUCCESS,
   LOAD_WORKERS_ADMIN_FAILURE,
@@ -46,7 +46,7 @@ const initialState = {
   data: {
     clocks: [],
     cities: [],
-    users: [],
+    customers: [],
     workers: [],
     orders: [],
     clocksError: null,
@@ -143,30 +143,30 @@ const adminReducer = (state = initialState, action) => {
         }
       }
 
-    case LOAD_CLIENTS_ADMIN_STARTED:
+    case LOAD_CUSTOMERS_ADMIN_STARTED:
       return {
         ...state,
         dataLoad: true
       }
 
-    case LOAD_CLIENTS_ADMIN_SUCCESS:
+    case LOAD_CUSTOMERS_ADMIN_SUCCESS:
       return {
         ...state,
         dataLoad: false,
         data: {
           ...state.data,
-          users: action.payload,
+          customers: action.payload,
           usersError: null
         }
       }
 
-    case LOAD_CLIENTS_ADMIN_FAILURE:
+    case LOAD_CUSTOMERS_ADMIN_FAILURE:
       return {
         ...state,
         dataLoad: false,
         data: {
           ...state.data,
-          users: [],
+          customers: [],
           usersError: action.payload
         }
       }
