@@ -12,16 +12,16 @@ module.exports = class Order {
   }
 
   addAdmin () {
-    const { clientName, clientEmail, timeRepair, city, date, time, masterID } = this.values
-    const values = [clientName, clientEmail, timeRepair, city, date, time, masterID]
-    return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?, ?)`, values)
+    const { customerID, clockID, cityID, date, time, masterID } = this.values
+    const values = [customerID, clockID, cityID, date, time, masterID ]
+    return service.requestToDB(`INSERT INTO orders (customerID, clockID, cityID, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?)`, values)
   }
 
   update (values) {
     this.values = values
-    const { clientName, clientEmail, timeRepair, city, date, time, masterID, id } = this.values
-    const val = [clientName, clientEmail, timeRepair, city, date, time, masterID, id]
-    return service.requestToDB(`UPDATE orders SET clientName = ?, clientEmail = ?, timeRepair = ?, city = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, val)
+    const { customerID, clockID, cityID, date, time, masterID, id } = this.values
+    const val = [customerID, clockID, cityID, date, time, masterID, id]
+    return service.requestToDB(`UPDATE orders SET customerID = ?, clockID = ?, cityID = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, val)
   }
 
   static add (values) {
@@ -72,9 +72,10 @@ module.exports = class Order {
   static findOne (id) {
     return service.requestToDB(`SELECT
     orders.id, orders.date, orders.time,
-    customers.name as customerName, customers.email as customerEmail,
-    workers.id as workerID,
-    cities.city
+    customers.name as customerName, customers.email as customerEmail,customers.id as customerID,
+    workers.id as masterID, workers.name as workerName,
+    clocks.timeRepair, clocks.typeClock, clocks.id as clockID,
+    cities.city, cities.id as cityID
     FROM
      orders
     LEFT JOIN customers ON orders.customerID = customers.id

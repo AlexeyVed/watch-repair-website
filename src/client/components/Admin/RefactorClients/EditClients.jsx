@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
-import { validateEmail, validatePassword, required } from '../../../validation'
+import { validateEmail, required } from '../../../validation'
 import { editUserIntoDB } from '../../../actions'
 
 import './RefactorClients.less'
@@ -21,13 +21,13 @@ class EditClients extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .post(`http://localhost:3000/api/users/get`, { id })
+      .post(`http://localhost:3000/api/customers/get`, { id })
       .then(res => {
         this.setState(() => ({
             load: false
           }
         ))
-        this.props.dispatch(initialize('editClient', res.data, ['id', 'email', 'password']))
+        this.props.dispatch(initialize('editClient', res.data, ['id', 'email', 'name']))
       })
       .catch(err => {
         console.log(err)
@@ -71,11 +71,11 @@ class EditClients extends React.Component {
             />
             <Field
               label='Create a password'
-              name='password'
+              name='name'
               component={myInput}
               type='text'
               placeholder='Enter your password'
-              validate={[validatePassword, required]}
+              validate={[required]}
               required
             />
             <button

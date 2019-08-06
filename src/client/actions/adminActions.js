@@ -114,7 +114,7 @@ export const addUserToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/users/add`, values)
+      .post(`http://localhost:3000/api/customers/add`, values)
       .then(res => {
         dispatch(addUserSuccess(res.data))
       })
@@ -179,7 +179,6 @@ export const addWorkerToDB = (values) => {
 }
 
 export const addOrderToDB = (values) => {
-  values.timeRepair = Number(values.timeRepair)
   values.time = Number(values.time)
   values.masterID = Number(values.masterID)
   return (dispatch) => {
@@ -203,7 +202,7 @@ export const editUserIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/users/update`, values)
+      .post(`http://localhost:3000/api/customers/update`, values)
       .then(res => {
         dispatch(editUserSuccess(res.data))
       })
@@ -259,7 +258,7 @@ export const editOrderIntoDB = (values) => {
     axios
       .post(`http://localhost:3000/api/orders/update`, values)
       .then(res => {
-        dispatch(editOrderSuccess(res.data))
+        dispatch(editOrderSuccess(res.data[0]))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -347,7 +346,7 @@ export const deleteClientFromDB = (id) => {
   return (dispatch) => {
     dispatch(deleteModelStarted())
     axios
-      .post(`http://localhost:3000/api/users/delete`, { id })
+      .post(`http://localhost:3000/api/customers/delete`, { id })
       .then(res => {
         dispatch(deleteClientSuccess(res.data))
       })
@@ -448,8 +447,9 @@ const editModelStarted = () => ({
   type: EDIT_MODEL_STARTED
 })
 
-const editModelFailure = () => ({
-  type: EDIT_MODEL_FAILURE
+const editModelFailure = (err) => ({
+  type: EDIT_MODEL_FAILURE,
+  payload: err
 })
 
 const redirectFromRefactor = () => ({

@@ -32,20 +32,10 @@ class AddOrder extends React.Component {
               Add Order
               <LinkButton to='/admin/orders' name='&times;' className='refactor-orders__header__right-button-close'/>
             </div>
-
-            <Field
-              label='Enter client name'
-              name='clientName'
-              component={myInput}
-              validate={[required]}
-              type='text'
-              placeholder='Enter your name'
-              required
-            />
             <div className='refactor-orders__order-select'>
               <label>Choose client email</label>
               <Field
-                name='clientEmail'
+                name='customerID'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -53,7 +43,7 @@ class AddOrder extends React.Component {
                 <option key={0} value={false}>Choose email</option>
                 {
                   chooseUsers.map((item, index) => (
-                    <option key={index} value={item.email}>{item.email}</option>
+                    <option key={index} value={item.id}>{item.email}</option>
                   ))
                 }
               </Field>
@@ -77,7 +67,7 @@ class AddOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose your clock</label>
               <Field
-                name='timeRepair'
+                name='clockID'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -85,7 +75,7 @@ class AddOrder extends React.Component {
                 <option key={0} value={false}>Choose your clock</option>
                 {
                   chooseClock.map((clock, index) => (
-                    <option key={index} value={clock.timeRepair}>{clock.typeClock}</option>
+                    <option key={index} value={clock.id}>{clock.typeClock}</option>
                   ))
                 }
               </Field>
@@ -93,7 +83,7 @@ class AddOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose your city</label>
               <Field
-                name='city'
+                name='cityID'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -101,7 +91,7 @@ class AddOrder extends React.Component {
                 <option key={0} value={false}>Choose your city</option>
                 {
                   chooseCities.map((item, index) => (
-                    <option key={index}>{item.city}</option>
+                    <option key={index} value={item.id}>{item.city}</option>
                   ))
                 }
               </Field>
@@ -143,7 +133,7 @@ const mapStateToProps = (state) => {
   return {
     chooseClock: state.adminReducer.data.clocks,
     chooseCities: state.adminReducer.data.cities,
-    chooseUsers: state.adminReducer.data.users,
+    chooseUsers: state.adminReducer.data.customers,
     redirectBack: state.adminReducer.redirectBackFromRefactor,
     chooseWorkers: state.adminReducer.data.workers
   }

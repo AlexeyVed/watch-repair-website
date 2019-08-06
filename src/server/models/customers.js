@@ -7,33 +7,26 @@ module.exports = class Customer {
 
   update (values) {
     this.values = values
-    const { email, password, id } = this.values
-    const val = [email, password, id]
-    return service.requestToDB(`UPDATE customers SET email = ?, password = ?  WHERE id = ?`, val)
-  }
-
-  registration () {
-    const { email, password } = this.values
-    const values = [email, password]
-    return service.requestToDB(`INSERT INTO customers (email, password) VALUES (?, ?)`, values)
-  }
-
-  check () {
-    const { email } = this.values
-    return service.requestToDBCheck(`SELECT email FROM customers where email= "${email}"`)
-  }
-
-  login () {
-    const { email } = this.values
-    return service.requestToDB(`SELECT email, password FROM customers where email= "${email}"`)
+    const { email, name, id } = this.values
+    const val = [ name, email, id]
+    return service.requestToDB(`UPDATE customers SET name = ?, email = ?  WHERE id = ?`, val)
   }
 
   static findOne (id) {
     return service.requestToDB(`SELECT * FROM customers WHERE id = ${id}`)
   }
 
+  static findByEmail (email) {
+    return service.requestToDB(`SELECT * FROM customers WHERE email = "${email}"`)
+  }
+
   static delete (id) {
     return service.requestToDB(`DELETE FROM customers WHERE id = ${id}`)
+  }
+
+  add () {
+    const { name, email } = this.values
+    return service.requestToDB(`INSERT INTO customers (name, email) VALUES (?, ?)`, [name, email])
   }
 
   static list () {

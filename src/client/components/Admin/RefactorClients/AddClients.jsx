@@ -40,30 +40,12 @@ class AddClients extends React.Component {
               required
             />
             <Field
-              label='Confirm your email'
-              name='confirm-email-reg'
+              label='Your name'
+              name='name'
               component={myInput}
               type='text'
-              placeholder='Confirm your email'
-              validate={[validateEmail, confirmEmail, required]}
-              required
-            />
-            <Field
-              label='Create a password'
-              name='password'
-              component={myInput}
-              type='password'
-              placeholder='Enter your password'
-              validate={[validatePassword, required]}
-              required
-            />
-            <Field
-              label='Confirm your password'
-              name='confirm-password'
-              component={myInput}
-              type='password'
-              placeholder='Confirm your password'
-              validate={[confirmPassword, required]}
+              placeholder='Enter your name'
+              validate={[required]}
               required
             />
             <button

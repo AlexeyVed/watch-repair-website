@@ -10,25 +10,24 @@ exports.list = function (req, res) {
 
 exports.add = function (req, res) {
   const customer = new Customer(req.body)
-  customer.check()
-    .then(() => {
-      customer.registration()
-        .then((result) => {
-          Customer.findOne(result.insertId)
-            .then(client => {
-              const json = JSON.stringify(client[0])
-              res.status(201).send(json)
-            })
-            .catch(err => {
-              res.status(500).send('some broke')
-            })
-        })
-        .catch(error => {
-          res.status(400).send(error)
-        })
+  Customer.findByEmail(req.body.email)
+    .then(result => {
+      if (!result.length) {
+        customer.add()
+          .then(insert => {
+            Customer.findOne(insert.insertId)
+              .then(customer => {
+                const json = JSON.stringify(customer[0])
+                res.send(json)
+              })
+          })
+          .catch(err => {
+            res.status(500).send('Error add customers')
+          })
+      }
     })
-    .catch(error => {
-      res.status(401).send('Email already used.')
+    .catch(err => {
+      res.status(400).send('Error add customer')
     })
 }
 
@@ -38,8 +37,11 @@ exports.update = function (req, res) {
       const customer = new Customer(userFromDB[0])
       customer.update(req.body)
         .then(result => {
-          const json = JSON.stringify(req.body)
-          res.send(json)
+          Customer.findOne(req.body.id)
+            .then(customer => {
+              const json = JSON.stringify(customer[0])
+              res.send(json)
+            })
         })
         .catch(err => {
           res.status(400).send('Error update clock')

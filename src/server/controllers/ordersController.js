@@ -4,7 +4,6 @@ const Worker = require('../models/workers.js')
 exports.list = function (req, res) {
   Order.list()
     .then(result => {
-      console.log(result)
       const json = JSON.stringify(result)
       res.send(json)
     })
@@ -69,8 +68,11 @@ exports.update = function (req, res) {
       const order = new Order(orderFromDB[0])
       order.update(req.body)
         .then(result => {
-          const json = JSON.stringify(req.body)
-          res.send(json)
+          Order.findOne(req.body.id)
+            .then(order => {
+              const json = JSON.stringify(order)
+              res.send(json)
+            })
         })
         .catch(err => {
           res.status(500).send('Error update order')

@@ -214,8 +214,8 @@ const adminReducer = (state = initialState, action) => {
         redirectBackFromRefactor: true,
         data: {
           ...state.data,
-          users: [
-            ...state.data.users,
+          customers: [
+            ...state.data.customers,
             action.payload
           ]
         }
@@ -340,7 +340,7 @@ const adminReducer = (state = initialState, action) => {
         redirectBackFromRefactor: true,
         data: {
           ...state.data,
-          users: state.data.users.map(user => {
+          customers: state.data.customers.map(user => {
             if (user.id === Number(action.payload.id)) {
               action.payload.id = Number(action.payload.id)
               return action.payload
@@ -429,7 +429,7 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         data: {
           ...state.data,
-          users: state.data.users.filter(el => el.id !== action.payload.id)
+          customers: state.data.customers.filter(el => el.id !== action.payload.id)
         }
       }
 
