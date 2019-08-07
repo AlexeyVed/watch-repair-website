@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
@@ -10,8 +10,19 @@ import { addOrderToDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorOrders.less'
+import { getDate } from "../../App/OrderForm/logic";
 
 class AddOrder extends React.Component {
+  componentDidMount() {
+    const date = getDate()
+
+    const initialValues = {
+      date: date.date,
+      time: date.time
+    }
+    this.props.dispatch(initialize('addOrder', initialValues, ['date', 'time']))
+  }
+
   render () {
     const { handleSubmit, addOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
 

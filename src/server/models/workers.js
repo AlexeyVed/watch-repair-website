@@ -7,15 +7,15 @@ module.exports = class Worker {
 
   update (values) {
     this.values = values
-    const { name, city, rating, id } = this.values
-    const val = [ name, city, rating, id ]
-    return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE id = ?`, val)
+    const { name, cityID, rating, id } = this.values
+    const val = [ name, cityID, rating, id ]
+    return service.requestToDB(`UPDATE workers SET name = ?, cityID = ?, rating = ?  WHERE id = ?`, val)
   }
 
   add () {
-    const { name, city, rating } = this.values
-    const values = [ name, city, rating ]
-    return service.requestToDB(`INSERT INTO workers (name, city, rating) VALUES (?, ?, ?)`, values)
+    const { name, cityID, rating } = this.values
+    const values = [ name, cityID, rating ]
+    return service.requestToDB(`INSERT INTO workers (name, cityID, rating) VALUES (?, ?, ?)`, values)
   }
 
   static delete (id) {
@@ -23,19 +23,30 @@ module.exports = class Worker {
   }
 
   static getWithoutBusy (arrayId, obj) {
-    const { city } = obj
+    const { cityID } = obj
     let sql = ''
     for (let i = 0; i < arrayId.length; i++) {
       sql += ` && id != '${arrayId[i]}'`
     }
-    return service.requestToDB(`SELECT * FROM workers WHERE city = '${city}'${sql}`)
+    return service.requestToDB(`SELECT * FROM workers WHERE cityID = '${cityID}'${sql}`)
   }
 
   static findOne (id) {
-    return service.requestToDB(`SELECT * FROM workers WHERE id = ?`, [id])
+    return service.requestToDB(`SELECT 
+    workers.id, workers.name, workers.cityID, workers.rating,
+    cities.city
+    FROM
+     workers
+    LEFT JOIN cities ON workers.cityID = cities.id
+    WHERE workers.id = ?`, [id])
   }
 
   static list () {
-    return service.requestToDB(`SELECT * FROM workers`)
+    return service.requestToDB(`SELECT
+     workers.id, workers.name, workers.cityID, workers.rating,
+     cities.city
+     FROM
+      workers
+     LEFT JOIN cities ON workers.cityID = cities.id`)
   }
 }

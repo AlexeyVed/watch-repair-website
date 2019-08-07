@@ -71,7 +71,7 @@ class EditWorkers extends React.Component {
             <div className='refactor-workers__select'>
               <label>Update city</label>
               <Field
-                name='city'
+                name='cityID'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -79,7 +79,7 @@ class EditWorkers extends React.Component {
                 <option key={0} value={0}>Choose city</option>
                 {
                   chooseCities.map(item => (
-                    <option key={item.id}>{item.city}</option>
+                    <option key={item.id} value={item.id}>{item.city}</option>
                   ))
                 }
               </Field>

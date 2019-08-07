@@ -13,13 +13,18 @@ import axios from 'axios'
 
 export const makeOrder = (values) => {
   return (dispatch) => {
-    values.timeRepair = Number(values.timeRepair)
+    values.cityID = Number(values.cityID)
+    values.clockID = Number(values.clockID)
     values.time = Number(values.time)
     dispatch(makeOrderStarted())
     axios
-      .post(`http://localhost:3000/api/orders/make`, values)
+      .post(`http://localhost:3000/api/orders/getWorkers`, values)
       .then(res => {
-        dispatch(makeOrderSuccess(res.data))
+        const obj = {
+          data: res.data,
+          values
+        }
+        dispatch(makeOrderSuccess(obj))
       })
       .catch(err => {
         dispatch(makeOrderFailure(err.response.data))

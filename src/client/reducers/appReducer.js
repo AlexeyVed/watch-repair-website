@@ -11,9 +11,9 @@ import {
 
 const initialState = {
   forOrder: {
-    freWorkers: [],
-    insertId: null,
-    masterID: null
+    freeWorkers: [],
+    masterID: null,
+    order: {}
   },
   dataLoad: false,
   isMakeOrder: false,
@@ -35,7 +35,11 @@ const appReducer = (state = initialState, action) => {
         ...state,
         isMakeOrder: false,
         chooseWorker: true,
-        forOrder: action.payload
+        forOrder: {
+          ...state.forOrder,
+          freeWorkers: action.payload.data,
+          order: action.payload.values
+        }
       }
 
     case MAKE_ORDER_FAILURE:

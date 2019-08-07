@@ -17,12 +17,16 @@ class ChooseWorker extends React.Component {
     })
   }
   render () {
-    const { workers, addOrder, id, masterID, setWorker } = this.props
+    const { workers, addOrder, id, masterID, setWorker, order } = this.props
 
     let buttonConf
 
     if (masterID) {
-      buttonConf = <button onClick={ () => (addOrder(masterID, id)) }>Confirm</button>
+      const fullOrder = {
+        ...order,
+        masterID
+      }
+      buttonConf = <button onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
     } else {
       buttonConf = <button disabled onClick={ () => (addOrder(masterID, id)) }>Confirm</button>
     }
@@ -54,14 +58,14 @@ class ChooseWorker extends React.Component {
 const mapStateToProps = (state) => {
   return {
     workers: state.appReducer.forOrder.freeWorkers,
-    id: state.appReducer.forOrder.insertId,
-    masterID: state.appReducer.forOrder.masterID
+    masterID: state.appReducer.forOrder.masterID,
+    order: state.appReducer.forOrder.order,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addOrder: (idMaster, id) => dispatch(addOrder({ idMaster, id })),
+    addOrder: values => dispatch(addOrder(values)),
     setWorker: (idMaster) => dispatch(setChooseWorker(idMaster))
 
   }

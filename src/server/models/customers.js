@@ -17,7 +17,7 @@ module.exports = class Customer {
   }
 
   static findByEmail (email) {
-    return service.requestToDB(`SELECT * FROM customers WHERE email = "${email}"`)
+    return service.requestToDB(`SELECT id FROM customers WHERE email = "${email}"`)
   }
 
   static delete (id) {

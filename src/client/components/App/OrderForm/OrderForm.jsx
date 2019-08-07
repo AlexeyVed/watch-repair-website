@@ -48,8 +48,6 @@ class OrderForm extends Component {
       )
     }
 
-    this.props.dispatch(change('orderForm', 'clientEmail', currentEmail))
-
     return (
       <div className='main-form'>
         <div className='main-form__title'>Make you order</div>
@@ -58,7 +56,7 @@ class OrderForm extends Component {
           className='main-form__order-form'>
           <Field
             label='Enter your name'
-            name='clientName'
+            name='name'
             component={myInput}
             type='text'
             placeholder='Enter your name'
@@ -66,7 +64,7 @@ class OrderForm extends Component {
           />
           <Field
             label='Enter your email'
-            name='clientEmail'
+            name='email'
             component={myInput}
             type='text'
             placeholder='Enter your email'
@@ -75,15 +73,15 @@ class OrderForm extends Component {
           <div className='main-form__order-select'>
             <label>Choose your clock</label>
             <Field
-              name='timeRepair'
+              name='clockID'
               component='select'
               type='number'
               validate={required}
             >
-              <option key={0} value={undefined}>Choose your clock</option>
+              <option key={0} value={false}>Choose your clock</option>
               {
                 chooseClock.map((clock, index) => (
-                  <option key={index} value={Number(clock.timeRepair)}>{clock.typeClock}</option>
+                  <option key={index} value={clock.id}>{clock.typeClock}</option>
                 ))
               }
             </Field>
@@ -91,7 +89,7 @@ class OrderForm extends Component {
           <div className='main-form__order-select'>
             <label>Choose your city</label>
             <Field
-              name='city'
+              name='cityID'
               component='select'
               type='text'
               validate={required}
@@ -99,7 +97,7 @@ class OrderForm extends Component {
               <option key={0} value={undefined}>Choose your city</option>
               {
                 chooseCities.map((item, index) => (
-                  <option key={index}>{item.city}</option>
+                  <option key={index} value={item.id}>{item.city}</option>
                 ))
               }
             </Field>

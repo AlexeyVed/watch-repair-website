@@ -5,10 +5,10 @@ module.exports = class Order {
     this.values = values
   }
 
-  addWithoutMaster () {
-    const { clientName, clientEmail, timeRepair, city, date, time } = this.values
-    const values = [clientName, clientEmail, timeRepair, city, date, time]
-    return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time) VALUES (?, ?, ?, ?, ?, ?)`, values)
+  add () {
+    const { customerID, clockID, cityID, date, time, masterID } = this.values
+    const values = [customerID, clockID, cityID, date, time, masterID ]
+    return service.requestToDB(`INSERT INTO orders (customerID, clockID, cityID, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?)`, values)
   }
 
   addAdmin () {
@@ -24,14 +24,15 @@ module.exports = class Order {
     return service.requestToDB(`UPDATE orders SET customerID = ?, clockID = ?, cityID = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, val)
   }
 
-  static add (values) {
-    const { idMaster, id } = values
-    return service.requestToDB(`UPDATE orders SET masterID = ? WHERE id = ?`, [idMaster, id])
-  }
-
   getIdBusyMasters () {
-    const { date, city, time, timeRepair } = this.values
-    return service.requestToDB(`SELECT masterID, timeRepair, time FROM orders WHERE date = '${date}' AND city = '${city}'`)
+    const { date, cityID, time, timeRepair } = this.values
+    return service.requestToDB(`
+    SELECT 
+    orders.masterID, clocks.timeRepair, orders.time 
+    FROM 
+    orders 
+    LEFT JOIN clocks ON orders.clockID = clocks.id
+    WHERE date = '${date}' AND cityID = '${cityID}'`)
       .then(workers => {
         return workers.filter(item => {
           if (item.time < time) {
