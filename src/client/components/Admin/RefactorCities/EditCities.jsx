@@ -1,37 +1,41 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, reduxForm, change } from 'redux-form'
-import { BrowserRouter as Router, Redirect } from 'react-router-dom'
-import { Placeholder } from 'react-preloading-screen'
+import { Field, reduxForm, initialize } from 'redux-form'
+import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editCityIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorCities.less'
 
 class EditCities extends React.Component {
+  state = {
+    load: true
+  }
+
   componentDidMount () {
-    this.props.dispatch(change('editCity', 'id', this.props.match.params.id))
-    this.props.dispatch(change('editCity', 'city', this.props.match.params.city))
+    const id = +this.props.match.params.id
+    axios
+      .post(`http://localhost:3000/api/cities/get`, { id })
+      .then(res => {
+        this.setState(() => ({
+            load: false
+          }
+        ))
+        this.props.dispatch(initialize('editCity', res.data, ['id', 'city']))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render () {
-    const { handleSubmit, editCity, redirectBack, isRefactor } = this.props
-    let loader
-
-    if (isRefactor) {
-      loader = <Placeholder>
-        <div className='preloader'>
-          <div className='loader'>
-          </div>
-        </div>
-      </Placeholder>
-    } else {
-      loader = null
-    }
+    const { handleSubmit, editCity, redirectBack } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/cities' }}/>
@@ -65,8 +69,8 @@ class EditCities extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
-            {loader}
           </form>
+          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -75,8 +79,7 @@ class EditCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor,
-    isRefactor: state.adminReducer.refactorModelInProcess
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 

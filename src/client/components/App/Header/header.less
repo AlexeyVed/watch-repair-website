@@ -1,9 +1,9 @@
 @headerColor: #fafafa;
 
 .header {
-  flex-grow: 5;
-  height: 12vh;
+  flex: 0 0 80px;
   background-color: @headerColor;
+  min-width: 555px;
   display: flex;
   border-left: 1px solid rgba(128, 128, 128, 0.4);
   border-bottom: 1px solid rgba(128, 128, 128, 0.4);
@@ -12,20 +12,21 @@
   border-bottom-left-radius: 5px;
 
   .container-logo {
-    flex: 1 3 300px;
+    flex: 1 1;
+    width: 250px;
     align-items: center;
-    justify-content: center;
-    padding-left: 40px;
+    padding-left: 30px;
     display: flex;
 
     &__logo {
       background: url(../../../image/logo.png) no-repeat left;
-      flex: 1 2 30%;
+      flex: none;
+      width: 90px;
       height: 100%;
     }
 
     &__discription {
-      flex: 2 1 70%;
+      flex: 1;
       padding-right: 40px;
 
       .company-name {
@@ -44,19 +45,16 @@
   }
 
   .container-user {
-    flex: 3 1 400px;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-right: 30px;
+    margin-right: 10px;
   }
 
   .container-buttons {
-    flex: 1 3 300px;
+    flex: 0 0 240px;
     display: flex;
-    justify-content: center;
-    text-align: right;
-    border-collapse: collapse;
 
     button {
       width: 100%;

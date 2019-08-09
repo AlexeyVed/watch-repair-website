@@ -1,15 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteClockFromDB } from '../../../actions'
+import { deleteClockFromDB, loadClocks } from '../../../actions'
 import AddClocks from '../RefactorClocks/AddClocks.jsx'
 import EditClocks from '../RefactorClocks/EditClocks.jsx'
 
 import './RefactorClocks.less'
 
 class RefactorClocks extends React.Component {
+  componentDidMount () {
+    this.props.loadClocks()
+  }
   render () {
     const { clocks, deleteClock } = this.props
 
@@ -31,7 +34,7 @@ class RefactorClocks extends React.Component {
                   <td>{item.typeClock}</td>
                   <td>{item.timeRepair}</td>
                   <td>
-                    <LinkButton to={`/admin/clocks/edit/${item.id}/${item.typeClock}/${item.timeRepair}`} name='Edit'/>
+                    <LinkButton to={`/admin/clocks/edit/${item.id}`} name='Edit'/>
                     <button onClick={ () => deleteClock(item.id) }>Delete</button>
                   </td>
                 </tr>
@@ -44,7 +47,7 @@ class RefactorClocks extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/clocks/add' component={AddClocks}/>
-          <Route path='/admin/clocks/edit/:id/:typeClock/:timeRepair' component={EditClocks}/>
+          <Route path='/admin/clocks/edit/:id' component={EditClocks}/>
         </Switch>
       </div>
     )
@@ -60,7 +63,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteClock: id => dispatch(deleteClockFromDB(id))
+    deleteClock: id => dispatch(deleteClockFromDB(id)),
+    loadClocks: () => dispatch(loadClocks())
   }
 }
 

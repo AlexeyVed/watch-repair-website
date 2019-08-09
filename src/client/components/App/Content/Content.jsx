@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Placeholder } from 'react-preloading-screen'
 
 import AllWorkers from '../AllWorkers/AllWorker.jsx'
 import ChooseWorker from '../ChooseWorker/ChooseWorker.jsx'
@@ -8,26 +7,14 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 class Content extends Component {
   render () {
-    const { chooseMaster, currentUser, dataLoad, isMakeOrder } = this.props
+    const { chooseMaster, currentUser } = this.props
 
-    let adminLink,
-      loader
+    let adminLink
 
     if (currentUser === 'admin@example.com') {
       adminLink = <LinkButton to='/admin' name='Admin interface' className=''/>
     } else {
       adminLink = null
-    }
-
-    if (dataLoad || isMakeOrder) {
-      loader = <Placeholder>
-        <div className='preloader'>
-          <div className='loader'>
-          </div>
-        </div>
-      </Placeholder>
-    } else {
-      loader = null
     }
 
     const component = (!chooseMaster) ? <AllWorkers/> : <ChooseWorker/>
@@ -39,7 +26,6 @@ class Content extends Component {
           <LinkButton to='/' name='Main' />
         </div>
         {component}
-        {loader}
       </div>
     )
   }
@@ -48,9 +34,7 @@ class Content extends Component {
 const mapStateToProps = (state) => {
   return {
     chooseMaster: state.appReducer.chooseWorker,
-    currentUser: state.loginReducer.singInUser,
-    dataLoad: state.appReducer.dataLoad,
-    isMakeOrder: state.appReducer.isMakeOrder
+    currentUser: state.loginReducer.singInUser
   }
 }
 

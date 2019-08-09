@@ -1,39 +1,41 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { change, Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect } from 'react-router-dom'
-import { Placeholder } from 'react-preloading-screen'
+import { Field, initialize, reduxForm} from 'redux-form'
+import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editWorkerIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorWorkers.less'
+import axios from 'axios'
 
 class EditWorkers extends React.Component {
+  state = {
+    load: true
+  }
+
   componentDidMount () {
-    this.props.dispatch(change('editWorker', 'idworker', this.props.match.params.idworker))
-    this.props.dispatch(change('editWorker', 'name', this.props.match.params.name))
-    this.props.dispatch(change('editWorker', 'city', this.props.match.params.city))
-    this.props.dispatch(change('editWorker', 'rating', this.props.match.params.rating))
+    const id = +this.props.match.params.id
+    axios
+      .post(`http://localhost:3000/api/workers/get`, { id })
+      .then(res => {
+        this.setState(() => ({
+            load: false
+          }
+        ))
+        this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'rating', 'city']))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render () {
-    const { handleSubmit, editWorker, chooseCities, redirectBack, isRefactor } = this.props
-    let loader
-
-    if (isRefactor) {
-      loader = <Placeholder>
-        <div className='preloader'>
-          <div className='loader'>
-          </div>
-        </div>
-      </Placeholder>
-    } else {
-      loader = null
-    }
+    const { handleSubmit, editWorker, chooseCities, redirectBack } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/workers' }}/>
@@ -52,10 +54,10 @@ class EditWorkers extends React.Component {
             </div>
             <Field
               label='ID'
-              name='idworker'
+              name='id'
               component={myInput}
               type='text'
-              placeholder={this.props.match.params.idworker}
+              placeholder={this.props.match.params.id}
               input={{ disabled: true }}
             />
             <Field
@@ -69,15 +71,15 @@ class EditWorkers extends React.Component {
             <div className='refactor-workers__select'>
               <label>Update city</label>
               <Field
-                name='city'
+                name='cityID'
                 component='select'
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose city</option>
+                <option key={0} value={0}>Choose city</option>
                 {
                   chooseCities.map(item => (
-                    <option key={item.id}>{item.city}</option>
+                    <option key={item.id} value={item.id}>{item.city}</option>
                   ))
                 }
               </Field>
@@ -101,8 +103,8 @@ class EditWorkers extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
-            {loader}
           </form>
+          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -112,13 +114,13 @@ class EditWorkers extends React.Component {
 const mapStateToProps = (state) => {
   return {
     chooseCities: state.adminReducer.data.cities,
-    redirectBack: state.adminReducer.redirectBackFromRefactor,
-    isRefactor: state.adminReducer.refactorModelInProcess
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+/*    editWorker: values => console.log(values),*/
     editWorker: values => dispatch(editWorkerIntoDB(values))
   }
 }

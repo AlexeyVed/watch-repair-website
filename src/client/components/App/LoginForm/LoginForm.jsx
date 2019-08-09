@@ -2,8 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect } from 'react-router-dom'
-import { Placeholder } from 'react-preloading-screen'
+import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -23,12 +22,10 @@ class LoginForm extends React.Component {
       currentUser,
       loginError,
       missLoginError,
-      page,
-      isSingIn
+      page
     } = this.props
 
     let bttnClose = null
-    let loader
 
     if (loginError) {
       setTimeout(missLoginError, 3000)
@@ -38,17 +35,6 @@ class LoginForm extends React.Component {
       bttnClose = <LinkButton to='/order' name='&times;' className='login-form__header__right-button-close'/>
     } else {
       bttnClose = <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
-    }
-
-    if (isSingIn) {
-      loader = <Placeholder>
-        <div className='preloader'>
-          <div className='loader'>
-          </div>
-        </div>
-      </Placeholder>
-    } else {
-      loader = null
     }
 
     if (currentUser === 'admin@example.com') {
@@ -94,7 +80,6 @@ class LoginForm extends React.Component {
               type='submit'
               disabled={pristine || submitting}
               label='submit'>Submit</button>
-            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -106,8 +91,7 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     loginError: state.loginReducer.singInError,
-    page: state.appReducer.page,
-    isSingIn: state.loginReducer.singInLoading
+    page: state.appReducer.page
   }
 }
 

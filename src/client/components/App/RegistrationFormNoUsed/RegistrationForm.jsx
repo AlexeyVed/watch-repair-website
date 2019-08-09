@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect } from 'react-router-dom'
-import { Placeholder } from 'react-preloading-screen'
+import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -21,12 +20,10 @@ class RegistrationForm extends Component {
       currentUser,
       loginError,
       missLoginError,
-      page,
-      loading
+      page
     } = this.props
 
     let bttnClose = null
-    let loader
 
     if (currentUser) {
       return <Redirect to={{ pathname: '/' }}/>
@@ -40,17 +37,6 @@ class RegistrationForm extends Component {
       bttnClose = <LinkButton to='/order' name='&times;' className='login-form__header__right-button-close'/>
     } else {
       bttnClose = <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
-    }
-
-    if (loading) {
-      loader = <Placeholder>
-        <div className='preloader'>
-          <div className='loader'>
-          </div>
-        </div>
-      </Placeholder>
-    } else {
-      loader = null
     }
 
     return (
@@ -104,7 +90,6 @@ class RegistrationForm extends Component {
               required
             />
             <button type='submit' label='submit'>Submit</button>
-            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -116,8 +101,7 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     loginError: state.loginReducer.singInError,
-    page: state.appReducer.page,
-    loading: state.loginReducer.singInLoading
+    page: state.appReducer.page
   }
 }
 

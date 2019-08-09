@@ -1,22 +1,41 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm, change } from 'redux-form'
+import { Field, reduxForm, initialize, change } from 'redux-form'
 
 import myInput from '../../FieldRedux'
 import { makeOrder } from '../../../actions'
 import { validateEmail, required } from '../../../validation'
+import { getDate } from './logic.js'
 
 import './OrderForm.less'
 
 class OrderForm extends Component {
-  render () {
-    const { handleSubmit, chooseClock, chooseCities, makeOrder, currentEmail, chooseMaster } = this.props
+  state = {
+    workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17]
+  }
 
-    if (currentEmail) {
-      this.props.dispatch(change('orderForm', 'clientEmail', currentEmail))
+  componentDidMount() {
+    const date = getDate()
+
+    this.setState(() => ({
+      workHours: this.state.workHours.filter(item => {
+        if (item >= date.time) {
+          return true
+        } else {
+          return false
+        }
+          })
+    }))
+    const initialValues = {
+      date: date.date,
+      time: date.time
     }
+    this.props.dispatch(initialize('orderForm', initialValues, ['date', 'time']))
 
-    const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]
+  }
+
+  render () {
+    const { handleSubmit, chooseClock, chooseCities, makeOrder, chooseMaster, currentEmail } = this.props
 
     if (chooseMaster) {
       return (
@@ -37,7 +56,7 @@ class OrderForm extends Component {
           className='main-form__order-form'>
           <Field
             label='Enter your name'
-            name='clientName'
+            name='name'
             component={myInput}
             type='text'
             placeholder='Enter your name'
@@ -45,7 +64,7 @@ class OrderForm extends Component {
           />
           <Field
             label='Enter your email'
-            name='clientEmail'
+            name='email'
             component={myInput}
             type='text'
             placeholder='Enter your email'
@@ -54,15 +73,15 @@ class OrderForm extends Component {
           <div className='main-form__order-select'>
             <label>Choose your clock</label>
             <Field
-              name='timeRepair'
+              name='clockID'
               component='select'
               type='number'
               validate={required}
             >
-              <option key={0} value={undefined}>Choose your clock</option>
+              <option key={0} value={false}>Choose your clock</option>
               {
                 chooseClock.map((clock, index) => (
-                  <option key={index} value={Number(clock.timeRepair)}>{clock.typeClock}</option>
+                  <option key={index} value={clock.id}>{clock.typeClock}</option>
                 ))
               }
             </Field>
@@ -70,7 +89,7 @@ class OrderForm extends Component {
           <div className='main-form__order-select'>
             <label>Choose your city</label>
             <Field
-              name='city'
+              name='cityID'
               component='select'
               type='text'
               validate={required}
@@ -78,7 +97,7 @@ class OrderForm extends Component {
               <option key={0} value={undefined}>Choose your city</option>
               {
                 chooseCities.map((item, index) => (
-                  <option key={index}>{item.city}</option>
+                  <option key={index} value={item.id}>{item.city}</option>
                 ))
               }
             </Field>
@@ -88,7 +107,6 @@ class OrderForm extends Component {
             name='date'
             component={myInput}
             type='date'
-            validate={required}
           />
           <div className='main-form__order-select'>
             <label>Choose convenient time</label>
@@ -98,9 +116,8 @@ class OrderForm extends Component {
               type='number'
               validate={required}
             >
-              <option key={0} value={undefined}>Select time</option>
               {
-                workHours.map((item) => {
+                this.state.workHours.map((item) => {
                   return <option key={item} value={Number(item)}>{item}:00</option>
                 })
               }
@@ -115,8 +132,8 @@ class OrderForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    chooseClock: state.appReducer.data.clocks,
-    chooseCities: state.appReducer.data.cities,
+    chooseClock: state.adminReducer.data.clocks,
+    chooseCities: state.adminReducer.data.cities,
     currentEmail: state.loginReducer.singInUser,
     chooseMaster: state.appReducer.chooseWorker
   }

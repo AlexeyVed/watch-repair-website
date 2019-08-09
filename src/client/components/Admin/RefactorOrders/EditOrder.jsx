@@ -1,41 +1,41 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { change, Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect } from 'react-router-dom'
-import { Placeholder } from 'react-preloading-screen'
+import { Field, initialize, reduxForm} from 'redux-form'
+import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editOrderIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorOrders.less'
+import axios from 'axios'
 
 class EditOrder extends React.Component {
+  state = {
+    load: true
+  }
+
   componentDidMount () {
-    this.props.dispatch(change('editOrder', 'id', this.props.match.params.id))
-    this.props.dispatch(change('editOrder', 'clientName', this.props.match.params.clientName))
-    this.props.dispatch(change('editOrder', 'clientEmail', this.props.match.params.clientEmail))
-    this.props.dispatch(change('editOrder', 'timeRepair', this.props.match.params.timeRepair))
-    this.props.dispatch(change('editOrder', 'city', this.props.match.params.city))
-    this.props.dispatch(change('editOrder', 'time', this.props.match.params.time))
+    const id = +this.props.match.params.id
+    axios
+      .post(`http://localhost:3000/api/orders/get`, { id })
+      .then(res => {
+        this.setState(() => ({
+            load: false
+          }
+        ))
+        this.props.dispatch(initialize('editOrder', res.data, ['id', 'customerID', 'masterID', 'cityID', 'time']))
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render () {
-    const { handleSubmit, editOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers, isRefactor } = this.props
-    let loader
-
-    if (isRefactor) {
-      loader = <Placeholder>
-        <div className='preloader'>
-          <div className='loader'>
-          </div>
-        </div>
-      </Placeholder>
-    } else {
-      loader = null
-    }
+    const { handleSubmit, editOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
@@ -62,19 +62,10 @@ class EditOrder extends React.Component {
               placeholder={this.props.match.params.id}
               input={{ disabled: true }}
             />
-            <Field
-              label='Enter client name'
-              name='clientName'
-              component={myInput}
-              validate={[required]}
-              type='text'
-              placeholder='Enter your name'
-              required
-            />
             <div className='refactor-orders__order-select'>
               <label>Choose client email</label>
               <Field
-                name='clientEmail'
+                name='customerID'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -82,7 +73,7 @@ class EditOrder extends React.Component {
                 <option key={0} value={false}>Choose email</option>
                 {
                   chooseUsers.map((item, index) => (
-                    <option key={index} value={item.email}>{item.email}</option>
+                    <option key={index} value={item.id}>{item.email}</option>
                   ))
                 }
               </Field>
@@ -98,7 +89,7 @@ class EditOrder extends React.Component {
                 <option key={0} value={false}>Choose master</option>
                 {
                   chooseWorkers.map((item, index) => (
-                    <option key={index} value={item.idworker}>{item.name}</option>
+                    <option key={index} value={item.id}>{item.name}</option>
                   ))
                 }
               </Field>
@@ -106,7 +97,7 @@ class EditOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose time repair</label>
               <Field
-                name='timeRepair'
+                name='clockID'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -114,7 +105,7 @@ class EditOrder extends React.Component {
                 <option key={0} value={false}>Choose time repair</option>
                 {
                   chooseClock.map((clock, index) => (
-                    <option key={index} value={clock.timeRepair}>{clock.timeRepair}</option>
+                    <option key={index} value={clock.id}>{clock.timeRepair}</option>
                   ))
                 }
               </Field>
@@ -122,7 +113,7 @@ class EditOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose your city</label>
               <Field
-                name='city'
+                name='cityID'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -130,7 +121,7 @@ class EditOrder extends React.Component {
                 <option key={0} value={false}>Choose your city</option>
                 {
                   chooseCities.map((item, index) => (
-                    <option key={index}>{item.city}</option>
+                    <option key={index} value={item.id}>{item.city}</option>
                   ))
                 }
               </Field>
@@ -161,8 +152,8 @@ class EditOrder extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
-            {loader}
           </form>
+          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -173,10 +164,9 @@ const mapStateToProps = (state) => {
   return {
     chooseClock: state.adminReducer.data.clocks,
     chooseCities: state.adminReducer.data.cities,
-    chooseUsers: state.adminReducer.data.users,
+    chooseUsers: state.adminReducer.data.customers,
     chooseWorkers: state.adminReducer.data.workers,
-    redirectBack: state.adminReducer.redirectBackFromRefactor,
-    isRefactor: state.adminReducer.refactorModelInProcess
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 

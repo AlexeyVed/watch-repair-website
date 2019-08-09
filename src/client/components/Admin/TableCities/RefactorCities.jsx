@@ -1,15 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import AddCities from '../RefactorCities/AddCities.jsx'
 import EditCities from '../RefactorCities/EditCities.jsx'
-import { deleteCityFromDB } from '../../../actions'
+import { deleteCityFromDB, loadCities } from '../../../actions'
 
 import './RefactorCities.less'
 
 class RefactorCities extends React.Component {
+  componentDidMount () {
+    this.props.loadCities()
+  }
   render () {
     const { cities, deleteCity } = this.props
 
@@ -29,7 +32,7 @@ class RefactorCities extends React.Component {
                   <td>{item.id}</td>
                   <td>{item.city}</td>
                   <td>
-                    <LinkButton to={`/admin/cities/edit/${item.id}/${item.city}`} name='Edit'/>
+                    <LinkButton to={`/admin/cities/edit/${item.id}`} name='Edit'/>
                     <button onClick={ () => deleteCity(item.id) }>Delete</button>
                   </td>
                 </tr>
@@ -42,7 +45,7 @@ class RefactorCities extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/cities/add' component={AddCities}/>
-          <Route path='/admin/cities/edit/:id/:city' component={EditCities}/>
+          <Route path='/admin/cities/edit/:id' component={EditCities}/>
         </Switch>
       </div>
     )
@@ -57,7 +60,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteCity: id => dispatch(deleteCityFromDB(id))
+    deleteCity: id => dispatch(deleteCityFromDB(id)),
+    loadCities: () => dispatch(loadCities())
   }
 }
 

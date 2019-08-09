@@ -7,35 +7,46 @@ module.exports = class Worker {
 
   update (values) {
     this.values = values
-    const { name, city, rating, idworker } = this.values
-    const val = [ name, city, rating, idworker ]
-    return service.requestToDB(`UPDATE workers SET name = ?, city = ?, rating = ?  WHERE idworker = ?`, val)
+    const { name, cityID, rating, id } = this.values
+    const val = [ name, cityID, rating, id ]
+    return service.requestToDB(`UPDATE workers SET name = ?, cityID = ?, rating = ?  WHERE id = ?`, val)
   }
 
   add () {
-    const { name, city, rating } = this.values
-    const values = [ name, city, rating ]
-    return service.requestToDB(`INSERT INTO workers (name, city, rating) VALUES (?, ?, ?)`, values)
+    const { name, cityID, rating } = this.values
+    const values = [ name, cityID, rating ]
+    return service.requestToDB(`INSERT INTO workers (name, cityID, rating) VALUES (?, ?, ?)`, values)
   }
 
-  static delete (idworker) {
-    return service.requestToDB(`DELETE FROM workers WHERE idworker = ?`, [idworker])
+  static delete (id) {
+    return service.requestToDB(`DELETE FROM workers WHERE id = ?`, [id])
   }
 
   static getWithoutBusy (arrayId, obj) {
-    const { city } = obj
+    const { cityID } = obj
     let sql = ''
     for (let i = 0; i < arrayId.length; i++) {
-      sql += ` && idworker != '${arrayId[i]}'`
+      sql += ` && id != '${arrayId[i]}'`
     }
-    return service.requestToDB(`SELECT * FROM workers WHERE city = '${city}'${sql}`)
+    return service.requestToDB(`SELECT * FROM workers WHERE cityID = '${cityID}'${sql}`)
   }
 
-  static findOne (idworker) {
-    return service.requestToDB(`SELECT * FROM workers WHERE idworker = ?`, [idworker])
+  static findOne (id) {
+    return service.requestToDB(`SELECT 
+    workers.id, workers.name, workers.cityID, workers.rating,
+    cities.city
+    FROM
+     workers
+    LEFT JOIN cities ON workers.cityID = cities.id
+    WHERE workers.id = ?`, [id])
   }
 
   static list () {
-    return service.requestToDB(`SELECT * FROM workers`)
+    return service.requestToDB(`SELECT
+     workers.id, workers.name, workers.cityID, workers.rating,
+     cities.city
+     FROM
+      workers
+     LEFT JOIN cities ON workers.cityID = cities.id`)
   }
 }

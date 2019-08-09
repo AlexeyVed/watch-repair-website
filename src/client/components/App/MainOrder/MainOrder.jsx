@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { changePage, loadCities, loadClocks, loadWorkers } from '../../../actions'
 import OrderForm from '../OrderForm/OrderForm.jsx'
 import Content from '../Content/Content.jsx'
 import LoginForm from '../LoginForm/LoginForm.jsx'
-import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx'
 
 class MainOrder extends Component {
   componentDidMount () {
@@ -23,7 +22,6 @@ class MainOrder extends Component {
         <Content/>
         <Switch>
           <Route path='/order/login' component={LoginForm}/>
-          <Route path='/order/registration' component={RegistrationForm}/>
         </Switch>
       </div>
     )

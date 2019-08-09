@@ -1,38 +1,40 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { change, Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect } from 'react-router-dom'
-import { Placeholder } from 'react-preloading-screen'
+import { Field, initialize, reduxForm } from 'redux-form'
+import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editClockIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorClocks.less'
+import axios from 'axios'
 
 class EditClocks extends React.Component {
-  componentDidMount () {
-    this.props.dispatch(change('editClock', 'id', this.props.match.params.id))
-    this.props.dispatch(change('editClock', 'typeClock', this.props.match.params.typeClock))
-    this.props.dispatch(change('editClock', 'timeRepair', this.props.match.params.timeRepair))
+  state = {
+    load: true
   }
 
+  componentDidMount () {
+    const id = +this.props.match.params.id
+    axios
+      .post(`http://localhost:3000/api/clocks/get`, { id })
+      .then(res => {
+        this.setState(() => ({
+            load: false
+          }
+        ))
+        this.props.dispatch(initialize('editClock', res.data, ['id', 'typeClock', 'timeRepair']))
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
   render () {
-    const { handleSubmit, editClock, redirectBack, isRefactor } = this.props
-    let loader
-
-    if (isRefactor) {
-      loader = <Placeholder>
-        <div className='preloader'>
-          <div className='loader'>
-          </div>
-        </div>
-      </Placeholder>
-    } else {
-      loader = null
-    }
+    const { handleSubmit, editClock, redirectBack } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clocks' }}/>
@@ -76,8 +78,8 @@ class EditClocks extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
-            {loader}
           </form>
+          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -86,8 +88,7 @@ class EditClocks extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor,
-    isRefactor: state.adminReducer.refactorModelInProcess
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 

@@ -2,8 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { BrowserRouter as Router, Redirect } from 'react-router-dom'
-import { Placeholder } from 'react-preloading-screen'
+import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -14,19 +13,7 @@ import './RefactorWorkers.less'
 
 class AddWorkers extends React.Component {
   render () {
-    const { handleSubmit, addWorker, chooseCities, redirectBack, isRefactor } = this.props
-    let loader
-
-    if (isRefactor) {
-      loader = <Placeholder>
-        <div className='preloader'>
-          <div className='loader'>
-          </div>
-        </div>
-      </Placeholder>
-    } else {
-      loader = null
-    }
+    const { handleSubmit, addWorker, chooseCities, redirectBack } = this.props
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/workers' }}/>
@@ -54,7 +41,7 @@ class AddWorkers extends React.Component {
             <div className='refactor-workers__select'>
               <label>Enter city</label>
               <Field
-                name='city'
+                name='cityID'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -62,7 +49,7 @@ class AddWorkers extends React.Component {
                 <option key={0} value={false}>Choose city</option>
                 {
                   chooseCities.map(item => (
-                    <option key={item.id}>{item.city}</option>
+                    <option key={item.id} value={item.id}>{item.city}</option>
                   ))
                 }
               </Field>
@@ -86,7 +73,6 @@ class AddWorkers extends React.Component {
             <button
               type='submit'
               label='submit'>Submit</button>
-            {loader}
           </form>
         </div>
         , document.getElementById('modal-root'))
@@ -97,8 +83,7 @@ class AddWorkers extends React.Component {
 const mapStateToProps = (state) => {
   return {
     chooseCities: state.adminReducer.data.cities,
-    redirectBack: state.adminReducer.redirectBackFromRefactor,
-    isRefactor: state.adminReducer.refactorModelInProcess
+    redirectBack: state.adminReducer.redirectBackFromRefactor
   }
 }
 

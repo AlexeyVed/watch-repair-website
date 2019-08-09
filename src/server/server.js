@@ -3,7 +3,8 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-const usersRouter = require('./routes/userRoutes.js')
+const customersRouter = require('./routes/customersRoutes.js')
+const usersRouter = require('./routes/usersRoutes.js')
 const citiesRouter = require('./routes/citiesRoutes.js')
 const workersRouter = require('./routes/workersRoutes.js')
 const clocksRouter = require('./routes/clocksRoutes.js')
@@ -15,6 +16,7 @@ app.options('*', cors())
 
 app.use(express.static('dist'))
 
+app.use('/api/customers', customersRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/cities', citiesRouter)
 app.use('/api/workers', workersRouter)

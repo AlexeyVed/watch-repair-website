@@ -9,7 +9,7 @@ exports.list = function (req, res) {
 }
 
 exports.update = function (req, res) {
-  Worker.findOne(req.body.idworker)
+  Worker.findOne(req.body.id)
     .then(workerFromDB => {
       const worker = new Worker(workerFromDB[0])
       worker.update(req.body)
@@ -20,6 +20,14 @@ exports.update = function (req, res) {
         .catch(err => {
           res.status(400).send('Error update worker')
         })
+    })
+}
+
+exports.get = function (req, res) {
+  Worker.findOne(req.body.id)
+    .then((worker) => {
+      const json = JSON.stringify(worker[0])
+      res.send(json)
     })
 }
 

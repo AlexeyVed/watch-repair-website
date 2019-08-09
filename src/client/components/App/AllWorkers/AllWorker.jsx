@@ -12,7 +12,7 @@ class AllWorker extends React.Component {
         <div className='all-worker__header'>All our masters</div>
         <div className='all-worker__table'>
           { workers.map(item => (
-            <div className='all-worker__table__worker' key={item.idworker}>
+            <div className='all-worker__table__worker' key={item.id}>
               <div className='all-image'></div>
               <div className='all-info'>
                 <div className='all-info__name'>{item.name}</div>
@@ -30,7 +30,7 @@ class AllWorker extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    workers: state.appReducer.data.workers
+    workers: state.adminReducer.data.workers
   }
 }
 

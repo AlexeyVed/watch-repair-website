@@ -8,36 +8,33 @@ import {
   LOAD_ORDERS_ADMIN_STARTED,
   LOAD_ORDERS_ADMIN_SUCCESS,
   LOAD_ORDERS_ADMIN_FAILURE,
-  LOAD_CLIENTS_ADMIN_STARTED,
-  LOAD_CLIENTS_ADMIN_SUCCESS,
-  LOAD_CLIENTS_ADMIN_FAILURE,
+  LOAD_CUSTOMERS_ADMIN_STARTED,
+  LOAD_CUSTOMERS_ADMIN_SUCCESS,
+  LOAD_CUSTOMERS_ADMIN_FAILURE,
   LOAD_WORKERS_ADMIN_STARTED,
   LOAD_WORKERS_ADMIN_SUCCESS,
   LOAD_WORKERS_ADMIN_FAILURE,
   ADD_MODEL_STARTED,
-  ADD_MODEL_SUCCESS,
   ADD_MODEL_FAILURE,
-  ADD_CITIES_TO_STATE,
-  ADD_CLIENTS_TO_STATE,
-  ADD_CLOCKS_TO_STATE,
-  ADD_ORDERS_TO_STATE,
-  ADD_WORKERS_TO_STATE,
+  ADD_CITIES_SUCCESS,
+  ADD_CLIENTS_SUCCESS,
+  ADD_CLOCKS_SUCCESS,
+  ADD_ORDERS_SUCCESS,
+  ADD_WORKERS_SUCCESS,
   DELETE_MODEL_STARTED,
-  DELETE_MODEL_SUCCESS,
   DELETE_MODEL_FAILURE,
-  DELETE_CITIES_FROM_STATE,
-  DELETE_CLIENTS_FROM_STATE,
-  DELETE_CLOCKS_FROM_STATE,
-  DELETE_ORDERS_FROM_STATE,
-  DELETE_WORKERS_FROM_STATE,
+  DELETE_CITIES_SUCCESS,
+  DELETE_CLIENTS_SUCCESS,
+  DELETE_CLOCKS_SUCCESS,
+  DELETE_ORDERS_SUCCESS,
+  DELETE_WORKERS_SUCCESS,
   EDIT_MODEL_STARTED,
-  EDIT_MODEL_SUCCESS,
   EDIT_MODEL_FAILURE,
-  EDIT_CITIES_INTO_STATE,
-  EDIT_CLIENTS_INTO_STATE,
-  EDIT_CLOCKS_INTO_STATE,
-  EDIT_ORDERS_INTO_STATE,
-  EDIT_WORKERS_INTO_STATE,
+  EDIT_CITIES_SUCCESS,
+  EDIT_CLIENTS_SUCCESS,
+  EDIT_CLOCKS_SUCCESS,
+  EDIT_ORDERS_SUCCESS,
+  EDIT_WORKERS_SUCCESS,
   REDIRECT_FROM_REFACTOR
 } from '../actions/types'
 
@@ -49,7 +46,7 @@ const initialState = {
   data: {
     clocks: [],
     cities: [],
-    users: [],
+    customers: [],
     workers: [],
     orders: [],
     clocksError: null,
@@ -71,6 +68,7 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_CLOCKS_ADMIN_SUCCESS:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           clocks: action.payload,
@@ -81,6 +79,7 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_CLOCKS_ADMIN_FAILURE:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           clocks: [],
@@ -90,12 +89,14 @@ const adminReducer = (state = initialState, action) => {
 
     case LOAD_CITIES_ADMIN_STARTED:
       return {
-        ...state
+        ...state,
+        dataLoad: true
       }
 
     case LOAD_CITIES_ADMIN_SUCCESS:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           cities: action.payload,
@@ -106,6 +107,7 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_CITIES_ADMIN_FAILURE:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           cities: [],
@@ -115,7 +117,8 @@ const adminReducer = (state = initialState, action) => {
 
     case LOAD_ORDERS_ADMIN_STARTED:
       return {
-        ...state
+        ...state,
+        dataLoad: true
       }
 
     case LOAD_ORDERS_ADMIN_SUCCESS:
@@ -140,40 +143,44 @@ const adminReducer = (state = initialState, action) => {
         }
       }
 
-    case LOAD_CLIENTS_ADMIN_STARTED:
-      return {
-        ...state
-      }
-
-    case LOAD_CLIENTS_ADMIN_SUCCESS:
+    case LOAD_CUSTOMERS_ADMIN_STARTED:
       return {
         ...state,
-        data: {
-          ...state.data,
-          users: action.payload,
-          usersError: null
-        }
+        dataLoad: true
       }
 
-    case LOAD_CLIENTS_ADMIN_FAILURE:
+    case LOAD_CUSTOMERS_ADMIN_SUCCESS:
       return {
         ...state,
         dataLoad: false,
         data: {
           ...state.data,
-          users: [],
+          customers: action.payload,
+          usersError: null
+        }
+      }
+
+    case LOAD_CUSTOMERS_ADMIN_FAILURE:
+      return {
+        ...state,
+        dataLoad: false,
+        data: {
+          ...state.data,
+          customers: [],
           usersError: action.payload
         }
       }
 
     case LOAD_WORKERS_ADMIN_STARTED:
       return {
-        ...state
+        ...state,
+        dataLoad: true
       }
 
     case LOAD_WORKERS_ADMIN_SUCCESS:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           workers: action.payload,
@@ -184,6 +191,7 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_WORKERS_ADMIN_FAILURE:
       return {
         ...state,
+        dataLoad: false,
         data: {
           ...state.data,
           workers: [],
@@ -198,29 +206,27 @@ const adminReducer = (state = initialState, action) => {
         refactorModelError: null
       }
 
-    case ADD_MODEL_SUCCESS:
+    case ADD_CLIENTS_SUCCESS:
       return {
         ...state,
         refactorModelInProcess: false,
         refactorModelError: null,
-        redirectBackFromRefactor: true
-      }
-
-    case ADD_CLIENTS_TO_STATE:
-      return {
-        ...state,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
-          users: [
-            ...state.data.users,
+          customers: [
+            ...state.data.customers,
             action.payload
           ]
         }
       }
 
-    case ADD_ORDERS_TO_STATE:
+    case ADD_ORDERS_SUCCESS:
       return {
         ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
           orders: [
@@ -230,9 +236,12 @@ const adminReducer = (state = initialState, action) => {
         }
       }
 
-    case ADD_CITIES_TO_STATE:
+    case ADD_CITIES_SUCCESS:
       return {
         ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
           cities: [
@@ -242,9 +251,12 @@ const adminReducer = (state = initialState, action) => {
         }
       }
 
-    case ADD_CLOCKS_TO_STATE:
+    case ADD_CLOCKS_SUCCESS:
       return {
         ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
           clocks: [
@@ -254,9 +266,12 @@ const adminReducer = (state = initialState, action) => {
         }
       }
 
-    case ADD_WORKERS_TO_STATE:
+    case ADD_WORKERS_SUCCESS:
       return {
         ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
           workers: [
@@ -280,17 +295,12 @@ const adminReducer = (state = initialState, action) => {
         refactorModelError: null
       }
 
-    case EDIT_MODEL_SUCCESS:
+    case EDIT_CITIES_SUCCESS:
       return {
         ...state,
         refactorModelInProcess: false,
         refactorModelError: null,
-        redirectBackFromRefactor: true
-      }
-
-    case EDIT_CITIES_INTO_STATE:
-      return {
-        ...state,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
           cities: state.data.cities.map(city => {
@@ -303,9 +313,12 @@ const adminReducer = (state = initialState, action) => {
         }
       }
 
-    case EDIT_CLOCKS_INTO_STATE:
+    case EDIT_CLOCKS_SUCCESS:
       return {
         ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
           clocks: state.data.clocks.map(clock => {
@@ -319,14 +332,17 @@ const adminReducer = (state = initialState, action) => {
         }
       }
 
-    case EDIT_CLIENTS_INTO_STATE:
+    case EDIT_CLIENTS_SUCCESS:
       return {
         ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
-          users: state.data.users.map(user => {
-            if (user.idlogin === Number(action.payload.idlogin)) {
-              action.payload.idlogin = Number(action.payload.idlogin)
+          customers: state.data.customers.map(user => {
+            if (user.id === Number(action.payload.id)) {
+              action.payload.id = Number(action.payload.id)
               return action.payload
             }
             return user
@@ -334,9 +350,12 @@ const adminReducer = (state = initialState, action) => {
         }
       }
 
-    case EDIT_ORDERS_INTO_STATE:
+    case EDIT_ORDERS_SUCCESS:
       return {
         ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
           orders: state.data.orders.map(order => {
@@ -349,14 +368,17 @@ const adminReducer = (state = initialState, action) => {
         }
       }
 
-    case EDIT_WORKERS_INTO_STATE:
+    case EDIT_WORKERS_SUCCESS:
       return {
         ...state,
+        refactorModelInProcess: false,
+        refactorModelError: null,
+        redirectBackFromRefactor: true,
         data: {
           ...state.data,
           workers: state.data.workers.map(worker => {
-            if (worker.idworker === Number(action.payload.idworker)) {
-              action.payload.idworker = Number(action.payload.idworker)
+            if (worker.id === Number(action.payload.id)) {
+              action.payload.id = Number(action.payload.id)
               action.payload.rating = Number(action.payload.rating)
               return action.payload
             }
@@ -378,52 +400,55 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: true
       }
 
-    case DELETE_MODEL_SUCCESS:
+    case DELETE_CITIES_SUCCESS:
       return {
         ...state,
         refactorModelError: null,
-        refactorModelInProcess: false
-      }
-
-    case DELETE_CITIES_FROM_STATE:
-      return {
-        ...state,
+        refactorModelInProcess: false,
         data: {
           ...state.data,
           cities: state.data.cities.filter(el => el.id !== action.payload.id)
         }
       }
 
-    case DELETE_CLOCKS_FROM_STATE:
+    case DELETE_CLOCKS_SUCCESS:
       return {
         ...state,
+        refactorModelError: null,
+        refactorModelInProcess: false,
         data: {
           ...state.data,
           clocks: state.data.clocks.filter(el => el.id !== action.payload.id)
         }
       }
 
-    case DELETE_CLIENTS_FROM_STATE:
+    case DELETE_CLIENTS_SUCCESS:
       return {
         ...state,
+        refactorModelError: null,
+        refactorModelInProcess: false,
         data: {
           ...state.data,
-          users: state.data.users.filter(el => el.idlogin !== action.payload.id)
+          customers: state.data.customers.filter(el => el.id !== action.payload.id)
         }
       }
 
-    case DELETE_WORKERS_FROM_STATE:
+    case DELETE_WORKERS_SUCCESS:
       return {
         ...state,
+        refactorModelError: null,
+        refactorModelInProcess: false,
         data: {
           ...state.data,
-          workers: state.data.workers.filter(el => el.idworker !== action.payload.id)
+          workers: state.data.workers.filter(el => el.id !== action.payload.id)
         }
       }
 
-    case DELETE_ORDERS_FROM_STATE:
+    case DELETE_ORDERS_SUCCESS:
       return {
         ...state,
+        refactorModelError: null,
+        refactorModelInProcess: false,
         data: {
           ...state.data,
           orders: state.data.orders.filter(el => el.id !== action.payload.id)

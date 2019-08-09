@@ -5,43 +5,44 @@ module.exports = class Order {
     this.values = values
   }
 
-  addWithoutMaster () {
-    const { clientName, clientEmail, timeRepair, city, date, time } = this.values
-    const values = [clientName, clientEmail, timeRepair, city, date, time]
-    return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time) VALUES (?, ?, ?, ?, ?, ?)`, values)
+  add () {
+    const { customerID, clockID, cityID, date, time, masterID } = this.values
+    const values = [customerID, clockID, cityID, date, time, masterID ]
+    return service.requestToDB(`INSERT INTO orders (customerID, clockID, cityID, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?)`, values)
   }
 
   addAdmin () {
-    const { clientName, clientEmail, timeRepair, city, date, time, masterID } = this.values
-    const values = [clientName, clientEmail, timeRepair, city, date, time, masterID]
-    return service.requestToDB(`INSERT INTO orders (clientName, clientEmail, timeRepair, city, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?, ?)`, values)
+    const { customerID, clockID, cityID, date, time, masterID } = this.values
+    const values = [customerID, clockID, cityID, date, time, masterID ]
+    return service.requestToDB(`INSERT INTO orders (customerID, clockID, cityID, date, time, masterID) VALUES (?, ?, ?, ?, ?, ?)`, values)
   }
 
   update (values) {
     this.values = values
-    const { clientName, clientEmail, timeRepair, city, date, time, masterID, id } = this.values
-    const val = [clientName, clientEmail, timeRepair, city, date, time, masterID, id]
-    return service.requestToDB(`UPDATE orders SET clientName = ?, clientEmail = ?, timeRepair = ?, city = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, val)
-  }
-
-  static add (values) {
-    const { idMaster, id } = values
-    return service.requestToDB(`UPDATE orders SET masterID = ? WHERE id = ?`, [idMaster, id])
+    const { customerID, clockID, cityID, date, time, masterID, id } = this.values
+    const val = [customerID, clockID, cityID, date, time, masterID, id]
+    return service.requestToDB(`UPDATE orders SET customerID = ?, clockID = ?, cityID = ?, date = ?, time = ?, masterID = ? WHERE id = ?`, val)
   }
 
   getIdBusyMasters () {
-    const { date, city } = this.values
-    return service.requestToDB(`SELECT masterID, timeRepair, time FROM orders WHERE date = '${date}' AND city = '${city}'`)
+    const { date, cityID, time, timeRepair } = this.values
+    return service.requestToDB(`
+    SELECT 
+    orders.masterID, clocks.timeRepair, orders.time 
+    FROM 
+    orders 
+    LEFT JOIN clocks ON orders.clockID = clocks.id
+    WHERE date = '${date}' AND cityID = '${cityID}'`)
       .then(workers => {
         return workers.filter(item => {
-          if (item.time < this.time) {
-            if ((item.time + item.timeRepair) < this.time) {
+          if (item.time < time) {
+            if ((item.time + item.timeRepair) < time) {
               return false
             } else {
               return true
             }
           } else {
-            if ((this.time + this.timeRepair) >= item.time) {
+            if ((time + timeRepair) >= item.time) {
               return true
             } else {
               return false
@@ -70,7 +71,19 @@ module.exports = class Order {
   }
 
   static findOne (id) {
-    return service.requestToDB(`SELECT * FROM orders WHERE id = ?`, [id])
+    return service.requestToDB(`SELECT
+    orders.id, orders.date, orders.time,
+    customers.name as customerName, customers.email as customerEmail,customers.id as customerID,
+    workers.id as masterID, workers.name as workerName,
+    clocks.timeRepair, clocks.typeClock, clocks.id as clockID,
+    cities.city, cities.id as cityID
+    FROM
+     orders
+    LEFT JOIN customers ON orders.customerID = customers.id
+    LEFT JOIN clocks ON orders.clockID = clocks.id
+    LEFT JOIN cities ON orders.cityID = cities.id
+    LEFT JOIN workers ON orders.masterID = workers.id
+    WHERE orders.id = ?`, [id])
   }
 
   static delete (id) {
@@ -78,6 +91,18 @@ module.exports = class Order {
   }
 
   static list () {
-    return service.requestToDB(`SELECT * FROM orders`)
+    return service.requestToDB(`
+    SELECT
+    orders.id, orders.date, orders.time,
+    customers.name as customerName, customers.email as customerEmail,
+    workers.name as workerName,
+    clocks.typeClock,
+    cities.city
+    FROM
+     orders
+    LEFT JOIN customers ON orders.customerID = customers.id
+    LEFT JOIN clocks ON orders.clockID = clocks.id
+    LEFT JOIN cities ON orders.cityID = cities.id
+    LEFT JOIN workers ON orders.masterID = workers.id`)
   }
 }

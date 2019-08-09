@@ -1,15 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteOrderFromDB } from '../../../actions'
+import {
+  deleteOrderFromDB,
+  loadCities,
+  loadClientsAdmin,
+  loadClocks,
+  loadOrdersAdmin,
+  loadWorkers
+} from '../../../actions'
 import AddOrder from '../RefactorOrders/AddOrder.jsx'
 import EditOrder from '../RefactorOrders/EditOrder.jsx'
 
 import './RefactorOrders.less'
 
-class RefactorClocks extends React.Component {
+class RefactorOrders extends React.Component {
+  componentDidMount () {
+    this.props.loadOrders()
+    this.props.loadClocks()
+    this.props.loadWorkers()
+    this.props.loadCities()
+    this.props.loadClients()
+  }
   render () {
     const { orders, deleteOrder } = this.props
 
@@ -23,21 +37,23 @@ class RefactorClocks extends React.Component {
                 <th>ID</th>
                 <th>Client name</th>
                 <th>Client email</th>
+                <th>Type clock</th>
                 <th>City</th>
                 <th>Date</th>
-                <th>ID work</th>
+                <th>Master</th>
                 <th>Service</th>
               </tr>
               { orders.map(item => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
-                  <td>{item.clientName}</td>
-                  <td>{item.clientEmail}</td>
+                  <td>{item.customerName}</td>
+                  <td>{item.customerEmail}</td>
+                  <td>{item.typeClock}</td>
                   <td>{item.city}</td>
                   <td>{item.date} / {item.time}</td>
-                  <td>{item.masterID}</td>
+                  <td>{item.workerName}</td>
                   <td>
-                    <LinkButton to={`/admin/orders/edit/${item.id}/${item.clientName}/${item.clientEmail}/${item.city}/${item.date}/${item.time}/${item.masterID}/${item.timeRepair}`} name='Edit'/>
+                    <LinkButton to={`/admin/orders/edit/${item.id}`} name='Edit'/>
                     <button onClick={ () => deleteOrder(item.id) }>Delete</button>
                   </td>
                 </tr>
@@ -51,7 +67,7 @@ class RefactorClocks extends React.Component {
         </div>
         <Switch>
           <Route path='/admin/orders/add' component={AddOrder}/>
-          <Route path='/admin/orders/edit/:id/:clientName/:clientEmail/:city/:date/:time/:masterID/:timeRepair' component={EditOrder}/>
+          <Route path='/admin/orders/edit/:id' component={EditOrder}/>
         </Switch>
       </div>
     )
@@ -66,8 +82,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteOrder: id => dispatch(deleteOrderFromDB(id))
+    deleteOrder: id => dispatch(deleteOrderFromDB(id)),
+    loadOrders: () => dispatch(loadOrdersAdmin()),
+    loadWorkers: () => dispatch(loadWorkers()),
+    loadCities: () => dispatch(loadCities()),
+    loadClocks: () => dispatch(loadClocks()),
+    loadClients: () => dispatch(loadClientsAdmin())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RefactorClocks)
+export default connect(mapStateToProps, mapDispatchToProps)(RefactorOrders)
