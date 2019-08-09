@@ -1,3 +1,18 @@
+const Sequelize = require('sequelize')
+const sequelize = require('../db/db-connection-config.js')
+
+module.exports = sequelize.define('users', {
+  email: {
+    type: Sequelize.STRING(191),
+    allowNull: false
+  },
+  password: {
+    type: Sequelize.STRING(191),
+    allowNull: false
+  }
+})
+
+/*
 const service = require('../services/modules.js')
 
 module.exports = class User {
@@ -21,3 +36,4 @@ module.exports = class User {
     return service.requestToDB(`SELECT email, password FROM login where email= "${email}"`)
   }
 }
+*/

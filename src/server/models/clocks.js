@@ -1,5 +1,18 @@
-const service = require('../services/modules.js')
+const Sequelize = require('sequelize')
+const sequelize = require('../db/db-connection-config.js')
 
+module.exports = sequelize.define('clocks', {
+  typeClock: {
+    type: Sequelize.STRING(191),
+    allowNull: false
+  },
+  timeRepair: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  }
+})
+
+/*
 module.exports = class Clock {
   constructor (values) {
     this.values = values
@@ -28,3 +41,4 @@ module.exports = class Clock {
     return service.requestToDB(`SELECT * FROM clocks`)
   }
 }
+*/

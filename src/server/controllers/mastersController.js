@@ -1,12 +1,29 @@
-const Worker = require('../models/workers.js')
+const Master = require('../models/masters.js')
 
 exports.list = function (req, res) {
-  Worker.list()
-    .then(result => {
-      const json = JSON.stringify(result)
+  Master.findAll()
+    .then(masters => {
+      const json = JSON.stringify(masters)
       res.send(json)
     })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 exports.update = function (req, res) {
   Worker.findOne(req.body.id)

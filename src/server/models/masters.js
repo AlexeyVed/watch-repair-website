@@ -1,3 +1,27 @@
+const Sequelize = require('sequelize')
+const sequelize = require('../db/db-connection-config.js')
+const City = require('./cities.js')
+
+module.exports = sequelize.define('masters', {
+  name: {
+    type: Sequelize.STRING(191),
+    allowNull: false
+  },
+  cityID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: City,
+      key: 'id'
+    }
+  },
+  rating: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  }
+})
+
+/*
 const service = require('../services/modules.js')
 
 module.exports = class Worker {
@@ -32,7 +56,7 @@ module.exports = class Worker {
   }
 
   static findOne (id) {
-    return service.requestToDB(`SELECT 
+    return service.requestToDB(`SELECT
     workers.id, workers.name, workers.cityID, workers.rating,
     cities.city
     FROM
@@ -50,3 +74,4 @@ module.exports = class Worker {
      LEFT JOIN cities ON workers.cityID = cities.id`)
   }
 }
+*/

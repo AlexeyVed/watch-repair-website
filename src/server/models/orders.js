@@ -1,3 +1,54 @@
+const Sequelize = require('sequelize')
+const sequelize = require('../db/db-connection-config.js')
+const Customer = require('./cities.js')
+const Clock = require('./cities.js')
+const City = require('./cities.js')
+const Master = require('./cities.js')
+
+module.exports = sequelize.define('orders', {
+  customerID: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: Customer,
+      key: 'id'
+    }
+  },
+  clockID: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: Clock,
+      key: 'id'
+    }
+  },
+  cityID: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: City,
+      key: 'id'
+    }
+  },
+  date: {
+    type: Sequelize.STRING(191),
+    allowNull: false
+  },
+  time: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  masterID: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: Master,
+      key: 'id'
+    }
+  }
+})
+
+/*
 const service = require('../services/modules.js')
 
 module.exports = class Order {
@@ -27,10 +78,10 @@ module.exports = class Order {
   getIdBusyMasters () {
     const { date, cityID, time, timeRepair } = this.values
     return service.requestToDB(`
-    SELECT 
-    orders.masterID, clocks.timeRepair, orders.time 
-    FROM 
-    orders 
+    SELECT
+    orders.masterID, clocks.timeRepair, orders.time
+    FROM
+    orders
     LEFT JOIN clocks ON orders.clockID = clocks.id
     WHERE date = '${date}' AND cityID = '${cityID}'`)
       .then(workers => {
@@ -106,3 +157,4 @@ module.exports = class Order {
     LEFT JOIN workers ON orders.masterID = workers.id`)
   }
 }
+*/

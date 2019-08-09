@@ -1,5 +1,16 @@
-const service = require('../services/modules.js')
+const Sequelize = require('sequelize')
+const sequelize = require('../db/db-connection-config.js')
 
+const City = sequelize.define('cities', {
+  city: {
+    type: Sequelize.STRING(191),
+    allowNull: false
+  }
+})
+
+module.exports = City
+
+/*
 module.exports = class City {
   constructor (values) {
     this.values = values
@@ -27,4 +38,4 @@ module.exports = class City {
   static list () {
     return service.requestToDB(`SELECT * FROM cities`)
   }
-}
+} */

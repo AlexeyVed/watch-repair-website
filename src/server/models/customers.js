@@ -1,3 +1,18 @@
+const Sequelize = require('sequelize')
+const sequelize = require('../db/db-connection-config.js')
+
+module.exports = sequelize.define('customers', {
+  name: {
+    type: Sequelize.STRING(191),
+    allowNull: false
+  },
+  email: {
+    type: Sequelize.STRING(191),
+    allowNull: false
+  }
+})
+
+/*
 const service = require('../services/modules.js')
 
 module.exports = class Customer {
@@ -33,3 +48,4 @@ module.exports = class Customer {
     return service.requestToDB(`SELECT * FROM customers`)
   }
 }
+*/

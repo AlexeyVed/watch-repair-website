@@ -1,12 +1,29 @@
 const Customer = require('../models/customers.js')
 
 exports.list = function (req, res) {
-  Customer.list()
-    .then(result => {
-      const json = JSON.stringify(result)
+  Customer.findAll()
+    .then(customers => {
+      const json = JSON.stringify(customers)
       res.send(json)
     })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 exports.add = function (req, res) {
   const customer = new Customer(req.body)

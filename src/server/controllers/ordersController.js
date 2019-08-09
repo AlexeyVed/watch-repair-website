@@ -1,15 +1,29 @@
 const Order = require('../models/orders.js')
-const Worker = require('../models/workers.js')
+const Worker = require('../models/masters.js')
 const Clock = require('../models/clocks.js')
 const Customer = require('../models/customers.js')
 
 exports.list = function (req, res) {
-  Order.list()
-    .then(result => {
-      const json = JSON.stringify(result)
+  Order.findAll()
+    .then(orders => {
+      const json = JSON.stringify(orders)
       res.send(json)
     })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 exports.delete = function (req, res) {
   Order.delete(req.body.id)

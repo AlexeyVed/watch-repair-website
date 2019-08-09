@@ -1,12 +1,31 @@
 const City = require('../models/cities.js')
 
 exports.list = function (req, res) {
-  City.list()
-    .then(result => {
-      const json = JSON.stringify(result)
+  City.findAll()
+    .then(cities => {
+      const json = JSON.stringify(cities)
       res.send(json)
     })
 }
+
+exports.get = function (req, res) {
+  City.findByPk(req.body.id)
+    .then((city) => {
+      const json = JSON.stringify(city)
+      res.send(json)
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
 
 exports.update = function (req, res) {
   City.findOne(req.body.id)
@@ -20,14 +39,6 @@ exports.update = function (req, res) {
         .catch(err => {
           res.status(400).send('Error update city')
         })
-    })
-}
-
-exports.get = function (req, res) {
-  City.findOne(req.body.id)
-    .then((city) => {
-      const json = JSON.stringify(city[0])
-      res.send(json)
     })
 }
 

@@ -1,5 +1,5 @@
 const express = require('express')
-const workersController = require('../controllers/workersController.js')
+const workersController = require('../controllers/mastersController.js')
 const workersRouter = express.Router()
 
 workersRouter.use('/list', workersController.list)

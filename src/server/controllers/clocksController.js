@@ -1,12 +1,20 @@
 const Clock = require('../models/clocks.js')
 
 exports.list = function (req, res) {
-  Clock.list()
-    .then(result => {
-      const json = JSON.stringify(result)
+  Clock.findAll()
+    .then(clocks => {
+      const json = JSON.stringify(clocks)
       res.send(json)
     })
 }
+
+
+
+
+
+
+
+
 
 exports.update = function (req, res) {
   Clock.findOne(req.body.id)
