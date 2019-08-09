@@ -1,23 +1,15 @@
-const dbConnectionConfig = require('../db/db-connection-config')
-const mysql = require('mysql')
-
-function getConnection () {
-  return mysql.createConnection(dbConnectionConfig)
-}
+const pool = require('../db/db-connection-config')
 
 exports.requestToDBCheck = (query, ...rest) => {
-  const connectionDB = getConnection()
   return new Promise((resolve, reject) => {
-    connectionDB.connect((err) => {
+    pool.getConnection((err, conn) => {
       if (err) {
-        console.log(err)
+        throw err
       }
-      connectionDB.query(query, ...rest, function (err, result) {
+      conn.query(query, ...rest, function (err, result) {
         if (err) {
-          console.log(err)
           throw err
         }
-
         if (result.length) {
           reject()
         } else {
@@ -29,15 +21,13 @@ exports.requestToDBCheck = (query, ...rest) => {
 }
 
 exports.requestToDB = (query, ...rest) => {
-  const connectionDB = getConnection()
   return new Promise((resolve, reject) => {
-    connectionDB.connect((err) => {
+    pool.getConnection((err, conn) => {
       if (err) {
-        console.log(err)
+        throw err
       }
-      connectionDB.query(query, ...rest, function (err, result) {
+      conn.query(query, ...rest, function (err, result) {
         if (err) {
-          console.log(err)
           throw err
         }
 

@@ -24,7 +24,6 @@ exports.registration = function (req, res) {
 }
 
 exports.login = function (req, res) {
-  console.log(req.body)
   const user = new User(req.body)
   user.login()
     .then(result => {
