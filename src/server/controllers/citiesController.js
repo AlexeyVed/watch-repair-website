@@ -16,54 +16,38 @@ exports.get = function (req, res) {
     })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-exports.update = function (req, res) {
-  City.findOne(req.body.id)
-    .then((cityFromDB) => {
-      const city = new City(cityFromDB[0])
-      city.update(req.body)
-        .then(result => {
-          const json = JSON.stringify(req.body)
-          res.send(json)
-        })
-        .catch(err => {
-          res.status(400).send('Error update city')
-        })
-    })
-}
-
 exports.add = function (req, res) {
-  const city = new City(req.body)
-  city.add()
+  City.create({
+    city: req.body.city
+  })
     .then(result => {
-      City.findOne(result.insertId)
-        .then(cities => {
-          const json = JSON.stringify(cities[0])
-          res.status(201).send(json)
-        })
+      const json = JSON.stringify(result)
+      res.status(201).send(json)
     })
     .catch(err => {
-      res.status(400).send('Error add city')
+
     })
 }
 
 exports.delete = function (req, res) {
-  City.delete(req.body.id)
+  City.destroy({
+    where: {
+      id: req.body.id
+    }
+  })
     .then(result => {
-      const json = JSON.stringify(req.body)
-      res.send(json)
+      res.send('OK')
     })
-    .catch(err => {
-      res.status(400).send('Error delete city')
-    })
+}
+
+exports.update = function (req, res) {
+  City.update({
+    city: req.body.city
+  }, {
+    where: {
+      id: req.body.id
+    }
+  }).then((result) => {
+    res.send(result)
+  })
 }

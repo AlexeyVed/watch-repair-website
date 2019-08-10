@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const session = require('express-session')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
@@ -10,6 +11,8 @@ const workersRouter = require('./routes/mastersRoutes.js')
 const clocksRouter = require('./routes/clocksRoutes.js')
 const ordersRouter = require('./routes/ordersRoutes.js')
 
+
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors())
 app.options('*', cors())

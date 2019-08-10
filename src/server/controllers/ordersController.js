@@ -1,65 +1,149 @@
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 const Order = require('../models/orders.js')
-const Worker = require('../models/masters.js')
+const Master = require('../models/masters.js')
 const Clock = require('../models/clocks.js')
 const Customer = require('../models/customers.js')
+const City = require('../models/cities.js')
 
 exports.list = function (req, res) {
-  Order.findAll()
+  Order.findAll({
+    include: [
+      {
+        model: Master
+      },
+      {
+        model: Clock
+      },
+      {
+        model: Customer
+      },
+      {
+        model: City
+      }]
+  })
     .then(orders => {
       const json = JSON.stringify(orders)
       res.send(json)
     })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-exports.delete = function (req, res) {
-  Order.delete(req.body.id)
-    .then(result => {
-      const json = JSON.stringify(req.body)
+exports.get = function (req, res) {
+  Order.findOne({
+    where: {
+      id: req.body.id
+    },
+    include: [
+      {
+        model: Master
+      },
+      {
+        model: Clock
+      },
+      {
+        model: Customer
+      },
+      {
+        model: City
+      }]
+  })
+    .then((order) => {
+      const json = JSON.stringify(order)
       res.send(json)
-    })
-    .catch(err => {
-      res.status(400).send('Error delete order')
     })
 }
 
+exports.delete = function (req, res) {
+  Order.destroy({
+    where: {
+      id: req.body.id
+    }
+  })
+    .then(result => {
+      res.send('OK')
+    })
+}
+
+exports.update = function (req, res) {
+  Order.update({
+    date: req.body.date,
+    time: req.body.time,
+    customerId: req.body.customerId,
+    clockId: req.body.clockId,
+    cityId: req.body.cityId,
+    masterId: req.body.masterId
+  }, {
+    where: {
+      id: req.body.id
+    }
+  }).then((result) => {
+    res.send(result)
+  })
+}
+
 exports.getWorkers = function (req, res) {
-  Clock.findOne(req.body.cityID)
+  Clock.findByPk(req.body.clockId)
     .then(clock => {
       req.body = {
         ...req.body,
-        timeRepair: clock[0].timeRepair
+        timeRepair: clock.timeRepair
       }
-      const order = new Order(req.body)
-      order.getIdBusyMasters()
-        .then(result => {
-          Worker.getWithoutBusy(result, req.body)
+      Order.findAll({
+        where: {
+          date: req.body.date,
+          cityId: req.body.cityId
+        },
+        include: [
+          {
+            model: Clock
+          }]
+      })
+        .then(ordersInDate => {
+          const { time, timeRepair } = req.body
+          return ordersInDate.filter(order => {
+            if (order.time < time) {
+              if ((order.time + order.clock.timeRepair) < time) {
+                return false
+              } else {
+                return true
+              }
+            } else {
+              if ((time + timeRepair) >= order.time) {
+                return true
+              } else {
+                return false
+              }
+            }
+          })
+        })
+        .then(busyMasters => {
+          const arrayIdBusyMaster = busyMasters.map(master => master.masterId)
+          console.log(arrayIdBusyMaster)
+          Master.findAll({
+            where: {
+              cityId: req.body.cityId,
+              id: {
+                [Op.notIn]: arrayIdBusyMaster
+              }
+            },
+            include: [
+              {
+                model: City
+              }
+            ]
+
+          })
             .then(workers => {
               const json = JSON.stringify(workers)
               res.send(json)
             })
             .catch(err => {
-              res.status(500).send('Error get work without Busy')
+
             })
-        })
-        .catch(err => {
-          res.status(500).send('Error get id bussy masters')
         })
     })
 }
+/// /////////////////////////////////
 
 exports.addAdmin = function (req, res) {
   const order = new Order(req.body)
@@ -76,71 +160,35 @@ exports.addAdmin = function (req, res) {
     })
 }
 
-exports.update = function (req, res) {
-  Order.findOne(req.body.id)
-    .then(orderFromDB => {
-      const order = new Order(orderFromDB[0])
-      order.update(req.body)
-        .then(result => {
-          Order.findOne(req.body.id)
-            .then(order => {
-              const json = JSON.stringify(order)
-              res.send(json)
-            })
-        })
-        .catch(err => {
-          res.status(500).send('Error update order')
-        })
-    })
-}
-
-exports.get = function (req, res) {
-  Order.findOne(req.body.id)
-    .then((order) => {
-      const json = JSON.stringify(order[0])
-      res.send(json)
-    })
-}
-
 exports.add = function (req, res) {
-  Customer.findByEmail(req.body.email)
-    .then(result => {
-      if (result.length) {
-        const obj = {
-          ...req.body,
-          customerID: result[0].id
-        }
-        const order = new Order(obj)
-        order.add()
-          .then(result => {
-            Order.findOne(result.insertId)
-              .then(order => {
-                const json = JSON.stringify(order)
-                res.status(201).send(json)
-              })
-          })
-      } else {
-        const newCustomer = new Customer(req.body)
-        newCustomer.add()
-          .then(result => {
-            const obj = {
-              ...req.body,
-              customerID: result.insertId
-            }
-            const order = new Order(obj)
-            order.add()
-              .then(result => {
-                Order.findOne(result.insertId)
-                  .then(order => {
-                    const json = JSON.stringify(order)
-                    res.status(201).send(json)
-                  })
-              })
-          })
+  Customer.findOrCreate({
+    where: {
+      email: req.body.email
+    },
+    defaults: {
+      name: req.body.name
+    }
+  })
+    .then(([user, created]) => {
+      req.body = {
+        ...req.body,
+        customerId: user.get({
+          plain: true
+        }).id
       }
+      Order.create({
+        time: req.body.time,
+        date: req.body.date,
+        customerId: req.body.customerId,
+        clockId: req.body.clockId,
+        cityId: req.body.cityId,
+        masterId: req.body.masterId
+      })
+        .then(result => {
+          res.status(201).send(result)
+        })
     })
     .catch(err => {
       res.status(500).send(err)
     })
-  /*  */
 }

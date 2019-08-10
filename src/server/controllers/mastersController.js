@@ -1,75 +1,69 @@
 const Master = require('../models/masters.js')
+const City = require('../models/cities.js')
 
 exports.list = function (req, res) {
-  Master.findAll()
+  Master.findAll({
+    include: [{
+      model: City
+    }]
+  })
     .then(masters => {
       const json = JSON.stringify(masters)
       res.send(json)
     })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-exports.update = function (req, res) {
-  Worker.findOne(req.body.id)
-    .then(workerFromDB => {
-      const worker = new Worker(workerFromDB[0])
-      worker.update(req.body)
-        .then(result => {
-          const json = JSON.stringify(req.body)
-          res.send(json)
-        })
-        .catch(err => {
-          res.status(400).send('Error update worker')
-        })
-    })
-}
-
 exports.get = function (req, res) {
-  Worker.findOne(req.body.id)
+  Master.findOne({
+    where: {
+      id: req.body.id
+    },
+    include: [{
+      model: City
+    }]
+  })
     .then((worker) => {
-      const json = JSON.stringify(worker[0])
+      const json = JSON.stringify(worker)
       res.send(json)
     })
 }
 
 exports.add = function (req, res) {
-  const worker = new Worker(req.body)
-  worker.add()
+  Master.create({
+    name: req.body.name,
+    rating: req.body.rating,
+    cityId: req.body.cityId
+  })
     .then(result => {
-      Worker.findOne(result.insertId)
-        .then((worker) => {
-          const json = JSON.stringify(worker[0])
-          res.status(201).send(json)
-        })
+      const json = JSON.stringify(result)
+      res.status(201).send(json)
     })
     .catch(err => {
-      res.status(400).send('Error add worker')
+
     })
 }
 
 exports.delete = function (req, res) {
-  Worker.delete(req.body.id)
+  Master.destroy({
+    where: {
+      id: req.body.id
+    }
+  })
     .then(result => {
-      const json = JSON.stringify(req.body)
-      res.send(json)
+      res.send('OK')
     })
-    .catch(err => {
-      res.status(400).send('Error delete worker')
-    })
+}
+
+exports.update = function (req, res) {
+  Master.update({
+    name: req.body.name,
+    rating: req.body.rating,
+    cityId: req.body.cityId
+  }, {
+    where: {
+      id: req.body.id
+    }
+  }).then((result) => {
+    res.send(result)
+  })
 }

@@ -8,59 +8,48 @@ exports.list = function (req, res) {
     })
 }
 
-
-
-
-
-
-
-
-
-exports.update = function (req, res) {
-  Clock.findOne(req.body.id)
-    .then((clockFromDB) => {
-      const clock = new Clock(clockFromDB[0])
-      clock.update(req.body)
-        .then(result => {
-          const json = JSON.stringify(req.body)
-          res.send(json)
-        })
-        .catch(err => {
-          res.status(400).send('Error update clock')
-        })
-    })
-}
-
 exports.get = function (req, res) {
-  Clock.findOne(req.body.id)
+  Clock.findByPk(req.body.id)
     .then((clock) => {
-      const json = JSON.stringify(clock[0])
+      const json = JSON.stringify(clock)
       res.send(json)
     })
 }
 
 exports.add = function (req, res) {
-  const clock = new Clock(req.body)
-  clock.add()
+  Clock.create({
+    typeClock: req.body.typeClock,
+    timeRepair: req.body.timeRepair
+  })
     .then(result => {
-      Clock.findOne(result.insertId)
-        .then(clocks => {
-          const json = JSON.stringify(clocks[0])
-          res.status(201).send(json)
-        })
+      const json = JSON.stringify(result)
+      res.status(201).send(json)
     })
     .catch(err => {
-      res.status(400).send('Error add clock')
+
     })
 }
 
 exports.delete = function (req, res) {
-  Clock.delete(req.body.id)
+  Clock.destroy({
+    where: {
+      id: req.body.id
+    }
+  })
     .then(result => {
-      const json = JSON.stringify(req.body)
-      res.send(json)
+      res.send('OK')
     })
-    .catch(err => {
-      res.status(400).send('Error delete clock')
-    })
+}
+
+exports.update = function (req, res) {
+  Clock.update({
+    typeClock: req.body.typeClock,
+    timeRepair: req.body.timeRepair
+  }, {
+    where: {
+      id: req.body.id
+    }
+  }).then((result) => {
+    res.send(result)
+  })
 }
