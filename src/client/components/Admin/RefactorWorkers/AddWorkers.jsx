@@ -41,7 +41,7 @@ class AddWorkers extends React.Component {
             <div className='refactor-workers__select'>
               <label>Enter city</label>
               <Field
-                name='cityID'
+                name='cityId'
                 component='select'
                 validate={[required]}
                 type='text'

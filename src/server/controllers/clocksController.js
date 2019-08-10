@@ -37,7 +37,8 @@ exports.delete = function (req, res) {
     }
   })
     .then(result => {
-      res.send('OK')
+      const json = JSON.stringify(req.body)
+      res.send(json)
     })
 }
 
@@ -50,6 +51,10 @@ exports.update = function (req, res) {
       id: req.body.id
     }
   }).then((result) => {
-    res.send(result)
+    Clock.findByPk(req.body.id)
+      .then(clock => {
+        const json = JSON.stringify(clock)
+        res.send(json)
+      })
   })
 }

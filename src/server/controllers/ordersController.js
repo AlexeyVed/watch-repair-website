@@ -60,7 +60,8 @@ exports.delete = function (req, res) {
     }
   })
     .then(result => {
-      res.send('OK')
+      const json = JSON.stringify(req.body)
+      res.send(json)
     })
 }
 
@@ -76,9 +77,31 @@ exports.update = function (req, res) {
     where: {
       id: req.body.id
     }
-  }).then((result) => {
-    res.send(result)
   })
+    .then((result) => {
+      Order.findOne({
+        where: {
+          id: req.body.id
+        },
+        include: [
+          {
+            model: Master
+          },
+          {
+            model: Clock
+          },
+          {
+            model: Customer
+          },
+          {
+            model: City
+          }]
+      })
+        .then((order) => {
+          const json = JSON.stringify(order)
+          res.send(json)
+        })
+    })
 }
 
 exports.getWorkers = function (req, res) {
@@ -143,20 +166,43 @@ exports.getWorkers = function (req, res) {
         })
     })
 }
-/// /////////////////////////////////
 
 exports.addAdmin = function (req, res) {
-  const order = new Order(req.body)
-  order.addAdmin()
+  Order.create({
+    time: req.body.time,
+    date: req.body.date,
+    cityId: req.body.cityId,
+    clockId: req.body.clockId,
+    customerId: req.body.customerId,
+    masterId: req.body.masterId
+  })
     .then(result => {
-      Order.findOne(result.insertId)
-        .then((orders) => {
-          const json = JSON.stringify(orders[0])
+      Order.findOne({
+        where: {
+          id: result.id
+        },
+        include: [{
+          model: City
+        },
+        {
+          model: Clock
+        },
+        {
+          model: Customer
+        },
+        {
+          model: Master
+        }
+
+        ]
+      })
+        .then(master => {
+          const json = JSON.stringify(master)
           res.status(201).send(json)
         })
     })
     .catch(err => {
-      res.status(500).send('Error add order admin')
+
     })
 }
 

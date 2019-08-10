@@ -16,7 +16,7 @@ class AllWorker extends React.Component {
               <div className='all-image'></div>
               <div className='all-info'>
                 <div className='all-info__name'>{item.name}</div>
-                <div className='all-info__city'>Work in {item.city}</div>
+                <div className='all-info__city'>Work in {(item.city !== null) ? item.city.city : null}</div>
                 <div className='all-info__rating'>Rating: {item.rating}</div>
               </div>
             </div>

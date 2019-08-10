@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
-const session = require('express-session')
+
 const bodyParser = require('body-parser')
+const passport = require('./config/passport')
 const cors = require('cors')
 
 const customersRouter = require('./routes/customersRoutes.js')
@@ -11,13 +12,14 @@ const workersRouter = require('./routes/mastersRoutes.js')
 const clocksRouter = require('./routes/clocksRoutes.js')
 const ordersRouter = require('./routes/ordersRoutes.js')
 
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors())
 app.options('*', cors())
-
 app.use(express.static('dist'))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/api/customers', customersRouter)
 app.use('/api/users', usersRouter)

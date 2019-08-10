@@ -46,7 +46,7 @@ class AddOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose client email</label>
               <Field
-                name='customerID'
+                name='customerId'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -62,7 +62,7 @@ class AddOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose master</label>
               <Field
-                name='masterID'
+                name='masterId'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -78,7 +78,7 @@ class AddOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose your clock</label>
               <Field
-                name='clockID'
+                name='clockId'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -94,7 +94,7 @@ class AddOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose your city</label>
               <Field
-                name='cityID'
+                name='cityId'
                 component='select'
                 validate={[required]}
                 type='text'

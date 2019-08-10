@@ -1,25 +1,15 @@
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
+const passport = require('../config/passport')
 const User = require('../models/users.js')
-/*
-passport.use(new LocalStrategy(
-  function (username, password, done) {
-  console.log('passport before findOne')
-  User.findOne({ username: username }, function (err, user) {
-    if (err) { return done(err) }
-    if (!user) {
-      return done(null, false, { message: 'Incorrect username.' })
-    }
-    if (!user.validPassword(password)) {
-      return done(null, false, { message: 'Incorrect password.' })
-    }
-    return done(null, user)
-  })
-}
-)) */
 
-exports.login = function (req, res) {
-  res.send(req.user)
+exports.login = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err)
+    if (!user) return res.send(info.message)
+    req.logIn(user, err => {
+      if (err) { return next(err) }
+      res.send(req.user)
+    })
+  })(req, res, next)
 }
 
 /* exports.registration = function (req, res) {

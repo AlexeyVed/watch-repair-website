@@ -12,7 +12,7 @@ import {
 const initialState = {
   forOrder: {
     freeWorkers: [],
-    masterID: null,
+    masterId: null,
     order: {}
   },
   dataLoad: false,
@@ -86,7 +86,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         forOrder: {
           ...state.forOrder,
-          masterID: action.payload
+          masterId: action.payload
         }
       }
 

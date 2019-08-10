@@ -46,12 +46,12 @@ class RefactorOrders extends React.Component {
               { orders.map(item => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
-                  <td>{item.customerName}</td>
-                  <td>{item.customerEmail}</td>
-                  <td>{item.typeClock}</td>
-                  <td>{item.city}</td>
+                  <td>{(item.customer !== null) ? item.customer.name : null }</td>
+                  <td>{(item.customer !== null) ? item.customer.email : <b>Customer was deleted</b>}</td>
+                  <td>{(item.clock !== null) ? item.clock.typeClock : <b>Clock was deleted</b>}</td>
+                  <td>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
                   <td>{item.date} / {item.time}</td>
-                  <td>{item.workerName}</td>
+                  <td>{(item.master !== null) ? item.master.name : <b>Master was deleted</b>}</td>
                   <td>
                     <LinkButton to={`/admin/orders/edit/${item.id}`} name='Edit'/>
                     <button onClick={ () => deleteOrder(item.id) }>Delete</button>

@@ -86,7 +86,7 @@ export const loadWorkers = () => {
   return (dispatch) => {
     dispatch(loadWorkersStarted())
     axios
-      .get(`http://localhost:3000/api/workers/list`)
+      .get(`http://localhost:3000/api/masters/list`)
       .then(res => {
         dispatch(loadWorkersSuccess(res.data))
       })
@@ -165,8 +165,9 @@ export const addWorkerToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/add`, values)
+      .post(`http://localhost:3000/api/masters/add`, values)
       .then(res => {
+        console.log(res.data)
         dispatch(addWorkerSuccess(res.data))
       })
       .then(() => {
@@ -250,15 +251,12 @@ export const editClockIntoDB = (values) => {
 }
 
 export const editOrderIntoDB = (values) => {
-  values.timeRepair = Number(values.timeRepair)
-  values.time = Number(values.time)
-  values.id = Number(values.id)
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
       .post(`http://localhost:3000/api/orders/update`, values)
       .then(res => {
-        dispatch(editOrderSuccess(res.data[0]))
+        dispatch(editOrderSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
@@ -273,7 +271,7 @@ export const editWorkerIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/update`, values)
+      .post(`http://localhost:3000/api/masters/update`, values)
       .then(res => {
         dispatch(editWorkerSuccess(res.data))
       })
@@ -318,7 +316,7 @@ export const deleteWorkerFromDB = (id) => {
   return (dispatch) => {
     dispatch(deleteModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/delete`, { id })
+      .post(`http://localhost:3000/api/masters/delete`, { id })
       .then(res => {
         dispatch(deleteWorkerSuccess(res.data))
       })

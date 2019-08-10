@@ -35,8 +35,18 @@ exports.add = function (req, res) {
     cityId: req.body.cityId
   })
     .then(result => {
-      const json = JSON.stringify(result)
-      res.status(201).send(json)
+      Master.findOne({
+        where: {
+          id: result.id
+        },
+        include: [{
+          model: City
+        }]
+      })
+        .then(master => {
+          const json = JSON.stringify(master)
+          res.status(201).send(json)
+        })
     })
     .catch(err => {
 
@@ -50,7 +60,8 @@ exports.delete = function (req, res) {
     }
   })
     .then(result => {
-      res.send('OK')
+      const json = JSON.stringify(req.body)
+      res.send(json)
     })
 }
 
@@ -63,7 +74,19 @@ exports.update = function (req, res) {
     where: {
       id: req.body.id
     }
-  }).then((result) => {
-    res.send(result)
   })
+    .then(result => {
+      Master.findOne({
+        where: {
+          id: req.body.id
+        },
+        include: [{
+          model: City
+        }]
+      })
+        .then(master => {
+          const json = JSON.stringify(master)
+          res.status(201).send(json)
+        })
+    })
 }

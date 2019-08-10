@@ -8,6 +8,20 @@ exports.list = function (req, res) {
     })
 }
 
+exports.add = function (req, res) {
+  Customer.create({
+    email: req.body.email,
+    name: req.body.name
+  })
+    .then(result => {
+      const json = JSON.stringify(result)
+      res.status(201).send(json)
+    })
+    .catch(err => {
+
+    })
+}
+
 exports.get = function (req, res) {
   Customer.findByPk(req.body.id)
     .then((user) => {
@@ -23,7 +37,8 @@ exports.delete = function (req, res) {
     }
   })
     .then(result => {
-      res.send('OK')
+      const json = JSON.stringify(req.body)
+      res.send(json)
     })
 }
 
@@ -36,6 +51,10 @@ exports.update = function (req, res) {
       id: req.body.id
     }
   }).then((result) => {
-    res.send(result)
+    Customer.findByPk(req.body.id)
+      .then(customer => {
+        const json = JSON.stringify(customer)
+        res.send(json)
+      })
   })
 }

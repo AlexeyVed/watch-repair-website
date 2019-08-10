@@ -35,7 +35,7 @@ class OrderForm extends Component {
   }
 
   render () {
-    const { handleSubmit, chooseClock, chooseCities, makeOrder, chooseMaster, currentEmail } = this.props
+    const { handleSubmit, chooseClock, chooseCities, makeOrder, chooseMaster } = this.props
 
     if (chooseMaster) {
       return (
@@ -73,7 +73,7 @@ class OrderForm extends Component {
           <div className='main-form__order-select'>
             <label>Choose your clock</label>
             <Field
-              name='clockID'
+              name='clockId'
               component='select'
               type='number'
               validate={required}
@@ -89,7 +89,7 @@ class OrderForm extends Component {
           <div className='main-form__order-select'>
             <label>Choose your city</label>
             <Field
-              name='cityID'
+              name='cityId'
               component='select'
               type='text'
               validate={required}

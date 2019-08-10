@@ -13,8 +13,8 @@ import axios from 'axios'
 
 export const makeOrder = (values) => {
   return (dispatch) => {
-    values.cityID = Number(values.cityID)
-    values.clockID = Number(values.clockID)
+    values.cityId = Number(values.cityId)
+    values.clockId = Number(values.clockId)
     values.time = Number(values.time)
     dispatch(makeOrderStarted())
     axios

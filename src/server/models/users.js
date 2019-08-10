@@ -20,4 +20,8 @@ const User = sequelize.define('users', {
   updatedAt: false
 })
 
+User.validPassword = (password, passwordFromDb) => {
+  return (password === passwordFromDb)
+}
+
 module.exports = User

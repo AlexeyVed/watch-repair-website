@@ -21,7 +21,7 @@ class EditWorkers extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .post(`http://localhost:3000/api/workers/get`, { id })
+      .post(`http://localhost:3000/api/masters/get`, { id })
       .then(res => {
         this.setState(() => ({
             load: false
@@ -71,7 +71,7 @@ class EditWorkers extends React.Component {
             <div className='refactor-workers__select'>
               <label>Update city</label>
               <Field
-                name='cityID'
+                name='cityId'
                 component='select'
                 validate={[required]}
                 type='text'

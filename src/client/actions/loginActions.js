@@ -2,9 +2,9 @@ import {
   SING_IN_SUCCESS,
   SING_IN_FAILURE,
   SING_IN_STARTED,
-  REGISTRATION_STARTED,
+  /* REGISTRATION_STARTED,
   REGISTRATION_SUCCESS,
-  REGISTRATION_FAILURE,
+  REGISTRATION_FAILURE, */
   LOG_OUT,
   SING_IN_FROM_LOCAL_STORAGE,
   LOGIN_ERROR_NULL
@@ -19,8 +19,8 @@ export const loginToApp = (values) => {
     axios
       .post(`http://localhost:3000/api/users/login`, values)
       .then(res => {
-        localStorage.setItem('user', res.data)
-        dispatch(singInSuccess(res.data))
+        localStorage.setItem('user', res.data.email)
+        dispatch(singInSuccess(res.data.email))
       })
       .catch(err => {
         dispatch(singInFailure(err.response.data))
@@ -28,7 +28,7 @@ export const loginToApp = (values) => {
   }
 }
 
-export const registrationToApp = (values) => {
+/* export const registrationToApp = (values) => {
   return (dispatch) => {
     dispatch(registrationStarted())
 
@@ -42,7 +42,7 @@ export const registrationToApp = (values) => {
         dispatch(registrationFailure(err.response.data))
       })
   }
-}
+} */
 
 export const logOutApp = () => {
   return (dispatch) => {
@@ -81,7 +81,7 @@ const logOut = () => ({
   payload: null
 })
 
-const registrationStarted = () => ({
+/* const registrationStarted = () => ({
   type: REGISTRATION_STARTED
 })
 
@@ -93,7 +93,7 @@ const registrationSuccess = user => ({
 const registrationFailure = error => ({
   type: REGISTRATION_FAILURE,
   payload: error
-})
+}) */
 
 const singInLS = (user) => ({
   type: SING_IN_FROM_LOCAL_STORAGE,
