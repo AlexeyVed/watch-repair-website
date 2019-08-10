@@ -1,11 +1,12 @@
 const express = require('express')
 const citiesController = require('../controllers/citiesController.js')
+const isAuthenticate = require('../config/middleware/isAuthenticated.js')
 const citiesRouter = express.Router()
 
 citiesRouter.use('/list', citiesController.list)
-citiesRouter.use('/add', citiesController.add)
-citiesRouter.use('/delete', citiesController.delete)
-citiesRouter.use('/update', citiesController.update)
-citiesRouter.use('/get', citiesController.get)
+citiesRouter.use('/add', isAuthenticate, citiesController.add)
+citiesRouter.use('/delete', isAuthenticate, citiesController.delete)
+citiesRouter.use('/update', isAuthenticate, citiesController.update)
+citiesRouter.use('/get', isAuthenticate, citiesController.get)
 
 module.exports = citiesRouter

@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const app = express()
 
 const bodyParser = require('body-parser')
@@ -18,14 +19,17 @@ app.use(cors())
 app.options('*', cors())
 app.use(express.static('dist'))
 
+app.use(session({ secret: 'xxxx',
+  resave: true,
+  saveUninitialized: true }))
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use('/api/customers', customersRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/clocks', clocksRouter)
+app.use('/api/customers', customersRouter)
 app.use('/api/cities', citiesRouter)
 app.use('/api/masters', workersRouter)
-app.use('/api/clocks', clocksRouter)
 app.use('/api/orders', ordersRouter)
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening on port ${process.env.PORT || 4000}!`))

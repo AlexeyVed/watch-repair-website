@@ -7,9 +7,14 @@ exports.login = (req, res, next) => {
     if (!user) return res.send(info.message)
     req.logIn(user, err => {
       if (err) { return next(err) }
-      res.send(req.user)
+      res.send(user)
     })
   })(req, res, next)
+}
+
+exports.logout = (req, res, next) => {
+  req.logOut()
+  res.send('req.user')
 }
 
 /* exports.registration = function (req, res) {

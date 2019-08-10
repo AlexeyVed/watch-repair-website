@@ -46,7 +46,15 @@ export const loginToApp = (values) => {
 
 export const logOutApp = () => {
   return (dispatch) => {
-    dispatch(logOut())
+    axios
+      .post(`http://localhost:3000/api/users/logout`)
+      .then(res => {
+        localStorage.removeItem('user')
+        dispatch(logOut())
+      })
+      .catch(err => {
+        dispatch(singInFailure(err.response.data))
+      })
   }
 }
 
