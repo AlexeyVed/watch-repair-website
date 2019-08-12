@@ -17,7 +17,7 @@ class Header extends React.Component {
   }
 
   render () {
-    const { currentUser, page } = this.props
+    const { currentUser } = this.props
 
     let view = null
 
@@ -64,7 +64,6 @@ class Header extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
-    page: state.appReducer.page,
     redirectLogOut: state.loginReducer.redirectLogOut
   }
 }

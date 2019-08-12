@@ -1,6 +1,6 @@
 const express = require('express')
 const workersController = require('../controllers/mastersController.js')
-const isAuthenticate = require('../config/middleware/isAuthenticated.js')
+const isAuthenticate = require('../config/jwt.js').isAuthenticate
 const workersRouter = express.Router()
 
 workersRouter.use('/list', workersController.list)

@@ -24,8 +24,8 @@ class EditClients extends React.Component {
       .post(`http://localhost:3000/api/customers/get`, { id })
       .then(res => {
         this.setState(() => ({
-            load: false
-          }
+          load: false
+        }
         ))
         this.props.dispatch(initialize('editClient', res.data, ['id', 'email', 'name']))
       })

@@ -19,8 +19,9 @@ export const loginToApp = (values) => {
     axios
       .post(`http://localhost:3000/api/users/login`, values)
       .then(res => {
-        localStorage.setItem('user', res.data.email)
-        dispatch(singInSuccess(res.data.email))
+        localStorage.setItem('user', res.data.user.email)
+        localStorage.setItem('token', res.data.token)
+        dispatch(singInSuccess(res.data.user.email))
       })
       .catch(err => {
         dispatch(singInFailure(err.response.data))
@@ -50,6 +51,7 @@ export const logOutApp = () => {
       .post(`http://localhost:3000/api/users/logout`)
       .then(res => {
         localStorage.removeItem('user')
+        localStorage.removeItem('token')
         dispatch(logOut())
       })
       .catch(err => {

@@ -1,7 +1,5 @@
 const express = require('express')
-const session = require('express-session')
 const app = express()
-
 const bodyParser = require('body-parser')
 const passport = require('./config/passport')
 const cors = require('cors')
@@ -18,12 +16,7 @@ app.use(bodyParser.json())
 app.use(cors())
 app.options('*', cors())
 app.use(express.static('dist'))
-
-app.use(session({ secret: 'xxxx',
-  resave: true,
-  saveUninitialized: true }))
 app.use(passport.initialize())
-app.use(passport.session())
 
 app.use('/api/users', usersRouter)
 app.use('/api/clocks', clocksRouter)

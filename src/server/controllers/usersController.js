@@ -1,20 +1,36 @@
-const passport = require('../config/passport')
+const passport = require('../config/passport.js')
+const jwtConfig = require('../config/jwt.js').jwtConfig
+const jwt = require('jsonwebtoken')
 const User = require('../models/users.js')
 
 exports.login = (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
+  passport.authenticate('login', (err, user, info) => {
     if (err) return next(err)
     if (!user) return res.send(info.message)
     req.logIn(user, err => {
-      if (err) { return next(err) }
-      res.send(user)
+      User.findOne({
+        where: {
+          email: user.email
+        }
+      })
+        .then(user => {
+          const token = jwt.sign({ email: user.email }, jwtConfig.secret)
+          const obj = {
+            auth: true,
+            token: token,
+            user: user,
+            exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60
+          }
+          const json = JSON.stringify(obj)
+          res.status(200).send(json)
+        })
     })
   })(req, res, next)
 }
 
 exports.logout = (req, res, next) => {
   req.logOut()
-  res.send('req.user')
+  res.send('logout')
 }
 
 /* exports.registration = function (req, res) {

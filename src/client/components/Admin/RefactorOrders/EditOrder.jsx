@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, initialize, reduxForm} from 'redux-form'
+import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
@@ -24,8 +24,8 @@ class EditOrder extends React.Component {
       .post(`http://localhost:3000/api/orders/get`, { id })
       .then(res => {
         this.setState(() => ({
-            load: false
-          }
+          load: false
+        }
         ))
         this.props.dispatch(initialize('editOrder', res.data, ['id', 'customerID', 'masterID', 'cityID', 'time']))
       })

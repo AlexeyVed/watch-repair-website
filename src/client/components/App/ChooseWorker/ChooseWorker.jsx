@@ -28,7 +28,7 @@ class ChooseWorker extends React.Component {
       }
       buttonConf = <button onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
     } else {
-      buttonConf = <button disabled onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
+      buttonConf = <button disabled onClick={ () => (addOrder()) }>Confirm</button>
     }
 
     return (
@@ -59,7 +59,7 @@ const mapStateToProps = (state) => {
   return {
     workers: state.appReducer.forOrder.freeWorkers,
     masterId: state.appReducer.forOrder.masterId,
-    order: state.appReducer.forOrder.order,
+    order: state.appReducer.forOrder.order
   }
 }
 

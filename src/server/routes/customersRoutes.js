@@ -1,6 +1,6 @@
 const express = require('express')
 const customersController = require('../controllers/customerController.js')
-const isAuthenticate = require('../config/middleware/isAuthenticated.js')
+const isAuthenticate = require('../config/jwt.js').isAuthenticate
 const customersRouter = express.Router()
 
 customersRouter.use('/list', isAuthenticate, customersController.list)

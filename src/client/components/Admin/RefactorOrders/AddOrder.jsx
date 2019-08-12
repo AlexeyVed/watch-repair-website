@@ -10,10 +10,10 @@ import { addOrderToDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorOrders.less'
-import { getDate } from "../../App/OrderForm/logic";
+import { getDate } from '../../App/OrderForm/logic'
 
 class AddOrder extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     const date = getDate()
 
     const initialValues = {

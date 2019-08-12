@@ -16,6 +16,20 @@ exports.get = function (req, res) {
     })
 }
 
+/*
+
+exports.get = (req, res, next) => {
+  passport.authenticate('jwt', { session: false }, (err, user) => {
+    console.log(err)
+    City.findByPk(req.body.id)
+      .then((city) => {
+        const json = JSON.stringify(city)
+        res.send(json)
+      })
+  })(req, res, next)
+}
+*/
+
 exports.add = function (req, res) {
   City.create({
     city: req.body.city

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, initialize, reduxForm} from 'redux-form'
+import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
@@ -24,8 +24,8 @@ class EditWorkers extends React.Component {
       .post(`http://localhost:3000/api/masters/get`, { id })
       .then(res => {
         this.setState(() => ({
-            load: false
-          }
+          load: false
+        }
         ))
         this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'rating', 'city']))
       })
@@ -120,7 +120,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-/*    editWorker: values => console.log(values),*/
+    /*    editWorker: values => console.log(values), */
     editWorker: values => dispatch(editWorkerIntoDB(values))
   }
 }

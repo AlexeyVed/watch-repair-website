@@ -42,6 +42,8 @@ import axios from 'axios'
 
 export const loadClocks = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadClocksStarted())
     axios
       .get(`http://localhost:3000/api/clocks/list`)
@@ -56,6 +58,8 @@ export const loadClocks = () => {
 
 export const loadCities = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadCitiesStarted())
     axios
       .get(`http://localhost:3000/api/cities/list`)
@@ -70,6 +74,8 @@ export const loadCities = () => {
 
 export const loadOrdersAdmin = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadOrdersStarted())
     axios
       .get(`http://localhost:3000/api/orders/list`)
@@ -84,6 +90,8 @@ export const loadOrdersAdmin = () => {
 
 export const loadWorkers = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadWorkersStarted())
     axios
       .get(`http://localhost:3000/api/masters/list`)
@@ -98,6 +106,8 @@ export const loadWorkers = () => {
 
 export const loadClientsAdmin = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadClientsStarted())
     axios
       .get(`http://localhost:3000/api/customers/list`)
