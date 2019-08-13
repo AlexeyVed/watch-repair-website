@@ -9,7 +9,7 @@ exports.list = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get list of cities'))
+    next(error(400, 'Error get list of cities'))
   }
 }
 
@@ -24,7 +24,7 @@ exports.get = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get city.'))
+    next(error(400, 'Error get city.'))
   }
 }
 
@@ -41,7 +41,7 @@ exports.add = function (req, res, next) {
         res.status(201).send(json)
       })
   } catch (e) {
-    next(error(500, 'Error add city'))
+    next(error(400, 'Error add city'))
   }
 }
 
@@ -60,7 +60,7 @@ exports.delete = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error delete city'))
+    next(error(400, 'Error delete city'))
   }
 }
 
@@ -83,6 +83,6 @@ exports.update = function (req, res, next) {
         })
     })
   } catch (e) {
-    next(error(500, 'Error update city'))
+    next(error(400, 'Error update city'))
   }
 }

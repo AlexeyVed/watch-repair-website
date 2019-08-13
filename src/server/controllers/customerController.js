@@ -9,7 +9,7 @@ exports.list = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get list of customers'))
+    next(error(400, 'Error get list of customers'))
   }
 }
 
@@ -27,7 +27,7 @@ exports.add = function (req, res, next) {
         res.status(201).send(json)
       })
   } catch (e) {
-    next(error(500, 'Error add customer'))
+    next(error(400, 'Error add customer'))
   }
 }
 
@@ -42,7 +42,7 @@ exports.get = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get customer'))
+    next(error(400, 'Error get customer'))
   }
 }
 
@@ -61,7 +61,7 @@ exports.delete = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error delete customer'))
+    next(error(400, 'Error delete customer'))
   }
 }
 
@@ -85,6 +85,6 @@ exports.update = function (req, res, next) {
         })
     })
   } catch (e) {
-    next(error(500, 'Error update customer'))
+    next(error(400, 'Error update customer'))
   }
 }

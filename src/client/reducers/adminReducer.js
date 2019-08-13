@@ -35,7 +35,8 @@ import {
   EDIT_CLOCKS_SUCCESS,
   EDIT_ORDERS_SUCCESS,
   EDIT_WORKERS_SUCCESS,
-  REDIRECT_FROM_REFACTOR
+  REDIRECT_FROM_REFACTOR,
+  MISS_ADMIN_ERROR
 } from '../actions/types'
 
 const initialState = {
@@ -43,6 +44,10 @@ const initialState = {
   refactorModelInProcess: false,
   refactorModelError: null,
   redirectBackFromRefactor: false,
+  showModal: false,
+  wasDeleted: false,
+  wasUpdated: false,
+  wasCreated: false,
   data: {
     clocks: [],
     cities: [],
@@ -212,6 +217,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasCreated: true,
+        showModal: true,
         data: {
           ...state.data,
           customers: [
@@ -227,6 +234,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasCreated: true,
+        showModal: true,
         data: {
           ...state.data,
           orders: [
@@ -242,6 +251,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasCreated: true,
+        showModal: true,
         data: {
           ...state.data,
           cities: [
@@ -257,6 +268,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasCreated: true,
+        showModal: true,
         data: {
           ...state.data,
           clocks: [
@@ -272,6 +285,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasCreated: true,
+        showModal: true,
         data: {
           ...state.data,
           workers: [
@@ -284,6 +299,7 @@ const adminReducer = (state = initialState, action) => {
     case ADD_MODEL_FAILURE:
       return {
         ...state,
+        showModal: true,
         refactorModelError: action.payload,
         refactorModelInProcess: false
       }
@@ -291,6 +307,7 @@ const adminReducer = (state = initialState, action) => {
     case EDIT_MODEL_STARTED:
       return {
         ...state,
+        showModal: true,
         refactorModelInProcess: true,
         refactorModelError: null
       }
@@ -301,6 +318,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasUpdated: true,
+        showModal: true,
         data: {
           ...state.data,
           cities: state.data.cities.map(city => {
@@ -319,6 +338,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasUpdated: true,
+        showModal: true,
         data: {
           ...state.data,
           clocks: state.data.clocks.map(clock => {
@@ -338,6 +359,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasUpdated: true,
+        showModal: true,
         data: {
           ...state.data,
           customers: state.data.customers.map(user => {
@@ -356,6 +379,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasUpdated: true,
+        showModal: true,
         data: {
           ...state.data,
           orders: state.data.orders.map(order => {
@@ -374,6 +399,8 @@ const adminReducer = (state = initialState, action) => {
         refactorModelInProcess: false,
         refactorModelError: null,
         redirectBackFromRefactor: true,
+        wasUpdated: true,
+        showModal: true,
         data: {
           ...state.data,
           workers: state.data.workers.map(worker => {
@@ -391,7 +418,8 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         refactorModelError: action.payload,
-        refactorModelInProcess: false
+        refactorModelInProcess: false,
+        showModal: true
       }
 
     case DELETE_MODEL_STARTED:
@@ -405,6 +433,8 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         refactorModelError: null,
         refactorModelInProcess: false,
+        wasDeleted: true,
+        showModal: true,
         data: {
           ...state.data,
           cities: state.data.cities.filter(el => el.id !== action.payload.id)
@@ -416,6 +446,8 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         refactorModelError: null,
         refactorModelInProcess: false,
+        wasDeleted: true,
+        showModal: true,
         data: {
           ...state.data,
           clocks: state.data.clocks.filter(el => el.id !== action.payload.id)
@@ -427,6 +459,8 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         refactorModelError: null,
         refactorModelInProcess: false,
+        wasDeleted: true,
+        showModal: true,
         data: {
           ...state.data,
           customers: state.data.customers.filter(el => el.id !== action.payload.id)
@@ -438,6 +472,8 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         refactorModelError: null,
         refactorModelInProcess: false,
+        wasDeleted: true,
+        showModal: true,
         data: {
           ...state.data,
           workers: state.data.workers.filter(el => el.id !== action.payload.id)
@@ -449,6 +485,8 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         refactorModelError: null,
         refactorModelInProcess: false,
+        wasDeleted: true,
+        showModal: true,
         data: {
           ...state.data,
           orders: state.data.orders.filter(el => el.id !== action.payload.id)
@@ -459,6 +497,7 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         refactorModelError: action.payload,
+        showModal: true,
         refactorModelInProcess: false
       }
 
@@ -466,6 +505,16 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         redirectBackFromRefactor: false
+      }
+
+    case MISS_ADMIN_ERROR:
+      return {
+        ...state,
+        wasDeleted: false,
+        wasUpdated: false,
+        wasCreated: false,
+        showModal: false,
+        refactorModelError: null
       }
 
     default:

@@ -14,7 +14,7 @@ exports.list = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get list of masters'))
+    next(error(400, 'Error get list of masters'))
   }
 }
 
@@ -36,7 +36,7 @@ exports.get = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get master'))
+    next(error(400, 'Error get master'))
   }
 }
 
@@ -65,7 +65,7 @@ exports.add = function (req, res, next) {
           })
       })
   } catch (e) {
-    next(error(500, 'Error add master'))
+    next(error(400, 'Error add master'))
   }
 }
 
@@ -84,7 +84,7 @@ exports.delete = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error delete master'))
+    next(error(400, 'Error delete master'))
   }
 }
 
@@ -117,6 +117,6 @@ exports.update = function (req, res, next) {
           })
       })
   } catch (e) {
-    next(error(500, 'Error update master'))
+    next(error(400, 'Error update master'))
   }
 }

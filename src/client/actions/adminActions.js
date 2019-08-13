@@ -35,8 +35,9 @@ import {
   EDIT_CLOCKS_SUCCESS,
   EDIT_ORDERS_SUCCESS,
   EDIT_WORKERS_SUCCESS,
-  REDIRECT_FROM_REFACTOR
-} from './types.js'
+  REDIRECT_FROM_REFACTOR,
+  MISS_ADMIN_ERROR
+  , MISS_APP_ERROR } from './types.js'
 
 import axios from 'axios'
 
@@ -132,7 +133,7 @@ export const addUserToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -149,7 +150,7 @@ export const addCityToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -166,7 +167,7 @@ export const addClockToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -184,7 +185,7 @@ export const addWorkerToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -204,7 +205,7 @@ export const addOrderToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -221,7 +222,7 @@ export const editUserIntoDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
@@ -238,7 +239,7 @@ export const editCityIntoDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
@@ -255,12 +256,16 @@ export const editClockIntoDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
 
 export const editOrderIntoDB = (values) => {
+  values.clockId = Number(values.clockId)
+  values.cityId = Number(values.cityId)
+  values.customerId = Number(values.customerId)
+  values.masterId = Number(values.masterId)
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
@@ -272,7 +277,7 @@ export const editOrderIntoDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
@@ -289,7 +294,7 @@ export const editWorkerIntoDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
@@ -303,7 +308,7 @@ export const deleteClockFromDB = (id) => {
         dispatch(deleteClockSuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
   }
 }
@@ -317,7 +322,7 @@ export const deleteOrderFromDB = (id) => {
         dispatch(deleteOrderSuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
   }
 }
@@ -331,7 +336,7 @@ export const deleteWorkerFromDB = (id) => {
         dispatch(deleteWorkerSuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
   }
 }
@@ -345,7 +350,7 @@ export const deleteCityFromDB = (id) => {
         dispatch(deleteCitySuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
   }
 }
@@ -359,8 +364,14 @@ export const deleteClientFromDB = (id) => {
         dispatch(deleteClientSuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
+  }
+}
+
+export const missErrorAdmin = () => {
+  return (dispatch) => {
+    dispatch(missAdminError())
   }
 }
 
@@ -537,4 +548,8 @@ const editClockSuccess = data => ({
 const editCitySuccess = data => ({
   type: EDIT_CITIES_SUCCESS,
   payload: data
+})
+
+const missAdminError = () => ({
+  type: MISS_ADMIN_ERROR
 })

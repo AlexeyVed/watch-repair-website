@@ -28,7 +28,7 @@ exports.list = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get list of orders'))
+    next(error(400, 'Error get list of orders'))
   }
 }
 
@@ -60,7 +60,7 @@ exports.get = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get order'))
+    next(error(400, 'Error get order'))
   }
 }
 
@@ -79,13 +79,14 @@ exports.delete = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error delete order'))
+    next(error(400, 'Error delete order'))
   }
 }
 
 exports.update = function (req, res, next) {
   try {
-    const { date, time, customerId, clockId, cityId, masterId, id} = req.body
+    console.log(req.body)
+    const { date, time, customerId, clockId, cityId, masterId, id } = req.body
     if (!date || !time || !customerId || !clockId || !cityId || !masterId || !id) {
       return next(error(400, 'Your must fill all fields'))
     }
@@ -126,7 +127,7 @@ exports.update = function (req, res, next) {
           })
       })
   } catch (e) {
-    next(error(500, 'Error update order'))
+    next(error(400, 'Error update order'))
   }
 }
 
@@ -189,18 +190,22 @@ exports.getWorkers = function (req, res, next) {
             })
               .then(workers => {
                 const json = JSON.stringify(workers)
+                const masters = JSON.parse(json)
+                if (!masters.length) {
+                  return next(error(404, 'There are no free masters in your city at this time. Please choose other time.'))
+                }
                 res.send(json)
               })
           })
       })
   } catch (e) {
-    next(error(500, 'Error get free workers'))
+    next(error(400, 'Error get free workers'))
   }
 }
 
 exports.addAdmin = function (req, res, next) {
   try {
-    const { date, time, customerId, clockId, cityId, masterId} = req.body
+    const { date, time, customerId, clockId, cityId, masterId } = req.body
     if (!date || !time || !customerId || !clockId || !cityId || !masterId) {
       return next(error(400, 'Your must fill all fields'))
     }
@@ -238,14 +243,15 @@ exports.addAdmin = function (req, res, next) {
           })
       })
   } catch (e) {
-    next(error(500, 'Error create order'))
+    next(error(400, 'Error create order'))
   }
 }
 
 exports.add = function (req, res, next) {
   try {
-    const { date, time, customerId, clockId, cityId, masterId} = req.body
-    if (!date || !time || !customerId || !clockId || !cityId || !masterId) {
+    console.log(req.body)
+    const { date, time, email, clockId, cityId, masterId } = req.body
+    if (!date || !time || !email || !clockId || !cityId || !masterId) {
       return next(error(400, 'Your must fill all fields'))
     }
     Customer.findOrCreate({
@@ -266,7 +272,7 @@ exports.add = function (req, res, next) {
         Order.create({
           time: time,
           date: date,
-          customerId: customerId,
+          customerId: req.body.customerId,
           clockId: clockId,
           cityId: cityId,
           masterId: masterId
@@ -276,6 +282,6 @@ exports.add = function (req, res, next) {
           })
       })
   } catch (e) {
-    next(error(500, 'Error add order'))
+    next(error(400, 'Error add order'))
   }
 }

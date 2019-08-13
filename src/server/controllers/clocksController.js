@@ -9,7 +9,7 @@ exports.list = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get list of clocks'))
+    next(error(400, 'Error get list of clocks'))
   }
 }
 
@@ -24,7 +24,7 @@ exports.get = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error get clock'))
+    next(error(400, 'Error get clock'))
   }
 }
 
@@ -42,7 +42,7 @@ exports.add = function (req, res, next) {
         res.status(201).send(json)
       })
   } catch (e) {
-    next(error(500, 'Error add clock'))
+    next(error(400, 'Error add clock'))
   }
 }
 
@@ -61,7 +61,7 @@ exports.delete = function (req, res, next) {
         res.send(json)
       })
   } catch (e) {
-    next(error(500, 'Error delete clock'))
+    next(error(400, 'Error delete clock'))
   }
 }
 
@@ -85,6 +85,6 @@ exports.update = function (req, res, next) {
         })
     })
   } catch (e) {
-    next(error(500, 'Error update clock'))
+    next(error(400, 'Error update clock'))
   }
 }

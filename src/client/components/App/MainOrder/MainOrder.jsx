@@ -2,22 +2,23 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { changePage, loadCities, loadClocks, loadWorkers } from '../../../actions'
+import { loadCities, loadClocks, loadWorkers } from '../../../actions'
 import OrderForm from '../OrderForm/OrderForm.jsx'
 import Content from '../Content/Content.jsx'
 import LoginForm from '../LoginForm/LoginForm.jsx'
+import ModalWindow from '../../ModalWindow/ModalWindowApp.jsx'
 
 class MainOrder extends Component {
   componentDidMount () {
     this.props.loadClocks()
     this.props.loadCities()
     this.props.loadWorkers()
-    this.props.page('order')
   }
 
   render () {
     return (
       <div className='main'>
+        {(this.props.modalApp) ? <ModalWindow/> : null}
         <OrderForm/>
         <Content/>
         <Switch>
@@ -30,7 +31,7 @@ class MainOrder extends Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    modalApp: state.appReducer.showModal
   }
 }
 
@@ -39,7 +40,6 @@ const mapDispatchToProps = (dispatch) => {
     loadCities: () => dispatch(loadCities()),
     loadClocks: () => dispatch(loadClocks()),
     loadWorkers: () => dispatch(loadWorkers()),
-    page: data => dispatch(changePage(data))
   }
 }
 

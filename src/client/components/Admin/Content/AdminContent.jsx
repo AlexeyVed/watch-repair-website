@@ -8,6 +8,7 @@ import RefactorClocks from '../TableClocks/RefactorClocks.jsx'
 import RefactorWorkers from '../TableWorkers/RefactorWorkers.jsx'
 import RefactorOrders from '../TableOrders/RefactorOrders.jsx'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import ModalWindow from '../../ModalWindow/ModalWindowAdmin.jsx'
 
 import './AdminContent.less'
 
@@ -15,6 +16,7 @@ class AdminContent extends React.Component {
   render () {
     return (
       <div className='admin-content'>
+        {(this.props.modalAdmin) ? <ModalWindow/> : null}
         <div className='admin-content__navigation'>
           <LinkButton to='/' name='Main' className=''/>
           <LinkButton to='/order' name='Make Order' className=''/>
@@ -39,7 +41,8 @@ class AdminContent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    view: state.adminReducer.view
+    view: state.adminReducer.view,
+    modalAdmin: state.adminReducer.showModal,
   }
 }
 
