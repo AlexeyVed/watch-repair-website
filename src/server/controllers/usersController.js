@@ -1,12 +1,15 @@
 const passport = require('../config/passport.js')
 const jwtConfig = require('../config/jwt.js').jwtConfig
 const jwt = require('jsonwebtoken')
+const error = require('../services/modules.js').makeError
 const User = require('../models/users.js')
 
 exports.login = (req, res, next) => {
   passport.authenticate('login', (err, user, info) => {
-    if (err) return next(err)
-    if (!user) return res.send(info.message)
+    if (err) return next(error(500, err.message))
+    if (!user) {
+      return next(error(info.code, info.message))
+    }
     req.logIn(user, err => {
       User.findOne({
         where: {
@@ -29,8 +32,12 @@ exports.login = (req, res, next) => {
 }
 
 exports.logout = (req, res, next) => {
-  req.logOut()
-  res.send('logout')
+  try {
+    req.logOut()
+    res.send('logout')
+  } catch (e) {
+    next(error(500, 'Error logout'))
+  }
 }
 
 /* exports.registration = function (req, res) {

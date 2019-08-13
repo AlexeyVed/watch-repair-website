@@ -1,6 +1,6 @@
 const express = require('express')
 const citiesController = require('../controllers/citiesController.js')
-const isAuthenticate = require('../config/jwt.js').isAuthenticate
+const isAuthenticate = require('../config/middleware/isAuthenticate.js')
 const citiesRouter = express.Router()
 
 citiesRouter.use('/list', citiesController.list)

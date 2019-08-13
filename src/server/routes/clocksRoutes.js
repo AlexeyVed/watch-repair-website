@@ -1,6 +1,6 @@
 const express = require('express')
 const clocksController = require('../controllers/clocksController.js')
-const isAuthenticate = require('../config/jwt.js').isAuthenticate
+const isAuthenticate = require('../config/middleware/isAuthenticate.js')
 const clocksRouter = express.Router()
 
 clocksRouter.use('/list', clocksController.list)

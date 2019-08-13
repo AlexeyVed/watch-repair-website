@@ -21,11 +21,13 @@ passport.use('login',
             const user = JSON.parse(json)
             if (!user) {
               return done(null, false, {
-                message: 'Incorrect email.'
+                code: 404,
+                message: 'User not found.'
               })
             } else if (!User.validPassword(password, user.password)) {
               return done(null, false, {
-                message: 'Incorrect password.'
+                code: 422,
+                message: 'Error validation.'
               })
             }
             return done(null, user)

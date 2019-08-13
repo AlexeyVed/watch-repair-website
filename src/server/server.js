@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const passport = require('./config/passport')
+const passport = require('./config/passport.js')
+const handleError = require('./config/middleware/handleError.js')
 const cors = require('cors')
 
 const customersRouter = require('./routes/customersRoutes.js')
@@ -24,5 +25,7 @@ app.use('/api/customers', customersRouter)
 app.use('/api/cities', citiesRouter)
 app.use('/api/masters', workersRouter)
 app.use('/api/orders', ordersRouter)
+
+app.use(handleError)
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening on port ${process.env.PORT || 4000}!`))
