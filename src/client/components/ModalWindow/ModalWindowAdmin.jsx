@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { missErrorAdmin } from '../../actions'
 
-
 import './ModalWindow.less'
 
 class ModalWindowAdmin extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     setTimeout(() => {
       this.props.missAdminError()
     }, 1500)

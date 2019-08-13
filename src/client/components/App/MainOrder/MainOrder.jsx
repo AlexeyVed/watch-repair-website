@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadCities: () => dispatch(loadCities()),
     loadClocks: () => dispatch(loadClocks()),
-    loadWorkers: () => dispatch(loadWorkers()),
+    loadWorkers: () => dispatch(loadWorkers())
   }
 }
 

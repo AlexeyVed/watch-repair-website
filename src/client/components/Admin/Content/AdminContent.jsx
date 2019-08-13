@@ -42,7 +42,7 @@ class AdminContent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     view: state.adminReducer.view,
-    modalAdmin: state.adminReducer.showModal,
+    modalAdmin: state.adminReducer.showModal
   }
 }
 

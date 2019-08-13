@@ -37,7 +37,7 @@ import {
   EDIT_WORKERS_SUCCESS,
   REDIRECT_FROM_REFACTOR,
   MISS_ADMIN_ERROR
-  , MISS_APP_ERROR } from './types.js'
+} from './types.js'
 
 import axios from 'axios'
 
