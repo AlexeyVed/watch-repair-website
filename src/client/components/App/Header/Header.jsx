@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { logOutApp } from '../../../actions'
 
 import './header.less'
@@ -13,13 +12,12 @@ class Header extends React.Component {
   }
 
   handleClickLogOut = () => {
-    localStorage.removeItem('user')
     this.props.logOut()
     this.setState({ redirect: true })
   }
 
   render () {
-    const { currentUser, page } = this.props
+    const { currentUser } = this.props
 
     let view = null
 
@@ -66,7 +64,6 @@ class Header extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
-    page: state.appReducer.page,
     redirectLogOut: state.loginReducer.redirectLogOut
   }
 }

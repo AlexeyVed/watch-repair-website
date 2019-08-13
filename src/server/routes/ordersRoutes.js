@@ -1,13 +1,14 @@
 const express = require('express')
 const ordersController = require('../controllers/ordersController.js')
+const isAuthenticate = require('../config/middleware/isAuthenticate.js')
 const ordersRouter = express.Router()
 
-ordersRouter.use('/list', ordersController.list)
+ordersRouter.use('/list', isAuthenticate, ordersController.list)
 ordersRouter.use('/getWorkers', ordersController.getWorkers)
 ordersRouter.use('/add', ordersController.add)
-ordersRouter.use('/delete', ordersController.delete)
-ordersRouter.use('/update', ordersController.update)
-ordersRouter.use('/addAdmin', ordersController.addAdmin)
-ordersRouter.use('/get', ordersController.get)
+ordersRouter.use('/delete', isAuthenticate, ordersController.delete)
+ordersRouter.use('/update', isAuthenticate, ordersController.update)
+ordersRouter.use('/addAdmin', isAuthenticate, ordersController.addAdmin)
+ordersRouter.use('/get', isAuthenticate, ordersController.get)
 
 module.exports = ordersRouter

@@ -1,18 +1,15 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../db/db-connection-config.js')
+const City = require('./cities.js')
 
-const Customer = sequelize.define('customers', {
+const Master = sequelize.define('masters', {
   name: {
     type: Sequelize.STRING(191),
     allowNull: false
   },
-  email: {
-    type: Sequelize.STRING(191),
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: true
-    }
+  rating: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 },
 {
@@ -20,4 +17,8 @@ const Customer = sequelize.define('customers', {
   updatedAt: false
 })
 
-module.exports = Customer
+City.hasMany(Master)
+
+Master.belongsTo(City)
+
+module.exports = Master

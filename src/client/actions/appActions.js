@@ -6,15 +6,16 @@ import {
   MAKE_ORDER_WITH_MASTER_SUCCESS,
   MAKE_ORDER_WITH_MASTER_FAILURE,
   CHANGE_PAGE,
-  SET_CHOOSE_WORKER
+  SET_CHOOSE_WORKER,
+  MISS_APP_ERROR
 } from './types.js'
 
 import axios from 'axios'
 
 export const makeOrder = (values) => {
   return (dispatch) => {
-    values.cityID = Number(values.cityID)
-    values.clockID = Number(values.clockID)
+    values.cityId = Number(values.cityId)
+    values.clockId = Number(values.clockId)
     values.time = Number(values.time)
     dispatch(makeOrderStarted())
     axios
@@ -43,6 +44,12 @@ export const addOrder = (values) => {
       .catch(err => {
         dispatch(makeOrderMasterFailure(err.response.data))
       })
+  }
+}
+
+export const missErrorApp = () => {
+  return (dispatch) => {
+    dispatch(missAppError())
   }
 }
 
@@ -81,4 +88,8 @@ const makeOrderMasterSuccess = () => ({
 const makeOrderMasterFailure = err => ({
   type: MAKE_ORDER_WITH_MASTER_FAILURE,
   payload: err
+})
+
+const missAppError = () => ({
+  type: MISS_APP_ERROR
 })

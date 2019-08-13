@@ -9,7 +9,7 @@ class ChooseWorker extends React.Component {
   componentDidUpdate (prevProps, prevState) {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
-      if (+worker.id === this.props.masterID) {
+      if (+worker.id === this.props.masterId) {
         worker.classList.add('active')
       } else if (worker.classList.contains('active')) {
         worker.classList.remove('active')
@@ -17,18 +17,18 @@ class ChooseWorker extends React.Component {
     })
   }
   render () {
-    const { workers, addOrder, id, masterID, setWorker, order } = this.props
+    const { workers, addOrder, masterId, setWorker, order } = this.props
 
     let buttonConf
 
-    if (masterID) {
+    if (masterId) {
       const fullOrder = {
         ...order,
-        masterID
+        masterId
       }
       buttonConf = <button onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
     } else {
-      buttonConf = <button disabled onClick={ () => (addOrder(masterID, id)) }>Confirm</button>
+      buttonConf = <button disabled onClick={ () => (addOrder()) }>Confirm</button>
     }
 
     return (
@@ -40,7 +40,7 @@ class ChooseWorker extends React.Component {
               <div className='worker-image'></div>
               <div className='worker-info'>
                 <div className='worker-info__name'>{item.name}</div>
-                <div className='worker-info__city'>Work in {item.city}</div>
+                <div className='worker-info__city'>Work in {(item.city !== null) ? item.city.city : null}</div>
                 <div className='worker-info__rating'>Rating: {item.rating}</div>
               </div>
             </div>
@@ -58,8 +58,8 @@ class ChooseWorker extends React.Component {
 const mapStateToProps = (state) => {
   return {
     workers: state.appReducer.forOrder.freeWorkers,
-    masterID: state.appReducer.forOrder.masterID,
-    order: state.appReducer.forOrder.order,
+    masterId: state.appReducer.forOrder.masterId,
+    order: state.appReducer.forOrder.order
   }
 }
 

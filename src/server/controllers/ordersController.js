@@ -1,132 +1,287 @@
+const Op = require('sequelize').Op
+const error = require('../services/modules.js').makeError
 const Order = require('../models/orders.js')
-const Worker = require('../models/workers.js')
+const Master = require('../models/masters.js')
 const Clock = require('../models/clocks.js')
 const Customer = require('../models/customers.js')
+const City = require('../models/cities.js')
 
-exports.list = function (req, res) {
-  Order.list()
-    .then(result => {
-      const json = JSON.stringify(result)
-      res.send(json)
+exports.list = function (req, res, next) {
+  try {
+    Order.findAll({
+      include: [
+        {
+          model: Master
+        },
+        {
+          model: Clock
+        },
+        {
+          model: Customer
+        },
+        {
+          model: City
+        }]
     })
+      .then(orders => {
+        const json = JSON.stringify(orders)
+        res.send(json)
+      })
+  } catch (e) {
+    next(error(400, 'Error get list of orders'))
+  }
 }
 
-exports.delete = function (req, res) {
-  Order.delete(req.body.id)
-    .then(result => {
-      const json = JSON.stringify(req.body)
-      res.send(json)
+exports.get = function (req, res, next) {
+  try {
+    if (!req.body.id) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    Order.findOne({
+      where: {
+        id: req.body.id
+      },
+      include: [
+        {
+          model: Master
+        },
+        {
+          model: Clock
+        },
+        {
+          model: Customer
+        },
+        {
+          model: City
+        }]
     })
-    .catch(err => {
-      res.status(400).send('Error delete order')
-    })
+      .then((order) => {
+        const json = JSON.stringify(order)
+        res.send(json)
+      })
+  } catch (e) {
+    next(error(400, 'Error get order'))
+  }
 }
 
-exports.getWorkers = function (req, res) {
-  Clock.findOne(req.body.cityID)
-    .then(clock => {
-      req.body = {
-        ...req.body,
-        timeRepair: clock[0].timeRepair
+exports.delete = function (req, res, next) {
+  try {
+    if (!req.body.id) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    Order.destroy({
+      where: {
+        id: req.body.id
       }
-      const order = new Order(req.body)
-      order.getIdBusyMasters()
-        .then(result => {
-          Worker.getWithoutBusy(result, req.body)
-            .then(workers => {
-              const json = JSON.stringify(workers)
-              res.send(json)
-            })
-            .catch(err => {
-              res.status(500).send('Error get work without Busy')
-            })
-        })
-        .catch(err => {
-          res.status(500).send('Error get id bussy masters')
-        })
     })
+      .then(result => {
+        const json = JSON.stringify(req.body)
+        res.send(json)
+      })
+  } catch (e) {
+    next(error(400, 'Error delete order'))
+  }
 }
 
-exports.addAdmin = function (req, res) {
-  const order = new Order(req.body)
-  order.addAdmin()
-    .then(result => {
-      Order.findOne(result.insertId)
-        .then((orders) => {
-          const json = JSON.stringify(orders[0])
-          res.status(201).send(json)
+exports.update = function (req, res, next) {
+  try {
+    console.log(req.body)
+    const { date, time, customerId, clockId, cityId, masterId, id } = req.body
+    if (!date || !time || !customerId || !clockId || !cityId || !masterId || !id) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    Order.update({
+      date: date,
+      time: time,
+      customerId: customerId,
+      clockId: clockId,
+      cityId: cityId,
+      masterId: masterId
+    }, {
+      where: {
+        id: id
+      }
+    })
+      .then((result) => {
+        Order.findOne({
+          where: {
+            id: req.body.id
+          },
+          include: [
+            {
+              model: Master
+            },
+            {
+              model: Clock
+            },
+            {
+              model: Customer
+            },
+            {
+              model: City
+            }]
         })
-    })
-    .catch(err => {
-      res.status(500).send('Error add order admin')
-    })
+          .then((order) => {
+            const json = JSON.stringify(order)
+            res.send(json)
+          })
+      })
+  } catch (e) {
+    next(error(400, 'Error update order'))
+  }
 }
 
-exports.update = function (req, res) {
-  Order.findOne(req.body.id)
-    .then(orderFromDB => {
-      const order = new Order(orderFromDB[0])
-      order.update(req.body)
-        .then(result => {
-          Order.findOne(req.body.id)
-            .then(order => {
-              const json = JSON.stringify(order)
-              res.send(json)
-            })
-        })
-        .catch(err => {
-          res.status(500).send('Error update order')
-        })
-    })
-}
-
-exports.get = function (req, res) {
-  Order.findOne(req.body.id)
-    .then((order) => {
-      const json = JSON.stringify(order[0])
-      res.send(json)
-    })
-}
-
-exports.add = function (req, res) {
-  Customer.findByEmail(req.body.email)
-    .then(result => {
-      if (result.length) {
-        const obj = {
+exports.getWorkers = function (req, res, next) {
+  try {
+    const { date, time, clockId, cityId } = req.body
+    if (!date || !time || !clockId || !cityId) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    Clock.findByPk(req.body.clockId)
+      .then(clock => {
+        req.body = {
           ...req.body,
-          customerID: result[0].id
+          timeRepair: clock.timeRepair
         }
-        const order = new Order(obj)
-        order.add()
-          .then(result => {
-            Order.findOne(result.insertId)
-              .then(order => {
-                const json = JSON.stringify(order)
-                res.status(201).send(json)
+        Order.findAll({
+          where: {
+            date: req.body.date,
+            cityId: req.body.cityId
+          },
+          include: [
+            {
+              model: Clock
+            }]
+        })
+          .then(ordersInDate => {
+            const { time, timeRepair } = req.body
+            return ordersInDate.filter(order => {
+              if (order.time < time) {
+                if ((order.time + order.clock.timeRepair) < time) {
+                  return false
+                } else {
+                  return true
+                }
+              } else {
+                if ((time + timeRepair) >= order.time) {
+                  return true
+                } else {
+                  return false
+                }
+              }
+            })
+          })
+          .then(busyMasters => {
+            const arrayIdBusyMaster = busyMasters.map(master => master.masterId)
+            console.log(arrayIdBusyMaster)
+            Master.findAll({
+              where: {
+                cityId: req.body.cityId,
+                id: {
+                  [Op.notIn]: arrayIdBusyMaster
+                }
+              },
+              include: [
+                {
+                  model: City
+                }
+              ]
+
+            })
+              .then(workers => {
+                const json = JSON.stringify(workers)
+                const masters = JSON.parse(json)
+                if (!masters.length) {
+                  return next(error(404, 'There are no free masters in your city at this time. Please choose other time.'))
+                }
+                res.send(json)
               })
           })
-      } else {
-        const newCustomer = new Customer(req.body)
-        newCustomer.add()
-          .then(result => {
-            const obj = {
-              ...req.body,
-              customerID: result.insertId
-            }
-            const order = new Order(obj)
-            order.add()
-              .then(result => {
-                Order.findOne(result.insertId)
-                  .then(order => {
-                    const json = JSON.stringify(order)
-                    res.status(201).send(json)
-                  })
-              })
+      })
+  } catch (e) {
+    next(error(400, 'Error get free workers'))
+  }
+}
+
+exports.addAdmin = function (req, res, next) {
+  try {
+    const { date, time, customerId, clockId, cityId, masterId } = req.body
+    if (!date || !time || !customerId || !clockId || !cityId || !masterId) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    Order.create({
+      time: time,
+      date: date,
+      cityId: cityId,
+      clockId: clockId,
+      customerId: customerId,
+      masterId: masterId
+    })
+      .then(result => {
+        Order.findOne({
+          where: {
+            id: result.id
+          },
+          include: [{
+            model: City
+          },
+          {
+            model: Clock
+          },
+          {
+            model: Customer
+          },
+          {
+            model: Master
+          }
+
+          ]
+        })
+          .then(master => {
+            const json = JSON.stringify(master)
+            res.status(201).send(json)
           })
+      })
+  } catch (e) {
+    next(error(400, 'Error create order'))
+  }
+}
+
+exports.add = function (req, res, next) {
+  try {
+    console.log(req.body)
+    const { date, time, email, clockId, cityId, masterId } = req.body
+    if (!date || !time || !email || !clockId || !cityId || !masterId) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    Customer.findOrCreate({
+      where: {
+        email: req.body.email
+      },
+      defaults: {
+        name: req.body.name
       }
     })
-    .catch(err => {
-      res.status(500).send(err)
-    })
-  /*  */
+      .then(([user, created]) => {
+        req.body = {
+          ...req.body,
+          customerId: user.get({
+            plain: true
+          }).id
+        }
+        Order.create({
+          time: time,
+          date: date,
+          customerId: req.body.customerId,
+          clockId: clockId,
+          cityId: cityId,
+          masterId: masterId
+        })
+          .then(result => {
+            res.status(201).send(result)
+          })
+      })
+  } catch (e) {
+    next(error(400, 'Error add order'))
+  }
 }

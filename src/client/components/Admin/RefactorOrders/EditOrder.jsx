@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, initialize, reduxForm} from 'redux-form'
+import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
@@ -24,8 +24,8 @@ class EditOrder extends React.Component {
       .post(`http://localhost:3000/api/orders/get`, { id })
       .then(res => {
         this.setState(() => ({
-            load: false
-          }
+          load: false
+        }
         ))
         this.props.dispatch(initialize('editOrder', res.data, ['id', 'customerID', 'masterID', 'cityID', 'time']))
       })
@@ -65,7 +65,7 @@ class EditOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose client email</label>
               <Field
-                name='customerID'
+                name='customerId'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -81,7 +81,7 @@ class EditOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose master</label>
               <Field
-                name='masterID'
+                name='masterId'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -97,7 +97,7 @@ class EditOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose time repair</label>
               <Field
-                name='clockID'
+                name='clockId'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -113,7 +113,7 @@ class EditOrder extends React.Component {
             <div className='refactor-orders__order-select'>
               <label>Choose your city</label>
               <Field
-                name='cityID'
+                name='cityId'
                 component='select'
                 validate={[required]}
                 type='text'

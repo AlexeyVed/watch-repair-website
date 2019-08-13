@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { confirmEmail, confirmPassword, validateEmail, validatePassword, required } from '../../../validation'
+import { validateEmail, required } from '../../../validation'
 import { addUserToDB } from '../../../actions'
 
 import './RefactorClients.less'

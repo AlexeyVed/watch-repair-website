@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm, initialize, change } from 'redux-form'
+import { Field, reduxForm, initialize } from 'redux-form'
 
 import myInput from '../../FieldRedux'
 import { makeOrder } from '../../../actions'
@@ -14,7 +14,7 @@ class OrderForm extends Component {
     workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17]
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const date = getDate()
 
     this.setState(() => ({
@@ -24,18 +24,17 @@ class OrderForm extends Component {
         } else {
           return false
         }
-          })
+      })
     }))
     const initialValues = {
       date: date.date,
       time: date.time
     }
     this.props.dispatch(initialize('orderForm', initialValues, ['date', 'time']))
-
   }
 
   render () {
-    const { handleSubmit, chooseClock, chooseCities, makeOrder, chooseMaster, currentEmail } = this.props
+    const { handleSubmit, chooseClock, chooseCities, makeOrder, chooseMaster } = this.props
 
     if (chooseMaster) {
       return (
@@ -73,7 +72,7 @@ class OrderForm extends Component {
           <div className='main-form__order-select'>
             <label>Choose your clock</label>
             <Field
-              name='clockID'
+              name='clockId'
               component='select'
               type='number'
               validate={required}
@@ -89,7 +88,7 @@ class OrderForm extends Component {
           <div className='main-form__order-select'>
             <label>Choose your city</label>
             <Field
-              name='cityID'
+              name='cityId'
               component='select'
               type='text'
               validate={required}

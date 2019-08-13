@@ -35,13 +35,16 @@ import {
   EDIT_CLOCKS_SUCCESS,
   EDIT_ORDERS_SUCCESS,
   EDIT_WORKERS_SUCCESS,
-  REDIRECT_FROM_REFACTOR
+  REDIRECT_FROM_REFACTOR,
+  MISS_ADMIN_ERROR
 } from './types.js'
 
 import axios from 'axios'
 
 export const loadClocks = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadClocksStarted())
     axios
       .get(`http://localhost:3000/api/clocks/list`)
@@ -56,6 +59,8 @@ export const loadClocks = () => {
 
 export const loadCities = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadCitiesStarted())
     axios
       .get(`http://localhost:3000/api/cities/list`)
@@ -70,6 +75,8 @@ export const loadCities = () => {
 
 export const loadOrdersAdmin = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadOrdersStarted())
     axios
       .get(`http://localhost:3000/api/orders/list`)
@@ -84,9 +91,11 @@ export const loadOrdersAdmin = () => {
 
 export const loadWorkers = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadWorkersStarted())
     axios
-      .get(`http://localhost:3000/api/workers/list`)
+      .get(`http://localhost:3000/api/masters/list`)
       .then(res => {
         dispatch(loadWorkersSuccess(res.data))
       })
@@ -98,6 +107,8 @@ export const loadWorkers = () => {
 
 export const loadClientsAdmin = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token')
+    axios.defaults.headers.common['authorization'] = token
     dispatch(loadClientsStarted())
     axios
       .get(`http://localhost:3000/api/customers/list`)
@@ -122,7 +133,7 @@ export const addUserToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -139,7 +150,7 @@ export const addCityToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -156,7 +167,7 @@ export const addClockToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -165,15 +176,16 @@ export const addWorkerToDB = (values) => {
   return (dispatch) => {
     dispatch(addModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/add`, values)
+      .post(`http://localhost:3000/api/masters/add`, values)
       .then(res => {
+        console.log(res.data)
         dispatch(addWorkerSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -193,7 +205,7 @@ export const addOrderToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(addModelFailure(err))
+        dispatch(addModelFailure(err.response.data))
       })
   }
 }
@@ -210,7 +222,7 @@ export const editUserIntoDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
@@ -227,7 +239,7 @@ export const editCityIntoDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
@@ -244,27 +256,28 @@ export const editClockIntoDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
 
 export const editOrderIntoDB = (values) => {
-  values.timeRepair = Number(values.timeRepair)
-  values.time = Number(values.time)
-  values.id = Number(values.id)
+  values.clockId = Number(values.clockId)
+  values.cityId = Number(values.cityId)
+  values.customerId = Number(values.customerId)
+  values.masterId = Number(values.masterId)
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
       .post(`http://localhost:3000/api/orders/update`, values)
       .then(res => {
-        dispatch(editOrderSuccess(res.data[0]))
+        dispatch(editOrderSuccess(res.data))
       })
       .then(() => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
@@ -273,7 +286,7 @@ export const editWorkerIntoDB = (values) => {
   return (dispatch) => {
     dispatch(editModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/update`, values)
+      .post(`http://localhost:3000/api/masters/update`, values)
       .then(res => {
         dispatch(editWorkerSuccess(res.data))
       })
@@ -281,7 +294,7 @@ export const editWorkerIntoDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        dispatch(editModelFailure(err))
+        dispatch(editModelFailure(err.response.data))
       })
   }
 }
@@ -295,7 +308,7 @@ export const deleteClockFromDB = (id) => {
         dispatch(deleteClockSuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
   }
 }
@@ -309,7 +322,7 @@ export const deleteOrderFromDB = (id) => {
         dispatch(deleteOrderSuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
   }
 }
@@ -318,12 +331,12 @@ export const deleteWorkerFromDB = (id) => {
   return (dispatch) => {
     dispatch(deleteModelStarted())
     axios
-      .post(`http://localhost:3000/api/workers/delete`, { id })
+      .post(`http://localhost:3000/api/masters/delete`, { id })
       .then(res => {
         dispatch(deleteWorkerSuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
   }
 }
@@ -337,7 +350,7 @@ export const deleteCityFromDB = (id) => {
         dispatch(deleteCitySuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
   }
 }
@@ -351,8 +364,14 @@ export const deleteClientFromDB = (id) => {
         dispatch(deleteClientSuccess(res.data))
       })
       .catch(err => {
-        dispatch(deleteModelFailure(err))
+        dispatch(deleteModelFailure(err.response.data))
       })
+  }
+}
+
+export const missErrorAdmin = () => {
+  return (dispatch) => {
+    dispatch(missAdminError())
   }
 }
 
@@ -529,4 +548,8 @@ const editClockSuccess = data => ({
 const editCitySuccess = data => ({
   type: EDIT_CITIES_SUCCESS,
   payload: data
+})
+
+const missAdminError = () => ({
+  type: MISS_ADMIN_ERROR
 })

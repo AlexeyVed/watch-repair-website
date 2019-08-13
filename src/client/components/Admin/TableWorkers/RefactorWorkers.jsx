@@ -34,7 +34,7 @@ class RefactorWorkers extends React.Component {
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>{item.name}</td>
-                  <td>{item.city}</td>
+                  <td>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
                   <td>{item.rating}</td>
                   <td>
                     <LinkButton to={`/admin/workers/edit/${item.id}`} name='Edit'/>

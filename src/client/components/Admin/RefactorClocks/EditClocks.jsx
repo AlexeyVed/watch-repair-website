@@ -24,8 +24,8 @@ class EditClocks extends React.Component {
       .post(`http://localhost:3000/api/clocks/get`, { id })
       .then(res => {
         this.setState(() => ({
-            load: false
-          }
+          load: false
+        }
         ))
         this.props.dispatch(initialize('editClock', res.data, ['id', 'typeClock', 'timeRepair']))
       })

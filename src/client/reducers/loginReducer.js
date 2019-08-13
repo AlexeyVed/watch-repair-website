@@ -2,9 +2,9 @@ import {
   SING_IN_SUCCESS,
   SING_IN_FAILURE,
   SING_IN_STARTED,
-  REGISTRATION_STARTED,
+  /*  REGISTRATION_STARTED,
   REGISTRATION_SUCCESS,
-  REGISTRATION_FAILURE,
+  REGISTRATION_FAILURE, */
   LOG_OUT,
   SING_IN_FROM_LOCAL_STORAGE,
   LOGIN_ERROR_NULL
@@ -39,7 +39,7 @@ const loginReducer = (state = initialState, action) => {
         singInLoading: true,
         singInError: null
       }
-
+      /*
     case REGISTRATION_STARTED:
       return {
         ...state,
@@ -60,7 +60,7 @@ const loginReducer = (state = initialState, action) => {
         singInLoading: false,
         singInError: action.payload
       }
-
+*/
     case SING_IN_FROM_LOCAL_STORAGE:
       return {
         ...state,

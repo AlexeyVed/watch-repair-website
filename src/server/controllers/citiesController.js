@@ -1,58 +1,88 @@
+const error = require('../services/modules.js').makeError
 const City = require('../models/cities.js')
 
-exports.list = function (req, res) {
-  City.list()
-    .then(result => {
-      const json = JSON.stringify(result)
-      res.send(json)
-    })
+exports.list = function (req, res, next) {
+  try {
+    City.findAll()
+      .then(cities => {
+        const json = JSON.stringify(cities)
+        res.send(json)
+      })
+  } catch (e) {
+    next(error(400, 'Error get list of cities'))
+  }
 }
 
-exports.update = function (req, res) {
-  City.findOne(req.body.id)
-    .then((cityFromDB) => {
-      const city = new City(cityFromDB[0])
-      city.update(req.body)
-        .then(result => {
-          const json = JSON.stringify(req.body)
+exports.get = function (req, res, next) {
+  try {
+    if (!req.body.id) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    City.findByPk(req.body.id)
+      .then((city) => {
+        const json = JSON.stringify(city)
+        res.send(json)
+      })
+  } catch (e) {
+    next(error(400, 'Error get city.'))
+  }
+}
+
+exports.add = function (req, res, next) {
+  try {
+    if (!req.body.city) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    City.create({
+      city: req.body.city
+    })
+      .then(result => {
+        const json = JSON.stringify(result)
+        res.status(201).send(json)
+      })
+  } catch (e) {
+    next(error(400, 'Error add city'))
+  }
+}
+
+exports.delete = function (req, res, next) {
+  try {
+    if (!req.body.id) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    City.destroy({
+      where: {
+        id: req.body.id
+      }
+    })
+      .then(result => {
+        const json = JSON.stringify(req.body)
+        res.send(json)
+      })
+  } catch (e) {
+    next(error(400, 'Error delete city'))
+  }
+}
+
+exports.update = function (req, res, next) {
+  try {
+    if (!req.body.id || !req.body.city) {
+      return next(error(400, 'Your must fill all fields'))
+    }
+    City.update({
+      city: req.body.city
+    }, {
+      where: {
+        id: req.body.id
+      }
+    }).then((result) => {
+      City.findByPk(req.body.id)
+        .then(city => {
+          const json = JSON.stringify(city)
           res.send(json)
         })
-        .catch(err => {
-          res.status(400).send('Error update city')
-        })
     })
-}
-
-exports.get = function (req, res) {
-  City.findOne(req.body.id)
-    .then((city) => {
-      const json = JSON.stringify(city[0])
-      res.send(json)
-    })
-}
-
-exports.add = function (req, res) {
-  const city = new City(req.body)
-  city.add()
-    .then(result => {
-      City.findOne(result.insertId)
-        .then(cities => {
-          const json = JSON.stringify(cities[0])
-          res.status(201).send(json)
-        })
-    })
-    .catch(err => {
-      res.status(400).send('Error add city')
-    })
-}
-
-exports.delete = function (req, res) {
-  City.delete(req.body.id)
-    .then(result => {
-      const json = JSON.stringify(req.body)
-      res.send(json)
-    })
-    .catch(err => {
-      res.status(400).send('Error delete city')
-    })
+  } catch (e) {
+    next(error(400, 'Error update city'))
+  }
 }

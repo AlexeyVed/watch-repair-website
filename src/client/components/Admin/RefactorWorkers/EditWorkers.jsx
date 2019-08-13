@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Field, initialize, reduxForm} from 'redux-form'
+import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
@@ -21,11 +21,11 @@ class EditWorkers extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .post(`http://localhost:3000/api/workers/get`, { id })
+      .post(`http://localhost:3000/api/masters/get`, { id })
       .then(res => {
         this.setState(() => ({
-            load: false
-          }
+          load: false
+        }
         ))
         this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'rating', 'city']))
       })
@@ -71,7 +71,7 @@ class EditWorkers extends React.Component {
             <div className='refactor-workers__select'>
               <label>Update city</label>
               <Field
-                name='cityID'
+                name='cityId'
                 component='select'
                 validate={[required]}
                 type='text'
@@ -120,7 +120,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-/*    editWorker: values => console.log(values),*/
+    /*    editWorker: values => console.log(values), */
     editWorker: values => dispatch(editWorkerIntoDB(values))
   }
 }
