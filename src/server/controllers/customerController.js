@@ -6,7 +6,15 @@ exports.list = function (req, res, next) {
     Customer.findAll()
       .then(customers => {
         const json = JSON.stringify(customers)
-        res.send(json)
+        try {
+          const obj = JSON.parse(json)
+          obj.sort((a, b) => {
+            return a.email.toLowerCase().localeCompare(b.email.toLowerCase())
+          })
+          res.json(obj)
+        } catch (e) {
+          res.send(json)
+        }
       })
   } catch (e) {
     next(error(400, 'Error get list of customers'))

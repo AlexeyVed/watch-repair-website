@@ -6,7 +6,20 @@ exports.list = function (req, res, next) {
     Clock.findAll()
       .then(clocks => {
         const json = JSON.stringify(clocks)
-        res.send(json)
+        try {
+          const obj = JSON.parse(json)
+          obj.sort((a, b) => {
+            if (a.timeRepair > b.timeRepair) {
+              return 1
+            }
+            if (a.timeRepair < b.timeRepair) {
+              return -1
+            }
+          })
+          res.json(obj)
+        } catch (e) {
+          res.send(json)
+        }
       })
   } catch (e) {
     next(error(400, 'Error get list of clocks'))

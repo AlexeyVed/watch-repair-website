@@ -22,7 +22,7 @@ class MainOrder extends Component {
         <OrderForm/>
         <Content/>
         <Switch>
-          <Route path='/order/login' component={LoginForm}/>
+          <Route path='/login' component={LoginForm}/>
         </Switch>
       </div>
     )

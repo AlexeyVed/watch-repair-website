@@ -1,5 +1,6 @@
 const Op = require('sequelize').Op
 const error = require('../services/modules.js').makeError
+const getToday = require('../services/modules.js').getToday
 const Order = require('../models/orders.js')
 const Master = require('../models/masters.js')
 const Clock = require('../models/clocks.js')
@@ -25,7 +26,56 @@ exports.list = function (req, res, next) {
     })
       .then(orders => {
         const json = JSON.stringify(orders)
-        res.send(json)
+        try {
+          const obj = JSON.parse(json)
+          obj.sort((a, b) => {
+            const x = a.date.split('-')
+            const y = b.date.split('-')
+            if (+x[0] > +y[0]) {
+              return 1
+            } else if (+x[0] < +y[0]) {
+              return -1
+            } else if (+x[1] > +y[1]) {
+              return 1
+            } else if (+x[1] < +y[1]) {
+              return -1
+            } else if (+x[2] > +y[2]) {
+              return 1
+            } else if (+x[2] < +y[2]) {
+              return -1
+            } else if (a.time > b.time) {
+              return 1
+            } else if (a.time < b.time) {
+              return -1
+            } else {
+              return 0
+            }
+          })
+          const today = getToday()
+          const indexToday = obj.findIndex((elem, index, array) => {
+            const x = elem.date.split('-')
+            if (Number(x[0]) >= today.year && Number(x[1]) >= today.month) {
+              if (Number(x[2]) >= today.day) {
+                if (elem.time >= today.hour) {
+                  return true
+                } else {
+                  return false
+                }
+              } else {
+                return false
+              }
+            }
+            return false
+          })
+          if (indexToday !== -1) {
+            const oldOrders = obj.splice(0, indexToday)
+            const finallyObj = obj.concat(oldOrders)
+            return res.json(finallyObj)
+          }
+          res.json(obj)
+        } catch (e) {
+          res.send(json)
+        }
       })
   } catch (e) {
     next(error(400, 'Error get list of orders'))
@@ -194,7 +244,21 @@ exports.getWorkers = function (req, res, next) {
                 if (!masters.length) {
                   return next(error(404, 'There are no free masters in your city at this time. Please choose other time.'))
                 }
-                res.send(json)
+                try {
+                  masters.sort((a, b) => {
+                    if (a.rating > b.rating) {
+                      return 1
+                    }
+                    if (a.rating < b.rating) {
+                      return -1
+                    }
+                    return 0
+                  })
+
+                  res.json(masters)
+                } catch (e) {
+                  res.send(json)
+                }
               })
           })
       })

@@ -11,7 +11,15 @@ exports.list = function (req, res, next) {
     })
       .then(masters => {
         const json = JSON.stringify(masters)
-        res.send(json)
+        try {
+          const obj = JSON.parse(json)
+          obj.sort((a, b) => {
+            return a.city.city.toLowerCase().localeCompare(b.city.city.toLowerCase())
+          })
+          res.json(obj)
+        } catch (e) {
+          res.send(json)
+        }
       })
   } catch (e) {
     next(error(400, 'Error get list of masters'))

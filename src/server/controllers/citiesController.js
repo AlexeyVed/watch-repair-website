@@ -6,7 +6,15 @@ exports.list = function (req, res, next) {
     City.findAll()
       .then(cities => {
         const json = JSON.stringify(cities)
-        res.send(json)
+        try {
+          const obj = JSON.parse(json)
+          obj.sort((a, b) => {
+            return a.city.localeCompare(b.city)
+          })
+          res.json(obj)
+        } catch (e) {
+          res.send(json)
+        }
       })
   } catch (e) {
     next(error(400, 'Error get list of cities'))

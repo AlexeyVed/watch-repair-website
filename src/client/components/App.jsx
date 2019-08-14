@@ -5,10 +5,11 @@ import { singInFromLS } from '../actions'
 
 import Preloader from './App/Preloader/Preloader.jsx'
 import Header from './App/Header/Header.jsx'
-import Main from './App/Main/Main'
+import Footer from './App/Footer/Footer.jsx'
 import MainOrder from './App/MainOrder/MainOrder.jsx'
 import MainAdmin from './Admin/Main/MainAdmin'
 import NoMatch from './NoMatch/NoMatch'
+import LoginForm from "./App/LoginForm/LoginForm";
 
 class App extends React.Component {
   componentDidMount () {
@@ -32,12 +33,12 @@ class App extends React.Component {
       <div className = 'app'>
         <Header/>
         <Switch>
-          <Route exact path='/' component={Main}/>
-          <Route path='/order' component={MainOrder}/>
-          <Route path='/login' component={Main}/>
+          <Route exact path='/' component={MainOrder}/>
+          <Route path='/login' component={MainOrder}/>
           <Route path='/admin' component={MainAdmin}/>
           <Route component={NoMatch}/>
         </Switch>
+        <Footer/>
         {preloader}
       </div>
     )

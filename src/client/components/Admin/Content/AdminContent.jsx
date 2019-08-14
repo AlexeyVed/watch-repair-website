@@ -7,7 +7,7 @@ import RefactorClients from '../TableClients/RefactorClients.jsx'
 import RefactorClocks from '../TableClocks/RefactorClocks.jsx'
 import RefactorWorkers from '../TableWorkers/RefactorWorkers.jsx'
 import RefactorOrders from '../TableOrders/RefactorOrders.jsx'
-import LinkButton from '../../LinkButton/LinkButton.jsx'
+/*import LinkButton from '../../LinkButton/LinkButton.jsx'*/
 import ModalWindow from '../../ModalWindow/ModalWindowAdmin.jsx'
 
 import './AdminContent.less'
@@ -17,10 +17,10 @@ class AdminContent extends React.Component {
     return (
       <div className='admin-content'>
         {(this.props.modalAdmin) ? <ModalWindow/> : null}
-        <div className='admin-content__navigation'>
-          <LinkButton to='/' name='Main' className=''/>
-          <LinkButton to='/order' name='Make Order' className=''/>
-        </div>
+   {/*     <div className='admin-content__navigation'>
+
+          <LinkButton to='/' name='Make Order' className=''/>
+        </div>*/}
         <div className='work-space'>
           <Switch>
             <Route exact path='/admin' render={
