@@ -449,8 +449,9 @@ const addModelStarted = () => ({
   type: ADD_MODEL_STARTED
 })
 
-const addModelFailure = () => ({
-  type: ADD_MODEL_FAILURE
+const addModelFailure = (err) => ({
+  type: ADD_MODEL_FAILURE,
+  payload: err
 })
 
 const deleteModelStarted = () => ({

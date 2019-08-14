@@ -209,37 +209,79 @@ exports.addAdmin = function (req, res, next) {
     if (!date || !time || !customerId || !clockId || !cityId || !masterId) {
       return next(error(400, 'Your must fill all fields'))
     }
-    Order.create({
-      time: time,
-      date: date,
-      cityId: cityId,
-      clockId: clockId,
-      customerId: customerId,
-      masterId: masterId
-    })
-      .then(result => {
-        Order.findOne({
+    Clock.findByPk(clockId)
+      .then(reqClock => {
+        Order.findAll({
           where: {
-            id: result.id
+            masterId: masterId,
+            cityId: cityId,
+            date: date
           },
           include: [{
-            model: City
-          },
-          {
             model: Clock
-          },
-          {
-            model: Customer
-          },
-          {
-            model: Master
-          }
-
-          ]
+          }]
         })
-          .then(master => {
-            const json = JSON.stringify(master)
-            res.status(201).send(json)
+          .then(result => {
+            const string = JSON.stringify(result)
+            const obj = JSON.parse(string)
+            const isCreated = obj.filter(order => {
+              if (order.time < time) {
+                if ((order.time + order.clock.timeRepair) < time) {
+                  return false
+                } else {
+                  return true
+                }
+              } else {
+                if ((time + reqClock.timeRepair) >= order.time) {
+                  return true
+                } else {
+                  return false
+                }
+              }
+            })
+            if (isCreated.length) {
+              return next(error(400, 'Master already busy at this time.'))
+            }
+
+            Master.findByPk(masterId)
+              .then(master => {
+                const stringMaster = JSON.stringify(master)
+                const objMaster = JSON.parse(stringMaster)
+                if (objMaster.cityId !== +cityId) {
+                  return next(error(400, 'Master doesnt work in this town'))
+                }
+                Order.create({ time: time,
+                  date: date,
+                  cityId: cityId,
+                  clockId: clockId,
+                  customerId: customerId,
+                  masterId: masterId })
+                  .then(order => {
+                    Order.findOne({
+                      where: {
+                        id: order.id
+                      },
+                      include: [{
+                        model: City
+                      },
+                      {
+                        model: Clock
+                      },
+                      {
+                        model: Customer
+                      },
+                      {
+                        model: Master
+                      }
+
+                      ]
+                    })
+                      .then(newOrder => {
+                        const json = JSON.stringify(newOrder)
+                        res.status(201).send(json)
+                      })
+                  })
+              })
           })
       })
   } catch (e) {
@@ -249,7 +291,6 @@ exports.addAdmin = function (req, res, next) {
 
 exports.add = function (req, res, next) {
   try {
-    console.log(req.body)
     const { date, time, email, clockId, cityId, masterId } = req.body
     if (!date || !time || !email || !clockId || !cityId || !masterId) {
       return next(error(400, 'Your must fill all fields'))

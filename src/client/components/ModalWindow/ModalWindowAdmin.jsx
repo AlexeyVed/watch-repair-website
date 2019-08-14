@@ -16,13 +16,16 @@ class ModalWindowAdmin extends React.Component {
     const { wasDelete, wasCreate, wasUpdate, refactorError } = this.props
     let text
 
-    if (wasDelete) {
+    if (refactorError) {
+      text = refactorError
+    } if (wasDelete) {
       text = `Model was successfully deleted.`
     } else if (wasCreate) {
       text = `Model was successfully created.`
     } else if (wasUpdate) {
       text = `Model was successfully updated.`
     }
+    console.log()
 
     return (
 
@@ -30,7 +33,7 @@ class ModalWindowAdmin extends React.Component {
         <div className='modal-info'>
           <div className='modal-info__text'>
             <div>
-              {(refactorError !== null) ? refactorError : text}
+              {text}
             </div>
           </div>
         </div>

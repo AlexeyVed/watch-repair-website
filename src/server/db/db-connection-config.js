@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-const sequelize = new Sequelize('clockwise', 'root', 'e8zbprhH', {
+const mysql = new Sequelize('clockwise', 'root', 'e8zbprhH', {
   dialect: 'mysql',
   host: 'localhost',
   port: 3306,
@@ -11,6 +11,17 @@ const sequelize = new Sequelize('clockwise', 'root', 'e8zbprhH', {
   }
 })
 
-sequelize.sync()
+const postgresql = new Sequelize('clockwise', 'root', 'e8zbprhH', {
+  dialect: 'mysql',
+  host: 'localhost',
+  port: 3306,
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  }
+})
 
-module.exports = sequelize
+const db = mysql || postgresql
+
+module.exports = db

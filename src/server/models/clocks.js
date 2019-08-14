@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
-const sequelize = require('../db/db-connection-config.js')
+const db = require('../db/db-connection-config.js')
 
-const Clock = sequelize.define('clocks', {
+const Clock = db.define('clocks', {
   typeClock: {
     type: Sequelize.STRING(191),
     allowNull: false
