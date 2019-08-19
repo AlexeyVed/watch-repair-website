@@ -8,8 +8,49 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
 }
-
 .app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.app-admin {
+    .buttonHome {
+        font-size: 50px;
+        position: absolute;
+        left: 0;
+        height: 95vh;
+        width: 10vw;
+        padding: 0;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        background-color: rgba(255, 253, 241, 0);
+        outline: none;
+        color: #f5f5eb;
+    }
+
+    a > button {
+        font-size: 50px;
+        position: absolute;
+        right: 0;
+        height: 95vh;
+        width: 10vw;
+        padding: 0;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        background-color: rgba(255, 253, 241, 0);
+        outline: none;
+        color: #f5f5eb;
+    }
+
+    a:first-child > button {
+        left: 0;
+    }
+}
+
+.app-main {
     display: flex;
     flex-direction: column;
     width: 80vw;
@@ -42,10 +83,11 @@ body {
 .footer {
     height: 30px;
     width: 100%;
+    min-width: 600px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f5f5eb;
+    background-color: rgb(238, 237, 238);
     border-left: 1px solid rgba(128, 128, 128, 0.4);
     border-top: 1px solid rgba(128, 128, 128, 0.4);
     border-right: 1px solid rgba(128, 128, 128, 0.4);

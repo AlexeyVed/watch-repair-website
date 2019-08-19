@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import { changePage } from '../../../actions'
 
 class Footer extends Component {
-
-
   render () {
     return (
       <div className='footer'>

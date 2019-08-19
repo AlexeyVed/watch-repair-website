@@ -7,7 +7,8 @@ import {
   MAKE_ORDER_WITH_MASTER_FAILURE,
   CHANGE_PAGE,
   SET_CHOOSE_WORKER,
-  MISS_APP_ERROR
+  MISS_APP_ERROR,
+  RETURN_HOME_PAGE
 } from './types.js'
 
 import axios from 'axios'
@@ -53,6 +54,12 @@ export const missErrorApp = () => {
   }
 }
 
+export const returnPageHome = () => {
+  return (dispatch) => {
+    dispatch(returnHomePage())
+  }
+}
+
 export const changePage = data => ({
   type: CHANGE_PAGE,
   payload: data
@@ -92,4 +99,8 @@ const makeOrderMasterFailure = err => ({
 
 const missAppError = () => ({
   type: MISS_APP_ERROR
+})
+
+const returnHomePage = () => ({
+  type: RETURN_HOME_PAGE
 })

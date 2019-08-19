@@ -7,7 +7,8 @@ import {
   MAKE_ORDER_WITH_MASTER_FAILURE,
   CHANGE_PAGE,
   SET_CHOOSE_WORKER,
-  MISS_APP_ERROR
+  MISS_APP_ERROR,
+  RETURN_HOME_PAGE
 } from '../actions/types'
 
 const initialState = {
@@ -50,6 +51,17 @@ const appReducer = (state = initialState, action) => {
         isMakeOrder: false,
         showModal: true,
         makeOrderError: action.payload
+      }
+
+    case RETURN_HOME_PAGE:
+      return {
+        ...state,
+        chooseWorker: false,
+        forOrder: {
+          ...state.forOrder,
+          freeWorkers: [],
+          order: null
+        }
       }
 
     case MAKE_ORDER_WITH_MASTER_STARTED:

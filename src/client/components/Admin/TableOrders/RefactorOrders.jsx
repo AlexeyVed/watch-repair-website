@@ -48,10 +48,10 @@ class RefactorOrders extends React.Component {
   }
   render () {
     const { orders, deleteOrder } = this.props
-    const { currentPage, itemsPerPage } = this.state;
+    const { currentPage, itemsPerPage } = this.state
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const indexOfLastItem = currentPage * itemsPerPage
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage
     const currentItem = orders.slice(indexOfFirstItem, indexOfLastItem)
 
     let num = (currentPage === 1) ? 0 : currentPage * 10 - 10
@@ -61,7 +61,7 @@ class RefactorOrders extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
-      return  <tr key={item.id}>
+      return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{(item.customer !== null) ? item.customer.name : null }</td>
         <td>{(item.customer !== null) ? item.customer.email : <b>Customer was deleted</b>}</td>
@@ -76,17 +76,17 @@ class RefactorOrders extends React.Component {
       </tr>
     })
 
-    const pageNumbers = [];
+    const pageNumbers = []
     for (let i = 1; i <= Math.ceil(orders.length / itemsPerPage); i++) {
-      pageNumbers.push(i);
+      pageNumbers.push(i)
     }
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
         <div className='page'
-             key={number}
-             id={number}
-             onClick={this.handleClick}
+          key={number}
+          id={number}
+          onClick={this.handleClick}
         >
           {number}
         </div>

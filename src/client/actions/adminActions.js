@@ -178,7 +178,6 @@ export const addWorkerToDB = (values) => {
     axios
       .post(`http://localhost:3000/api/masters/add`, values)
       .then(res => {
-        console.log(res.data)
         dispatch(addWorkerSuccess(res.data))
       })
       .then(() => {

@@ -37,10 +37,10 @@ class RefactorCities extends React.Component {
   }
   render () {
     const { cities, deleteCity } = this.props
-    const { currentPage, itemsPerPage } = this.state;
+    const { currentPage, itemsPerPage } = this.state
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const indexOfLastItem = currentPage * itemsPerPage
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage
     const currentItem = cities.slice(indexOfFirstItem, indexOfLastItem)
 
     let num = (currentPage === 1) ? 0 : currentPage * 10 - 10
@@ -60,9 +60,9 @@ class RefactorCities extends React.Component {
       </tr>
     })
 
-    const pageNumbers = [];
+    const pageNumbers = []
     for (let i = 1; i <= Math.ceil(cities.length / itemsPerPage); i++) {
-      pageNumbers.push(i);
+      pageNumbers.push(i)
     }
 
     const renderPageNumbers = pageNumbers.map(number => {
@@ -77,8 +77,6 @@ class RefactorCities extends React.Component {
       )
     })
 
-
-
     return (
       <div className='table-cities'>
         <div className='table-cities__title'>Town where we work</div>
@@ -90,7 +88,7 @@ class RefactorCities extends React.Component {
                 <th>City</th>
                 <th>Service</th>
               </tr>
-                { renderItems }
+              { renderItems }
             </tbody>
           </table>
         </div>

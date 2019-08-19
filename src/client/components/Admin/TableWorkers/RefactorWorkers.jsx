@@ -38,10 +38,10 @@ class RefactorWorkers extends React.Component {
   }
   render () {
     const { workers, deleteWorker } = this.props
-    const { currentPage, itemsPerPage } = this.state;
+    const { currentPage, itemsPerPage } = this.state
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const indexOfLastItem = currentPage * itemsPerPage
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage
     const currentItem = workers.slice(indexOfFirstItem, indexOfLastItem)
 
     let num = (currentPage === 1) ? 0 : currentPage * 10 - 10
@@ -63,17 +63,17 @@ class RefactorWorkers extends React.Component {
       </tr>
     })
 
-    const pageNumbers = [];
+    const pageNumbers = []
     for (let i = 1; i <= Math.ceil(workers.length / itemsPerPage); i++) {
-      pageNumbers.push(i);
+      pageNumbers.push(i)
     }
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
         <div className='page'
-             key={number}
-             id={number}
-             onClick={this.handleClick}
+          key={number}
+          id={number}
+          onClick={this.handleClick}
         >
           {number}
         </div>
