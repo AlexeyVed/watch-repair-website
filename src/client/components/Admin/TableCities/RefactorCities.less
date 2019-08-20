@@ -6,8 +6,8 @@
 
   &__title {
     text-align: center;
-    height: 40px;
-    margin-top: 30px;
+    height: 30px;
+    margin-top: 20px;
     font-weight: bold;
     font-size: 20px;
   }
@@ -15,8 +15,7 @@
   &__table {
     flex: 1;
     overflow: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 15px;
 
     table {
       border-collapse: collapse;
@@ -91,29 +90,61 @@
           border-right: 1px solid #e6e6e2;
         }
       }
+    }
+  }
 
+  &__numbers-pages {
+    display: flex;
+    width: 97.7%;
+    background-color: #f1efe4;
+    border-top: 1px solid #bfbfbf;
+    border-bottom: 1px solid #b4b4b4;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+
+    div {
+      width: 25px;
+      height: 25px;
+      border-right: 1px solid grey;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-right: 5px;
+      padding-left: 5px;
+    }
+
+    .active {
+      background-color: #d1d4d1;
+    }
+
+    div:hover {
+      background-color: #d1d4d1;
+    }
+
+    div:first-child {
+      border-left: 1px solid grey;
     }
   }
 
   &__bttn-add {
-    position: relative;
-    width: 100%;
+    display: flex;
+    width: 97.7%;
     height: 30px;
+    flex-direction: row-reverse;
 
     a > button {
-      position: absolute;
-      right: 30px;
+
       height: 100%;
       width: 120px;
       padding: 0;
-      border: none;
       color: inherit;
       cursor: pointer;
       background-color: #f1efe4;
       outline: none;
       border: 1px solid #b9b9b5;
+      border-top: none;
       color: black;
     }
   }
-
 }

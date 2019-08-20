@@ -16,6 +16,10 @@ class Header extends React.Component {
     this.setState({ redirect: true })
   }
 
+  clickLogo = () => {
+    this.setState({ redirect: true })
+  }
+
   render () {
     const { currentUser } = this.props
 
@@ -48,7 +52,7 @@ class Header extends React.Component {
 
     return (
       <div className='header'>
-        <div className='container-logo'>
+        <div className='container-logo' onClick={this.clickLogo}>
           <div className='container-logo__logo'></div>
           <div className='container-logo__description'>
             <div className='container-logo__description company-name'>ClockWise</div>

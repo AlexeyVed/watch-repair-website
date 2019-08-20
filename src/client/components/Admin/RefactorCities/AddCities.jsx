@@ -40,7 +40,8 @@ class AddCities extends React.Component {
             />
             <button
               type='submit'
-              label='submit'>Submit</button>
+              label='submit'
+              className='refactor-city__submit'>Submit</button>
           </form>
         </div>
         , document.getElementById('modal-root'))

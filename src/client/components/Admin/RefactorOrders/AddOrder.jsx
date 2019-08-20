@@ -13,8 +13,26 @@ import './RefactorOrders.less'
 import { getDate } from '../../App/OrderForm/logic'
 
 class AddOrder extends React.Component {
+  state = {
+    workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
+    date: {
+      date: null,
+      time: null
+    }
+  }
   componentDidMount () {
     const date = getDate()
+
+    this.setState(() => ({
+      workHours: this.state.workHours.filter(item => {
+        if (item >= date.time) {
+          return true
+        } else {
+          return false
+        }
+      }),
+      date: date
+    }))
 
     const initialValues = {
       date: date.date,
@@ -51,7 +69,7 @@ class AddOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose email</option>
+                <option key={0} value='' disabled hidden>Choose email</option>
                 {
                   chooseUsers.map((item, index) => (
                     <option key={index} value={item.id}>{item.email}</option>
@@ -67,7 +85,7 @@ class AddOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose master</option>
+                <option key={0} value='' disabled hidden>Choose master</option>
                 {
                   chooseWorkers.map((item, index) => (
                     <option key={index} value={item.id}>{item.name}</option>
@@ -83,7 +101,7 @@ class AddOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose your clock</option>
+                <option key={0} value='' disabled hidden>Choose your clock</option>
                 {
                   chooseClock.map((clock, index) => (
                     <option key={index} value={clock.id}>{clock.typeClock}</option>
@@ -99,7 +117,7 @@ class AddOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose your city</option>
+                <option key={0} value='' disabled hidden>Choose your city</option>
                 {
                   chooseCities.map((item, index) => (
                     <option key={index} value={item.id}>{item.city}</option>
@@ -110,9 +128,16 @@ class AddOrder extends React.Component {
             <Field
               label='Choose date'
               name='date'
+              min={ this.state.date.date }
+              max={'2020-12-25'}
               component={myInput}
               validate={[required]}
               type='date'
+              onChange={() => {
+                this.setState(() => ({
+                  workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17]
+                }))
+              }}
             />
             <div className='refactor-orders__order-select'>
               <label>Choose convenient time</label>
@@ -122,7 +147,7 @@ class AddOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0}>Select time</option>
+                <option key={0} value='' disabled hidden>Select time</option>
                 {
                   workHours.map((item) => {
                     return <option key={item} value={item}>{item}:00</option>

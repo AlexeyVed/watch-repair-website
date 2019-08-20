@@ -27,7 +27,7 @@ passport.use('login',
             } else if (!User.validPassword(password, user.password)) {
               return done(null, false, {
                 code: 422,
-                message: 'Error validation.'
+                message: 'Wrong password.'
               })
             }
             return done(null, user)

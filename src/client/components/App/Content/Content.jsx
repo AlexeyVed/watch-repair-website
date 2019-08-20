@@ -1,30 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import AllWorkers from '../AllWorkers/AllWorker.jsx'
+import HomePage from '../HomePage/HomePage.jsx'
 import ChooseWorker from '../ChooseWorker/ChooseWorker.jsx'
-import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 class Content extends Component {
   render () {
-    const { chooseMaster, currentUser } = this.props
+    const { chooseMaster } = this.props
 
-    let adminLink
-
-    if (currentUser === 'admin@example.com') {
-      adminLink = <LinkButton to='/admin' name='Admin interface' className=''/>
-    } else {
-      adminLink = null
-    }
-
-    const component = (!chooseMaster) ? <AllWorkers/> : <ChooseWorker/>
+    const component = (!chooseMaster) ? <HomePage/> : <ChooseWorker/>
 
     return (
       <div className='content'>
-        <div className='home-page__navigation'>
-          {adminLink}
-          <LinkButton to='/' name='Main' />
-        </div>
         {component}
       </div>
     )

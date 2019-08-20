@@ -11,6 +11,8 @@ const myInput = (props) => {
       <input
         {...props.input}
         type={props.type}
+        min={props.min}
+        max={props.max}
         placeholder={props.placeholder}
       />
       {meta.error &&

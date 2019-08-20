@@ -10,8 +10,10 @@ import {
   LOGIN_ERROR_NULL
 } from '../actions/types'
 
+const client = localStorage.getItem('user')
+
 const initialState = {
-  singInUser: null,
+  singInUser: client || null,
   singInLoading: false,
   singInError: null
 }
@@ -71,7 +73,7 @@ const loginReducer = (state = initialState, action) => {
     case LOG_OUT:
       return {
         ...state,
-        singInUser: action.payload
+        singInUser: null
       }
 
     case LOGIN_ERROR_NULL:

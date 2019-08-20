@@ -3,7 +3,9 @@ const customersController = require('../controllers/usersController.js')
 
 const customersRouter = express.Router()
 
-customersRouter.use('/login', customersController.login)
-customersRouter.use('/logout', customersController.logout)
+const { loginValidation, login, logout } = customersController
+
+customersRouter.use('/login', loginValidation, login)
+customersRouter.use('/logout', logout)
 
 module.exports = customersRouter

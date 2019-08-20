@@ -46,7 +46,7 @@ class AddWorkers extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose city</option>
+                <option key={0} value='' disabled hidden>Choose city</option>
                 {
                   chooseCities.map(item => (
                     <option key={item.id} value={item.id}>{item.city}</option>
@@ -62,7 +62,7 @@ class AddWorkers extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose Rating</option>
+                <option key={0} value='' disabled hidden>Choose Rating</option>
                 <option key={1} value={1}>1</option>
                 <option key={2} value={2}>2</option>
                 <option key={3} value={3}>3</option>
