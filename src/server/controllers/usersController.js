@@ -6,8 +6,8 @@ const error = require('../services/modules.js').makeError
 const User = require('../models/users.js')
 
 exports.loginValidation = [
-  check('username').not().isEmpty().isEmail(),
-  check('password').not().isEmpty().isLength({ min: 5 })
+  check('email').isEmail().not().isEmpty(),
+  check('password').isLength({ min: 5 }).not().isEmpty()
 ]
 
 exports.login = (req, res, next) => {

@@ -34,7 +34,7 @@ class RefactorWorkers extends React.Component {
 
   componentDidMount () {
     return Promise.all([this.props.loadWorkers(), this.props.loadCities()])
-      .then((res)=> {
+      .then((res) => {
         this.props.loadEnd()
       })
   }

@@ -34,7 +34,6 @@ class ModalWindowAdmin extends React.Component {
       text = `Model was successfully updated.`
     }
 
-
     return (
 
       ReactDOM.createPortal(

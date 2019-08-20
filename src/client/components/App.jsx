@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
-import { returnPageHome, singInFromLS } from '../actions'
+import { returnPageHome } from '../actions'
 
 import LinkButton from './LinkButton/LinkButton.jsx'
+import PrivateRoute from './PrivateRouter/PrivateRouter.jsx'
 import Preloader from './App/Preloader/Preloader.jsx'
 import ModalWindow from './ModalWindow/ModalWindowAdmin.jsx'
 import Header from './App/Header/Header.jsx'
@@ -13,21 +14,13 @@ import MainAdmin from './Admin/Main/MainAdmin'
 import NoMatch from './NoMatch/NoMatch'
 
 class App extends React.Component {
-  componentDidMount () {
-    const client = localStorage.getItem('user')
-
-    if (client) {
-      this.props.singInLS(client)
-    }
-  }
-
   render () {
     const { isRefactor, isOrder, isLoad, isLoadData, isLogin, user, chooseMaster, returnHomePage, modalAdmin } = this.props
     let preloader,
       adminButton,
       homeButton
 
-    if (isRefactor || isLoad || isLoadData || isLogin || isOrder ) {
+    if (isRefactor || isLoad || isLoadData || isLogin || isOrder) {
       preloader = <Preloader/>
     } else {
       preloader = null
@@ -47,7 +40,6 @@ class App extends React.Component {
       homeButton = null
     }
 
-
     return (
       <div className = 'app'>
         <div className='app-admin'>
@@ -60,7 +52,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={MainOrder}/>
             <Route path='/login' component={MainOrder}/>
-            <Route path='/admin' component={MainAdmin}/>
+            <PrivateRoute path='/admin' component={MainAdmin} auth={user}/>
             <Route component={NoMatch}/>
           </Switch>
           <Footer/>
@@ -85,7 +77,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    singInLS: user => dispatch(singInFromLS(user)),
     returnHomePage: () => dispatch(returnPageHome())
   }
 }

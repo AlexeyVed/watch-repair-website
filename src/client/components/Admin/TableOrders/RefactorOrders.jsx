@@ -40,9 +40,9 @@ class RefactorOrders extends React.Component {
   }
 
   componentDidMount () {
-    const { loadOrders, loadClocks, loadWorkers, loadCities, loadClients} = this.props
+    const { loadOrders, loadClocks, loadWorkers, loadCities, loadClients } = this.props
     return Promise.all([loadOrders(), loadClocks(), loadWorkers(), loadCities(), loadClients()])
-      .then((res)=> {
+      .then((res) => {
         this.props.loadEnd()
       })
   }

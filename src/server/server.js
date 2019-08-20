@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const passport = require('./config/passport.js')
 const handleError = require('./config/middleware/handleError.js')
-/* const syncDB = require('./config/syncDB.js') */
+require('./config/syncDB.js')
 const cors = require('cors')
 
 const customersRouter = require('./routes/customersRoutes.js')

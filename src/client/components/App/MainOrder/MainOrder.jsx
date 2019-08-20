@@ -11,9 +11,9 @@ import ModalWindow from '../../ModalWindow/ModalWindowApp.jsx'
 class MainOrder extends Component {
   componentDidMount () {
     return Promise.all([this.props.loadClocks(),
-    this.props.loadCities(),
-    this.props.loadWorkers()])
-      .then((res)=> {
+      this.props.loadCities(),
+      this.props.loadWorkers()])
+      .then((res) => {
         this.props.loadEnd()
       })
   }

@@ -34,7 +34,7 @@ class RefactorClocks extends React.Component {
 
   componentDidMount () {
     this.props.loadClocks()
-      .then( () => {
+      .then(() => {
         this.props.loadEnd()
       })
   }
