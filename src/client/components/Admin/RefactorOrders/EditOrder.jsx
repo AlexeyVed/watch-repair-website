@@ -70,7 +70,7 @@ class EditOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose email</option>
+                <option key={0} value='' disabled hidden>Choose email</option>
                 {
                   chooseUsers.map((item, index) => (
                     <option key={index} value={item.id}>{item.email}</option>
@@ -86,7 +86,7 @@ class EditOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose master</option>
+                <option key={0} value='' disabled hidden>Choose master</option>
                 {
                   chooseWorkers.map((item, index) => (
                     <option key={index} value={item.id}>{item.name}</option>
@@ -102,7 +102,7 @@ class EditOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose time repair</option>
+                <option key={0} value='' disabled hidden>Choose time repair</option>
                 {
                   chooseClock.map((clock, index) => (
                     <option key={index} value={clock.id}>{clock.timeRepair}</option>
@@ -118,7 +118,7 @@ class EditOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Choose your city</option>
+                <option key={0} value='' disabled hidden>Choose your city</option>
                 {
                   chooseCities.map((item, index) => (
                     <option key={index} value={item.id}>{item.city}</option>
@@ -141,7 +141,7 @@ class EditOrder extends React.Component {
                 validate={[required]}
                 type='text'
               >
-                <option key={0} value={false}>Select time</option>
+                <option key={0} value='' disabled hidden>Select time</option>
                 {
                   workHours.map((item) => (
                     <option key={item} value={item}>{item}:00</option>

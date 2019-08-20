@@ -29,4 +29,6 @@ app.use('/api/orders', ordersRouter)
 
 app.use(handleError)
 
+console.log(process.argv)
+
 app.listen(process.env.PORT || 4000, () => console.log(`Listening on port ${process.env.PORT || 4000}!`))

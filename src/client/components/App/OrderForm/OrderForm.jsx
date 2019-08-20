@@ -11,7 +11,11 @@ import './OrderForm.less'
 
 class OrderForm extends Component {
   state = {
-    workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17]
+    workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
+    date: {
+      date: null,
+      time: null
+    }
   }
 
   componentDidMount () {
@@ -24,7 +28,8 @@ class OrderForm extends Component {
         } else {
           return false
         }
-      })
+      }),
+      date: date
     }))
     const initialValues = {
       date: date.date,
@@ -77,7 +82,7 @@ class OrderForm extends Component {
               type='number'
               validate={required}
             >
-              <option key={0} value={false}>Choose your clock</option>
+              <option key={0} value='' disabled hidden>Choose your clock</option>
               {
                 chooseClock.map((clock, index) => (
                   <option key={index} value={clock.id}>{clock.typeClock}</option>
@@ -93,7 +98,7 @@ class OrderForm extends Component {
               type='text'
               validate={required}
             >
-              <option key={0} value={undefined}>Choose your city</option>
+              <option key={0} value='' disabled hidden>Choose your city</option>
               {
                 chooseCities.map((item, index) => (
                   <option key={index} value={item.id}>{item.city}</option>
@@ -104,8 +109,15 @@ class OrderForm extends Component {
           <Field
             label='Choose date'
             name='date'
+            min={ this.state.date.date }
+            max={'2020-12-25'}
             component={myInput}
             type='date'
+            onChange={() => {
+              this.setState(() => ({
+                workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17]
+              }))
+            }}
           />
           <div className='main-form__order-select'>
             <label>Choose convenient time</label>
