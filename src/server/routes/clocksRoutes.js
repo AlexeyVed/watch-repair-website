@@ -3,10 +3,18 @@ const clocksController = require('../controllers/clocksController.js')
 const isAuthenticate = require('../config/middleware/isAuthenticate.js')
 const clocksRouter = express.Router()
 
-clocksRouter.use('/list', clocksController.list)
-clocksRouter.use('/add', isAuthenticate, clocksController.add)
-clocksRouter.use('/delete', isAuthenticate, clocksController.delete)
-clocksRouter.use('/update', isAuthenticate, clocksController.update)
-clocksRouter.use('/get', isAuthenticate, clocksController.get)
+const {
+  list,
+  addValidation, add,
+  removeValidation, remove,
+  updateValidation, update,
+  getValidation, get
+} = clocksController
+
+clocksRouter.use('/list', list)
+clocksRouter.use('/add', isAuthenticate, addValidation, add)
+clocksRouter.use('/delete', isAuthenticate, removeValidation, remove)
+clocksRouter.use('/update', isAuthenticate, updateValidation, update)
+clocksRouter.use('/get', isAuthenticate, getValidation, get)
 
 module.exports = clocksRouter

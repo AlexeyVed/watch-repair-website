@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import AddCities from '../RefactorCities/AddCities.jsx'
 import EditCities from '../RefactorCities/EditCities.jsx'
-import { deleteCityFromDB, loadCities } from '../../../actions'
+import { deleteCityFromDB, loadCities, loadDataEnd } from '../../../actions'
 
 import './RefactorCities.less'
 
@@ -34,6 +34,9 @@ class RefactorCities extends React.Component {
 
   componentDidMount () {
     this.props.loadCities()
+      .then(res => {
+        this.props.loadEnd()
+      })
   }
   render () {
     const { cities, deleteCity } = this.props
@@ -116,7 +119,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteCity: id => dispatch(deleteCityFromDB(id)),
-    loadCities: () => dispatch(loadCities())
+    loadCities: () => dispatch(loadCities()),
+    loadEnd: () => dispatch(loadDataEnd())
   }
 }
 

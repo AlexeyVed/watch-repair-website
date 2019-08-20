@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteWorkerFromDB, loadCities, loadWorkers } from '../../../actions'
+import { deleteWorkerFromDB, loadCities, loadDataEnd, loadWorkers } from '../../../actions'
 import AddWorkers from '../RefactorWorkers/AddWorkers.jsx'
 import EditWorkers from '../RefactorWorkers/EditWorkers.jsx'
 
@@ -33,8 +33,10 @@ class RefactorWorkers extends React.Component {
   }
 
   componentDidMount () {
-    this.props.loadWorkers()
-    this.props.loadCities()
+    return Promise.all([this.props.loadWorkers(), this.props.loadCities()])
+      .then((res)=> {
+        this.props.loadEnd()
+      })
   }
   render () {
     const { workers, deleteWorker } = this.props
@@ -121,7 +123,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteWorker: id => dispatch(deleteWorkerFromDB(id)),
     loadWorkers: () => dispatch(loadWorkers()),
-    loadCities: () => dispatch(loadCities())
+    loadCities: () => dispatch(loadCities()),
+    loadEnd: () => dispatch(loadDataEnd())
   }
 }
 

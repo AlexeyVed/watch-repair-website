@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import { returnPageHome, singInFromLS } from '../actions'
 
 import LinkButton from './LinkButton/LinkButton.jsx'
 import Preloader from './App/Preloader/Preloader.jsx'
+import ModalWindow from './ModalWindow/ModalWindowAdmin.jsx'
 import Header from './App/Header/Header.jsx'
 import Footer from './App/Footer/Footer.jsx'
 import MainOrder from './App/MainOrder/MainOrder.jsx'
@@ -21,12 +22,12 @@ class App extends React.Component {
   }
 
   render () {
-    const { isRefactor, isLoad, isLoadData, isLogin, user, chooseMaster, returnHomePage } = this.props
+    const { isRefactor, isOrder, isLoad, isLoadData, isLogin, user, chooseMaster, returnHomePage, modalAdmin } = this.props
     let preloader,
       adminButton,
       homeButton
 
-    if (isRefactor || isLoad || isLoadData || isLogin) {
+    if (isRefactor || isLoad || isLoadData || isLogin || isOrder ) {
       preloader = <Preloader/>
     } else {
       preloader = null
@@ -46,6 +47,7 @@ class App extends React.Component {
       homeButton = null
     }
 
+
     return (
       <div className = 'app'>
         <div className='app-admin'>
@@ -53,6 +55,7 @@ class App extends React.Component {
           { adminButton }
         </div>
         <div className= 'app-main'>
+          {(modalAdmin) ? <ModalWindow/> : null}
           <Header/>
           <Switch>
             <Route exact path='/' component={MainOrder}/>
@@ -73,8 +76,10 @@ const mapStateToProps = (state) => {
     isRefactor: state.adminReducer.refactorModelInProcess,
     isLoad: state.adminReducer.dataLoad,
     isLogin: state.loginReducer.singInLoading,
+    isOrder: state.appReducer.isMakeOrder,
     user: state.loginReducer.singInUser,
-    chooseMaster: state.appReducer.chooseWorker
+    chooseMaster: state.appReducer.chooseWorker,
+    modalAdmin: state.adminReducer.showModal
   }
 }
 
@@ -85,7 +90,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
+const AppWithRouter = connect(
   mapStateToProps,
   mapDispatchToProps
 )(App)
+
+export default withRouter(AppWithRouter)

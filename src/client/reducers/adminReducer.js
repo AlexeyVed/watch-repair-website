@@ -36,7 +36,8 @@ import {
   EDIT_ORDERS_SUCCESS,
   EDIT_WORKERS_SUCCESS,
   REDIRECT_FROM_REFACTOR,
-  MISS_ADMIN_ERROR
+  MISS_ADMIN_ERROR,
+  END_LOAD_DATA
 } from '../actions/types'
 
 const initialState = {
@@ -73,7 +74,6 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_CLOCKS_ADMIN_SUCCESS:
       return {
         ...state,
-        dataLoad: false,
         data: {
           ...state.data,
           clocks: action.payload,
@@ -85,6 +85,7 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         dataLoad: false,
+        showModal: true,
         data: {
           ...state.data,
           clocks: [],
@@ -101,7 +102,6 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_CITIES_ADMIN_SUCCESS:
       return {
         ...state,
-        dataLoad: false,
         data: {
           ...state.data,
           cities: action.payload,
@@ -113,6 +113,7 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         dataLoad: false,
+        showModal: true,
         data: {
           ...state.data,
           cities: [],
@@ -129,7 +130,6 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_ORDERS_ADMIN_SUCCESS:
       return {
         ...state,
-        dataLoad: false,
         data: {
           ...state.data,
           orders: action.payload,
@@ -141,6 +141,7 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         dataLoad: false,
+        showModal: true,
         data: {
           ...state.data,
           orders: [],
@@ -157,7 +158,6 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_CUSTOMERS_ADMIN_SUCCESS:
       return {
         ...state,
-        dataLoad: false,
         data: {
           ...state.data,
           customers: action.payload,
@@ -169,6 +169,7 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         dataLoad: false,
+        showModal: true,
         data: {
           ...state.data,
           customers: [],
@@ -185,7 +186,6 @@ const adminReducer = (state = initialState, action) => {
     case LOAD_WORKERS_ADMIN_SUCCESS:
       return {
         ...state,
-        dataLoad: false,
         data: {
           ...state.data,
           workers: action.payload,
@@ -197,6 +197,7 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         dataLoad: false,
+        showModal: true,
         data: {
           ...state.data,
           workers: [],
@@ -514,7 +515,21 @@ const adminReducer = (state = initialState, action) => {
         wasUpdated: false,
         wasCreated: false,
         showModal: false,
-        refactorModelError: null
+        refactorModelError: null,
+        data: {
+          ...state.data,
+          clockError: null,
+          citiesError: null,
+          usersError: null,
+          workersError: null,
+          ordersError: null
+        }
+      }
+
+    case END_LOAD_DATA:
+      return {
+        ...state,
+        dataLoad: false
       }
 
     default:

@@ -7,7 +7,7 @@ import {
   deleteOrderFromDB,
   loadCities,
   loadClientsAdmin,
-  loadClocks,
+  loadClocks, loadDataEnd,
   loadOrdersAdmin,
   loadWorkers
 } from '../../../actions'
@@ -40,11 +40,11 @@ class RefactorOrders extends React.Component {
   }
 
   componentDidMount () {
-    this.props.loadOrders()
-    this.props.loadClocks()
-    this.props.loadWorkers()
-    this.props.loadCities()
-    this.props.loadClients()
+    const { loadOrders, loadClocks, loadWorkers, loadCities, loadClients} = this.props
+    return Promise.all([loadOrders(), loadClocks(), loadWorkers(), loadCities(), loadClients()])
+      .then((res)=> {
+        this.props.loadEnd()
+      })
   }
   render () {
     const { orders, deleteOrder } = this.props
@@ -140,7 +140,8 @@ const mapDispatchToProps = (dispatch) => {
     loadWorkers: () => dispatch(loadWorkers()),
     loadCities: () => dispatch(loadCities()),
     loadClocks: () => dispatch(loadClocks()),
-    loadClients: () => dispatch(loadClientsAdmin())
+    loadClients: () => dispatch(loadClientsAdmin()),
+    loadEnd: () => dispatch(loadDataEnd())
   }
 }
 

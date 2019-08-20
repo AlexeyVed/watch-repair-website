@@ -1,10 +1,20 @@
 const passport = require('../config/passport.js')
+const { check, validationResult } = require('express-validator')
 const jwtConfig = require('../config/jwt.js').jwtConfig
 const jwt = require('jsonwebtoken')
 const error = require('../services/modules.js').makeError
 const User = require('../models/users.js')
 
+exports.loginValidation = [
+  check('username').not().isEmpty().isEmail(),
+  check('password').not().isEmpty().isLength({ min: 5 })
+]
+
 exports.login = (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   passport.authenticate('login', (err, user, info) => {
     if (err) return next(error(500, err.message))
     if (!user) {

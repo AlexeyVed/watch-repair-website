@@ -3,10 +3,12 @@ const workersController = require('../controllers/mastersController.js')
 const isAuthenticate = require('../config/middleware/isAuthenticate.js')
 const workersRouter = express.Router()
 
-workersRouter.use('/list', workersController.list)
-workersRouter.use('/add', isAuthenticate, workersController.add)
-workersRouter.use('/delete', isAuthenticate, workersController.delete)
-workersRouter.use('/update', isAuthenticate, workersController.update)
-workersRouter.use('/get', isAuthenticate, workersController.get)
+const { list, add, remove, update, get } = workersController
+
+workersRouter.use('/list', list)
+workersRouter.use('/add', isAuthenticate, add)
+workersRouter.use('/delete', isAuthenticate, remove)
+workersRouter.use('/update', isAuthenticate, update)
+workersRouter.use('/get', isAuthenticate, get)
 
 module.exports = workersRouter

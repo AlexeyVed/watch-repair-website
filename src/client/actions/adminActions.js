@@ -36,7 +36,8 @@ import {
   EDIT_ORDERS_SUCCESS,
   EDIT_WORKERS_SUCCESS,
   REDIRECT_FROM_REFACTOR,
-  MISS_ADMIN_ERROR
+  MISS_ADMIN_ERROR,
+  END_LOAD_DATA
 } from './types.js'
 
 import axios from 'axios'
@@ -46,7 +47,7 @@ export const loadClocks = () => {
     const token = localStorage.getItem('token')
     axios.defaults.headers.common['authorization'] = token
     dispatch(loadClocksStarted())
-    axios
+    return axios
       .get(`http://localhost:3000/api/clocks/list`)
       .then(res => {
         dispatch(loadClocksSuccess(res.data))
@@ -62,7 +63,7 @@ export const loadCities = () => {
     const token = localStorage.getItem('token')
     axios.defaults.headers.common['authorization'] = token
     dispatch(loadCitiesStarted())
-    axios
+    return axios
       .get(`http://localhost:3000/api/cities/list`)
       .then(res => {
         dispatch(loadCitiesSuccess(res.data))
@@ -78,7 +79,7 @@ export const loadOrdersAdmin = () => {
     const token = localStorage.getItem('token')
     axios.defaults.headers.common['authorization'] = token
     dispatch(loadOrdersStarted())
-    axios
+    return axios
       .get(`http://localhost:3000/api/orders/list`)
       .then(res => {
         dispatch(loadOrdersSuccess(res.data))
@@ -94,7 +95,7 @@ export const loadWorkers = () => {
     const token = localStorage.getItem('token')
     axios.defaults.headers.common['authorization'] = token
     dispatch(loadWorkersStarted())
-    axios
+    return axios
       .get(`http://localhost:3000/api/masters/list`)
       .then(res => {
         dispatch(loadWorkersSuccess(res.data))
@@ -110,7 +111,7 @@ export const loadClientsAdmin = () => {
     const token = localStorage.getItem('token')
     axios.defaults.headers.common['authorization'] = token
     dispatch(loadClientsStarted())
-    axios
+    return axios
       .get(`http://localhost:3000/api/customers/list`)
       .then(res => {
         dispatch(loadClientsSuccess(res.data))
@@ -150,6 +151,7 @@ export const addCityToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
+        console.log(err.response)
         dispatch(addModelFailure(err.response.data))
       })
   }
@@ -374,6 +376,12 @@ export const missErrorAdmin = () => {
   }
 }
 
+export const loadDataEnd = () => {
+  return (dispatch) => {
+    dispatch(endLoadData())
+  }
+}
+
 const loadClocksStarted = () => ({
   type: LOAD_CLOCKS_ADMIN_STARTED
 })
@@ -552,4 +560,8 @@ const editCitySuccess = data => ({
 
 const missAdminError = () => ({
   type: MISS_ADMIN_ERROR
+})
+
+const endLoadData = () => ({
+  type: END_LOAD_DATA
 })

@@ -1,3 +1,4 @@
+const { check, validationResult } = require('express-validator')
 const error = require('../services/modules.js').makeError
 const Master = require('../models/masters.js')
 const City = require('../models/cities.js')
@@ -26,11 +27,16 @@ exports.list = function (req, res, next) {
   }
 }
 
+exports.getValidation = [
+  check('id').isNumeric().not().isEmpty()
+]
+
 exports.get = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    if (!req.body.id) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Master.findOne({
       where: {
         id: req.body.id
@@ -48,11 +54,18 @@ exports.get = function (req, res, next) {
   }
 }
 
+exports.addValidation = [
+  check('name').isAlpha().not().isEmpty(),
+  check('rating').isNumeric().not().isEmpty(),
+  check('cityId').isNumeric().not().isEmpty()
+]
+
 exports.add = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    if (!req.body.name || !req.body.rating || !req.body.cityId) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Master.create({
       name: req.body.name,
       rating: req.body.rating,
@@ -77,11 +90,16 @@ exports.add = function (req, res, next) {
   }
 }
 
-exports.delete = function (req, res, next) {
+exports.removeValidation = [
+  check('id').isNumeric().not().isEmpty()
+]
+
+exports.remove = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    if (!req.body.id) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Master.destroy({
       where: {
         id: req.body.id
@@ -96,11 +114,19 @@ exports.delete = function (req, res, next) {
   }
 }
 
+exports.updateValidation = [
+  check('name').isAlpha().not().isEmpty(),
+  check('rating').isNumeric().not().isEmpty(),
+  check('cityId').isNumeric().not().isEmpty(),
+  check('id').isNumeric().not().isEmpty()
+]
+
 exports.update = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    if (!req.body.name || !req.body.rating || !req.body.cityId || !req.body.id) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Master.update({
       name: req.body.name,
       rating: req.body.rating,

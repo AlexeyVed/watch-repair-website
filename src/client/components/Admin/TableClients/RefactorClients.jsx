@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteClientFromDB, loadClientsAdmin } from '../../../actions'
+import { deleteClientFromDB, loadClientsAdmin, loadDataEnd } from '../../../actions'
 import AddClients from '../RefactorClients/AddClients.jsx'
 import EditClients from '../RefactorClients/EditClients.jsx'
 
@@ -34,6 +34,9 @@ class RefactorClients extends React.Component {
 
   componentDidMount () {
     this.props.loadClients()
+      .then(() => {
+        this.props.loadEnd()
+      })
   }
   render () {
     const { customers, deleteClient } = this.props
@@ -119,7 +122,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteClient: id => dispatch(deleteClientFromDB(id)),
-    loadClients: () => dispatch(loadClientsAdmin())
+    loadClients: () => dispatch(loadClientsAdmin()),
+    loadEnd: () => dispatch(loadDataEnd())
   }
 }
 

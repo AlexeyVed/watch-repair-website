@@ -1,3 +1,4 @@
+const { check, validationResult } = require('express-validator')
 const error = require('../services/modules.js').makeError
 const Clock = require('../models/clocks.js')
 
@@ -26,11 +27,16 @@ exports.list = function (req, res, next) {
   }
 }
 
+exports.getValidation = [
+  check('id').isNumeric().not().isEmpty()
+]
+
 exports.get = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    if (!req.body.id) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Clock.findByPk(req.body.id)
       .then((clock) => {
         const json = JSON.stringify(clock)
@@ -41,11 +47,17 @@ exports.get = function (req, res, next) {
   }
 }
 
+exports.addValidation = [
+  check('typeClock').isAlpha().not().isEmpty(),
+  check('timeRepair').isNumeric().not().isEmpty()
+]
+
 exports.add = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    if (!req.body.typeClock || !req.body.timeRepair) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Clock.create({
       typeClock: req.body.typeClock,
       timeRepair: req.body.timeRepair
@@ -59,9 +71,14 @@ exports.add = function (req, res, next) {
   }
 }
 
-exports.delete = function (req, res, next) {
-  if (!req.body.id) {
-    return next(error(400, 'Your must fill all fields'))
+exports.removeValidation = [
+  check('id').isNumeric().not().isEmpty()
+]
+
+exports.remove = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
   }
   try {
     Clock.destroy({
@@ -78,11 +95,18 @@ exports.delete = function (req, res, next) {
   }
 }
 
+exports.updateValidation = [
+  check('typeClock').isAlpha().not().isEmpty(),
+  check('timeRepair').isNumeric().not().isEmpty(),
+  check('id').isNumeric().not().isEmpty()
+]
+
 exports.update = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    if (!req.body.id || !req.body.timeRepair || !req.body.typeClock) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Clock.update({
       typeClock: req.body.typeClock,
       timeRepair: req.body.timeRepair

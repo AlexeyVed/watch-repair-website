@@ -1,3 +1,4 @@
+const { check, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
 const error = require('../services/modules.js').makeError
 const getToday = require('../services/modules.js').getToday
@@ -82,11 +83,16 @@ exports.list = function (req, res, next) {
   }
 }
 
+exports.getValidation = [
+  check('id').isNumeric().not().isEmpty()
+]
+
 exports.get = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    if (!req.body.id) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Order.findOne({
       where: {
         id: req.body.id
@@ -114,11 +120,16 @@ exports.get = function (req, res, next) {
   }
 }
 
-exports.delete = function (req, res, next) {
+exports.removeValidation = [
+  check('id').isNumeric().not().isEmpty()
+]
+
+exports.remove = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    if (!req.body.id) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Order.destroy({
       where: {
         id: req.body.id
@@ -133,9 +144,22 @@ exports.delete = function (req, res, next) {
   }
 }
 
+exports.updateValidation = [
+  check('date').not().isEmpty(),
+  check('time').isNumeric().not().isEmpty(),
+  check('customerId').isNumeric().not().isEmpty(),
+  check('clockId').isNumeric().not().isEmpty(),
+  check('cityId').isNumeric().not().isEmpty(),
+  check('masterId').isNumeric().not().isEmpty(),
+  check('id').isNumeric().not().isEmpty()
+]
+
 exports.update = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    console.log(req.body)
     const { date, time, customerId, clockId, cityId, masterId, id } = req.body
     if (!date || !time || !customerId || !clockId || !cityId || !masterId || !id) {
       return next(error(400, 'Your must fill all fields'))
@@ -181,13 +205,21 @@ exports.update = function (req, res, next) {
   }
 }
 
+exports.getWorkersValidation = [
+  check('date').not().isEmpty(),
+  check('time').isNumeric().not().isEmpty(),
+  check('clockId').isNumeric().not().isEmpty(),
+  check('cityId').isNumeric().not().isEmpty()
+]
+
 exports.getWorkers = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
     const { date, time, clockId, cityId } = req.body
-    if (!date || !time || !clockId || !cityId) {
-      return next(error(400, 'Your must fill all fields'))
-    }
-    Clock.findByPk(req.body.clockId)
+    Clock.findByPk(clockId)
       .then(clock => {
         req.body = {
           ...req.body,
@@ -195,8 +227,8 @@ exports.getWorkers = function (req, res, next) {
         }
         Order.findAll({
           where: {
-            date: req.body.date,
-            cityId: req.body.cityId
+            date: date,
+            cityId: cityId
           },
           include: [
             {
@@ -223,7 +255,6 @@ exports.getWorkers = function (req, res, next) {
           })
           .then(busyMasters => {
             const arrayIdBusyMaster = busyMasters.map(master => master.masterId)
-            console.log(arrayIdBusyMaster)
             Master.findAll({
               where: {
                 cityId: req.body.cityId,
@@ -267,12 +298,22 @@ exports.getWorkers = function (req, res, next) {
   }
 }
 
+exports.addAdminValidation = [
+  check('date').not().isEmpty(),
+  check('time').isNumeric().not().isEmpty(),
+  check('customerId').isNumeric().not().isEmpty(),
+  check('clockId').isNumeric().not().isEmpty(),
+  check('cityId').isNumeric().not().isEmpty(),
+  check('masterId').isNumeric().not().isEmpty()
+]
+
 exports.addAdmin = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
     const { date, time, customerId, clockId, cityId, masterId } = req.body
-    if (!date || !time || !customerId || !clockId || !cityId || !masterId) {
-      return next(error(400, 'Your must fill all fields'))
-    }
     Clock.findByPk(clockId)
       .then(reqClock => {
         Order.findAll({
@@ -353,18 +394,29 @@ exports.addAdmin = function (req, res, next) {
   }
 }
 
+exports.addValidation = [
+  check('date').not().isEmpty(),
+  check('time').isNumeric().not().isEmpty(),
+  check('email').isEmail().not().isEmpty(),
+  check('name').isAlpha().not().isEmpty(),
+  check('clockId').isNumeric().not().isEmpty(),
+  check('cityId').isNumeric().not().isEmpty(),
+  check('masterId').isNumeric().not().isEmpty()
+]
+
 exports.add = function (req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return next(error(422, null, errors.array()))
+  }
   try {
-    const { date, time, email, clockId, cityId, masterId } = req.body
-    if (!date || !time || !email || !clockId || !cityId || !masterId) {
-      return next(error(400, 'Your must fill all fields'))
-    }
+    const { date, time, email, clockId, cityId, masterId, name } = req.body
     Customer.findOrCreate({
       where: {
-        email: req.body.email
+        email: email
       },
       defaults: {
-        name: req.body.name
+        name: name
       }
     })
       .then(([user, created]) => {
