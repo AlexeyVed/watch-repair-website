@@ -1,7 +1,7 @@
 import {
-  LOAD_CITIES_ADMIN_STARTED,
-  LOAD_CITIES_ADMIN_SUCCESS,
-  LOAD_CITIES_ADMIN_FAILURE,
+  LOAD_CITIES_STARTED,
+  LOAD_CITIES_SUCCESS,
+  LOAD_CITIES_FAILURE,
   ADD_CITIES_STARTED,
   ADD_CITIES_FAILURE,
   ADD_CITIES_SUCCESS,
@@ -38,13 +38,13 @@ const initialState = {
 
 const cityReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_CITIES_ADMIN_STARTED:
+    case LOAD_CITIES_STARTED:
       return {
         ...state,
         dataLoad: true
       }
 
-    case LOAD_CITIES_ADMIN_SUCCESS:
+    case LOAD_CITIES_SUCCESS:
       return {
         ...state,
         data: {
@@ -54,7 +54,7 @@ const cityReducer = (state = initialState, action) => {
         }
       }
 
-    case LOAD_CITIES_ADMIN_FAILURE:
+    case LOAD_CITIES_FAILURE:
       return {
         ...state,
         dataLoad: false,
