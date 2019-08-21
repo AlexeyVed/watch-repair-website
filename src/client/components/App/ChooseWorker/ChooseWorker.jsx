@@ -6,6 +6,7 @@ import { addOrder, setChooseWorker } from '../../../actions'
 import './ChooseWorker.less'
 
 class ChooseWorker extends React.Component {
+
   componentDidUpdate (prevProps, prevState) {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
@@ -16,6 +17,18 @@ class ChooseWorker extends React.Component {
       }
     })
   }
+
+  componentDidMount() {
+    const workers = document.querySelectorAll('.choose-worker__table__worker')
+    workers.forEach(worker => {
+      if (+worker.id === this.props.masterId) {
+        worker.classList.add('active')
+      } else if (worker.classList.contains('active')) {
+        worker.classList.remove('active')
+      }
+    })
+  }
+
   render () {
     const { workers, addOrder, masterId, setWorker, order } = this.props
 

@@ -54,6 +54,12 @@ export const missErrorApp = () => {
   }
 }
 
+export const setPage = data => {
+  return (dispatch) => {
+    dispatch(changePage(data))
+  }
+}
+
 export const returnPageHome = () => {
   return (dispatch) => {
     dispatch(returnHomePage())

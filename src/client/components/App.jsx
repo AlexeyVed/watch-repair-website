@@ -17,7 +17,6 @@ class App extends React.Component {
   render () {
     const { isRefactor, isOrder, isLoad, isLoadData, isLogin, user, chooseMaster, returnHomePage, modalAdmin } = this.props
     let preloader,
-      adminButton,
       homeButton
 
     if (isRefactor || isLoad || isLoadData || isLogin || isOrder) {
@@ -26,17 +25,9 @@ class App extends React.Component {
       preloader = null
     }
 
-    if (chooseMaster && user === 'admin@example.com') {
-      adminButton = <LinkButton to='/admin' name='&gt;'/>
-      homeButton = <button className='buttonHome' onClick={ returnHomePage }>&lt;</button>
-    } else if (user === 'admin@example.com') {
-      adminButton = <LinkButton to='/admin' name='&gt;'/>
-      homeButton = <LinkButton to='/' name='&lt;'/>
-    } else if (chooseMaster) {
-      adminButton = null
+    if (chooseMaster) {
       homeButton = <button className='buttonHome' onClick={ returnHomePage }>&lt;</button>
     } else {
-      adminButton = null
       homeButton = null
     }
 
@@ -44,7 +35,6 @@ class App extends React.Component {
       <div className = 'app'>
         <div className='app-admin'>
           { homeButton }
-          { adminButton }
         </div>
         <div className= 'app-main'>
           {(modalAdmin) ? <ModalWindow/> : null}

@@ -151,7 +151,6 @@ export const addCityToDB = (values) => {
         dispatch(redirectFromRefactor())
       })
       .catch(err => {
-        console.log(err.response)
         dispatch(addModelFailure(err.response.data))
       })
   }

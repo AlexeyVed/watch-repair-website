@@ -3,79 +3,93 @@ const Clock = require('../models/clocks.js')
 const Customer = require('../models/customers.js')
 const Master = require('../models/masters.js')
 const User = require('../models/users.js')
+const Order = require('../models/orders.js')
 
-exports.syncDB = City.sync({ force: true })
+exports.syncDB = City.sync({ force: false })
   .then(() => {
-    return City.create({
-      city: 'Dnipro'
-    })
+    return Clock.sync({ force: false })
   })
   .then(() => {
-    return City.create({
-      city: 'Uzhgorod'
-    })
+    return Master.sync({ force: false })
   })
   .then(() => {
-    return Clock.sync({ force: true })
-      .then(() => {
-        return Clock.create({
-          typeClock: 'Small',
+    return User.sync({ force: false })
+  })
+  .then(() => {
+    return Customer.sync({ force: false })
+  })
+  .then(() => {
+    return Order.sync({ force: false })
+  })
+  .then(() => {
+    return Promise.all([
+      City.findOrCreate({
+        where: {
+          city: 'Dnipro'
+        }
+      }),
+      City.findOrCreate({
+        where: {
+          city: 'Uzhgorod'
+        }
+      }),
+      Clock.findOrCreate({
+        where: {
+          typeClock: 'Small'
+        },
+        defaults: {
           timeRepair: 1
-        })
-      })
-      .then(() => {
-        return Clock.create({
-          typeClock: 'Medium',
+        }
+      }),
+      Clock.findOrCreate({
+        where: {
+          typeClock: 'Medium'
+        },
+        defaults: {
           timeRepair: 2
-        })
-      })
-      .then(() => {
-        return Clock.create({
-          typeClock: 'Big',
+        }
+      }),
+      Clock.findOrCreate({
+        where: {
+          typeClock: 'Big'
+        },
+        defaults: {
           timeRepair: 3
-        })
-      })
-  })
-  .then(() => {
-    return Master.sync({ force: true })
-      .then(() => {
-        return Master.create({
+        }
+      }),
+      Master.findOrCreate({
+        where: {
           name: 'Andrey',
-          rating: 5,
           cityId: 1
-        })
-      })
-      .then(() => {
-        return Master.create({
+        },
+        defaults: {
+          rating: 5
+        }
+      }),
+      Master.findOrCreate({
+        where: {
           name: 'Sergey',
-          rating: 5,
           cityId: 2
-        })
-      })
-  })
-  .then(()=> {
-    User.sync({ force: true })
-      .then(() => {
-        return User.create({
-          email: 'admin@example.com',
+        },
+        defaults: {
+          rating: 5
+        }
+      }),
+      User.findOrCreate({
+        where: {
+          email: 'admin@example.com'
+        },
+        defaults: {
           password: 'passwordsecret'
-        })
-      })
-  })
-  .then(() => {
-    Customer.sync({ force: true })
-      .then(() => {
-        return Customer.create({
-          email: 'alexey@gmail.com',
+        }
+      }),
+      Customer.findOrCreate({
+        where: {
+          email: 'alexey@gmail.com'
+        },
+        defaults: {
           name: 'Alexey'
-        })
+        }
       })
+    ])
   })
-
-
-
-
-
-
-
-

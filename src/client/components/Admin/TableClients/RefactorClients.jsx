@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteClientFromDB, loadClientsAdmin, loadDataEnd } from '../../../actions'
+import { deleteClientFromDB, loadClientsAdmin, loadDataEnd, setPage } from '../../../actions'
 import AddClients from '../RefactorClients/AddClients.jsx'
 import EditClients from '../RefactorClients/EditClients.jsx'
 
@@ -37,6 +37,7 @@ class RefactorClients extends React.Component {
       .then(() => {
         this.props.loadEnd()
       })
+    this.props.setPage('customers')
   }
   render () {
     const { customers, deleteClient } = this.props
@@ -83,7 +84,7 @@ class RefactorClients extends React.Component {
 
     return (
       <div className='table-clients'>
-        <div className='table-clients__title'>Our Clients</div>
+        <div className='table-clients__title'>Table customers</div>
         <div className='table-clients__table'>
           <table>
             <tbody>
@@ -123,7 +124,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteClient: id => dispatch(deleteClientFromDB(id)),
     loadClients: () => dispatch(loadClientsAdmin()),
-    loadEnd: () => dispatch(loadDataEnd())
+    loadEnd: () => dispatch(loadDataEnd()),
+    setPage: data => dispatch(setPage(data))
   }
 }
 

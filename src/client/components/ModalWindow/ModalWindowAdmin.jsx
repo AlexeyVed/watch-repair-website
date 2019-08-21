@@ -6,10 +6,12 @@ import { missErrorAdmin } from '../../actions'
 import './ModalWindow.less'
 
 class ModalWindowAdmin extends React.Component {
-  componentDidMount () {
-    setTimeout(() => {
-      this.props.missAdminError()
-    }, 1500)
+  state = {
+    timeOut: 1500
+  }
+
+  timeOutNull = () => {
+    this.setState({timeOut: 0})
   }
 
   render () {
@@ -23,6 +25,11 @@ class ModalWindowAdmin extends React.Component {
       workersError,
       ordersError } = this.props
     let text
+
+    setTimeout(() => {
+      this.props.missAdminError()
+    }, this.state.timeOut)
+
 
     if (refactorError) {
       text = refactorError
@@ -38,7 +45,7 @@ class ModalWindowAdmin extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-info'>
-          <div className='modal-info__text'>
+          <div className='modal-info__text' onClick={this.timeOutNull}>
             <div className='modal-info__text__errors'>
               <div>{ text }</div>
               <div>{ clockError }</div>
@@ -46,6 +53,9 @@ class ModalWindowAdmin extends React.Component {
               <div>{ workersError }</div>
               <div>{ usersError }</div>
               <div>{ ordersError }</div>
+            </div>
+            <div className='modal-info__text__description'>
+              Click here to close window.
             </div>
           </div>
         </div>

@@ -9,7 +9,8 @@ import {
   loadClientsAdmin,
   loadClocks, loadDataEnd,
   loadOrdersAdmin,
-  loadWorkers
+  loadWorkers,
+  setPage
 } from '../../../actions'
 import AddOrder from '../RefactorOrders/AddOrder.jsx'
 import EditOrder from '../RefactorOrders/EditOrder.jsx'
@@ -41,10 +42,11 @@ class RefactorOrders extends React.Component {
 
   componentDidMount () {
     const { loadOrders, loadClocks, loadWorkers, loadCities, loadClients } = this.props
-    return Promise.all([loadOrders(), loadClocks(), loadWorkers(), loadCities(), loadClients()])
+    Promise.all([loadOrders(), loadClocks(), loadWorkers(), loadCities(), loadClients()])
       .then((res) => {
         this.props.loadEnd()
       })
+    this.props.setPage('orders')
   }
   render () {
     const { orders, deleteOrder } = this.props
@@ -94,7 +96,7 @@ class RefactorOrders extends React.Component {
     })
     return (
       <div className='table-orders'>
-        <div className='table-orders__title'>Which clock we repair</div>
+        <div className='table-orders__title'>Table orders</div>
         <div className='table-orders__table'>
           <table>
             <tbody>
@@ -141,7 +143,8 @@ const mapDispatchToProps = (dispatch) => {
     loadCities: () => dispatch(loadCities()),
     loadClocks: () => dispatch(loadClocks()),
     loadClients: () => dispatch(loadClientsAdmin()),
-    loadEnd: () => dispatch(loadDataEnd())
+    loadEnd: () => dispatch(loadDataEnd()),
+    setPage: data => dispatch(setPage(data))
   }
 }
 

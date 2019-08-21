@@ -1,4 +1,4 @@
-@headerColor: rgb(238, 237, 238);
+@headerColor: rgb(233, 232, 233);
 
 .header {
   flex: 0 0 80px;
@@ -13,8 +13,9 @@
 
   .container-logo {
     flex: 0 1 270px;
+    min-width: 265px;
     align-items: center;
-    padding-left: 30px;
+    padding-left: 25px;
     display: flex;
     cursor: pointer;
 
@@ -49,11 +50,24 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-right: 10px;
+
+    &__user {
+      margin-right: 25px;
+      height: 30px;
+      width: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    &__user:hover {
+      color: #535353;
+    }
   }
 
   .container-buttons {
-    flex: 0 0 240px;
+    flex: 0 0 220px;
     display: flex;
 
     button {
@@ -96,14 +110,8 @@
 
     }
 
-    .a:hover {
-
-      background-color: rgb(249, 252, 255);
-    }
-
     button:hover {
-
-      background-color: rgb(249, 252, 255);
+      background-color: #f1f1f1;
     }
   }
 }
