@@ -10,7 +10,8 @@ import {
   DELETE_ORDERS_SUCCESS,
   EDIT_ORDERS_STARTED,
   EDIT_ORDERS_FAILURE,
-  EDIT_ORDERS_SUCCESS
+  EDIT_ORDERS_SUCCESS,
+  REDIRECT_FROM_REFACTOR
 } from '../types.js'
 
 import axios from 'axios'
@@ -42,6 +43,9 @@ export const addOrdersToDB = (values) => {
       .then(res => {
         dispatch(addOrdersSuccess(res.data))
       })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
+      })
       .catch(err => {
         dispatch(addOrdersFailure(err.response.data))
       })
@@ -59,6 +63,9 @@ export const editOrdersIntoDB = (values) => {
       .post(`http://localhost:3000/api/orders/update`, values)
       .then(res => {
         dispatch(editOrdersSuccess(res.data))
+      })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
       })
       .catch(err => {
         dispatch(editOrdersFailure(err.response.data))
@@ -123,15 +130,18 @@ const editOrdersFailure = (err) => ({
 
 const addOrdersSuccess = data => ({
   type: ADD_ORDERS_SUCCESS,
+  message: 'Order was successfully added.',
   payload: data
 })
 
 const deleteOrdersSuccess = data => ({
   type: DELETE_ORDERS_SUCCESS,
+  message: 'Order was successfully removed.',
   payload: data
 })
 
 const editOrdersSuccess = data => ({
   type: EDIT_ORDERS_SUCCESS,
+  message: 'Order was successfully edited.',
   payload: data
 })

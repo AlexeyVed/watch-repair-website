@@ -10,12 +10,18 @@ import {
   DELETE_ORDERS_SUCCESS,
   EDIT_ORDERS_STARTED,
   EDIT_ORDERS_FAILURE,
-  EDIT_ORDERS_SUCCESS
+  EDIT_ORDERS_SUCCESS,
+  REDIRECT_FROM_REFACTOR,
+  MISS_ERRORS
 } from '../../actions/types.js'
 
 const initialState = {
   data: [],
-  error: null
+  error: null,
+  redirectBackFromRefactor: false,
+  refactorModelInProcess: false,
+  showModal: false,
+  message: null
 }
 
 const orderReducer = (state = initialState, action) => {
@@ -42,84 +48,56 @@ const orderReducer = (state = initialState, action) => {
     case ADD_ORDERS_STARTED:
       return {
         ...state,
-        refactorModelInProcess: true,
-        refactorModelError: null
+        refactorModelInProcess: true
       }
 
     case ADD_ORDERS_SUCCESS:
       return {
         ...state,
-        refactorModelInProcess: false,
-        refactorModelError: null,
-        redirectBackFromRefactor: true,
-        wasCreated: true,
-        showModal: true,
-        data: {
+        data: [
           ...state.data,
-          customers: [
-            ...state.data.customers,
-            action.payload
-          ]
-        }
-      }
-
-    case ADD_ORDERS_SUCCESS:
-      return {
-        ...state,
-        refactorModelInProcess: false,
-        refactorModelError: null,
+          action.payload
+        ],
         redirectBackFromRefactor: true,
-        wasCreated: true,
+        refactorModelInProcess: false,
         showModal: true,
-        data: {
-          ...state.data,
-          orders: [
-            ...state.data.orders,
-            action.payload
-          ]
-        }
+        message: action.message
       }
 
     case ADD_ORDERS_FAILURE:
       return {
         ...state,
-        showModal: true,
-        refactorModelError: action.payload,
-        refactorModelInProcess: false
+        error: action.payload,
+        refactorModelInProcess: false,
+        showModal: true
       }
 
     case EDIT_ORDERS_STARTED:
       return {
         ...state,
-        showModal: true,
-        refactorModelInProcess: true,
-        refactorModelError: null
+        refactorModelInProcess: true
       }
 
     case EDIT_ORDERS_SUCCESS:
       return {
         ...state,
-        refactorModelInProcess: false,
-        refactorModelError: null,
+        data: state.data.map(order => {
+          if (order.id === Number(action.payload.id)) {
+            action.payload.masterID = Number(action.payload.masterID)
+            return action.payload
+          }
+          return order
+        }),
         redirectBackFromRefactor: true,
-        wasUpdated: true,
+        refactorModelInProcess: false,
         showModal: true,
-        data: {
-          ...state.data,
-          orders: state.data.orders.map(order => {
-            if (order.id === Number(action.payload.id)) {
-              action.payload.masterID = Number(action.payload.masterID)
-              return action.payload
-            }
-            return order
-          })
-        }
+        message: action.message
       }
 
     case EDIT_ORDERS_FAILURE:
       return {
         ...state,
-        refactorModelError: action.payload,
+        error: action.payload,
         refactorModelInProcess: false,
         showModal: true
       }
@@ -133,22 +111,32 @@ const orderReducer = (state = initialState, action) => {
     case DELETE_ORDERS_SUCCESS:
       return {
         ...state,
-        refactorModelError: null,
+        data: state.data.filter(el => el.id !== action.payload.id),
         refactorModelInProcess: false,
-        wasDeleted: true,
         showModal: true,
-        data: {
-          ...state.data,
-          orders: state.data.orders.filter(el => el.id !== action.payload.id)
-        }
+        message: action.message
       }
 
     case DELETE_ORDERS_FAILURE:
       return {
         ...state,
-        refactorModelError: action.payload,
-        showModal: true,
-        refactorModelInProcess: false
+        error: action.payload,
+        refactorModelInProcess: false,
+        showModal: true
+      }
+
+    case REDIRECT_FROM_REFACTOR:
+      return {
+        ...state,
+        redirectBackFromRefactor: false
+      }
+
+    case MISS_ERRORS:
+      return {
+        ...state,
+        error: null,
+        showModal: false,
+        message: null
       }
 
     default:

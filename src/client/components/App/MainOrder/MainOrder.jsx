@@ -19,9 +19,10 @@ class MainOrder extends Component {
   }
 
   render () {
+    const { modalApp } = this.props
     return (
       <div className='main'>
-        {(this.props.modalApp) ? <ModalWindow/> : null}
+        {(modalApp) ? <ModalWindow/> : null}
         <OrderForm/>
         <Content/>
         <Switch>

@@ -10,7 +10,8 @@ import {
   DELETE_CUSTOMERS_SUCCESS,
   EDIT_CUSTOMERS_STARTED,
   EDIT_CUSTOMERS_FAILURE,
-  EDIT_CUSTOMERS_SUCCESS
+  EDIT_CUSTOMERS_SUCCESS,
+  REDIRECT_FROM_REFACTOR
 } from '../types.js'
 
 import axios from 'axios'
@@ -41,6 +42,9 @@ export const addCustomersToDB = (values) => {
       .then(res => {
         dispatch(addCustomersSuccess(res.data))
       })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
+      })
       .catch(err => {
         dispatch(addCustomersFailure(err.response.data))
       })
@@ -54,6 +58,9 @@ export const editCustomersIntoDB = (values) => {
       .post(`http://localhost:3000/api/customers/update`, values)
       .then(res => {
         dispatch(editCustomersSuccess(res.data))
+      })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
       })
       .catch(err => {
         dispatch(editCustomersFailure(err.response.data))
@@ -118,15 +125,18 @@ const editCustomersFailure = (err) => ({
 
 const addCustomersSuccess = data => ({
   type: ADD_CUSTOMERS_SUCCESS,
+  message: 'Customer was successfully added.',
   payload: data
 })
 
 const deleteCustomersSuccess = data => ({
   type: DELETE_CUSTOMERS_SUCCESS,
+  message: 'Customer was successfully removed.',
   payload: data
 })
 
 const editCustomersSuccess = data => ({
   type: EDIT_CUSTOMERS_SUCCESS,
+  message: 'Customer was successfully edited.',
   payload: data
 })

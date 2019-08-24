@@ -10,7 +10,8 @@ import {
   DELETE_CITIES_SUCCESS,
   EDIT_CITIES_STARTED,
   EDIT_CITIES_FAILURE,
-  EDIT_CITIES_SUCCESS
+  EDIT_CITIES_SUCCESS,
+  REDIRECT_FROM_REFACTOR
 } from '../types.js'
 
 import axios from 'axios'
@@ -41,6 +42,9 @@ export const addCityToDB = (values) => {
       .then(res => {
         dispatch(addCitiesSuccess(res.data))
       })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
+      })
       .catch(err => {
         dispatch(addCitiesFailure(err.response.data))
       })
@@ -54,6 +58,9 @@ export const editCityIntoDB = (values) => {
       .post(`http://localhost:3000/api/cities/update`, values)
       .then(res => {
         dispatch(editCitiesSuccess(res.data))
+      })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
       })
       .catch(err => {
         dispatch(editCitiesFailure(err.response.data))
@@ -118,15 +125,18 @@ const editCitiesFailure = (err) => ({
 
 const addCitiesSuccess = data => ({
   type: ADD_CITIES_SUCCESS,
+  message: 'City was successfully added.',
   payload: data
 })
 
 const deleteCitiesSuccess = data => ({
   type: DELETE_CITIES_SUCCESS,
+  message: 'City was successfully removed.',
   payload: data
 })
 
 const editCitiesSuccess = data => ({
   type: EDIT_CITIES_SUCCESS,
+  message: 'City was successfully edited.',
   payload: data
 })

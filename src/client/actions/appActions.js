@@ -7,38 +7,12 @@ import {
   MAKE_ORDER_WITH_MASTER_FAILURE,
   CHANGE_PAGE,
   SET_CHOOSE_WORKER,
-  MISS_APP_ERROR,
+  MISS_ERRORS,
   RETURN_HOME_PAGE,
-  REDIRECT_FROM_REFACTOR,
-  MISS_ADMIN_ERROR,
   END_LOAD_DATA
 } from './types.js'
 
 import axios from 'axios'
-
-export const missErrorAdmin = () => {
-  return (dispatch) => {
-    dispatch(missAdminError())
-  }
-}
-
-export const loadDataEnd = () => {
-  return (dispatch) => {
-    dispatch(endLoadData())
-  }
-}
-
-const redirectFromRefactor = () => ({
-  type: REDIRECT_FROM_REFACTOR
-})
-
-const missAdminError = () => ({
-  type: MISS_ADMIN_ERROR
-})
-
-const endLoadData = () => ({
-  type: END_LOAD_DATA
-})
 
 export const makeOrder = (values) => {
   return (dispatch) => {
@@ -75,15 +49,11 @@ export const addOrder = (values) => {
   }
 }
 
-export const missErrorApp = () => {
-  return (dispatch) => {
-    dispatch(missAppError())
-  }
-}
-
 export const setPage = data => {
   return (dispatch) => {
-    dispatch(changePage(data))
+    dispatch({
+      type: CHANGE_PAGE,
+      payload: data })
   }
 }
 
@@ -93,15 +63,20 @@ export const returnPageHome = () => {
   }
 }
 
-export const changePage = data => ({
-  type: CHANGE_PAGE,
-  payload: data
-})
-
 export const setChooseWorker = id => ({
   type: SET_CHOOSE_WORKER,
   payload: id
 })
+
+export const missErrors = () => ({
+  type: MISS_ERRORS
+})
+
+export const loadDataEnd = () => {
+  return (dispatch) => {
+    dispatch({ type: END_LOAD_DATA })
+  }
+}
 
 const makeOrderStarted = () => ({
   type: MAKE_ORDER_STARTED
@@ -128,10 +103,6 @@ const makeOrderMasterSuccess = () => ({
 const makeOrderMasterFailure = err => ({
   type: MAKE_ORDER_WITH_MASTER_FAILURE,
   payload: err
-})
-
-const missAppError = () => ({
-  type: MISS_APP_ERROR
 })
 
 const returnHomePage = () => ({

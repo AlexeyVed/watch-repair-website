@@ -10,12 +10,18 @@ import {
   DELETE_MASTERS_SUCCESS,
   EDIT_MASTERS_STARTED,
   EDIT_MASTERS_FAILURE,
-  EDIT_MASTERS_SUCCESS
+  EDIT_MASTERS_SUCCESS,
+  REDIRECT_FROM_REFACTOR,
+  MISS_ERRORS
 } from '../../actions/types.js'
 
 const initialState = {
   data: [],
-  error: null
+  error: null,
+  redirectBackFromRefactor: false,
+  refactorModelInProcess: false,
+  showModal: false,
+  message: null
 }
 
 const masterReducer = (state = initialState, action) => {
@@ -42,68 +48,57 @@ const masterReducer = (state = initialState, action) => {
     case ADD_MASTERS_STARTED:
       return {
         ...state,
-        refactorModelInProcess: true,
-        refactorModelError: null
+        refactorModelInProcess: true
       }
 
     case ADD_MASTERS_SUCCESS:
       return {
         ...state,
-        refactorModelInProcess: false,
-        refactorModelError: null,
-        redirectBackFromRefactor: true,
-        wasCreated: true,
-        showModal: true,
-        data: {
+        data: [
           ...state.data,
-          workers: [
-            ...state.data.workers,
-            action.payload
-          ]
-        }
+          action.payload
+        ],
+        redirectBackFromRefactor: true,
+        refactorModelInProcess: false,
+        showModal: true,
+        message: action.message
       }
 
     case ADD_MASTERS_FAILURE:
       return {
         ...state,
-        showModal: true,
-        refactorModelError: action.payload,
-        refactorModelInProcess: false
+        error: action.payload,
+        refactorModelInProcess: false,
+        showModal: true
       }
 
     case EDIT_MASTERS_STARTED:
       return {
         ...state,
-        showModal: true,
-        refactorModelInProcess: true,
-        refactorModelError: null
+        refactorModelInProcess: true
       }
 
     case EDIT_MASTERS_SUCCESS:
       return {
         ...state,
-        refactorModelInProcess: false,
-        refactorModelError: null,
+        data: state.data.map(worker => {
+          if (worker.id === Number(action.payload.id)) {
+            action.payload.id = Number(action.payload.id)
+            action.payload.rating = Number(action.payload.rating)
+            return action.payload
+          }
+          return worker
+        }),
         redirectBackFromRefactor: true,
-        wasUpdated: true,
+        refactorModelInProcess: false,
         showModal: true,
-        data: {
-          ...state.data,
-          workers: state.data.workers.map(worker => {
-            if (worker.id === Number(action.payload.id)) {
-              action.payload.id = Number(action.payload.id)
-              action.payload.rating = Number(action.payload.rating)
-              return action.payload
-            }
-            return worker
-          })
-        }
+        message: action.message
       }
 
     case EDIT_MASTERS_FAILURE:
       return {
         ...state,
-        refactorModelError: action.payload,
+        error: action.payload,
         refactorModelInProcess: false,
         showModal: true
       }
@@ -117,22 +112,32 @@ const masterReducer = (state = initialState, action) => {
     case DELETE_MASTERS_SUCCESS:
       return {
         ...state,
-        refactorModelError: null,
+        data: state.data.filter(el => el.id !== action.payload.id),
         refactorModelInProcess: false,
-        wasDeleted: true,
         showModal: true,
-        data: {
-          ...state.data,
-          workers: state.data.workers.filter(el => el.id !== action.payload.id)
-        }
+        message: action.message
       }
 
     case DELETE_MASTERS_FAILURE:
       return {
         ...state,
-        refactorModelError: action.payload,
-        showModal: true,
-        refactorModelInProcess: false
+        error: action.payload,
+        refactorModelInProcess: false,
+        showModal: true
+      }
+
+    case REDIRECT_FROM_REFACTOR:
+      return {
+        ...state,
+        redirectBackFromRefactor: false
+      }
+
+    case MISS_ERRORS:
+      return {
+        ...state,
+        error: null,
+        showModal: false,
+        message: null
       }
 
     default:

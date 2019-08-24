@@ -10,7 +10,8 @@ import {
   DELETE_MASTERS_SUCCESS,
   EDIT_MASTERS_STARTED,
   EDIT_MASTERS_FAILURE,
-  EDIT_MASTERS_SUCCESS
+  EDIT_MASTERS_SUCCESS,
+  REDIRECT_FROM_REFACTOR
 } from '../types.js'
 
 import axios from 'axios'
@@ -39,6 +40,9 @@ export const addMastersToDB = (values) => {
       .then(res => {
         dispatch(addMastersSuccess(res.data))
       })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
+      })
       .catch(err => {
         dispatch(addMastersFailure(err.response.data))
       })
@@ -52,6 +56,9 @@ export const editMastersIntoDB = (values) => {
       .post(`http://localhost:3000/api/masters/update`, values)
       .then(res => {
         dispatch(editMastersSuccess(res.data))
+      })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
       })
       .catch(err => {
         dispatch(editMastersFailure(err.response.data))
@@ -116,15 +123,18 @@ const editMastersFailure = (err) => ({
 
 const addMastersSuccess = data => ({
   type: ADD_MASTERS_SUCCESS,
+  message: 'Master was successfully added.',
   payload: data
 })
 
 const deleteMastersSuccess = data => ({
   type: DELETE_MASTERS_SUCCESS,
+  message: 'Master was successfully removed.',
   payload: data
 })
 
 const editMastersSuccess = data => ({
   type: EDIT_MASTERS_SUCCESS,
+  message: 'Master was successfully edited.',
   payload: data
 })

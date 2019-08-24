@@ -170,7 +170,7 @@ const mapStateToProps = (state) => {
     chooseClock: state.clockReducer.data,
     chooseCities: state.cityReducer.data,
     chooseUsers: state.customerReducer.data,
-    redirectBack: state.appReducer.redirectBackFromRefactor,
+    redirectBack: state.orderReducer.redirectBackFromRefactor,
     chooseWorkers: state.masterReducer.data
   }
 }

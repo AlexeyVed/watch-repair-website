@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { addOrder, setChooseWorker } from '../../../actions'
+import { addOrder, setChooseWorker, returnPageHome } from '../../../actions'
 
 import './ChooseWorker.less'
 
@@ -30,9 +30,17 @@ class ChooseWorker extends React.Component {
   }
 
   render () {
-    const { workers, addOrder, masterId, setWorker, order } = this.props
+    const { workers, addOrder, masterId, setWorker, order, chooseMaster, returnHomePage } = this.props
 
-    let buttonConf
+    let buttonConf,
+      homeButton
+
+    if (chooseMaster) {
+      homeButton = <button className='buttonHome' onClick={ returnHomePage }>&lt;</button>
+    } else {
+      homeButton = null
+    }
+
 
     if (masterId) {
       const fullOrder = {
@@ -46,6 +54,7 @@ class ChooseWorker extends React.Component {
 
     return (
       <div className='choose-worker'>
+        { homeButton }
         <div className='choose-worker__header'>Choose Free Worker</div>
         <div className='choose-worker__table'>
           { workers.map(item => (
@@ -72,15 +81,16 @@ const mapStateToProps = (state) => {
   return {
     workers: state.appReducer.forOrder.freeWorkers,
     masterId: state.appReducer.forOrder.masterId,
-    order: state.appReducer.forOrder.order
+    order: state.appReducer.forOrder.order,
+    chooseMaster: state.appReducer.chooseWorker,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     addOrder: values => dispatch(addOrder(values)),
-    setWorker: (idMaster) => dispatch(setChooseWorker(idMaster))
-
+    setWorker: (idMaster) => dispatch(setChooseWorker(idMaster)),
+    returnHomePage: () => dispatch(returnPageHome())
   }
 }
 

@@ -91,7 +91,7 @@ class EditClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.appReducer.redirectBackFromRefactor
+    redirectBack: state.customerReducer.redirectBackFromRefactor
   }
 }
 

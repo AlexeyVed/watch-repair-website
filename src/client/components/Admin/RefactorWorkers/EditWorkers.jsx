@@ -114,7 +114,7 @@ class EditWorkers extends React.Component {
 const mapStateToProps = (state) => {
   return {
     chooseCities: state.cityReducer.data,
-    redirectBack: state.appReducer.redirectBackFromRefactor
+    redirectBack: state.masterReducer.redirectBackFromRefactor
   }
 }
 

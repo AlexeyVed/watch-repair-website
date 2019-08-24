@@ -10,7 +10,8 @@ import {
   DELETE_CLOCKS_SUCCESS,
   EDIT_CLOCKS_STARTED,
   EDIT_CLOCKS_FAILURE,
-  EDIT_CLOCKS_SUCCESS
+  EDIT_CLOCKS_SUCCESS,
+  REDIRECT_FROM_REFACTOR
 } from '../types.js'
 
 import axios from 'axios'
@@ -41,6 +42,9 @@ export const addClockToDB = (values) => {
       .then(res => {
         dispatch(addClocksSuccess(res.data))
       })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
+      })
       .catch(err => {
         dispatch(addClocksFailure(err.response.data))
       })
@@ -54,6 +58,9 @@ export const editClockIntoDB = (values) => {
       .post(`http://localhost:3000/api/clocks/update`, values)
       .then(res => {
         dispatch(editClocksSuccess(res.data))
+      })
+      .then(() => {
+        dispatch({ type: REDIRECT_FROM_REFACTOR })
       })
       .catch(err => {
         dispatch(editClocksFailure(err.response.data))
@@ -118,15 +125,18 @@ const editClocksFailure = (err) => ({
 
 const addClocksSuccess = data => ({
   type: ADD_CLOCKS_SUCCESS,
+  message: 'Clock was successfully added.',
   payload: data
 })
 
 const deleteClocksSuccess = data => ({
   type: DELETE_CLOCKS_SUCCESS,
+  message: 'Clock was successfully removed.',
   payload: data
 })
 
 const editClocksSuccess = data => ({
   type: EDIT_CLOCKS_SUCCESS,
+  message: 'Clock was successfully edited.',
   payload: data
 })

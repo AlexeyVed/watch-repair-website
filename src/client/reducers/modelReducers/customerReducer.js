@@ -10,12 +10,18 @@ import {
   DELETE_CUSTOMERS_SUCCESS,
   EDIT_CUSTOMERS_STARTED,
   EDIT_CUSTOMERS_FAILURE,
-  EDIT_CUSTOMERS_SUCCESS
+  EDIT_CUSTOMERS_SUCCESS,
+  REDIRECT_FROM_REFACTOR,
+  MISS_ERRORS
 } from '../../actions/types.js'
 
 const initialState = {
   data: [],
-  error: null
+  error: null,
+  redirectBackFromRefactor: false,
+  refactorModelInProcess: false,
+  showModal: false,
+  message: null
 }
 
 const customerReducer = (state = initialState, action) => {
@@ -28,8 +34,7 @@ const customerReducer = (state = initialState, action) => {
     case LOAD_CUSTOMERS_SUCCESS:
       return {
         ...state,
-        data: action.payload,
-        error: null
+        data: action.payload
       }
 
     case LOAD_CUSTOMERS_FAILURE:
@@ -42,67 +47,56 @@ const customerReducer = (state = initialState, action) => {
     case ADD_CUSTOMERS_STARTED:
       return {
         ...state,
-        refactorModelInProcess: true,
-        refactorModelError: null
+        refactorModelInProcess: true
       }
 
     case ADD_CUSTOMERS_SUCCESS:
       return {
         ...state,
-        refactorModelInProcess: false,
-        refactorModelError: null,
-        redirectBackFromRefactor: true,
-        wasCreated: true,
-        showModal: true,
-        data: {
+        data: [
           ...state.data,
-          customers: [
-            ...state.data.customers,
-            action.payload
-          ]
-        }
+          action.payload
+        ],
+        redirectBackFromRefactor: true,
+        refactorModelInProcess: false,
+        showModal: true,
+        message: action.message
       }
 
     case ADD_CUSTOMERS_FAILURE:
       return {
         ...state,
-        showModal: true,
-        refactorModelError: action.payload,
-        refactorModelInProcess: false
+        error: action.payload,
+        refactorModelInProcess: false,
+        showModal: true
       }
 
     case EDIT_CUSTOMERS_STARTED:
       return {
         ...state,
-        showModal: true,
-        refactorModelInProcess: true,
-        refactorModelError: null
+        refactorModelInProcess: true
       }
 
     case EDIT_CUSTOMERS_SUCCESS:
       return {
         ...state,
-        refactorModelInProcess: false,
-        refactorModelError: null,
+        data: state.data.map(user => {
+          if (user.id === Number(action.payload.id)) {
+            action.payload.id = Number(action.payload.id)
+            return action.payload
+          }
+          return user
+        }),
         redirectBackFromRefactor: true,
-        wasUpdated: true,
+        refactorModelInProcess: false,
         showModal: true,
-        data: {
-          ...state.data,
-          customers: state.data.customers.map(user => {
-            if (user.id === Number(action.payload.id)) {
-              action.payload.id = Number(action.payload.id)
-              return action.payload
-            }
-            return user
-          })
-        }
+        message: action.message
       }
 
     case EDIT_CUSTOMERS_FAILURE:
       return {
         ...state,
-        refactorModelError: action.payload,
+        error: action.payload,
         refactorModelInProcess: false,
         showModal: true
       }
@@ -116,22 +110,32 @@ const customerReducer = (state = initialState, action) => {
     case DELETE_CUSTOMERS_SUCCESS:
       return {
         ...state,
-        refactorModelError: null,
+        data: state.data.filter(el => el.id !== action.payload.id),
         refactorModelInProcess: false,
-        wasDeleted: true,
         showModal: true,
-        data: {
-          ...state.data,
-          customers: state.data.customers.filter(el => el.id !== action.payload.id)
-        }
+        message: action.message
       }
 
     case DELETE_CUSTOMERS_FAILURE:
       return {
         ...state,
-        refactorModelError: action.payload,
-        showModal: true,
-        refactorModelInProcess: false
+        error: action.payload,
+        refactorModelInProcess: false,
+        showModal: true
+      }
+
+    case REDIRECT_FROM_REFACTOR:
+      return {
+        ...state,
+        redirectBackFromRefactor: false
+      }
+
+    case MISS_ERRORS:
+      return {
+        ...state,
+        error: null,
+        showModal: false,
+        message: null
       }
 
     default:

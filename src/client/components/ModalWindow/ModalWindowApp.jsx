@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { missErrorApp } from '../../actions'
+import { missErrors } from '../../actions'
 
 import './ModalWindow.less'
 
@@ -39,13 +39,13 @@ class ModalWindowApp extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    makeOrderError: state.appReducer.makeOrderError
+    makeOrderError: state.appReducer.error
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    missAppError: () => dispatch(missErrorApp())
+    missAppError: () => dispatch(missErrors())
   }
 }
 
