@@ -11,11 +11,10 @@ class ModalWindowApp extends React.Component {
   }
 
   timeOutNull = () => {
-    this.setState({timeOut: 0})
+    this.setState({ timeOut: 0 })
   }
 
   render () {
-
     setTimeout(() => {
       this.props.missAppError()
     }, this.state.timeOut)

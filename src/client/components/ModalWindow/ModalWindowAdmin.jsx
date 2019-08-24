@@ -11,7 +11,7 @@ class ModalWindowAdmin extends React.Component {
   }
 
   timeOutNull = () => {
-    this.setState({timeOut: 0})
+    this.setState({ timeOut: 0 })
   }
 
   render () {
@@ -27,7 +27,6 @@ class ModalWindowAdmin extends React.Component {
       masterMessage,
       orderMessage
     } = this.props
-    let text
 
     setTimeout(() => {
       this.props.missAdminError()

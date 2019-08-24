@@ -6,7 +6,6 @@ import {
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE, */
   LOG_OUT,
-  SING_IN_FROM_LOCAL_STORAGE,
   LOGIN_ERROR_NULL
 } from '../actions/types.js'
 

@@ -6,7 +6,6 @@ import { addOrder, setChooseWorker, returnPageHome } from '../../../actions'
 import './ChooseWorker.less'
 
 class ChooseWorker extends React.Component {
-
   componentDidUpdate (prevProps, prevState) {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
@@ -18,7 +17,7 @@ class ChooseWorker extends React.Component {
     })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
       if (+worker.id === this.props.masterId) {
@@ -40,7 +39,6 @@ class ChooseWorker extends React.Component {
     } else {
       homeButton = null
     }
-
 
     if (masterId) {
       const fullOrder = {
@@ -82,7 +80,7 @@ const mapStateToProps = (state) => {
     workers: state.appReducer.forOrder.freeWorkers,
     masterId: state.appReducer.forOrder.masterId,
     order: state.appReducer.forOrder.order,
-    chooseMaster: state.appReducer.chooseWorker,
+    chooseMaster: state.appReducer.chooseWorker
   }
 }
 

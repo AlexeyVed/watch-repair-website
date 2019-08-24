@@ -3,8 +3,7 @@ import {
   SING_IN_FAILURE,
   SING_IN_STARTED,
   LOG_OUT,
-  SING_IN_FROM_LOCAL_STORAGE,
-  LOGIN_ERROR_NULL,
+  LOGIN_ERROR_NULL
   /* REGISTRATION_STARTED,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE, */
@@ -28,7 +27,6 @@ export const loginToApp = (values) => {
       })
   }
 }
-
 
 export const logOutApp = () => {
   return (dispatch) => {

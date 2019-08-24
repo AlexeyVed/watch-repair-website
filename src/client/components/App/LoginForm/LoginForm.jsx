@@ -21,8 +21,7 @@ class LoginForm extends React.Component {
       submitting,
       currentUser,
       loginError,
-      missLoginError,
-      page
+      missLoginError
     } = this.props
 
     if (loginError) {
@@ -83,8 +82,7 @@ class LoginForm extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
-    loginError: state.loginReducer.singInError,
-    page: state.appReducer.page
+    loginError: state.loginReducer.singInError
   }
 }
 

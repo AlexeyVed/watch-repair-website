@@ -5,7 +5,6 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import './AdminBar.less'
 
 class AdminBar extends React.Component {
-
   componentDidUpdate (prevProps, prevState) {
     const buttons = document.querySelectorAll('.button-bar')
     buttons.forEach(button => {

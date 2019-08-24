@@ -47,7 +47,7 @@ class EditOrder extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-window'>
-          <div  className='refactor-orders edit-order'>
+          <div className='refactor-orders edit-order'>
             <div className="refactor-orders__header">
               Edit Order
               <LinkButton to='/admin/orders' name='&times;' className='refactor-orders__header__right-button-close'/>

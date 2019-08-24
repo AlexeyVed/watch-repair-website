@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { connect } from "react-redux"
+import { connect } from 'react-redux'
 
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import ModalWindow from '../../ModalWindow/ModalWindowAdmin.jsx'
@@ -14,7 +14,7 @@ import RefactorOrders from '../TableOrders/RefactorOrders'
 import './MainAdmin.less'
 
 class MainAdmin extends React.Component {
-  render() {
+  render () {
     const {
       isRefCity,
       isRefClock,
