@@ -2,19 +2,19 @@ import {
   SING_IN_SUCCESS,
   SING_IN_FAILURE,
   SING_IN_STARTED,
+  LOG_OUT,
+  SING_IN_FROM_LOCAL_STORAGE,
+  LOGIN_ERROR_NULL,
   /* REGISTRATION_STARTED,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE, */
-  LOG_OUT,
-  SING_IN_FROM_LOCAL_STORAGE,
-  LOGIN_ERROR_NULL
 } from './types.js'
 
 import axios from 'axios'
 
 export const loginToApp = (values) => {
   return (dispatch) => {
-    dispatch(singInStarted())
+    dispatch({ type: SING_IN_STARTED })
 
     axios
       .post(`http://localhost:3000/api/users/login`, values)
@@ -28,6 +28,38 @@ export const loginToApp = (values) => {
       })
   }
 }
+
+
+export const logOutApp = () => {
+  return (dispatch) => {
+    axios
+      .post(`http://localhost:3000/api/users/logout`)
+      .then(res => {
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        dispatch({ type: LOG_OUT })
+      })
+      .catch(err => {
+        dispatch(singInFailure(err.response.data))
+      })
+  }
+}
+
+export const missLoginError = () => {
+  return (dispatch) => {
+    dispatch({ type: LOGIN_ERROR_NULL })
+  }
+}
+
+const singInSuccess = user => ({
+  type: SING_IN_SUCCESS,
+  payload: user
+})
+
+const singInFailure = error => ({
+  type: SING_IN_FAILURE,
+  payload: error
+})
 
 /* export const registrationToApp = (values) => {
   return (dispatch) => {
@@ -43,55 +75,9 @@ export const loginToApp = (values) => {
         dispatch(registrationFailure(err.response.data))
       })
   }
-} */
-
-export const logOutApp = () => {
-  return (dispatch) => {
-    axios
-      .post(`http://localhost:3000/api/users/logout`)
-      .then(res => {
-        localStorage.removeItem('user')
-        localStorage.removeItem('token')
-        dispatch(logOut())
-      })
-      .catch(err => {
-        dispatch(singInFailure(err.response.data))
-      })
-  }
 }
 
-export const singInFromLS = (user) => {
-  return (dispatch) => {
-    dispatch(singInLS(user))
-  }
-}
-
-export const missLoginError = () => {
-  return (dispatch) => {
-    dispatch(loginErrorNull())
-  }
-}
-
-const singInSuccess = user => ({
-  type: SING_IN_SUCCESS,
-  payload: user
-})
-
-const singInStarted = () => ({
-  type: SING_IN_STARTED
-})
-
-const singInFailure = error => ({
-  type: SING_IN_FAILURE,
-  payload: error
-})
-
-const logOut = () => ({
-  type: LOG_OUT,
-  payload: null
-})
-
-/* const registrationStarted = () => ({
+ const registrationStarted = () => ({
   type: REGISTRATION_STARTED
 })
 
@@ -104,12 +90,3 @@ const registrationFailure = error => ({
   type: REGISTRATION_FAILURE,
   payload: error
 }) */
-
-const singInLS = (user) => ({
-  type: SING_IN_FROM_LOCAL_STORAGE,
-  payload: user
-})
-
-const loginErrorNull = () => ({
-  type: LOGIN_ERROR_NULL
-})

@@ -20,7 +20,7 @@ export const loadOrders = () => {
   return (dispatch) => {
     const token = localStorage.getItem('token')
     axios.defaults.headers.common['authorization'] = token
-    dispatch(loadOrdersStarted())
+    dispatch({ type: LOAD_ORDERS_STARTED })
     return axios
       .get(`http://localhost:3000/api/orders/list`)
       .then(res => {
@@ -36,7 +36,7 @@ export const addOrdersToDB = (values) => {
   values.time = Number(values.time)
   values.masterID = Number(values.masterID)
   return (dispatch) => {
-    dispatch(addOrdersStarted())
+    dispatch({ type: ADD_ORDERS_STARTED })
 
     axios
       .post(`http://localhost:3000/api/orders/addAdmin`, values)
@@ -58,7 +58,7 @@ export const editOrdersIntoDB = (values) => {
   values.customerId = Number(values.customerId)
   values.masterId = Number(values.masterId)
   return (dispatch) => {
-    dispatch(editOrdersStarted())
+    dispatch({ type: EDIT_ORDERS_STARTED })
     axios
       .post(`http://localhost:3000/api/orders/update`, values)
       .then(res => {
@@ -75,7 +75,7 @@ export const editOrdersIntoDB = (values) => {
 
 export const deleteOrdersFromDB = (id) => {
   return (dispatch) => {
-    dispatch(deleteOrdersStarted())
+    dispatch({ type: DELETE_ORDERS_STARTED })
     axios
       .post(`http://localhost:3000/api/orders/delete`, { id })
       .then(res => {
@@ -87,10 +87,6 @@ export const deleteOrdersFromDB = (id) => {
   }
 }
 
-const loadOrdersStarted = () => ({
-  type: LOAD_ORDERS_STARTED
-})
-
 const loadOrdersFailure = err => ({
   type: LOAD_ORDERS_FAILURE,
   payload: err
@@ -101,26 +97,14 @@ const loadOrdersSuccess = data => ({
   payload: data
 })
 
-const addOrdersStarted = () => ({
-  type: ADD_ORDERS_STARTED
-})
-
 const addOrdersFailure = (err) => ({
   type: ADD_ORDERS_FAILURE,
   payload: err
 })
 
-const deleteOrdersStarted = () => ({
-  type: DELETE_ORDERS_STARTED
-})
-
 const deleteOrdersFailure = (err) => ({
   type: DELETE_ORDERS_FAILURE,
   payload: err
-})
-
-const editOrdersStarted = () => ({
-  type: EDIT_ORDERS_STARTED
 })
 
 const editOrdersFailure = (err) => ({

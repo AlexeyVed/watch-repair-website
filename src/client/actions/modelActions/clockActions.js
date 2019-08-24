@@ -22,7 +22,7 @@ export const loadClocks = () => {
     if (token) {
       axios.defaults.headers.common['authorization'] = token
     }
-    dispatch(loadClocksStarted())
+    dispatch({ type: LOAD_CLOCKS_STARTED })
     return axios
       .get(`http://localhost:3000/api/clocks/list`)
       .then(res => {
@@ -36,7 +36,7 @@ export const loadClocks = () => {
 
 export const addClockToDB = (values) => {
   return (dispatch) => {
-    dispatch(addClocksStarted())
+    dispatch({ type: ADD_CLOCKS_STARTED })
     axios
       .post(`http://localhost:3000/api/clocks/add`, values)
       .then(res => {
@@ -53,7 +53,7 @@ export const addClockToDB = (values) => {
 
 export const editClockIntoDB = (values) => {
   return (dispatch) => {
-    dispatch(editClocksStarted())
+    dispatch({ type: EDIT_CLOCKS_STARTED })
     axios
       .post(`http://localhost:3000/api/clocks/update`, values)
       .then(res => {
@@ -70,7 +70,7 @@ export const editClockIntoDB = (values) => {
 
 export const deleteClockFromDB = (id) => {
   return (dispatch) => {
-    dispatch(deleteClocksStarted())
+    dispatch({ type: DELETE_CLOCKS_STARTED })
     axios
       .post(`http://localhost:3000/api/clocks/delete`, { id })
       .then(res => {
@@ -82,10 +82,6 @@ export const deleteClockFromDB = (id) => {
   }
 }
 
-const loadClocksStarted = () => ({
-  type: LOAD_CLOCKS_STARTED
-})
-
 const loadClocksFailure = err => ({
   type: LOAD_CLOCKS_FAILURE,
   payload: err
@@ -96,26 +92,14 @@ const loadClocksSuccess = data => ({
   payload: data
 })
 
-const addClocksStarted = () => ({
-  type: ADD_CLOCKS_STARTED
-})
-
 const addClocksFailure = (err) => ({
   type: ADD_CLOCKS_FAILURE,
   payload: err
 })
 
-const deleteClocksStarted = () => ({
-  type: DELETE_CLOCKS_STARTED
-})
-
 const deleteClocksFailure = (err) => ({
   type: DELETE_CLOCKS_FAILURE,
   payload: err
-})
-
-const editClocksStarted = () => ({
-  type: EDIT_CLOCKS_STARTED
 })
 
 const editClocksFailure = (err) => ({

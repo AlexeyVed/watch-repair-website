@@ -22,7 +22,7 @@ export const loadCustomers = () => {
     if (token) {
       axios.defaults.headers.common['authorization'] = token
     }
-    dispatch(loadCustomersStarted())
+    dispatch({ type: LOAD_CUSTOMERS_STARTED })
     return axios
       .get(`http://localhost:3000/api/customers/list`)
       .then(res => {
@@ -36,7 +36,7 @@ export const loadCustomers = () => {
 
 export const addCustomersToDB = (values) => {
   return (dispatch) => {
-    dispatch(addCustomersStarted())
+    dispatch({ type: ADD_CUSTOMERS_STARTED })
     axios
       .post(`http://localhost:3000/api/customers/add`, values)
       .then(res => {
@@ -53,7 +53,7 @@ export const addCustomersToDB = (values) => {
 
 export const editCustomersIntoDB = (values) => {
   return (dispatch) => {
-    dispatch(editCustomersStarted())
+    dispatch({ type: EDIT_CUSTOMERS_STARTED })
     axios
       .post(`http://localhost:3000/api/customers/update`, values)
       .then(res => {
@@ -70,7 +70,7 @@ export const editCustomersIntoDB = (values) => {
 
 export const deleteCustomersFromDB = (id) => {
   return (dispatch) => {
-    dispatch(deleteCustomersStarted())
+    dispatch({ type: DELETE_CUSTOMERS_STARTED })
     axios
       .post(`http://localhost:3000/api/customers/delete`, { id })
       .then(res => {
@@ -82,10 +82,6 @@ export const deleteCustomersFromDB = (id) => {
   }
 }
 
-const loadCustomersStarted = () => ({
-  type: LOAD_CUSTOMERS_STARTED
-})
-
 const loadCustomersFailure = err => ({
   type: LOAD_CUSTOMERS_FAILURE,
   payload: err
@@ -96,26 +92,14 @@ const loadCustomersSuccess = data => ({
   payload: data
 })
 
-const addCustomersStarted = () => ({
-  type: ADD_CUSTOMERS_STARTED
-})
-
 const addCustomersFailure = (err) => ({
   type: ADD_CUSTOMERS_FAILURE,
   payload: err
 })
 
-const deleteCustomersStarted = () => ({
-  type: DELETE_CUSTOMERS_STARTED
-})
-
 const deleteCustomersFailure = (err) => ({
   type: DELETE_CUSTOMERS_FAILURE,
   payload: err
-})
-
-const editCustomersStarted = () => ({
-  type: EDIT_CUSTOMERS_STARTED
 })
 
 const editCustomersFailure = (err) => ({

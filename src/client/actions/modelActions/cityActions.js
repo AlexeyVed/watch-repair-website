@@ -22,7 +22,7 @@ export const loadCities = () => {
     if (token) {
       axios.defaults.headers.common['authorization'] = token
     }
-    dispatch(loadCitiesStarted())
+    dispatch({ type: LOAD_CITIES_STARTED })
     return axios
       .get(`http://localhost:3000/api/cities/list`)
       .then(res => {
@@ -36,7 +36,7 @@ export const loadCities = () => {
 
 export const addCityToDB = (values) => {
   return (dispatch) => {
-    dispatch(addCitiesStarted())
+    dispatch({ type: ADD_CITIES_STARTED })
     axios
       .post(`http://localhost:3000/api/cities/add`, values)
       .then(res => {
@@ -53,7 +53,7 @@ export const addCityToDB = (values) => {
 
 export const editCityIntoDB = (values) => {
   return (dispatch) => {
-    dispatch(editCitiesStarted())
+    dispatch({ type: EDIT_CITIES_STARTED })
     axios
       .post(`http://localhost:3000/api/cities/update`, values)
       .then(res => {
@@ -70,7 +70,7 @@ export const editCityIntoDB = (values) => {
 
 export const deleteCityFromDB = (id) => {
   return (dispatch) => {
-    dispatch(deleteCitiesStarted())
+    dispatch({ type: DELETE_CITIES_STARTED })
     axios
       .post(`http://localhost:3000/api/cities/delete`, { id })
       .then(res => {
@@ -82,10 +82,6 @@ export const deleteCityFromDB = (id) => {
   }
 }
 
-const loadCitiesStarted = () => ({
-  type: LOAD_CITIES_STARTED
-})
-
 const loadCitiesFailure = err => ({
   type: LOAD_CITIES_FAILURE,
   payload: err
@@ -96,26 +92,14 @@ const loadCitiesSuccess = data => ({
   payload: data
 })
 
-const addCitiesStarted = () => ({
-  type: ADD_CITIES_STARTED
-})
-
 const addCitiesFailure = (err) => ({
   type: ADD_CITIES_FAILURE,
   payload: err
 })
 
-const deleteCitiesStarted = () => ({
-  type: DELETE_CITIES_STARTED
-})
-
 const deleteCitiesFailure = (err) => ({
   type: DELETE_CITIES_FAILURE,
   payload: err
-})
-
-const editCitiesStarted = () => ({
-  type: EDIT_CITIES_STARTED
 })
 
 const editCitiesFailure = (err) => ({

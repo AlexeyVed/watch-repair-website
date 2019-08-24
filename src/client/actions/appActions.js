@@ -19,7 +19,7 @@ export const makeOrder = (values) => {
     values.cityId = Number(values.cityId)
     values.clockId = Number(values.clockId)
     values.time = Number(values.time)
-    dispatch(makeOrderStarted())
+    dispatch({ type: MAKE_ORDER_STARTED })
     axios
       .post(`http://localhost:3000/api/orders/getWorkers`, values)
       .then(res => {
@@ -37,11 +37,11 @@ export const makeOrder = (values) => {
 
 export const addOrder = (values) => {
   return (dispatch) => {
-    dispatch(makeOrderMasterStarted())
+    dispatch({ type: MAKE_ORDER_WITH_MASTER_STARTED })
     axios
       .post(`http://localhost:3000/api/orders/add`, values)
       .then(res => {
-        dispatch(makeOrderMasterSuccess())
+        dispatch({ type: MAKE_ORDER_WITH_MASTER_SUCCESS })
       })
       .catch(err => {
         dispatch(makeOrderMasterFailure(err.response.data))
@@ -59,7 +59,7 @@ export const setPage = data => {
 
 export const returnPageHome = () => {
   return (dispatch) => {
-    dispatch(returnHomePage())
+    dispatch({ type: RETURN_HOME_PAGE })
   }
 }
 
@@ -78,9 +78,6 @@ export const loadDataEnd = () => {
   }
 }
 
-const makeOrderStarted = () => ({
-  type: MAKE_ORDER_STARTED
-})
 
 const makeOrderSuccess = (data) => ({
   type: MAKE_ORDER_SUCCESS,
@@ -92,19 +89,7 @@ const makeOrderFailure = err => ({
   payload: err
 })
 
-const makeOrderMasterStarted = () => ({
-  type: MAKE_ORDER_WITH_MASTER_STARTED
-})
-
-const makeOrderMasterSuccess = () => ({
-  type: MAKE_ORDER_WITH_MASTER_SUCCESS
-})
-
 const makeOrderMasterFailure = err => ({
   type: MAKE_ORDER_WITH_MASTER_FAILURE,
   payload: err
-})
-
-const returnHomePage = () => ({
-  type: RETURN_HOME_PAGE
 })

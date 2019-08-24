@@ -63,13 +63,6 @@ const loginReducer = (state = initialState, action) => {
         singInError: action.payload
       }
 */
-    case SING_IN_FROM_LOCAL_STORAGE:
-      return {
-        ...state,
-        singInUser: action.payload,
-        singInError: null
-      }
-
     case LOG_OUT:
       return {
         ...state,
