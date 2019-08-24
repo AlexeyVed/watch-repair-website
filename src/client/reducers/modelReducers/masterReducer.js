@@ -11,59 +11,32 @@ import {
   EDIT_MASTERS_STARTED,
   EDIT_MASTERS_FAILURE,
   EDIT_MASTERS_SUCCESS
-} from '../actions/types'
+} from '../../actions/types.js'
 
 const initialState = {
-  dataLoad: false,
-  refactorModelInProcess: false,
-  refactorModelError: null,
-  redirectBackFromRefactor: false,
-  showModal: false,
-  wasDeleted: false,
-  wasUpdated: false,
-  wasCreated: false,
-  data: {
-    clocks: [],
-    cities: [],
-    customers: [],
-    workers: [],
-    orders: [],
-    clocksError: null,
-    citiesError: null,
-    usersError: null,
-    workersError: null,
-    ordersError: null
-  }
+  data: [],
+  error: null
 }
 
 const masterReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_MASTERS_STARTED:
       return {
-        ...state,
-        dataLoad: true
+        ...state
       }
 
     case LOAD_MASTERS_SUCCESS:
       return {
         ...state,
-        data: {
-          ...state.data,
-          workers: action.payload,
-          workersError: null
-        }
+        data: action.payload,
+        error: null
       }
 
     case LOAD_MASTERS_FAILURE:
       return {
         ...state,
-        dataLoad: false,
-        showModal: true,
-        data: {
-          ...state.data,
-          workers: [],
-          workersError: action.payload
-        }
+        data: [],
+        error: action.payload
       }
 
     case ADD_MASTERS_STARTED:

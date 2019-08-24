@@ -66,15 +66,15 @@ class ModalWindowAdmin extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    wasDelete: state.adminReducer.wasDeleted,
-    wasCreate: state.adminReducer.wasCreated,
-    wasUpdate: state.adminReducer.wasUpdated,
-    clockError: state.adminReducer.data.clocksError,
-    citiesError: state.adminReducer.data.citiesError,
-    usersError: state.adminReducer.data.usersError,
-    workersError: state.adminReducer.data.workersError,
-    ordersError: state.adminReducer.data.ordersError,
-    refactorError: state.adminReducer.refactorModelError
+    wasDelete: state.appReducer.wasDeleted,
+    wasCreate: state.appReducer.wasCreated,
+    wasUpdate: state.appReducer.wasUpdated,
+    clockError: state.clockReducer.error,
+    citiesError: state.cityReducer.error,
+    usersError: state.customerReducer.error,
+    workersError: state.masterReducer.error,
+    ordersError: state.orderReducer.error,
+    refactorError: state.appReducer.refactorModelError
   }
 }
 

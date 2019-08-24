@@ -11,7 +11,7 @@ import {
   EDIT_MASTERS_STARTED,
   EDIT_MASTERS_FAILURE,
   EDIT_MASTERS_SUCCESS
-} from './types.js'
+} from '../types.js'
 
 import axios from 'axios'
 

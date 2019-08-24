@@ -115,7 +115,7 @@ class RefactorClocks extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    clocks: state.adminReducer.data.clocks
+    clocks: state.clockReducer.data
 
   }
 }

@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { validateEmail, required } from '../../../validation'
-import { addUserToDB } from '../../../actions'
+import { addCustomersToDB } from '../../../actions'
 
 import './RefactorClients.less'
 
@@ -60,13 +60,13 @@ class AddClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.appReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addUser: values => dispatch(addUserToDB(values))
+    addUser: values => dispatch(addCustomersToDB(values))
   }
 }
 

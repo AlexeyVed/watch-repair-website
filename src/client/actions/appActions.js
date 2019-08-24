@@ -8,10 +8,37 @@ import {
   CHANGE_PAGE,
   SET_CHOOSE_WORKER,
   MISS_APP_ERROR,
-  RETURN_HOME_PAGE
+  RETURN_HOME_PAGE,
+  REDIRECT_FROM_REFACTOR,
+  MISS_ADMIN_ERROR,
+  END_LOAD_DATA
 } from './types.js'
 
 import axios from 'axios'
+
+export const missErrorAdmin = () => {
+  return (dispatch) => {
+    dispatch(missAdminError())
+  }
+}
+
+export const loadDataEnd = () => {
+  return (dispatch) => {
+    dispatch(endLoadData())
+  }
+}
+
+const redirectFromRefactor = () => ({
+  type: REDIRECT_FROM_REFACTOR
+})
+
+const missAdminError = () => ({
+  type: MISS_ADMIN_ERROR
+})
+
+const endLoadData = () => ({
+  type: END_LOAD_DATA
+})
 
 export const makeOrder = (values) => {
   return (dispatch) => {

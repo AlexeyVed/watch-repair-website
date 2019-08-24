@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom'
 
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { addWorkerToDB } from '../../../actions'
+import { addMastersToDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorWorkers.less'
@@ -82,14 +82,14 @@ class AddWorkers extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    chooseCities: state.adminReducer.data.cities,
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    chooseCities: state.cityReducer.data,
+    redirectBack: state.appReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addWorker: values => dispatch(addWorkerToDB(values))
+    addWorker: values => dispatch(addMastersToDB(values))
   }
 }
 

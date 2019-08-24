@@ -4,12 +4,12 @@ import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import {
-  deleteOrderFromDB,
+  deleteOrdersFromDB,
   loadCities,
-  loadClientsAdmin,
+  loadCustomers,
   loadClocks, loadDataEnd,
-  loadOrdersAdmin,
-  loadWorkers,
+  loadOrders,
+  loadMasters,
   setPage
 } from '../../../actions'
 import AddOrder from '../RefactorOrders/AddOrder.jsx'
@@ -131,18 +131,18 @@ class RefactorOrders extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    orders: state.adminReducer.data.orders
+    orders: state.orderReducer.data
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteOrder: id => dispatch(deleteOrderFromDB(id)),
-    loadOrders: () => dispatch(loadOrdersAdmin()),
-    loadWorkers: () => dispatch(loadWorkers()),
+    deleteOrder: id => dispatch(deleteOrdersFromDB(id)),
+    loadOrders: () => dispatch(loadOrders()),
+    loadWorkers: () => dispatch(loadMasters()),
     loadCities: () => dispatch(loadCities()),
     loadClocks: () => dispatch(loadClocks()),
-    loadClients: () => dispatch(loadClientsAdmin()),
+    loadClients: () => dispatch(loadCustomers()),
     loadEnd: () => dispatch(loadDataEnd()),
     setPage: data => dispatch(setPage(data))
   }

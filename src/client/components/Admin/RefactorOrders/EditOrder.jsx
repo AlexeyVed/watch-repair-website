@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
-import { editOrderIntoDB } from '../../../actions'
+import { editOrdersIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorOrders.less'
@@ -162,17 +162,17 @@ class EditOrder extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    chooseClock: state.adminReducer.data.clocks,
-    chooseCities: state.adminReducer.data.cities,
-    chooseUsers: state.adminReducer.data.customers,
-    chooseWorkers: state.adminReducer.data.workers,
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    chooseClock: state.clockReducer.data,
+    chooseCities: state.cityReducer.data,
+    chooseUsers: state.customerReducer.data,
+    redirectBack: state.appReducer.redirectBackFromRefactor,
+    chooseWorkers: state.masterReducer.data
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editOrder: values => dispatch(editOrderIntoDB(values))
+    editOrder: values => dispatch(editOrdersIntoDB(values))
   }
 }
 

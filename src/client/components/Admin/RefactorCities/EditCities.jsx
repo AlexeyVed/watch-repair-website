@@ -79,7 +79,7 @@ class EditCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.appReducer.redirectBackFromRefactor
   }
 }
 

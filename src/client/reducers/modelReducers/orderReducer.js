@@ -11,59 +11,32 @@ import {
   EDIT_ORDERS_STARTED,
   EDIT_ORDERS_FAILURE,
   EDIT_ORDERS_SUCCESS
-} from '../actions/types'
+} from '../../actions/types.js'
 
 const initialState = {
-  dataLoad: false,
-  refactorModelInProcess: false,
-  refactorModelError: null,
-  redirectBackFromRefactor: false,
-  showModal: false,
-  wasDeleted: false,
-  wasUpdated: false,
-  wasCreated: false,
-  data: {
-    clocks: [],
-    cities: [],
-    customers: [],
-    workers: [],
-    orders: [],
-    clocksError: null,
-    citiesError: null,
-    usersError: null,
-    workersError: null,
-    ordersError: null
-  }
+  data: [],
+  error: null
 }
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_ORDERS_STARTED:
       return {
-        ...state,
-        dataLoad: true
+        ...state
       }
 
     case LOAD_ORDERS_SUCCESS:
       return {
         ...state,
-        data: {
-          ...state.data,
-          orders: action.payload,
-          ordersError: null
-        }
+        data: action.payload,
+        error: null
       }
 
     case LOAD_ORDERS_FAILURE:
       return {
         ...state,
-        dataLoad: false,
-        showModal: true,
-        data: {
-          ...state.data,
-          orders: [],
-          ordersError: action.payload
-        }
+        data: [],
+        error: action.payload
       }
 
     case ADD_ORDERS_STARTED:

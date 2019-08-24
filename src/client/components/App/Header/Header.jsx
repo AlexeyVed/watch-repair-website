@@ -1,11 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-
 import { logOutApp } from '../../../actions'
 
 import './header.less'
-import LinkButton from "../../App";
 
 class Header extends React.Component {
   state = {

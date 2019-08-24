@@ -11,7 +11,7 @@ import {
   EDIT_CITIES_STARTED,
   EDIT_CITIES_FAILURE,
   EDIT_CITIES_SUCCESS
-} from './types.js'
+} from '../types.js'
 
 import axios from 'axios'
 

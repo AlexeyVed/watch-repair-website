@@ -11,62 +11,33 @@ import {
   EDIT_CUSTOMERS_STARTED,
   EDIT_CUSTOMERS_FAILURE,
   EDIT_CUSTOMERS_SUCCESS
-} from '../actions/types'
+} from '../../actions/types.js'
 
 const initialState = {
-  dataLoad: false,
-  refactorModelInProcess: false,
-  refactorModelError: null,
-  redirectBackFromRefactor: false,
-  showModal: false,
-  wasDeleted: false,
-  wasUpdated: false,
-  wasCreated: false,
-  data: {
-    clocks: [],
-    cities: [],
-    customers: [],
-    workers: [],
-    orders: [],
-    clocksError: null,
-    citiesError: null,
-    usersError: null,
-    workersError: null,
-    ordersError: null
-  }
+  data: [],
+  error: null
 }
 
 const customerReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_CUSTOMERS_STARTED:
       return {
-        ...state,
-        dataLoad: true
+        ...state
       }
 
     case LOAD_CUSTOMERS_SUCCESS:
       return {
         ...state,
-        data: {
-          ...state.data,
-          customers: action.payload,
-          usersError: null
-        }
+        data: action.payload,
+        error: null
       }
 
     case LOAD_CUSTOMERS_FAILURE:
       return {
         ...state,
-        dataLoad: false,
-        showModal: true,
-        data: {
-          ...state.data,
-          customers: [],
-          usersError: action.payload
-        }
+        data: [],
+        error: action.payload
       }
-
-
 
     case ADD_CUSTOMERS_STARTED:
       return {

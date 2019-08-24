@@ -113,7 +113,7 @@ class RefactorCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    cities: state.adminReducer.data.cities
+    cities: state.cityReducer.data
   }
 }
 

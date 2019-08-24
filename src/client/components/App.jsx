@@ -55,13 +55,13 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isRefactor: state.adminReducer.refactorModelInProcess,
-    isLoad: state.adminReducer.dataLoad,
+    isRefactor: state.appReducer.refactorModelInProcess,
+    isLoad: state.appReducer.dataLoad,
     isLogin: state.loginReducer.singInLoading,
     isOrder: state.appReducer.isMakeOrder,
     user: state.loginReducer.singInUser,
     chooseMaster: state.appReducer.chooseWorker,
-    modalAdmin: state.adminReducer.showModal
+    modalAdmin: state.appReducer.showModal
   }
 }
 

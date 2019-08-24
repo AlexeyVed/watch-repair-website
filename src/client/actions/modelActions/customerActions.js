@@ -11,7 +11,7 @@ import {
   EDIT_CUSTOMERS_STARTED,
   EDIT_CUSTOMERS_FAILURE,
   EDIT_CUSTOMERS_SUCCESS
-} from './types.js'
+} from '../types.js'
 
 import axios from 'axios'
 

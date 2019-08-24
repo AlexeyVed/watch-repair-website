@@ -11,59 +11,32 @@ import {
   EDIT_CITIES_STARTED,
   EDIT_CITIES_FAILURE,
   EDIT_CITIES_SUCCESS
-} from '../actions/types'
+} from '../../actions/types.js'
 
 const initialState = {
-  dataLoad: false,
-  refactorModelInProcess: false,
-  refactorModelError: null,
-  redirectBackFromRefactor: false,
-  showModal: false,
-  wasDeleted: false,
-  wasUpdated: false,
-  wasCreated: false,
-  data: {
-    clocks: [],
-    cities: [],
-    customers: [],
-    workers: [],
-    orders: [],
-    clocksError: null,
-    citiesError: null,
-    usersError: null,
-    workersError: null,
-    ordersError: null
-  }
+  data: [],
+  error: null
 }
 
 const cityReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_CITIES_STARTED:
       return {
-        ...state,
-        dataLoad: true
+        ...state
       }
 
     case LOAD_CITIES_SUCCESS:
       return {
         ...state,
-        data: {
-          ...state.data,
-          cities: action.payload,
-          citiesError: null
-        }
+        data: action.payload,
+        error: null
       }
 
     case LOAD_CITIES_FAILURE:
       return {
         ...state,
-        dataLoad: false,
-        showModal: true,
-        data: {
-          ...state.data,
-          cities: [],
-          citiesError: action.payload
-        }
+        data: [],
+        error: action.payload
       }
 
     case ADD_CITIES_STARTED:

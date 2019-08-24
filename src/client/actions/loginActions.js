@@ -8,7 +8,7 @@ import {
   LOG_OUT,
   SING_IN_FROM_LOCAL_STORAGE,
   LOGIN_ERROR_NULL
-} from './types'
+} from './types.js'
 
 import axios from 'axios'
 

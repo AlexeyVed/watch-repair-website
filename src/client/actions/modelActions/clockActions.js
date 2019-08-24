@@ -11,7 +11,7 @@ import {
   EDIT_CLOCKS_STARTED,
   EDIT_CLOCKS_FAILURE,
   EDIT_CLOCKS_SUCCESS
-} from './types.js'
+} from '../types.js'
 
 import axios from 'axios'
 

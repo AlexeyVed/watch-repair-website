@@ -8,7 +8,7 @@ import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import { validateEmail, required } from '../../../validation'
-import { editUserIntoDB } from '../../../actions'
+import { editCustomersIntoDB } from '../../../actions'
 
 import './RefactorClients.less'
 import axios from 'axios'
@@ -91,13 +91,13 @@ class EditClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.appReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editClient: values => dispatch(editUserIntoDB(values))
+    editClient: values => dispatch(editCustomersIntoDB(values))
   }
 }
 
