@@ -78,7 +78,6 @@ export const loadDataEnd = () => {
   }
 }
 
-
 const makeOrderSuccess = (data) => ({
   type: MAKE_ORDER_SUCCESS,
   payload: data

@@ -45,43 +45,44 @@ class EditClients extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-window'>
-          <form
-            onSubmit={handleSubmit(editClient)}
-            className='refactor-clients edit-client'>
+          <div className='refactor-clients edit-client'>
             <div className="refactor-clients__header">
               Edit Client
               <LinkButton to='/admin/clients' name='&times;' className='refactor-clients__header__right-button-close'/>
             </div>
-            <Field
-              label='ID'
-              name='id'
-              component={myInput}
-              type='text'
-              placeholder={this.props.match.params.id}
-              input={{ disabled: true }}
-            />
-            <Field
-              label='Your email'
-              name='email'
-              component={myInput}
-              type='text'
-              placeholder='Enter your email'
-              validate={[validateEmail, required]}
-              required
-            />
-            <Field
-              label='Create a password'
-              name='name'
-              component={myInput}
-              type='text'
-              placeholder='Enter your password'
-              validate={[required]}
-              required
-            />
-            <button
-              type='submit'
-              label='submit'>Submit</button>
-          </form>
+            <form
+              onSubmit={handleSubmit(editClient)}>
+              <Field
+                label='ID'
+                name='id'
+                component={myInput}
+                type='text'
+                placeholder={this.props.match.params.id}
+                input={{ disabled: true }}
+              />
+              <Field
+                label='Your email'
+                name='email'
+                component={myInput}
+                type='text'
+                placeholder='Enter your email'
+                validate={[validateEmail, required]}
+                required
+              />
+              <Field
+                label='Create a password'
+                name='name'
+                component={myInput}
+                type='text'
+                placeholder='Enter your password'
+                validate={[required]}
+                required
+              />
+              <button
+                type='submit'
+                label='submit'>Submit</button>
+            </form>
+          </div>
           {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))

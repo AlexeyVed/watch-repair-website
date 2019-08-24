@@ -25,16 +25,8 @@ class LoginForm extends React.Component {
       page
     } = this.props
 
-    let bttnClose = null
-
     if (loginError) {
       setTimeout(missLoginError, 3000)
-    }
-
-    if (page === 'order') {
-      bttnClose = <LinkButton to='/order' name='&times;' className='login-form__header__right-button-close'/>
-    } else {
-      bttnClose = <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
     }
 
     if (currentUser === 'admin@example.com') {
@@ -47,40 +39,41 @@ class LoginForm extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-window'>
-          <form
-            onSubmit={handleSubmit(loginApp)}
-            className='login-form'>
-            <div className="login-form__header">
+          <div className='login-form'>
+            <div className='login-form__header'>
               Member login
-              {bttnClose}
+              <LinkButton to='/' name='&times;' className='login-form__header__right-button-close'/>
             </div>
-            <Field
-              label='Your email'
-              name='email'
-              component={myInput}
-              type='text'
-              placeholder='Enter your email'
-              validate={validateEmail}
-            />
-            { loginError &&
-            !currentUser &&
-            <div className='login-form__input-error'>
-              {loginError}
-            </div>
-            }
-            <Field
-              label='Your password'
-              name='password'
-              component={myInput}
-              type='password'
-              placeholder='Enter your password'
-              validate={validatePassword}
-            />
-            <button
-              type='submit'
-              disabled={pristine || submitting}
-              label='submit'>Submit</button>
-          </form>
+            <form
+              onSubmit={handleSubmit(loginApp)}>
+              <Field
+                label='Your email'
+                name='email'
+                component={myInput}
+                type='text'
+                placeholder='Enter your email'
+                validate={validateEmail}
+              />
+              { loginError &&
+              !currentUser &&
+              <div className='login-form__input-error'>
+                {loginError}
+              </div>
+              }
+              <Field
+                label='Your password'
+                name='password'
+                component={myInput}
+                type='password'
+                placeholder='Enter your password'
+                validate={validatePassword}
+              />
+              <button
+                type='submit'
+                disabled={pristine || submitting}
+                label='submit'>Submit</button>
+            </form>
+          </div>
         </div>
         , document.getElementById('modal-root'))
     )

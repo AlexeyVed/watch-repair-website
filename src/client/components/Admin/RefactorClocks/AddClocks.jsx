@@ -23,33 +23,34 @@ class AddClocks extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-window'>
-          <form
-            onSubmit={handleSubmit(addClock)}
-            className='refactor-clocks add-clock'>
+          <div className='refactor-clocks add-clock'>
             <div className="refactor-clocks__header">
               Add Clock
               <LinkButton to='/admin/clocks' name='&times;' className='refactor-clocks__header__right-button-close'/>
             </div>
-            <Field
-              label='Enter type of clock'
-              name='typeClock'
-              component={myInput}
-              validate={[required]}
-              type='text'
-              placeholder='Enter type of clock'
-            />
-            <Field
-              label='Enter time of repair clock'
-              name='timeRepair'
-              component={myInput}
-              validate={[required]}
-              type='number'
-              placeholder='Enter time repair clock'
-            />
-            <button
-              type='submit'
-              label='submit'>Submit</button>
-          </form>
+            <form
+              onSubmit={handleSubmit(addClock)}>
+              <Field
+                label='Enter type of clock'
+                name='typeClock'
+                component={myInput}
+                validate={[required]}
+                type='text'
+                placeholder='Enter type of clock'
+              />
+              <Field
+                label='Enter time of repair clock'
+                name='timeRepair'
+                component={myInput}
+                validate={[required]}
+                type='number'
+                placeholder='Enter time repair clock'
+              />
+              <button
+                type='submit'
+                label='submit'>Submit</button>
+            </form>
+          </div>
         </div>
         , document.getElementById('modal-root'))
     )

@@ -42,33 +42,41 @@
     }
   }
 
-  & > .input-with-label > input {
-    width: 65%;
-    height: 30px;
-    margin-top: 20px;
-    border-radius: 5px;
-    border: 1px solid gray;
-    padding-left: 10px;
-  }
+  form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    & > .input-with-label > input {
+      width: 65%;
+      height: 30px;
+      margin-top: 20px;
+      border-radius: 5px;
+      border: 1px solid gray;
+      padding-left: 10px;
+    }
 
-  & > button {
-    margin-top: 30px;
-    width: 100px;
-    height: 30px;
-    padding: 0;
-    border: none;
-    color: inherit;
-    font-size: 14px;
-    cursor: pointer;
-    background-color: rgba(221, 235, 200, 0.69);
-    outline: none;
-    border: 1px solid rgba(55, 69, 62, 0.49);
-    border-radius: 5px;
-  }
+    & > button {
+      margin-top: 30px;
+      width: 100px;
+      height: 30px;
+      padding: 0;
+      border: none;
+      color: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: rgba(221, 235, 200, 0.69);
+      outline: none;
+      border: 1px solid rgba(55, 69, 62, 0.49);
+      border-radius: 5px;
+    }
 
-  & > button:hover {
-    border: 1px solid rgba(55, 69, 62, 0.56);
-    background-color: rgba(234, 248, 213, 0.67);
+    & > button:hover {
+      border: 1px solid rgba(55, 69, 62, 0.56);
+      background-color: rgba(234, 248, 213, 0.67);
+    }
   }
 }
 

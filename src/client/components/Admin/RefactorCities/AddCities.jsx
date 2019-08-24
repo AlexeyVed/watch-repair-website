@@ -23,26 +23,27 @@ class AddCities extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-window'>
-          <form
-            onSubmit={handleSubmit(addCity)}
-            className='refactor-city add-city'>
+          <div className='refactor-city add-city'>
             <div className="refactor-city__header">
               Add city
               <LinkButton to='/admin/cities' name='&times;' className='refactor-city__header__right-button-close'/>
             </div>
-            <Field
-              label='Enter city'
-              name='city'
-              component={myInput}
-              validate={required}
-              type='text'
-              placeholder='Enter new city'
-            />
-            <button
-              type='submit'
-              label='submit'
-              className='refactor-city__submit'>Submit</button>
-          </form>
+            <form
+              onSubmit={handleSubmit(addCity)}>
+              <Field
+                label='Enter city'
+                name='city'
+                component={myInput}
+                validate={required}
+                type='text'
+                placeholder='Enter new city'
+              />
+              <button
+                type='submit'
+                label='submit'
+                className='refactor-city__submit'>Submit</button>
+            </form>
+          </div>
         </div>
         , document.getElementById('modal-root'))
     )
