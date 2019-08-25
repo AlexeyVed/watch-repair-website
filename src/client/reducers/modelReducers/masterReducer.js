@@ -112,7 +112,7 @@ const masterReducer = (state = initialState, action) => {
     case DELETE_MASTERS_SUCCESS:
       return {
         ...state,
-        data: state.data.filter(el => el.id !== action.payload.id),
+        data: state.data.filter(el => el.id !== +action.payload),
         refactorModelInProcess: false,
         showModal: true,
         message: action.message

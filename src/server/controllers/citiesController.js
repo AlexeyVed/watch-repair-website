@@ -23,7 +23,7 @@ exports.get = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  City.findByPk(req.body.id)
+  City.findByPk(req.query.id)
     .then(city => {
       res.json(city)
     })
@@ -60,10 +60,10 @@ exports.remove = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   City.destroy({
-    where: { id: req.body.id }
+    where: { id: req.query.id }
   })
     .then(result => {
-      res.json(req.body)
+      res.json(req.query.id)
     })
     .catch(err => {
       next(error(400, 'Error delete city'))
@@ -82,7 +82,7 @@ exports.update = function (req, res, next) {
   }
   City.update({
     city: req.body.city }, {
-    where: { id: req.body.id }
+    where: { id: req.query.id }
   })
     .then((result) => {
       return City.findByPk(req.body.id)

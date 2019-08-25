@@ -24,7 +24,7 @@ export const loadCities = () => {
     }
     dispatch({ type: LOAD_CITIES_STARTED })
     return axios
-      .get(`http://localhost:3000/api/cities/list`)
+      .get(`http://localhost:3000/api/cities/`)
       .then(res => {
         dispatch(loadCitiesSuccess(res.data))
       })
@@ -38,7 +38,7 @@ export const addCityToDB = (values) => {
   return (dispatch) => {
     dispatch({ type: ADD_CITIES_STARTED })
     axios
-      .post(`http://localhost:3000/api/cities/add`, values)
+      .post(`http://localhost:3000/api/cities/`, values)
       .then(res => {
         dispatch(addCitiesSuccess(res.data))
       })
@@ -55,7 +55,7 @@ export const editCityIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_CITIES_STARTED })
     axios
-      .post(`http://localhost:3000/api/cities/update`, values)
+      .put(`http://localhost:3000/api/cities/id?id=${values.id}`, values)
       .then(res => {
         dispatch(editCitiesSuccess(res.data))
       })
@@ -72,7 +72,7 @@ export const deleteCityFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_CITIES_STARTED })
     axios
-      .post(`http://localhost:3000/api/cities/delete`, { id })
+      .delete(`http://localhost:3000/api/cities/id?id=${id}`)
       .then(res => {
         dispatch(deleteCitiesSuccess(res.data))
       })

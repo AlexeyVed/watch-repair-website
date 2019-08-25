@@ -21,7 +21,7 @@ class EditClients extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .post(`http://localhost:3000/api/customers/get`, { id })
+      .get(`http://localhost:3000/api/customers/id?id=${id}`)
       .then(res => {
         this.setState(() => ({
           load: false

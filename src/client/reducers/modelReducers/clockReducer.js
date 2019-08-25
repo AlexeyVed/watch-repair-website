@@ -112,7 +112,7 @@ const clockReducer = (state = initialState, action) => {
     case DELETE_CLOCKS_SUCCESS:
       return {
         ...state,
-        data: state.data.filter(el => el.id !== action.payload.id),
+        data: state.data.filter(el => el.id !== +action.payload),
         refactorModelInProcess: false,
         showModal: true,
         message: action.message

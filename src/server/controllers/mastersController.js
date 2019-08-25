@@ -29,7 +29,7 @@ exports.get = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Master.findOne({
-    where: { id: req.body.id },
+    where: { id: req.query.id },
     include: [ { model: City } ]
   })
     .then((worker) => {
@@ -80,10 +80,10 @@ exports.remove = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Master.destroy({
-    where: { id: req.body.id }
+    where: { id: req.query.id }
   })
     .then(result => {
-      res.json(req.body)
+      res.json(req.query.id)
     })
     .catch(err => {
       next(error(400, 'Error delete master'))
@@ -107,7 +107,7 @@ exports.update = function (req, res, next) {
     rating: req.body.rating,
     cityId: req.body.cityId
   }, {
-    where: { id: req.body.id }
+    where: { id: req.query.id }
   })
     .then(result => {
       return Master.findOne({

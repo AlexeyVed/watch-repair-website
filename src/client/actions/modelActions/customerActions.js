@@ -24,7 +24,7 @@ export const loadCustomers = () => {
     }
     dispatch({ type: LOAD_CUSTOMERS_STARTED })
     return axios
-      .get(`http://localhost:3000/api/customers/list`)
+      .get(`http://localhost:3000/api/customers/`)
       .then(res => {
         dispatch(loadCustomersSuccess(res.data))
       })
@@ -38,7 +38,7 @@ export const addCustomersToDB = (values) => {
   return (dispatch) => {
     dispatch({ type: ADD_CUSTOMERS_STARTED })
     axios
-      .post(`http://localhost:3000/api/customers/add`, values)
+      .post(`http://localhost:3000/api/customers/`, values)
       .then(res => {
         dispatch(addCustomersSuccess(res.data))
       })
@@ -55,7 +55,7 @@ export const editCustomersIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_CUSTOMERS_STARTED })
     axios
-      .post(`http://localhost:3000/api/customers/update`, values)
+      .put(`http://localhost:3000/api/customers/id?id=${values.id}`, values)
       .then(res => {
         dispatch(editCustomersSuccess(res.data))
       })
@@ -72,7 +72,7 @@ export const deleteCustomersFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_CUSTOMERS_STARTED })
     axios
-      .post(`http://localhost:3000/api/customers/delete`, { id })
+      .delete(`http://localhost:3000/api/customers/id?id=${id}`)
       .then(res => {
         dispatch(deleteCustomersSuccess(res.data))
       })

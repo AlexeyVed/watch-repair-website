@@ -23,7 +23,7 @@ exports.get = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  Clock.findByPk(req.body.id)
+  Clock.findByPk(req.query.id)
     .then((clock) => {
       res.json(clock)
     })
@@ -64,10 +64,10 @@ exports.remove = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Clock.destroy({
-    where: { id: req.body.id }
+    where: { id: req.query.id }
   })
     .then(result => {
-      res.json(req.body)
+      res.json(req.query.id)
     })
     .catch(err => {
       next(error(400, 'Error delete clock'))
@@ -89,7 +89,7 @@ exports.update = function (req, res, next) {
     typeClock: req.body.typeClock,
     timeRepair: req.body.timeRepair
   }, {
-    where: { id: req.body.id }
+    where: { id: req.query.id }
   })
     .then((result) => {
       return Clock.findByPk(req.body.id)

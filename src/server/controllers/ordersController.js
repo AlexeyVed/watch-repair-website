@@ -6,7 +6,6 @@ const Order = require('../models/orders.js')
 const Master = require('../models/masters.js')
 const Clock = require('../models/clocks.js')
 const Customer = require('../models/customers.js')
-const City = require('../models/cities.js')
 
 exports.list = function (req, res, next) {
   Order.findAll({
@@ -47,10 +46,8 @@ exports.get = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Order.findOne({
-    where: {
-      id: req.body.id
-    },
-    include: [ { all: true } ]
+    where: { id: req.query.id },
+    include: [{ all: true }]
   })
     .then(order => {
       res.json(order)
@@ -70,12 +67,10 @@ exports.remove = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Order.destroy({
-    where: {
-      id: req.body.id
-    }
+    where: { id: req.query.id }
   })
     .then(result => {
-      res.json(req.body)
+      res.json(req.query.id)
     })
     .catch(err => {
       next(error(400, 'Error delete order'))
@@ -97,21 +92,32 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, customerId, clockId, cityId, masterId, id } = req.body
-  Order.update({
-    date: date,
-    time: time,
-    customerId: customerId,
-    clockId: clockId,
-    cityId: cityId,
-    masterId: masterId
-  }, {
-    where: { id: id }
-  })
+  const { date, time, customerId, clockId, cityId, masterId } = req.body
+  Master.findByPk(masterId)
+    .then(master => {
+      const stringMaster = JSON.stringify(master)
+      const objMaster = JSON.parse(stringMaster)
+      if (objMaster.cityId !== +cityId) {
+        return next(error(400, 'Master doesnt work in this town'))
+      }
+      return true
+    })
+    .then(() => {
+      return Order.update({
+        date: date,
+        time: time,
+        customerId: customerId,
+        clockId: clockId,
+        cityId: cityId,
+        masterId: masterId
+      }, {
+        where: { id: req.query.id }
+      })
+    })
     .then(result => {
       return Order.findOne({
         where: { id: req.body.id },
-        include: [ { all: true } ]
+        include: [{ all: true }]
       })
     })
     .then((order) => {

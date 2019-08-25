@@ -11,10 +11,10 @@ const {
   getValidation, get
 } = workersController
 
-workersRouter.use('/list', list)
-workersRouter.use('/add', isAuthenticate, addValidation, add)
-workersRouter.use('/delete', isAuthenticate, removeValidation, remove)
-workersRouter.use('/update', isAuthenticate, updateValidation, update)
-workersRouter.use('/get', isAuthenticate, getValidation, get)
+workersRouter.get('/', list)
+workersRouter.get('/?id', isAuthenticate, getValidation, get)
+workersRouter.post('/', isAuthenticate, addValidation, add)
+workersRouter.delete('/?id', isAuthenticate, removeValidation, remove)
+workersRouter.put('/?id', isAuthenticate, updateValidation, update)
 
 module.exports = workersRouter

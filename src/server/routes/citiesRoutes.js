@@ -11,10 +11,10 @@ const {
   getValidation, get
 } = citiesController
 
-citiesRouter.use('/list', list)
-citiesRouter.use('/add', isAuthenticate, addValidation, add)
-citiesRouter.use('/delete', isAuthenticate, removeValidation, remove)
-citiesRouter.use('/update', isAuthenticate, updateValidation, update)
-citiesRouter.use('/get', isAuthenticate, getValidation, get)
+citiesRouter.get('/', list)
+citiesRouter.get('/?id', isAuthenticate, getValidation, get)
+citiesRouter.post('/', isAuthenticate, addValidation, add)
+citiesRouter.delete('/?id', isAuthenticate, removeValidation, remove)
+citiesRouter.put('/?id', isAuthenticate, updateValidation, update)
 
 module.exports = citiesRouter

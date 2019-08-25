@@ -24,7 +24,7 @@ export const loadClocks = () => {
     }
     dispatch({ type: LOAD_CLOCKS_STARTED })
     return axios
-      .get(`http://localhost:3000/api/clocks/list`)
+      .get(`http://localhost:3000/api/clocks/`)
       .then(res => {
         dispatch(loadClocksSuccess(res.data))
       })
@@ -38,7 +38,7 @@ export const addClockToDB = (values) => {
   return (dispatch) => {
     dispatch({ type: ADD_CLOCKS_STARTED })
     axios
-      .post(`http://localhost:3000/api/clocks/add`, values)
+      .post(`http://localhost:3000/api/clocks/`, values)
       .then(res => {
         dispatch(addClocksSuccess(res.data))
       })
@@ -55,7 +55,7 @@ export const editClockIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_CLOCKS_STARTED })
     axios
-      .post(`http://localhost:3000/api/clocks/update`, values)
+      .put(`http://localhost:3000/api/clocks/id?id=${values.id}`, values)
       .then(res => {
         dispatch(editClocksSuccess(res.data))
       })
@@ -72,7 +72,7 @@ export const deleteClockFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_CLOCKS_STARTED })
     axios
-      .post(`http://localhost:3000/api/clocks/delete`, { id })
+      .delete(`http://localhost:3000/api/clocks/id?id=${id}`)
       .then(res => {
         dispatch(deleteClocksSuccess(res.data))
       })

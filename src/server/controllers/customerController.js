@@ -45,7 +45,7 @@ exports.get = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  Customer.findByPk(req.body.id)
+  Customer.findByPk(req.query.id)
     .then((user) => {
       res.json(user)
     })
@@ -64,10 +64,10 @@ exports.remove = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Customer.destroy({
-    where: { id: req.body.id }
+    where: { id: req.query.id }
   })
     .then(result => {
-      res.json(req.body)
+      res.json(req.query.id)
     })
     .catch(err => {
       next(error(400, 'Error delete customer'))
@@ -89,7 +89,7 @@ exports.update = function (req, res, next) {
     name: req.body.name,
     email: req.body.email
   }, {
-    where: { id: req.body.id }
+    where: { id: req.query.id }
   })
     .then((result) => {
       return Customer.findByPk(req.body.id)

@@ -11,10 +11,10 @@ const {
   getValidation, get
 } = customersController
 
-customersRouter.use('/list', isAuthenticate, list)
-customersRouter.use('/delete', isAuthenticate, removeValidation, remove)
-customersRouter.use('/add', isAuthenticate, addValidation, add)
-customersRouter.use('/update', isAuthenticate, updateValidation, update)
-customersRouter.use('/get', isAuthenticate, getValidation, get)
+customersRouter.get('/', isAuthenticate, list)
+customersRouter.get('/?id', isAuthenticate, getValidation, get)
+customersRouter.delete('/?id', isAuthenticate, removeValidation, remove)
+customersRouter.post('/', isAuthenticate, addValidation, add)
+customersRouter.put('/?id', isAuthenticate, updateValidation, update)
 
 module.exports = customersRouter
