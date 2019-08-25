@@ -21,7 +21,7 @@ class EditWorkers extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .get(`http://localhost:3000/api/masters/id?id=${id}`)
+      .get(`/api/masters/id?id=${id}`)
       .then(res => {
         this.setState(() => ({
           load: false

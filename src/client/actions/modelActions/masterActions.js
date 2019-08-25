@@ -22,7 +22,7 @@ export const loadMasters = () => {
     axios.defaults.headers.common['authorization'] = token
     dispatch({ type: LOAD_MASTERS_STARTED })
     return axios
-      .get(`http://localhost:3000/api/masters/`)
+      .get(`/api/masters/`)
       .then(res => {
         dispatch(loadMastersSuccess(res.data))
       })
@@ -36,7 +36,7 @@ export const addMastersToDB = (values) => {
   return (dispatch) => {
     dispatch({ type: ADD_MASTERS_STARTED })
     axios
-      .post(`http://localhost:3000/api/masters/`, values)
+      .post(`/api/masters/`, values)
       .then(res => {
         dispatch(addMastersSuccess(res.data))
       })
@@ -53,7 +53,7 @@ export const editMastersIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_MASTERS_STARTED })
     axios
-      .put(`http://localhost:3000/api/masters/id?id=${values.id}`, values)
+      .put(`/api/masters/id?id=${values.id}`, values)
       .then(res => {
         dispatch(editMastersSuccess(res.data))
       })
@@ -70,7 +70,7 @@ export const deleteMastersFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_MASTERS_STARTED })
     axios
-      .delete(`http://localhost:3000/api/masters/id?id=${id}`)
+      .delete(`/api/masters/id?id=${id}`)
       .then(res => {
         dispatch(deleteMastersSuccess(res.data))
       })

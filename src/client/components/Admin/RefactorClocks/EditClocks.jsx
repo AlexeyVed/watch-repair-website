@@ -21,7 +21,7 @@ class EditClocks extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .get(`http://localhost:3000/api/clocks/id?id=${id}`)
+      .get(`/api/clocks/id?id=${id}`)
       .then(res => {
         this.setState(() => ({
           load: false

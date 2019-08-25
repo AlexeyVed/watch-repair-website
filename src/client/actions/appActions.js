@@ -21,7 +21,7 @@ export const makeOrder = (values) => {
     values.time = Number(values.time)
     dispatch({ type: MAKE_ORDER_STARTED })
     axios
-      .post(`http://localhost:3000/api/orders/freeMasters`, values)
+      .post(`/api/orders/freeMasters`, values)
       .then(res => {
         const obj = {
           data: res.data,
@@ -39,7 +39,7 @@ export const addOrder = (values) => {
   return (dispatch) => {
     dispatch({ type: MAKE_ORDER_WITH_MASTER_STARTED })
     axios
-      .post(`http://localhost:3000/api/orders/`, values)
+      .post(`/api/orders/`, values)
       .then(res => {
         dispatch({ type: MAKE_ORDER_WITH_MASTER_SUCCESS })
       })

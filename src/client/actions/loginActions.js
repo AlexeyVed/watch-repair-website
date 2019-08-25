@@ -16,7 +16,7 @@ export const loginToApp = (values) => {
     dispatch({ type: SING_IN_STARTED })
 
     axios
-      .post(`http://localhost:3000/api/users/login`, values)
+      .post(`/api/users/login`, values)
       .then(res => {
         localStorage.setItem('user', res.data.user.email)
         localStorage.setItem('token', res.data.token)
@@ -31,7 +31,7 @@ export const loginToApp = (values) => {
 export const logOutApp = () => {
   return (dispatch) => {
     axios
-      .post(`http://localhost:3000/api/users/logout`)
+      .post(`/api/users/logout`)
       .then(res => {
         localStorage.removeItem('user')
         localStorage.removeItem('token')

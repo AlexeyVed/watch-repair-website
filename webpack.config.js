@@ -5,12 +5,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const outputDirectory = 'dist'
 
 module.exports = {
-  mode: 'production',
   entry: ['babel-polyfill', './src/client/index.jsx'],
   output: {
     path: path.join(__dirname, outputDirectory),
-    filename: 'bundle.js',
-    publicPath: '/' || '/admin/'
+    publicPath: '/',
+    filename: 'bundle.js'
   },
   module: {
     rules: [

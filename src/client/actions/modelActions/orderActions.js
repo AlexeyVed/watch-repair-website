@@ -22,7 +22,7 @@ export const loadOrders = () => {
     axios.defaults.headers.common['authorization'] = token
     dispatch({ type: LOAD_ORDERS_STARTED })
     return axios
-      .get(`http://localhost:3000/api/orders/`)
+      .get(`/api/orders/`)
       .then(res => {
         dispatch(loadOrdersSuccess(res.data))
       })
@@ -39,7 +39,7 @@ export const addOrdersToDB = (values) => {
     dispatch({ type: ADD_ORDERS_STARTED })
 
     axios
-      .post(`http://localhost:3000/api/orders/admin`, values)
+      .post(`/api/orders/admin`, values)
       .then(res => {
         dispatch(addOrdersSuccess(res.data))
       })
@@ -60,7 +60,7 @@ export const editOrdersIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_ORDERS_STARTED })
     axios
-      .put(`http://localhost:3000/api/orders/id?id=${values.id}`, values)
+      .put(`/api/orders/id?id=${values.id}`, values)
       .then(res => {
         dispatch(editOrdersSuccess(res.data))
       })
@@ -77,7 +77,7 @@ export const deleteOrdersFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_ORDERS_STARTED })
     axios
-      .delete(`http://localhost:3000/api/orders/id?id=${id}`)
+      .delete(`/api/orders/id?id=${id}`)
       .then(res => {
         dispatch(deleteOrdersSuccess(res.data))
       })

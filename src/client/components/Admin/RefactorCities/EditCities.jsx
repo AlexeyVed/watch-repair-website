@@ -21,7 +21,7 @@ class EditCities extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .get(`http://localhost:3000/api/cities/id?id=${id}`)
+      .get(`/api/cities/id?id=${id}`)
       .then(res => {
         this.setState(() => ({
           load: false
