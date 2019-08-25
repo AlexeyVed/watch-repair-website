@@ -12,6 +12,6 @@ exports.getToday = () => {
     year: now.getFullYear(),
     month: now.getMonth() + 1,
     day: now.getDate(),
-    hour: now.getHours() + 1,
+    hour: now.getHours() + 1
   }
 }

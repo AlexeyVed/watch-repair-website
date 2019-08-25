@@ -4,27 +4,19 @@ const Master = require('../models/masters.js')
 const City = require('../models/cities.js')
 
 exports.list = function (req, res, next) {
-  try {
-    Master.findAll({
-      include: [{
-        model: City
-      }]
+  Master.findAll({
+    include: [ { model: City } ],
+    order: [
+      [City, 'city', 'ASC'],
+      ['name', 'ASC']
+    ]
+  })
+    .then(masters => {
+      res.json(masters)
     })
-      .then(masters => {
-        const json = JSON.stringify(masters)
-        try {
-          const obj = JSON.parse(json)
-          obj.sort((a, b) => {
-            return a.city.city.toLowerCase().localeCompare(b.city.city.toLowerCase())
-          })
-          res.json(obj)
-        } catch (e) {
-          res.send(json)
-        }
-      })
-  } catch (e) {
-    next(error(400, 'Error get list of masters'))
-  }
+    .catch(err => {
+      next(error(400, 'Error get list of masters'))
+    })
 }
 
 exports.getValidation = [
@@ -36,22 +28,16 @@ exports.get = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Master.findOne({
-      where: {
-        id: req.body.id
-      },
-      include: [{
-        model: City
-      }]
+  Master.findOne({
+    where: { id: req.body.id },
+    include: [ { model: City } ]
+  })
+    .then((worker) => {
+      res.send(worker)
     })
-      .then((worker) => {
-        const json = JSON.stringify(worker)
-        res.send(json)
-      })
-  } catch (e) {
-    next(error(400, 'Error get master'))
-  }
+    .catch(err => {
+      next(error(400, 'Error get master'))
+    })
 }
 
 exports.addValidation = [
@@ -65,29 +51,23 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Master.create({
-      name: req.body.name,
-      rating: req.body.rating,
-      cityId: req.body.cityId
-    })
-      .then(result => {
-        Master.findOne({
-          where: {
-            id: result.id
-          },
-          include: [{
-            model: City
-          }]
-        })
-          .then(master => {
-            const json = JSON.stringify(master)
-            res.status(201).send(json)
-          })
+  Master.create({
+    name: req.body.name,
+    rating: req.body.rating,
+    cityId: req.body.cityId
+  })
+    .then(result => {
+      return Master.findOne({
+        where: { id: result.id },
+        include: [ { model: City } ]
       })
-  } catch (e) {
-    next(error(400, 'Error add master'))
-  }
+    })
+    .then(master => {
+      res.status(201).send(master)
+    })
+    .catch(err => {
+      next(error(400, 'Error add master'))
+    })
 }
 
 exports.removeValidation = [
@@ -99,19 +79,15 @@ exports.remove = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Master.destroy({
-      where: {
-        id: req.body.id
-      }
+  Master.destroy({
+    where: { id: req.body.id }
+  })
+    .then(result => {
+      res.json(req.body)
     })
-      .then(result => {
-        const json = JSON.stringify(req.body)
-        res.send(json)
-      })
-  } catch (e) {
-    next(error(400, 'Error delete master'))
-  }
+    .catch(err => {
+      next(error(400, 'Error delete master'))
+    })
 }
 
 exports.updateValidation = [
@@ -126,31 +102,23 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Master.update({
-      name: req.body.name,
-      rating: req.body.rating,
-      cityId: req.body.cityId
-    }, {
-      where: {
-        id: req.body.id
-      }
-    })
-      .then(result => {
-        Master.findOne({
-          where: {
-            id: req.body.id
-          },
-          include: [{
-            model: City
-          }]
-        })
-          .then(master => {
-            const json = JSON.stringify(master)
-            res.status(201).send(json)
-          })
+  Master.update({
+    name: req.body.name,
+    rating: req.body.rating,
+    cityId: req.body.cityId
+  }, {
+    where: { id: req.body.id }
+  })
+    .then(result => {
+      return Master.findOne({
+        where: { id: req.body.id },
+        include: [ { model: City } ]
       })
-  } catch (e) {
-    next(error(400, 'Error update master'))
-  }
+    })
+    .then(master => {
+      res.status(201).json(master)
+    })
+    .catch(err => {
+      next(error(400, 'Error update master'))
+    })
 }
