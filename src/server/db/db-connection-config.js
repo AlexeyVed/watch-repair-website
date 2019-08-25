@@ -11,9 +11,9 @@ const mysql = new Sequelize('clockwise', 'root', 'e8zbprhH', {
   }
 })
 
-const postgresql = new Sequelize('clockwise', 'postgres', 'e8zbprhH', {
+const postgresql = new Sequelize('dbn9cua6pcfq6m', 'pawllgmzgkumjo', '219fda9a0c93a8b6208af0b3a15694e3e49b12f1741feeff7300225deb0b67a2', {
   dialect: 'postgres',
-  host: 'localhost',
+  host: 'ec2-107-20-155-148.compute-1.amazonaws.com',
   port: 5432,
   pool: {
     max: 5,

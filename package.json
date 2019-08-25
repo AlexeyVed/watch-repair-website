@@ -6,11 +6,9 @@
   "scripts": {
     "heroku-postbuild": "webpack -p",
     "server": "node src/server/server.js",
-
     "start-dev": "start webpack-dev-server --mode development --history-api-fallback",
     "server-dev": "start nodemon src/server/server.js",
     "all-start": "npm-run-all --parallel start-dev server-dev",
-
     "test": "mocha --opts ./config/mocha.opts src/client/**/*.test.js --recursive --silent",
     "test-cov": "nyc -e .jsx mocha --opts ./config/mocha.opts src/**/*.test.js --recursive -R nyan --silent",
     "update-snapshots": "mocha --opts ./config/mocha.opts src/**/*.test.js --require mocha-snapshots --update"
@@ -75,7 +73,9 @@
     "redux-form": "^8.2.3",
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.13.0",
-    "sequelize-cli": "^5.5.0"
+    "sequelize-cli": "^5.5.0",
+    "nodemon": "^1.18.11",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -86,7 +86,6 @@
     "babel-loader": "^8.0.0",
     "chai": "^4.2.0",
     "clean-webpack-plugin": "^1.0.0",
-    "cors": "^2.8.5",
     "css-loader": "^2.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
@@ -103,7 +102,6 @@
     "less-loader": "^4.1.0",
     "mocha": "^6.0.2",
     "mocha-snapshots": "^4.2.0",
-    "nodemon": "^1.18.11",
     "npm-run-all": "^4.1.5",
     "nyc": "^13.3.0",
     "redux-devtools-extension": "^2.13.8",
@@ -113,5 +111,8 @@
     "webpack": "^4.33.0",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.7.1"
+  },
+  "engines": {
+    "node": "8.12.0"
   }
 }
