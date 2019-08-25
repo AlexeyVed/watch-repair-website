@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteClockFromDB, loadClocks, loadDataEnd } from '../../../actions'
+import { deleteClockFromDB, loadClocks, loadDataEnd, setPage } from '../../../actions'
 import AddClocks from '../RefactorClocks/AddClocks.jsx'
 import EditClocks from '../RefactorClocks/EditClocks.jsx'
 
@@ -37,6 +37,7 @@ class RefactorClocks extends React.Component {
       .then(() => {
         this.props.loadEnd()
       })
+    this.props.setPage('clocks')
   }
   render () {
     const { clocks, deleteClock } = this.props
@@ -83,7 +84,7 @@ class RefactorClocks extends React.Component {
 
     return (
       <div className='table-clocks'>
-        <div className='table-clocks__title'>Which clock we repair</div>
+        <div className='table-clocks__title'>Table clock</div>
         <div className='table-clocks__table'>
           <table>
             <tbody>
@@ -114,7 +115,7 @@ class RefactorClocks extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    clocks: state.adminReducer.data.clocks
+    clocks: state.clockReducer.data
 
   }
 }
@@ -123,7 +124,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteClock: id => dispatch(deleteClockFromDB(id)),
     loadClocks: () => dispatch(loadClocks()),
-    loadEnd: () => dispatch(loadDataEnd())
+    loadEnd: () => dispatch(loadDataEnd()),
+    setPage: data => dispatch(setPage(data))
   }
 }
 

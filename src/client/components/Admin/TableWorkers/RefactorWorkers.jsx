@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import { deleteWorkerFromDB, loadCities, loadDataEnd, loadWorkers } from '../../../actions'
+import { deleteMastersFromDB, loadCities, loadDataEnd, loadMasters, setPage } from '../../../actions'
 import AddWorkers from '../RefactorWorkers/AddWorkers.jsx'
 import EditWorkers from '../RefactorWorkers/EditWorkers.jsx'
 
@@ -33,10 +33,11 @@ class RefactorWorkers extends React.Component {
   }
 
   componentDidMount () {
-    return Promise.all([this.props.loadWorkers(), this.props.loadCities()])
+    Promise.all([this.props.loadWorkers(), this.props.loadCities()])
       .then((res) => {
         this.props.loadEnd()
       })
+    this.props.setPage('masters')
   }
   render () {
     const { workers, deleteWorker } = this.props
@@ -83,7 +84,7 @@ class RefactorWorkers extends React.Component {
     })
     return (
       <div className='table-workers'>
-        <div className='table-workers__title'>Our Workers</div>
+        <div className='table-workers__title'>Table masters</div>
         <div className='table-workers__table'>
           <table>
             <tbody>
@@ -115,16 +116,17 @@ class RefactorWorkers extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    workers: state.adminReducer.data.workers
+    workers: state.masterReducer.data
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteWorker: id => dispatch(deleteWorkerFromDB(id)),
-    loadWorkers: () => dispatch(loadWorkers()),
+    deleteWorker: id => dispatch(deleteMastersFromDB(id)),
+    loadWorkers: () => dispatch(loadMasters()),
     loadCities: () => dispatch(loadCities()),
-    loadEnd: () => dispatch(loadDataEnd())
+    loadEnd: () => dispatch(loadDataEnd()),
+    setPage: data => dispatch(setPage(data))
   }
 }
 

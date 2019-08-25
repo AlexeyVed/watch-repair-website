@@ -3,28 +3,15 @@ const error = require('../services/modules.js').makeError
 const Clock = require('../models/clocks.js')
 
 exports.list = function (req, res, next) {
-  try {
-    Clock.findAll()
-      .then(clocks => {
-        const json = JSON.stringify(clocks)
-        try {
-          const obj = JSON.parse(json)
-          obj.sort((a, b) => {
-            if (a.timeRepair > b.timeRepair) {
-              return 1
-            }
-            if (a.timeRepair < b.timeRepair) {
-              return -1
-            }
-          })
-          res.json(obj)
-        } catch (e) {
-          res.send(json)
-        }
-      })
-  } catch (e) {
-    next(error(400, 'Error get list of clocks'))
-  }
+  Clock.findAll({
+    order: [ ['timeRepair', 'ASC'] ]
+  })
+    .then(clocks => {
+      res.json(clocks)
+    })
+    .catch(err => {
+      next(error(400, 'Error get list of clocks'))
+    })
 }
 
 exports.getValidation = [
@@ -36,15 +23,13 @@ exports.get = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Clock.findByPk(req.body.id)
-      .then((clock) => {
-        const json = JSON.stringify(clock)
-        res.send(json)
-      })
-  } catch (e) {
-    next(error(400, 'Error get clock'))
-  }
+  Clock.findByPk(req.query.id)
+    .then((clock) => {
+      res.json(clock)
+    })
+    .catch(err => {
+      next(error(400, 'Error get clock'))
+    })
 }
 
 exports.addValidation = [
@@ -57,18 +42,16 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Clock.create({
-      typeClock: req.body.typeClock,
-      timeRepair: req.body.timeRepair
+  Clock.create({
+    typeClock: req.body.typeClock,
+    timeRepair: req.body.timeRepair
+  })
+    .then(result => {
+      res.status(201).json(result)
     })
-      .then(result => {
-        const json = JSON.stringify(result)
-        res.status(201).send(json)
-      })
-  } catch (e) {
-    next(error(400, 'Error add clock'))
-  }
+    .catch(err => {
+      next(error(400, 'Error add clock'))
+    })
 }
 
 exports.removeValidation = [
@@ -80,19 +63,15 @@ exports.remove = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Clock.destroy({
-      where: {
-        id: req.body.id
-      }
+  Clock.destroy({
+    where: { id: req.query.id }
+  })
+    .then(result => {
+      res.json(req.query.id)
     })
-      .then(result => {
-        const json = JSON.stringify(req.body)
-        res.send(json)
-      })
-  } catch (e) {
-    next(error(400, 'Error delete clock'))
-  }
+    .catch(err => {
+      next(error(400, 'Error delete clock'))
+    })
 }
 
 exports.updateValidation = [
@@ -106,22 +85,19 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Clock.update({
-      typeClock: req.body.typeClock,
-      timeRepair: req.body.timeRepair
-    }, {
-      where: {
-        id: req.body.id
-      }
-    }).then((result) => {
-      Clock.findByPk(req.body.id)
-        .then(clock => {
-          const json = JSON.stringify(clock)
-          res.send(json)
-        })
+  Clock.update({
+    typeClock: req.body.typeClock,
+    timeRepair: req.body.timeRepair
+  }, {
+    where: { id: req.query.id }
+  })
+    .then((result) => {
+      return Clock.findByPk(req.body.id)
     })
-  } catch (e) {
-    next(error(400, 'Error update clock'))
-  }
+    .then(clock => {
+      res.json(clock)
+    })
+    .catch(err => {
+      next(error(400, 'Error update clock'))
+    })
 }

@@ -5,23 +5,39 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import './AdminBar.less'
 
 class AdminBar extends React.Component {
+  componentDidUpdate (prevProps, prevState) {
+    const buttons = document.querySelectorAll('.button-bar')
+    buttons.forEach(button => {
+      if (button.classList.contains(this.props.page)) {
+        button.classList.add('active')
+      } else {
+        button.classList.remove('active')
+      }
+    })
+  }
+
   render () {
     return (
       <div className='bar-choose-item'>
-        <div className='bar-choose-item__title'>What dо you want change?</div>
         <div className="bar-choose-item__buttons">
-          <LinkButton to='/admin/cities' name='Control cities'/>
-          <LinkButton to='/admin/workers' name='Control workers'/>
-          <LinkButton to='/admin/clocks' name='Control clocks'/>
-          <LinkButton to='/admin/clients' name='Control clients'/>
-          <LinkButton to='/admin/orders' name='Control orders'/>
+          <LinkButton className='button-bar cities' to='/admin/cities' name='Control cities'/>
+          <LinkButton className='button-bar masters' to='/admin/workers' name='Control masters'/>
+          <LinkButton className='button-bar clocks' to='/admin/clocks' name='Control clocks'/>
+          <LinkButton className='button-bar customers' to='/admin/clients' name='Control clients'/>
+          <LinkButton className='button-bar orders' to='/admin/orders' name='Control orders'/>
         </div>
       </div>
     )
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    page: state.appReducer.page
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   null
 )(AdminBar)

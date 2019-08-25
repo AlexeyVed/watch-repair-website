@@ -143,8 +143,8 @@ class OrderForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    chooseClock: state.adminReducer.data.clocks,
-    chooseCities: state.adminReducer.data.cities,
+    chooseClock: state.clockReducer.data,
+    chooseCities: state.cityReducer.data,
     currentEmail: state.loginReducer.singInUser,
     chooseMaster: state.appReducer.chooseWorker
   }

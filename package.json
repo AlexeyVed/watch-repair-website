@@ -4,10 +4,13 @@
   "description": "",
   "main": "src/server/index.js",
   "scripts": {
-    "build": "start webpack --mode production",
-    "start": "start webpack-dev-server --mode development --history-api-fallback",
-    "server": "start nodemon src/server/server.js",
-    "all-start": "npm-run-all --parallel start server",
+    "heroku-postbuild": "webpack -p",
+    "server": "node src/server/server.js",
+
+    "start-dev": "start webpack-dev-server --mode development --history-api-fallback",
+    "server-dev": "start nodemon src/server/server.js",
+    "all-start": "npm-run-all --parallel start-dev server-dev",
+
     "test": "mocha --opts ./config/mocha.opts src/client/**/*.test.js --recursive --silent",
     "test-cov": "nyc -e .jsx mocha --opts ./config/mocha.opts src/**/*.test.js --recursive -R nyan --silent",
     "update-snapshots": "mocha --opts ./config/mocha.opts src/**/*.test.js --require mocha-snapshots --update"
@@ -108,7 +111,7 @@
     "style-loader": "^0.23.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.3",
+    "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.7.1"
   }
 }

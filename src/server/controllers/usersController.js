@@ -21,7 +21,7 @@ exports.login = (req, res, next) => {
       return next(error(info.code, info.message))
     }
     req.logIn(user, err => {
-      User.findOne({
+      return User.findOne({
         where: {
           email: user.email
         }
@@ -34,8 +34,7 @@ exports.login = (req, res, next) => {
             user: user,
             exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60
           }
-          const json = JSON.stringify(obj)
-          res.status(200).send(json)
+          res.status(200).json(obj)
         })
     })
   })(req, res, next)

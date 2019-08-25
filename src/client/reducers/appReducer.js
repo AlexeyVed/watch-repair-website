@@ -1,4 +1,6 @@
 import {
+  MISS_ERRORS,
+  END_LOAD_DATA,
   MAKE_ORDER_STARTED,
   MAKE_ORDER_SUCCESS,
   MAKE_ORDER_FAILURE,
@@ -7,9 +9,13 @@ import {
   MAKE_ORDER_WITH_MASTER_FAILURE,
   CHANGE_PAGE,
   SET_CHOOSE_WORKER,
-  MISS_APP_ERROR,
-  RETURN_HOME_PAGE
-} from '../actions/types'
+  RETURN_HOME_PAGE,
+  LOAD_CITIES_STARTED,
+  LOAD_CLOCKS_STARTED,
+  LOAD_CUSTOMERS_STARTED,
+  LOAD_ORDERS_STARTED,
+  LOAD_MASTERS_STARTED
+} from '../actions/types.js'
 
 const initialState = {
   forOrder: {
@@ -17,12 +23,12 @@ const initialState = {
     masterId: null,
     order: {}
   },
-  dataLoad: false,
   isMakeOrder: false,
-  makeOrderError: null,
+  error: null,
   chooseWorker: false,
+  page: null,
   showModal: false,
-  page: null
+  dataLoad: false
 }
 
 const appReducer = (state = initialState, action) => {
@@ -50,7 +56,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         isMakeOrder: false,
         showModal: true,
-        makeOrderError: action.payload
+        error: action.payload
       }
 
     case RETURN_HOME_PAGE:
@@ -93,20 +99,13 @@ const appReducer = (state = initialState, action) => {
           ...state.forOrder,
           masterId: null
         },
-        makeOrderError: action.payload
+        error: action.payload
       }
 
     case CHANGE_PAGE:
       return {
         ...state,
         page: action.payload
-      }
-
-    case MISS_APP_ERROR:
-      return {
-        ...state,
-        showModal: false,
-        makeOrderError: null
       }
 
     case SET_CHOOSE_WORKER:
@@ -116,6 +115,49 @@ const appReducer = (state = initialState, action) => {
           ...state.forOrder,
           masterId: action.payload
         }
+      }
+
+    case LOAD_CLOCKS_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case LOAD_CITIES_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case LOAD_CUSTOMERS_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case LOAD_MASTERS_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case LOAD_ORDERS_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case MISS_ERRORS:
+      return {
+        ...state,
+        error: null,
+        showModal: false
+      }
+
+    case END_LOAD_DATA:
+      return {
+        ...state,
+        dataLoad: false
       }
 
     default:

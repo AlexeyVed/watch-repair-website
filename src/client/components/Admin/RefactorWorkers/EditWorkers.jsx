@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
-import { editWorkerIntoDB } from '../../../actions'
+import { editMastersIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
 import './RefactorWorkers.less'
@@ -21,7 +21,7 @@ class EditWorkers extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .post(`http://localhost:3000/api/masters/get`, { id })
+      .get(`/api/masters/id?id=${id}`)
       .then(res => {
         this.setState(() => ({
           load: false
@@ -45,65 +45,66 @@ class EditWorkers extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-window'>
-          <form
-            onSubmit={handleSubmit(editWorker)}
-            className='refactor-workers'>
+          <div className='refactor-workers'>
             <div className="refactor-workers__header">
-            Edit Worker
+              Edit Worker
               <LinkButton to='/admin/workers' name='&times;' className='refactor-workers__header__right-button-close'/>
             </div>
-            <Field
-              label='ID'
-              name='id'
-              component={myInput}
-              type='text'
-              placeholder={this.props.match.params.id}
-              input={{ disabled: true }}
-            />
-            <Field
-              label='Update worker name'
-              name='name'
-              component={myInput}
-              validate={[required]}
-              type='text'
-              placeholder='Update worker name'
-            />
-            <div className='refactor-workers__select'>
-              <label>Update city</label>
+            <form
+              onSubmit={handleSubmit(editWorker)}>
               <Field
-                name='cityId'
-                component='select'
+                label='ID'
+                name='id'
+                component={myInput}
+                type='text'
+                placeholder={this.props.match.params.id}
+                input={{ disabled: true }}
+              />
+              <Field
+                label='Update worker name'
+                name='name'
+                component={myInput}
                 validate={[required]}
                 type='text'
-              >
-                <option key={0} value='' disabled hidden>Choose city</option>
-                {
-                  chooseCities.map(item => (
-                    <option key={item.id} value={item.id}>{item.city}</option>
-                  ))
-                }
-              </Field>
-            </div>
-            <div className='refactor-workers__select'>
-              <label>Update rating</label>
-              <Field
-                name='rating'
-                component='select'
-                validate={[required]}
-                type='text'
-              >
-                <option key={0} value='' disabled hidden>Choose Rating</option>
-                <option key={1} value={1}>1</option>
-                <option key={2} value={2}>2</option>
-                <option key={3} value={3}>3</option>
-                <option key={4} value={4}>4</option>
-                <option key={5} value={5}>5</option>
-              </Field>
-            </div>
-            <button
-              type='submit'
-              label='submit'>Submit</button>
-          </form>
+                placeholder='Update worker name'
+              />
+              <div className='refactor-workers__select'>
+                <label>Update city</label>
+                <Field
+                  name='cityId'
+                  component='select'
+                  validate={[required]}
+                  type='text'
+                >
+                  <option key={0} value='' disabled hidden>Choose city</option>
+                  {
+                    chooseCities.map(item => (
+                      <option key={item.id} value={item.id}>{item.city}</option>
+                    ))
+                  }
+                </Field>
+              </div>
+              <div className='refactor-workers__select'>
+                <label>Update rating</label>
+                <Field
+                  name='rating'
+                  component='select'
+                  validate={[required]}
+                  type='text'
+                >
+                  <option key={0} value='' disabled hidden>Choose Rating</option>
+                  <option key={1} value={1}>1</option>
+                  <option key={2} value={2}>2</option>
+                  <option key={3} value={3}>3</option>
+                  <option key={4} value={4}>4</option>
+                  <option key={5} value={5}>5</option>
+                </Field>
+              </div>
+              <button
+                type='submit'
+                label='submit'>Submit</button>
+            </form>
+          </div>
           {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
@@ -113,15 +114,14 @@ class EditWorkers extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    chooseCities: state.adminReducer.data.cities,
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    chooseCities: state.cityReducer.data,
+    redirectBack: state.masterReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    /*    editWorker: values => console.log(values), */
-    editWorker: values => dispatch(editWorkerIntoDB(values))
+    editWorker: values => dispatch(editMastersIntoDB(values))
   }
 }
 

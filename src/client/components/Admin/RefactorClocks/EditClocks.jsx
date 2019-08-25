@@ -21,7 +21,7 @@ class EditClocks extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .post(`http://localhost:3000/api/clocks/get`, { id })
+      .get(`/api/clocks/id?id=${id}`)
       .then(res => {
         this.setState(() => ({
           load: false
@@ -44,41 +44,42 @@ class EditClocks extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-window'>
-          <form
-            onSubmit={handleSubmit(editClock)}
-            className='refactor-clocks'>
+          <div className='refactor-clocks'>
             <div className="refactor-clocks__header">
               Edit Clock
               <LinkButton to='/admin/clocks' name='&times;' className='refactor-clocks__header__right-button-close'/>
             </div>
-            <Field
-              label='ID'
-              name='id'
-              component={myInput}
-              type='text'
-              placeholder={this.props.match.params.id}
-              input={{ disabled: true }}
-            />
-            <Field
-              label='Enter type of clock'
-              name='typeClock'
-              component={myInput}
-              validate={[required]}
-              type='text'
-              placeholder='Enter type of clock'
-            />
-            <Field
-              label='Enter time of repair clock'
-              name='timeRepair'
-              component={myInput}
-              validate={[required]}
-              type='number'
-              placeholder='Enter time repair clock'
-            />
-            <button
-              type='submit'
-              label='submit'>Submit</button>
-          </form>
+            <form
+              onSubmit={handleSubmit(editClock)}>
+              <Field
+                label='ID'
+                name='id'
+                component={myInput}
+                type='text'
+                placeholder={this.props.match.params.id}
+                input={{ disabled: true }}
+              />
+              <Field
+                label='Enter type of clock'
+                name='typeClock'
+                component={myInput}
+                validate={[required]}
+                type='text'
+                placeholder='Enter type of clock'
+              />
+              <Field
+                label='Enter time of repair clock'
+                name='timeRepair'
+                component={myInput}
+                validate={[required]}
+                type='number'
+                placeholder='Enter time repair clock'
+              />
+              <button
+                type='submit'
+                label='submit'>Submit</button>
+            </form>
+          </div>
           {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
@@ -88,7 +89,7 @@ class EditClocks extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.clockReducer.redirectBackFromRefactor
   }
 }
 

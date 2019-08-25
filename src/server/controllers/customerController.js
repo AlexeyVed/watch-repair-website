@@ -3,23 +3,15 @@ const error = require('../services/modules.js').makeError
 const Customer = require('../models/customers.js')
 
 exports.list = function (req, res, next) {
-  try {
-    Customer.findAll()
-      .then(customers => {
-        const json = JSON.stringify(customers)
-        try {
-          const obj = JSON.parse(json)
-          obj.sort((a, b) => {
-            return a.email.toLowerCase().localeCompare(b.email.toLowerCase())
-          })
-          res.json(obj)
-        } catch (e) {
-          res.send(json)
-        }
-      })
-  } catch (e) {
-    next(error(400, 'Error get list of customers'))
-  }
+  Customer.findAll({
+    order: [ ['email', 'ASC'] ]
+  })
+    .then(customers => {
+      res.json(customers)
+    })
+    .catch(err => {
+      next(error(400, 'Error get list of customers'))
+    })
 }
 
 exports.addValidation = [
@@ -32,18 +24,16 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Customer.create({
-      email: req.body.email,
-      name: req.body.name
+  Customer.create({
+    email: req.body.email,
+    name: req.body.name
+  })
+    .then(result => {
+      res.status(201).json(result)
     })
-      .then(result => {
-        const json = JSON.stringify(result)
-        res.status(201).send(json)
-      })
-  } catch (e) {
-    next(error(400, 'Error add customer'))
-  }
+    .catch(err => {
+      next(error(400, 'Error add customer'))
+    })
 }
 
 exports.getValidation = [
@@ -55,15 +45,13 @@ exports.get = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Customer.findByPk(req.body.id)
-      .then((user) => {
-        const json = JSON.stringify(user)
-        res.send(json)
-      })
-  } catch (e) {
-    next(error(400, 'Error get customer'))
-  }
+  Customer.findByPk(req.query.id)
+    .then((user) => {
+      res.json(user)
+    })
+    .catch(err => {
+      next(error(400, 'Error get customer'))
+    })
 }
 
 exports.removeValidation = [
@@ -75,19 +63,15 @@ exports.remove = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Customer.destroy({
-      where: {
-        id: req.body.id
-      }
+  Customer.destroy({
+    where: { id: req.query.id }
+  })
+    .then(result => {
+      res.json(req.query.id)
     })
-      .then(result => {
-        const json = JSON.stringify(req.body)
-        res.send(json)
-      })
-  } catch (e) {
-    next(error(400, 'Error delete customer'))
-  }
+    .catch(err => {
+      next(error(400, 'Error delete customer'))
+    })
 }
 
 exports.updateValidation = [
@@ -101,22 +85,19 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  try {
-    Customer.update({
-      name: req.body.name,
-      email: req.body.email
-    }, {
-      where: {
-        id: req.body.id
-      }
-    }).then((result) => {
-      Customer.findByPk(req.body.id)
-        .then(customer => {
-          const json = JSON.stringify(customer)
-          res.send(json)
-        })
+  Customer.update({
+    name: req.body.name,
+    email: req.body.email
+  }, {
+    where: { id: req.query.id }
+  })
+    .then((result) => {
+      return Customer.findByPk(req.body.id)
     })
-  } catch (e) {
-    next(error(400, 'Error update customer'))
-  }
+    .then(customer => {
+      res.json(customer)
+    })
+    .catch(err => {
+      next(error(400, 'Error update customer'))
+    })
 }

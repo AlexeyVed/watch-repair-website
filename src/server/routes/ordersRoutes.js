@@ -13,12 +13,12 @@ const {
   getValidation, get
 } = ordersController
 
-ordersRouter.use('/list', isAuthenticate, list)
-ordersRouter.use('/getWorkers', getWorkersValidation, getWorkers)
-ordersRouter.use('/add', addValidation, add)
-ordersRouter.use('/delete', isAuthenticate, removeValidation, remove)
-ordersRouter.use('/update', isAuthenticate, updateValidation, update)
-ordersRouter.use('/addAdmin', isAuthenticate, addAdminValidation, addAdmin)
-ordersRouter.use('/get', isAuthenticate, getValidation, get)
+ordersRouter.get('/', isAuthenticate, list)
+ordersRouter.get('/?id', isAuthenticate, getValidation, get)
+ordersRouter.post('/freeMasters', getWorkersValidation, getWorkers)
+ordersRouter.post('/', addValidation, add)
+ordersRouter.post('/admin', isAuthenticate, addAdminValidation, addAdmin)
+ordersRouter.delete('/?id', isAuthenticate, removeValidation, remove)
+ordersRouter.put('/?id', isAuthenticate, updateValidation, update)
 
 module.exports = ordersRouter

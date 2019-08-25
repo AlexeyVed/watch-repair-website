@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-
 import { logOutApp } from '../../../actions'
 
 import './header.less'
 
 class Header extends React.Component {
   state = {
-    redirect: false
+    redirect: false,
+    redirectAdmin: false
   }
 
   handleClickLogOut = () => {
@@ -18,6 +18,10 @@ class Header extends React.Component {
 
   clickLogo = () => {
     this.setState({ redirect: true })
+  }
+
+  clickUser = () => {
+    this.setState({ redirectAdmin: true })
   }
 
   render () {
@@ -30,6 +34,11 @@ class Header extends React.Component {
       return <Redirect to={{ pathname: '/' }}/>
     }
 
+    if (this.state.redirectAdmin) {
+      this.setState({ redirectAdmin: false })
+      return <Redirect to={{ pathname: '/admin' }}/>
+    }
+
     if (!currentUser) {
       view = <React.Fragment>
         <div className='container-user'>
@@ -38,7 +47,9 @@ class Header extends React.Component {
     } else {
       view = <React.Fragment>
         <div className='container-user'>
-          Welcome,  {currentUser}
+          <div className='container-user__user' onClick={this.clickUser}>
+            {currentUser}
+          </div>
         </div>
         <div className='container-buttons'>
           <button

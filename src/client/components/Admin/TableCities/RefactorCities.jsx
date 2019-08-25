@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import AddCities from '../RefactorCities/AddCities.jsx'
 import EditCities from '../RefactorCities/EditCities.jsx'
-import { deleteCityFromDB, loadCities, loadDataEnd } from '../../../actions'
+import { deleteCityFromDB, loadCities, loadDataEnd, setPage } from '../../../actions'
 
 import './RefactorCities.less'
 
@@ -37,6 +37,7 @@ class RefactorCities extends React.Component {
       .then(res => {
         this.props.loadEnd()
       })
+    this.props.setPage('cities')
   }
   render () {
     const { cities, deleteCity } = this.props
@@ -82,7 +83,7 @@ class RefactorCities extends React.Component {
 
     return (
       <div className='table-cities'>
-        <div className='table-cities__title'>Town where we work</div>
+        <div className='table-cities__title'>Table cities</div>
         <div className='table-cities__table'>
           <table>
             <tbody>
@@ -112,7 +113,7 @@ class RefactorCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    cities: state.adminReducer.data.cities
+    cities: state.cityReducer.data
   }
 }
 
@@ -120,7 +121,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteCity: id => dispatch(deleteCityFromDB(id)),
     loadCities: () => dispatch(loadCities()),
-    loadEnd: () => dispatch(loadDataEnd())
+    loadEnd: () => dispatch(loadDataEnd()),
+    setPage: data => dispatch(setPage(data))
   }
 }
 

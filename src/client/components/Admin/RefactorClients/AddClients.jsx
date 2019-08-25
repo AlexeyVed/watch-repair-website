@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import myInput from '../../FieldRedux'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { validateEmail, required } from '../../../validation'
-import { addUserToDB } from '../../../actions'
+import { addCustomersToDB } from '../../../actions'
 
 import './RefactorClients.less'
 
@@ -23,35 +23,36 @@ class AddClients extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-window'>
-          <form
-            onSubmit={handleSubmit(addUser)}
-            className='refactor-clients'>
+          <div className='refactor-clients'>
             <div className="refactor-clients__header">
               Add Client
               <LinkButton to='/admin/clients' name='&times;' className='refactor-clients__header__right-button-close'/>
             </div>
-            <Field
-              label='Your email'
-              name='email'
-              component={myInput}
-              type='text'
-              placeholder='Enter your email'
-              validate={[validateEmail, required]}
-              required
-            />
-            <Field
-              label='Your name'
-              name='name'
-              component={myInput}
-              type='text'
-              placeholder='Enter your name'
-              validate={[required]}
-              required
-            />
-            <button
-              type='submit'
-              label='submit'>Submit</button>
-          </form>
+            <form
+              onSubmit={handleSubmit(addUser)}>
+              <Field
+                label='Your email'
+                name='email'
+                component={myInput}
+                type='text'
+                placeholder='Enter your email'
+                validate={[validateEmail, required]}
+                required
+              />
+              <Field
+                label='Your name'
+                name='name'
+                component={myInput}
+                type='text'
+                placeholder='Enter your name'
+                validate={[required]}
+                required
+              />
+              <button
+                type='submit'
+                label='submit'>Submit</button>
+            </form>
+          </div>
         </div>
         , document.getElementById('modal-root'))
     )
@@ -60,13 +61,13 @@ class AddClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    redirectBack: state.adminReducer.redirectBackFromRefactor
+    redirectBack: state.customerReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addUser: values => dispatch(addUserToDB(values))
+    addUser: values => dispatch(addCustomersToDB(values))
   }
 }
 

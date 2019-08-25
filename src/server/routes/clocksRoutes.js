@@ -11,10 +11,10 @@ const {
   getValidation, get
 } = clocksController
 
-clocksRouter.use('/list', list)
-clocksRouter.use('/add', isAuthenticate, addValidation, add)
-clocksRouter.use('/delete', isAuthenticate, removeValidation, remove)
-clocksRouter.use('/update', isAuthenticate, updateValidation, update)
-clocksRouter.use('/get', isAuthenticate, getValidation, get)
+clocksRouter.get('/', list)
+clocksRouter.get('/?id', isAuthenticate, getValidation, get)
+clocksRouter.post('/', isAuthenticate, addValidation, add)
+clocksRouter.delete('/?id', isAuthenticate, removeValidation, remove)
+clocksRouter.put('/?id', isAuthenticate, updateValidation, update)
 
 module.exports = clocksRouter

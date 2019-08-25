@@ -1,51 +1,56 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { missErrorAdmin } from '../../actions'
+import { missErrors } from '../../actions'
 
 import './ModalWindow.less'
 
 class ModalWindowAdmin extends React.Component {
-  componentDidMount () {
-    setTimeout(() => {
-      this.props.missAdminError()
-    }, 1500)
+  state = {
+    timeOut: 1500
+  }
+
+  timeOutNull = () => {
+    this.setState({ timeOut: 0 })
   }
 
   render () {
-    const { wasDelete,
-      wasCreate,
-      wasUpdate,
-      refactorError,
+    const {
       clockError,
       citiesError,
       usersError,
       workersError,
-      ordersError } = this.props
-    let text
+      ordersError,
+      clockMessage,
+      cityMessage,
+      customerMessage,
+      masterMessage,
+      orderMessage
+    } = this.props
 
-    if (refactorError) {
-      text = refactorError
-    } if (wasDelete) {
-      text = `Model was successfully deleted.`
-    } else if (wasCreate) {
-      text = `Model was successfully created.`
-    } else if (wasUpdate) {
-      text = `Model was successfully updated.`
-    }
+    setTimeout(() => {
+      this.props.missAdminError()
+    }, this.state.timeOut)
 
     return (
 
       ReactDOM.createPortal(
         <div className='modal-info'>
-          <div className='modal-info__text'>
+          <div className='modal-info__text' onClick={this.timeOutNull}>
             <div className='modal-info__text__errors'>
-              <div>{ text }</div>
-              <div>{ clockError }</div>
-              <div>{ citiesError }</div>
-              <div>{ workersError }</div>
-              <div>{ usersError }</div>
-              <div>{ ordersError }</div>
+              { (clockMessage) ? <div>{ clockMessage }</div> : null }
+              { (cityMessage) ? <div>{ cityMessage }</div> : null }
+              { (customerMessage) ? <div>{ customerMessage }</div> : null }
+              { (masterMessage) ? <div>{ masterMessage }</div> : null }
+              { (orderMessage) ? <div>{ orderMessage }</div> : null }
+              { (clockError) ? <div>{ clockError }</div> : null }
+              { (citiesError) ? <div>{ citiesError }</div> : null }
+              { (usersError) ? <div>{ usersError }</div> : null }
+              { (workersError) ? <div>{ workersError }</div> : null }
+              { (ordersError) ? <div>{ ordersError }</div> : null }
+            </div>
+            <div className='modal-info__text__description'>
+              Click here to close window.
             </div>
           </div>
         </div>
@@ -56,21 +61,22 @@ class ModalWindowAdmin extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    wasDelete: state.adminReducer.wasDeleted,
-    wasCreate: state.adminReducer.wasCreated,
-    wasUpdate: state.adminReducer.wasUpdated,
-    clockError: state.adminReducer.data.clocksError,
-    citiesError: state.adminReducer.data.citiesError,
-    usersError: state.adminReducer.data.usersError,
-    workersError: state.adminReducer.data.workersError,
-    ordersError: state.adminReducer.data.ordersError,
-    refactorError: state.adminReducer.refactorModelError
+    clockMessage: state.clockReducer.message,
+    cityMessage: state.cityReducer.message,
+    customerMessage: state.customerReducer.message,
+    masterMessage: state.masterReducer.message,
+    orderMessage: state.orderReducer.message,
+    clockError: state.clockReducer.error,
+    citiesError: state.cityReducer.error,
+    usersError: state.customerReducer.error,
+    workersError: state.masterReducer.error,
+    ordersError: state.orderReducer.error
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    missAdminError: () => dispatch(missErrorAdmin())
+    missAdminError: () => dispatch(missErrors())
   }
 }
 
