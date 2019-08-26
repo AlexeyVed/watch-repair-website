@@ -5,7 +5,7 @@
   "main": "src/server/index.js",
   "scripts": {
     "heroku-postbuild": "webpack -p",
-    "server": "node src/server/server.js",
+    "start": "node src/server/server.js",
     "start-dev": "start webpack-dev-server --mode development --history-api-fallback",
     "server-dev": "start nodemon src/server/server.js",
     "all-start": "npm-run-all --parallel start-dev server-dev",
