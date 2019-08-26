@@ -75,3 +75,6 @@ exports.syncDB = City.sync({ force: false })
       })
     ])
   })
+  .catch(err => {
+    console.log(err)
+  })
