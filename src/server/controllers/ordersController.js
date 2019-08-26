@@ -2,6 +2,7 @@ const { check, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
 const error = require('../services/modules.js').makeError
 const getToday = require('../services/modules.js').getToday
+const sendMsg = require('../config/sendEmail.js').sendSuccessfullyMsg
 const Order = require('../models/orders.js')
 const Master = require('../models/masters.js')
 const Clock = require('../models/clocks.js')
@@ -288,7 +289,22 @@ exports.add = function (req, res, next) {
       })
     })
     .then(result => {
-      res.status(201).json(result)
+      const string = JSON.stringify(result)
+      const obj = JSON.parse(string)
+      console.log('result order', obj)
+      return Order.findOne({
+        where: { id: obj.id },
+        include: [{ all: true }]
+      })
+    })
+    .then(order => {
+      const string = JSON.stringify(order)
+      const obj = JSON.parse(string)
+      console.log('result order include', obj)
+      return sendMsg(obj)
+    })
+    .then(order => {
+      res.status(201).json(order)
     })
     .catch(err => {
       next(error(400, 'Error add order'))
