@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize')
 
+const mode = process.env.NODE_ENV || 'development'
+let db
+
 const mysql = new Sequelize('clockwise', 'root', 'e8zbprhH', {
   dialect: 'mysql',
   host: 'localhost',
@@ -11,9 +14,9 @@ const mysql = new Sequelize('clockwise', 'root', 'e8zbprhH', {
   }
 })
 
-const postgresql = new Sequelize('dbn9cua6pcfq6m', 'pawllgmzgkumjo', '219fda9a0c93a8b6208af0b3a15694e3e49b12f1741feeff7300225deb0b67a2', {
+const postgresql = new Sequelize('ddhe17nk5stidt', 'cytndkmrdjztds', '4c34a00ed10369edd02a851b6200870c26ab195d470c0379d1004e908769d84d', {
   dialect: 'postgres',
-  host: 'ec2-107-20-155-148.compute-1.amazonaws.com',
+  host: 'ec2-174-129-242-183.compute-1.amazonaws.com',
   port: 5432,
   pool: {
     max: 5,
@@ -23,6 +26,6 @@ const postgresql = new Sequelize('dbn9cua6pcfq6m', 'pawllgmzgkumjo', '219fda9a0c
   }
 })
 
-const db = postgresql
+mode === 'production' ? db = postgresql : db = mysql
 
 module.exports = db

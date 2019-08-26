@@ -57,24 +57,6 @@ exports.syncDB = City.sync({ force: false })
           timeRepair: 3
         }
       }),
-      Master.findOrCreate({
-        where: {
-          name: 'Andrey',
-          cityId: 1
-        },
-        defaults: {
-          rating: 5
-        }
-      }),
-      Master.findOrCreate({
-        where: {
-          name: 'Sergey',
-          cityId: 2
-        },
-        defaults: {
-          rating: 5
-        }
-      }),
       User.findOrCreate({
         where: {
           email: 'admin@example.com'
