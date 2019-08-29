@@ -20,16 +20,15 @@ class App extends React.Component {
     }
   }
   render () {
-    const { isOrder, isLoad, isLogin, user } = this.props
+    const { isOrder, isLogin, user, cityLoad, clockLoad, customerLoad, masterLoad, orderLoad } = this.props
 
-    let preloader
-
-    if (isLoad || isLogin || isOrder) {
-      preloader = <Preloader/>
-    } else {
-      preloader = null
-    }
-
+    const isPreloader = cityLoad ||
+        clockLoad ||
+        customerLoad ||
+        masterLoad ||
+        orderLoad ||
+        isLogin ||
+        isOrder || false
     return (
       <div className = 'app'>
         <div className='app-admin'>
@@ -43,7 +42,7 @@ class App extends React.Component {
             <Route component={NoMatch} />
           </Switch>
           <Footer/>
-          { preloader }
+          {(isPreloader) ? <Preloader/> : null}
         </div>
       </div>
     )
@@ -52,11 +51,14 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLoad: state.appReducer.dataLoad,
+    cityLoad: state.cityReducer.dataLoad,
+    clockLoad: state.clockReducer.dataLoad,
+    customerLoad: state.customerReducer.dataLoad,
+    masterLoad: state.masterReducer.dataLoad,
+    orderLoad: state.orderReducer.dataLoad,
     isLogin: state.loginReducer.singInLoading,
     isOrder: state.appReducer.isMakeOrder,
-    user: state.loginReducer.singInUser,
-    token: state.loginReducer.token
+    user: state.loginReducer.singInUser
   }
 }
 

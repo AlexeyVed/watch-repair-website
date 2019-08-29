@@ -7,11 +7,21 @@ import './ModalWindow.less'
 
 class ModalWindowAdmin extends React.Component {
   state = {
-    timeOut: 1500
+    timeOut: 2500,
+    interval: null
   }
 
   timeOutNull = () => {
-    this.setState({ timeOut: 0 })
+    clearTimeout(this.state.interval)
+    this.props.missAdminError()
+  }
+  componentDidMount () {
+    let timerId = setTimeout(() => {
+      this.props.missAdminError()
+    }, this.state.timeOut)
+    this.setState(() => ({
+      interval: timerId
+    }))
   }
 
   render () {
@@ -28,9 +38,7 @@ class ModalWindowAdmin extends React.Component {
       orderMessage
     } = this.props
 
-    setTimeout(() => {
-      this.props.missAdminError()
-    }, this.state.timeOut)
+    const loadError = (clockError) ? <div>{ clockError }</div> : (citiesError) ? <div>{ citiesError }</div> : (usersError) ? <div>{ usersError }</div> : (workersError) ? <div>{ workersError }</div> : (ordersError) ? <div>{ ordersError }</div> : null
 
     return (
 
@@ -44,11 +52,7 @@ class ModalWindowAdmin extends React.Component {
               { (customerMessage) ? <div>{ customerMessage }</div> : null }
               { (masterMessage) ? <div>{ masterMessage }</div> : null }
               { (orderMessage) ? <div>{ orderMessage }</div> : null }
-              { (clockError) ? <div>{ clockError }</div> : null }
-              { (citiesError) ? <div>{ citiesError }</div> : null }
-              { (usersError) ? <div>{ usersError }</div> : null }
-              { (workersError) ? <div>{ workersError }</div> : null }
-              { (ordersError) ? <div>{ ordersError }</div> : null }
+              { loadError }
             </div>
           </div>
         </div>

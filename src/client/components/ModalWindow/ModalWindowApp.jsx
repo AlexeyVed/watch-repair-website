@@ -7,18 +7,24 @@ import './ModalWindow.less'
 
 class ModalWindowApp extends React.Component {
   state = {
-    timeOut: 3000
+    timeOut: 3000,
+    interval: null
   }
 
   timeOutNull = () => {
-    this.setState({ timeOut: 0 })
+    clearTimeout(this.state.interval)
+    this.props.missAppError()
+  }
+  componentDidMount () {
+    let timerId = setTimeout(() => {
+      this.props.missAppError()
+    }, this.state.timeOut)
+    this.setState(() => ({
+      interval: timerId
+    }))
   }
 
   render () {
-    setTimeout(() => {
-      this.props.missAppError()
-    }, this.state.timeOut)
-
     return (
       ReactDOM.createPortal(
         <div className='modal-info'>

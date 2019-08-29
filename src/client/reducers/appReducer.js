@@ -1,6 +1,5 @@
 import {
   MISS_ERRORS,
-  END_LOAD_DATA,
   MAKE_ORDER_STARTED,
   MAKE_ORDER_SUCCESS,
   MAKE_ORDER_FAILURE,
@@ -9,12 +8,7 @@ import {
   MAKE_ORDER_WITH_MASTER_FAILURE,
   CHANGE_PAGE,
   SET_CHOOSE_WORKER,
-  RETURN_HOME_PAGE,
-  LOAD_CITIES_STARTED,
-  LOAD_CLOCKS_STARTED,
-  LOAD_CUSTOMERS_STARTED,
-  LOAD_ORDERS_STARTED,
-  LOAD_MASTERS_STARTED
+  RETURN_HOME_PAGE
 } from '../actions/types.js'
 
 const initialState = {
@@ -27,8 +21,7 @@ const initialState = {
   error: null,
   chooseWorker: false,
   page: null,
-  showModal: false,
-  dataLoad: false
+  showModal: false
 }
 
 const appReducer = (state = initialState, action) => {
@@ -116,50 +109,12 @@ const appReducer = (state = initialState, action) => {
           masterId: action.payload
         }
       }
-
-    case LOAD_CLOCKS_STARTED:
-      return {
-        ...state,
-        dataLoad: true
-      }
-
-    case LOAD_CITIES_STARTED:
-      return {
-        ...state,
-        dataLoad: true
-      }
-
-    case LOAD_CUSTOMERS_STARTED:
-      return {
-        ...state,
-        dataLoad: true
-      }
-
-    case LOAD_MASTERS_STARTED:
-      return {
-        ...state,
-        dataLoad: true
-      }
-
-    case LOAD_ORDERS_STARTED:
-      return {
-        ...state,
-        dataLoad: true
-      }
-
     case MISS_ERRORS:
       return {
         ...state,
         error: null,
         showModal: false
       }
-
-    case END_LOAD_DATA:
-      return {
-        ...state,
-        dataLoad: false
-      }
-
     default:
       return state
   }

@@ -27,8 +27,6 @@ class Header extends React.Component {
   render () {
     const { currentUser } = this.props
 
-    let view = null
-
     if (this.state.redirect) {
       this.setState({ redirect: false })
       return <Redirect to={{ pathname: '/' }}/>
@@ -38,29 +36,6 @@ class Header extends React.Component {
       this.setState({ redirectAdmin: false })
       return <Redirect to={{ pathname: '/admin/orders' }}/>
     }
-
-    if (!currentUser) {
-      view = <React.Fragment>
-        <div className='container-user'>
-        </div>
-      </React.Fragment>
-    } else {
-      view = <React.Fragment>
-        <div className='container-user'>
-          <div className='container-user__user' onClick={this.clickUser}>
-            {currentUser}
-          </div>
-        </div>
-        <div className='container-buttons'>
-          <button
-            className='container-buttons__button-logout header-buttons'
-            onClick={this.handleClickLogOut}>
-            Log Out
-          </button>
-        </div>
-      </React.Fragment>
-    }
-
     return (
       <div className='header'>
         <div className='container-logo' onClick={this.clickLogo}>
@@ -70,7 +45,24 @@ class Header extends React.Component {
             <div className='container-logo__description tagline'>We make your time!</div>
           </div>
         </div>
-        {view}
+        {(!currentUser) ? <React.Fragment>
+          <div className='container-user'>
+          </div>
+        </React.Fragment> : <React.Fragment>
+          <div className='container-user'>
+            <div className='container-user__user' onClick={this.clickUser}>
+              {currentUser}
+            </div>
+          </div>
+          <div className='container-buttons'>
+            <button
+              className='container-buttons__button-logout header-buttons'
+              onClick={this.handleClickLogOut}>
+            Log Out
+            </button>
+          </div>
+        </React.Fragment>
+        }
       </div>
     )
   }

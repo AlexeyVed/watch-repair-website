@@ -2,27 +2,29 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { loadCities, loadClocks, loadMasters, loadDataEnd } from '../../../actions'
+import { loadCities, loadClocks, loadDataEnd } from '../../../actions'
 import OrderForm from '../OrderForm/OrderForm.jsx'
 import Content from '../Content/Content.jsx'
 import LoginForm from '../LoginForm/LoginForm.jsx'
 import ModalWindow from '../../ModalWindow/ModalWindowApp.jsx'
+import ModalWindowAdmin from '../../ModalWindow/ModalWindowAdmin.jsx'
 
 class MainOrder extends Component {
   componentDidMount () {
     return Promise.all([this.props.loadClocks(),
-      this.props.loadCities(),
-      this.props.loadWorkers()])
+      this.props.loadCities()])
       .then((res) => {
         this.props.loadEnd()
       })
   }
 
   render () {
-    const { modalApp } = this.props
+    const { modalClock, modalCity, modalOrder, modalApp } = this.props
+    const isModal = modalClock || modalCity || modalOrder || false
     return (
       <div className='main'>
         {(modalApp) ? <ModalWindow/> : null}
+        {(isModal) ? <ModalWindowAdmin/> : null}
         <OrderForm/>
         <Content/>
         <Switch>
@@ -35,7 +37,10 @@ class MainOrder extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    modalApp: state.appReducer.showModal
+    modalApp: state.appReducer.showModal,
+    modalClock: state.clockReducer.showModal,
+    modalCity: state.cityReducer.showModal,
+    modalOrder: state.orderReducer.showModal
   }
 }
 
@@ -43,7 +48,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadCities: () => dispatch(loadCities()),
     loadClocks: () => dispatch(loadClocks()),
-    loadWorkers: () => dispatch(loadMasters()),
     loadEnd: () => dispatch(loadDataEnd())
   }
 }

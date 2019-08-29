@@ -12,7 +12,8 @@ import {
   EDIT_ORDERS_FAILURE,
   EDIT_ORDERS_SUCCESS,
   REDIRECT_FROM_REFACTOR,
-  MISS_ERRORS
+  MISS_ERRORS,
+  END_LOAD_DATA
 } from '../../actions/types.js'
 
 const initialState = {
@@ -21,14 +22,16 @@ const initialState = {
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
   showModal: false,
-  message: null
+  message: null,
+  dataLoad: false
 }
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_ORDERS_STARTED:
       return {
-        ...state
+        ...state,
+        dataLoad: true
       }
 
     case LOAD_ORDERS_SUCCESS:
@@ -42,6 +45,7 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         data: [],
+        showModal: true,
         error: action.payload
       }
 
@@ -139,6 +143,11 @@ const orderReducer = (state = initialState, action) => {
         message: null
       }
 
+    case END_LOAD_DATA:
+      return {
+        ...state,
+        dataLoad: false
+      }
     default:
       return state
   }

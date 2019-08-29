@@ -12,7 +12,8 @@ import {
   EDIT_CITIES_FAILURE,
   EDIT_CITIES_SUCCESS,
   REDIRECT_FROM_REFACTOR,
-  MISS_ERRORS
+  MISS_ERRORS,
+  END_LOAD_DATA
 } from '../../actions/types.js'
 
 const initialState = {
@@ -21,14 +22,16 @@ const initialState = {
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
   showModal: false,
-  message: null
+  message: null,
+  dataLoad: false
 }
 
 const cityReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_CITIES_STARTED:
       return {
-        ...state
+        ...state,
+        dataLoad: true
       }
 
     case LOAD_CITIES_SUCCESS:
@@ -42,6 +45,7 @@ const cityReducer = (state = initialState, action) => {
       return {
         ...state,
         data: [],
+        showModal: true,
         error: action.payload
       }
 
@@ -139,6 +143,11 @@ const cityReducer = (state = initialState, action) => {
         message: null
       }
 
+    case END_LOAD_DATA:
+      return {
+        ...state,
+        dataLoad: false
+      }
     default:
       return state
   }
