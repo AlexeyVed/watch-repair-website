@@ -1,4 +1,4 @@
-const { check, validationResult } = require('express-validator')
+const { checkSchema, validationResult } = require('express-validator')
 const error = require('../modules/services.js').makeError
 const City = require('../models/cities.js')
 
@@ -9,14 +9,20 @@ exports.list = function (req, res, next) {
     .then(cities => {
       res.json(cities)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get list of cities'))
     })
 }
 
-exports.getValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.getValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.get = function (req, res, next) {
   const errors = validationResult(req)
@@ -27,17 +33,23 @@ exports.get = function (req, res, next) {
     .then(city => {
       res.json(city)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get city.'))
     })
 }
 
-exports.addValidation = [
-  check('city').isAlpha().not().isEmpty()
-]
+exports.addValidation = checkSchema({
+  city: {
+    in: ['body'],
+    errorMessage: 'City is wrong',
+    isAlpha: true,
+    isEmpty: false
+  }
+})
 
 exports.add = function (req, res, next) {
   const errors = validationResult(req)
+  console.log(errors)
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
@@ -45,14 +57,20 @@ exports.add = function (req, res, next) {
     .then(result => {
       res.status(201).json(result)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error add city'))
     })
 }
 
-exports.removeValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.removeValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.remove = function (req, res, next) {
   const errors = validationResult(req)
@@ -65,15 +83,26 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error delete city'))
     })
 }
 
-exports.updateValidation = [
-  check('city').isAlpha().not().isEmpty(),
-  check('id').isNumeric().not().isEmpty()
-]
+exports.updateValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  city: {
+    in: ['body'],
+    errorMessage: 'City is wrong',
+    isAlpha: true,
+    isEmpty: false
+  }
+})
 
 exports.update = function (req, res, next) {
   const errors = validationResult(req)
@@ -90,7 +119,7 @@ exports.update = function (req, res, next) {
     .then(city => {
       res.json(city)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error update city'))
     })
 }

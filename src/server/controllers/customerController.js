@@ -1,4 +1,4 @@
-const { check, validationResult } = require('express-validator')
+const { checkSchema, validationResult } = require('express-validator')
 const error = require('../modules/services.js').makeError
 const Customer = require('../models/customers.js')
 
@@ -9,15 +9,25 @@ exports.list = function (req, res, next) {
     .then(customers => {
       res.json(customers)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get list of customers'))
     })
 }
 
-exports.addValidation = [
-  check('email').isEmail().not().isEmpty(),
-  check('name').isAlpha().not().isEmpty()
-]
+exports.addValidation = checkSchema({
+  email: {
+    in: ['body'],
+    errorMessage: 'Email is wrong',
+    isEmail: true,
+    isEmpty: false
+  },
+  name: {
+    in: ['body'],
+    errorMessage: 'Name is wrong',
+    isAlpha: true,
+    isEmpty: false
+  }
+})
 
 exports.add = function (req, res, next) {
   const errors = validationResult(req)
@@ -31,14 +41,20 @@ exports.add = function (req, res, next) {
     .then(result => {
       res.status(201).json(result)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error add customer'))
     })
 }
 
-exports.getValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.getValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.get = function (req, res, next) {
   const errors = validationResult(req)
@@ -49,14 +65,20 @@ exports.get = function (req, res, next) {
     .then((user) => {
       res.json(user)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get customer'))
     })
 }
 
-exports.removeValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.removeValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.remove = function (req, res, next) {
   const errors = validationResult(req)
@@ -69,16 +91,32 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error delete customer'))
     })
 }
 
-exports.updateValidation = [
-  check('email').isEmail().not().isEmpty(),
-  check('name').isAlpha().not().isEmpty(),
-  check('id').isNumeric().not().isEmpty()
-]
+exports.updateValidation = checkSchema({
+  email: {
+    in: ['body'],
+    errorMessage: 'Email is wrong',
+    isEmail: true,
+    isEmpty: false
+  },
+  name: {
+    in: ['body'],
+    errorMessage: 'Name is wrong',
+    isAlpha: true,
+    isEmpty: false
+  },
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.update = function (req, res, next) {
   const errors = validationResult(req)
@@ -97,7 +135,7 @@ exports.update = function (req, res, next) {
     .then(customer => {
       res.json(customer)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error update customer'))
     })
 }

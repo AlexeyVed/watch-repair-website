@@ -1,14 +1,26 @@
 const passport = require('../modules/passport.js')
-const { check, validationResult } = require('express-validator')
+const { checkSchema, validationResult } = require('express-validator')
 const config = require('../config/config.js')
 const jwt = require('jsonwebtoken')
 const error = require('../modules/services.js').makeError
 const User = require('../models/users.js')
 
-exports.loginValidation = [
-  check('email').isEmail().not().isEmpty(),
-  check('password').isLength({ min: 5 }).not().isEmpty()
-]
+exports.loginValidation = checkSchema({
+  email: {
+    in: ['body'],
+    errorMessage: 'Email is wrong',
+    isEmail: true,
+    isEmpty: false
+  },
+  password: {
+    in: ['body'],
+    isLength: {
+      errorMessage: 'Password should be at least 7 chars long',
+      options: { min: 5 }
+    },
+    isEmpty: false
+  }
+})
 
 exports.login = (req, res, next) => {
   const errors = validationResult(req)

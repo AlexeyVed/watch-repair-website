@@ -1,4 +1,4 @@
-const { check, validationResult } = require('express-validator')
+const { checkSchema, validationResult } = require('express-validator')
 const error = require('../modules/services.js').makeError
 const Master = require('../models/masters.js')
 const City = require('../models/cities.js')
@@ -14,14 +14,20 @@ exports.list = function (req, res, next) {
     .then(masters => {
       res.json(masters)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get list of masters'))
     })
 }
 
-exports.getValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.getValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.get = function (req, res, next) {
   const errors = validationResult(req)
@@ -35,16 +41,33 @@ exports.get = function (req, res, next) {
     .then((worker) => {
       res.send(worker)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get master'))
     })
 }
 
-exports.addValidation = [
-  check('name').isAlpha().not().isEmpty(),
-  check('rating').isNumeric().not().isEmpty(),
-  check('cityId').isNumeric().not().isEmpty()
-]
+exports.addValidation = checkSchema({
+  rating: {
+    in: ['body'],
+    errorMessage: 'Rating is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  name: {
+    in: ['body'],
+    errorMessage: 'Name is wrong',
+    isAlpha: true,
+    isEmpty: false
+  },
+  cityId: {
+    in: ['body'],
+    errorMessage: 'City is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.add = function (req, res, next) {
   const errors = validationResult(req)
@@ -65,14 +88,20 @@ exports.add = function (req, res, next) {
     .then(master => {
       res.status(201).send(master)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error add master'))
     })
 }
 
-exports.removeValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.removeValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.remove = function (req, res, next) {
   const errors = validationResult(req)
@@ -85,17 +114,40 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error delete master'))
     })
 }
 
-exports.updateValidation = [
-  check('name').isAlpha().not().isEmpty(),
-  check('rating').isNumeric().not().isEmpty(),
-  check('cityId').isNumeric().not().isEmpty(),
-  check('id').isNumeric().not().isEmpty()
-]
+exports.updateValidation = checkSchema({
+  rating: {
+    in: ['body'],
+    errorMessage: 'Rating is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  name: {
+    in: ['body'],
+    errorMessage: 'Name is wrong',
+    isAlpha: true,
+    isEmpty: false
+  },
+  cityId: {
+    in: ['body'],
+    errorMessage: 'City is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.update = function (req, res, next) {
   const errors = validationResult(req)
@@ -118,7 +170,7 @@ exports.update = function (req, res, next) {
     .then(master => {
       res.status(201).json(master)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error update master'))
     })
 }

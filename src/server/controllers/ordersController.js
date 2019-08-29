@@ -1,4 +1,4 @@
-const { check, validationResult } = require('express-validator')
+const { checkSchema, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
 const error = require('../modules/services.js').makeError
 const getToday = require('../modules/services.js').getToday
@@ -32,14 +32,20 @@ exports.list = function (req, res, next) {
       }
       res.json(orders)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get list of orders'))
     })
 }
 
-exports.getValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.getValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.get = function (req, res, next) {
   const errors = validationResult(req)
@@ -53,14 +59,20 @@ exports.get = function (req, res, next) {
     .then(order => {
       res.json(order)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get order'))
     })
 }
 
-exports.removeValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.removeValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.remove = function (req, res, next) {
   const errors = validationResult(req)
@@ -73,20 +85,60 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error delete order'))
     })
 }
 
-exports.updateValidation = [
-  check('date').not().isEmpty(),
-  check('time').isNumeric().not().isEmpty(),
-  check('customerId').isNumeric().not().isEmpty(),
-  check('clockId').isNumeric().not().isEmpty(),
-  check('cityId').isNumeric().not().isEmpty(),
-  check('masterId').isNumeric().not().isEmpty(),
-  check('id').isNumeric().not().isEmpty()
-]
+exports.updateValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  cityId: {
+    in: ['body'],
+    errorMessage: 'City is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  masterId: {
+    in: ['body'],
+    errorMessage: 'Master is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  clockId: {
+    in: ['body'],
+    errorMessage: 'Clock is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  customerId: {
+    in: ['body'],
+    errorMessage: 'Customer is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  date: {
+    in: ['body'],
+    errorMessage: 'Date is wrong',
+    isEmpty: false
+  },
+  time: {
+    in: ['body'],
+    errorMessage: 'Time is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.update = function (req, res, next) {
   const errors = validationResult(req)
@@ -124,17 +176,39 @@ exports.update = function (req, res, next) {
     .then((order) => {
       res.json(order)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error update order'))
     })
 }
 
-exports.getWorkersValidation = [
-  check('date').not().isEmpty(),
-  check('time').isNumeric().not().isEmpty(),
-  check('clockId').isNumeric().not().isEmpty(),
-  check('cityId').isNumeric().not().isEmpty()
-]
+exports.getWorkersValidation = checkSchema({
+  cityId: {
+    in: ['body'],
+    errorMessage: 'City is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  clockId: {
+    in: ['body'],
+    errorMessage: 'Clock is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  date: {
+    in: ['body'],
+    errorMessage: 'Date is wrong',
+    isEmpty: false
+  },
+  time: {
+    in: ['body'],
+    errorMessage: 'Time is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.getWorkers = function (req, res, next) {
   const errors = validationResult(req)
@@ -178,19 +252,53 @@ exports.getWorkers = function (req, res, next) {
       }
       res.json(workers)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get free workers'))
     })
 }
 
-exports.addAdminValidation = [
-  check('date').not().isEmpty(),
-  check('time').isNumeric().not().isEmpty(),
-  check('customerId').isNumeric().not().isEmpty(),
-  check('clockId').isNumeric().not().isEmpty(),
-  check('cityId').isNumeric().not().isEmpty(),
-  check('masterId').isNumeric().not().isEmpty()
-]
+exports.addAdminValidation = checkSchema({
+  cityId: {
+    in: ['body'],
+    errorMessage: 'City is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  masterId: {
+    in: ['body'],
+    errorMessage: 'Master is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  clockId: {
+    in: ['body'],
+    errorMessage: 'Clock is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  customerId: {
+    in: ['body'],
+    errorMessage: 'Customer is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  date: {
+    in: ['body'],
+    errorMessage: 'Date is wrong',
+    isEmpty: false
+  },
+  time: {
+    in: ['body'],
+    errorMessage: 'Time is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.addAdmin = function (req, res, next) {
   const errors = validationResult(req)
@@ -247,20 +355,58 @@ exports.addAdmin = function (req, res, next) {
     .then(newOrder => {
       res.status(201).json(newOrder)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error create order'))
     })
 }
 
-exports.addValidation = [
-  check('date').not().isEmpty(),
-  check('time').isNumeric().not().isEmpty(),
-  check('email').isEmail().not().isEmpty(),
-  check('name').isAlpha().not().isEmpty(),
-  check('clockId').isNumeric().not().isEmpty(),
-  check('cityId').isNumeric().not().isEmpty(),
-  check('masterId').isNumeric().not().isEmpty()
-]
+exports.addValidation = checkSchema({
+  name: {
+    in: ['body'],
+    errorMessage: 'Name is wrong',
+    isAlpha: true,
+    isEmpty: false
+  },
+  cityId: {
+    in: ['body'],
+    errorMessage: 'City is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  masterId: {
+    in: ['body'],
+    errorMessage: 'Master is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  clockId: {
+    in: ['body'],
+    errorMessage: 'Clock is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  email: {
+    in: ['body'],
+    errorMessage: 'Email is wrong',
+    isEmail: true,
+    isEmpty: false
+  },
+  date: {
+    in: ['body'],
+    errorMessage: 'Date is wrong',
+    isEmpty: false
+  },
+  time: {
+    in: ['body'],
+    errorMessage: 'Time is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.add = function (req, res, next) {
   const errors = validationResult(req)
@@ -306,7 +452,7 @@ exports.add = function (req, res, next) {
     .then(order => {
       res.status(201).json(order)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error add order'))
     })
 }

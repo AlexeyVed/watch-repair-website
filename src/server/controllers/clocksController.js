@@ -1,4 +1,4 @@
-const { check, validationResult } = require('express-validator')
+const { checkSchema, validationResult } = require('express-validator')
 const error = require('../modules/services.js').makeError
 const Clock = require('../models/clocks.js')
 
@@ -9,14 +9,20 @@ exports.list = function (req, res, next) {
     .then(clocks => {
       res.json(clocks)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get list of clocks'))
     })
 }
 
-exports.getValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.getValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.get = function (req, res, next) {
   const errors = validationResult(req)
@@ -27,15 +33,26 @@ exports.get = function (req, res, next) {
     .then((clock) => {
       res.json(clock)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error get clock'))
     })
 }
 
-exports.addValidation = [
-  check('typeClock').isAlpha().not().isEmpty(),
-  check('timeRepair').isNumeric().not().isEmpty()
-]
+exports.addValidation = checkSchema({
+  typeClock: {
+    in: ['body'],
+    errorMessage: 'Type of clock is wrong',
+    isAlpha: true,
+    isEmpty: false
+  },
+  timeRepair: {
+    in: ['body'],
+    errorMessage: 'Time repair is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.add = function (req, res, next) {
   const errors = validationResult(req)
@@ -49,14 +66,20 @@ exports.add = function (req, res, next) {
     .then(result => {
       res.status(201).json(result)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error add clock'))
     })
 }
 
-exports.removeValidation = [
-  check('id').isNumeric().not().isEmpty()
-]
+exports.removeValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.remove = function (req, res, next) {
   const errors = validationResult(req)
@@ -69,16 +92,33 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error delete clock'))
     })
 }
 
-exports.updateValidation = [
-  check('typeClock').isAlpha().not().isEmpty(),
-  check('timeRepair').isNumeric().not().isEmpty(),
-  check('id').isNumeric().not().isEmpty()
-]
+exports.updateValidation = checkSchema({
+  id: {
+    in: ['params', 'query'],
+    errorMessage: 'ID is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  },
+  typeClock: {
+    in: ['body'],
+    errorMessage: 'Type of clock is wrong',
+    isAlpha: true,
+    isEmpty: false
+  },
+  timeRepair: {
+    in: ['body'],
+    errorMessage: 'Time repair is wrong',
+    isInt: true,
+    toInt: true,
+    isEmpty: false
+  }
+})
 
 exports.update = function (req, res, next) {
   const errors = validationResult(req)
@@ -97,7 +137,7 @@ exports.update = function (req, res, next) {
     .then(clock => {
       res.json(clock)
     })
-    .catch(err => {
+    .catch(() => {
       next(error(400, 'Error update clock'))
     })
 }
