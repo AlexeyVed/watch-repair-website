@@ -18,10 +18,6 @@ import axios from 'axios'
 
 export const loadClocks = () => {
   return (dispatch) => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      axios.defaults.headers.common['authorization'] = token
-    }
     dispatch({ type: LOAD_CLOCKS_STARTED })
     return axios
       .get(`/api/clocks/`)
@@ -55,7 +51,7 @@ export const editClockIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_CLOCKS_STARTED })
     axios
-      .put(`/api/clocks/id?id=${values.id}`, values)
+      .put(`/api/clocks/${values.id}`, values)
       .then(res => {
         dispatch(editClocksSuccess(res.data))
       })
@@ -72,7 +68,7 @@ export const deleteClockFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_CLOCKS_STARTED })
     axios
-      .delete(`/api/clocks/id?id=${id}`)
+      .delete(`/api/clocks/${id}`)
       .then(res => {
         dispatch(deleteClocksSuccess(res.data))
       })

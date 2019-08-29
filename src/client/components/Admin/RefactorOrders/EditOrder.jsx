@@ -21,7 +21,7 @@ class EditOrder extends React.Component {
   componentDidMount () {
     const id = +this.props.match.params.id
     axios
-      .get(`/api/orders/id?id=${id}`)
+      .get(`/api/orders/${id}`)
       .then(res => {
         this.setState(() => ({
           load: false

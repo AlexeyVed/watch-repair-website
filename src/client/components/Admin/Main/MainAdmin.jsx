@@ -10,6 +10,7 @@ import RefactorClients from '../TableClients/RefactorClients'
 import RefactorClocks from '../TableClocks/RefactorClocks'
 import RefactorWorkers from '../TableWorkers/RefactorWorkers'
 import RefactorOrders from '../TableOrders/RefactorOrders'
+import NoMatch from '../../NoMatch/NoMatch.jsx'
 
 import './MainAdmin.less'
 
@@ -48,6 +49,7 @@ class MainAdmin extends React.Component {
         modalOrder ||
         modalMaster)
     }
+
     return (
       <div className='admin-main'>
         {(isModal()) ? <ModalWindow/> : null}
@@ -56,15 +58,12 @@ class MainAdmin extends React.Component {
         <div className='admin-content'>
           <div className='work-space'>
             <Switch>
-              <Route exact path='/admin' render={
-                props => (<div className='work-space__welcome'>
-                  Welcome to Admin interface!
-                </div>)}/>
-              <Route path="/admin/cities" component={RefactorCities}/>
-              <Route path="/admin/clients" component={RefactorClients}/>
-              <Route path="/admin/clocks" component={RefactorClocks}/>
-              <Route path="/admin/workers" component={RefactorWorkers}/>
-              <Route path="/admin/orders" component={RefactorOrders}/>
+              <Route path='/admin/cities' component={RefactorCities}/>
+              <Route path='/admin/clients' component={RefactorClients}/>
+              <Route path='/admin/clocks' component={RefactorClocks}/>
+              <Route path='/admin/workers' component={RefactorWorkers}/>
+              <Route path='/admin/orders' component={RefactorOrders}/>
+              <Route component={NoMatch}/>
             </Switch>
           </div>
         </div>

@@ -1,5 +1,5 @@
 const { check, validationResult } = require('express-validator')
-const error = require('../services/modules.js').makeError
+const error = require('../modules/services.js').makeError
 const Master = require('../models/masters.js')
 const City = require('../models/cities.js')
 
@@ -29,7 +29,7 @@ exports.get = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Master.findOne({
-    where: { id: req.query.id },
+    where: { id: req.params.id },
     include: [ { model: City } ]
   })
     .then((worker) => {
@@ -80,10 +80,10 @@ exports.remove = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Master.destroy({
-    where: { id: req.query.id }
+    where: { id: req.params.id }
   })
     .then(result => {
-      res.json(req.query.id)
+      res.json(req.params.id)
     })
     .catch(err => {
       next(error(400, 'Error delete master'))
@@ -107,11 +107,11 @@ exports.update = function (req, res, next) {
     rating: req.body.rating,
     cityId: req.body.cityId
   }, {
-    where: { id: req.query.id }
+    where: { id: req.params.id }
   })
     .then(result => {
       return Master.findOne({
-        where: { id: req.body.id },
+        where: { id: req.params.id },
         include: [ { model: City } ]
       })
     })

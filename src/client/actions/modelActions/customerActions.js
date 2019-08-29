@@ -18,10 +18,6 @@ import axios from 'axios'
 
 export const loadCustomers = () => {
   return (dispatch) => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      axios.defaults.headers.common['authorization'] = token
-    }
     dispatch({ type: LOAD_CUSTOMERS_STARTED })
     return axios
       .get(`/api/customers/`)
@@ -55,7 +51,7 @@ export const editCustomersIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_CUSTOMERS_STARTED })
     axios
-      .put(`/api/customers/id?id=${values.id}`, values)
+      .put(`/api/customers/${values.id}`, values)
       .then(res => {
         dispatch(editCustomersSuccess(res.data))
       })
@@ -72,7 +68,7 @@ export const deleteCustomersFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_CUSTOMERS_STARTED })
     axios
-      .delete(`/api/customers/id?id=${id}`)
+      .delete(`/api/customers/${id}`)
       .then(res => {
         dispatch(deleteCustomersSuccess(res.data))
       })

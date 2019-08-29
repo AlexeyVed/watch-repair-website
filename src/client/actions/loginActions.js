@@ -20,6 +20,7 @@ export const loginToApp = (values) => {
       .then(res => {
         localStorage.setItem('user', res.data.user.email)
         localStorage.setItem('token', res.data.token)
+        axios.defaults.headers.common['authorization'] = res.data.token
         dispatch(singInSuccess(res.data.user.email))
       })
       .catch(err => {
@@ -35,6 +36,7 @@ export const logOutApp = () => {
       .then(res => {
         localStorage.removeItem('user')
         localStorage.removeItem('token')
+        delete axios.defaults.headers.common['authorization']
         dispatch({ type: LOG_OUT })
       })
       .catch(err => {

@@ -36,7 +36,7 @@ class Header extends React.Component {
 
     if (this.state.redirectAdmin) {
       this.setState({ redirectAdmin: false })
-      return <Redirect to={{ pathname: '/admin' }}/>
+      return <Redirect to={{ pathname: '/admin/orders' }}/>
     }
 
     if (!currentUser) {

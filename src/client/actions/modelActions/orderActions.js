@@ -18,8 +18,6 @@ import axios from 'axios'
 
 export const loadOrders = () => {
   return (dispatch) => {
-    const token = localStorage.getItem('token')
-    axios.defaults.headers.common['authorization'] = token
     dispatch({ type: LOAD_ORDERS_STARTED })
     return axios
       .get(`/api/orders/`)
@@ -60,7 +58,7 @@ export const editOrdersIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_ORDERS_STARTED })
     axios
-      .put(`/api/orders/id?id=${values.id}`, values)
+      .put(`/api/orders/${values.id}`, values)
       .then(res => {
         dispatch(editOrdersSuccess(res.data))
       })
@@ -77,7 +75,7 @@ export const deleteOrdersFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_ORDERS_STARTED })
     axios
-      .delete(`/api/orders/id?id=${id}`)
+      .delete(`/api/orders/${id}`)
       .then(res => {
         dispatch(deleteOrdersSuccess(res.data))
       })

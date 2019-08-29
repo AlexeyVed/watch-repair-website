@@ -22,12 +22,10 @@ class ModalWindowApp extends React.Component {
     return (
       ReactDOM.createPortal(
         <div className='modal-info'>
-          <div className='modal-info__text' onClick={this.timeOutNull}>
+          <div className='modal-info__text'>
+            <button className='modal-info__text__bttn-close' onClick={this.timeOutNull}>&times;</button>
             <div className='modal-info__text__info'>
               {(this.props.makeOrderError) ? this.props.makeOrderError : 'Order was successfully created and send to your email.'}
-            </div>
-            <div className='modal-info__text__description'>
-              Click here to close window.
             </div>
           </div>
         </div>

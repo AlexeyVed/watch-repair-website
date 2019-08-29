@@ -1,5 +1,5 @@
 const { check, validationResult } = require('express-validator')
-const error = require('../services/modules.js').makeError
+const error = require('../modules/services.js').makeError
 const Clock = require('../models/clocks.js')
 
 exports.list = function (req, res, next) {
@@ -23,7 +23,7 @@ exports.get = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  Clock.findByPk(req.query.id)
+  Clock.findByPk(req.params.id)
     .then((clock) => {
       res.json(clock)
     })
@@ -64,10 +64,10 @@ exports.remove = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Clock.destroy({
-    where: { id: req.query.id }
+    where: { id: req.params.id }
   })
     .then(result => {
-      res.json(req.query.id)
+      res.json(req.params.id)
     })
     .catch(err => {
       next(error(400, 'Error delete clock'))
@@ -89,10 +89,10 @@ exports.update = function (req, res, next) {
     typeClock: req.body.typeClock,
     timeRepair: req.body.timeRepair
   }, {
-    where: { id: req.query.id }
+    where: { id: req.params.id }
   })
     .then((result) => {
-      return Clock.findByPk(req.body.id)
+      return Clock.findByPk(req.params.id)
     })
     .then(clock => {
       res.json(clock)

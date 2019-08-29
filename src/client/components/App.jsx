@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import axios from 'axios'
 
 import PrivateRoute from './PrivateRouter/PrivateRouter.jsx'
 import Preloader from './App/Preloader/Preloader.jsx'
@@ -11,6 +12,13 @@ import MainAdmin from './Admin/Main/MainAdmin'
 import NoMatch from './NoMatch/NoMatch'
 
 class App extends React.Component {
+  constructor (props) {
+    super()
+    const token = localStorage.getItem('token')
+    if (token) {
+      axios.defaults.headers.common['authorization'] = token
+    }
+  }
   render () {
     const { isOrder, isLoad, isLogin, user } = this.props
 
@@ -31,8 +39,8 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={MainOrder}/>
             <Route path='/login' component={MainOrder}/>
-            <PrivateRoute path='/admin' component={MainAdmin} auth={user}/>
-            <Route component={NoMatch}/>
+            <PrivateRoute path='/admin/' component={MainAdmin} auth={user}/>
+            <Route path='*' component={NoMatch} />
           </Switch>
           <Footer/>
           { preloader }
@@ -47,7 +55,8 @@ const mapStateToProps = (state) => {
     isLoad: state.appReducer.dataLoad,
     isLogin: state.loginReducer.singInLoading,
     isOrder: state.appReducer.isMakeOrder,
-    user: state.loginReducer.singInUser
+    user: state.loginReducer.singInUser,
+    token: state.loginReducer.token
   }
 }
 

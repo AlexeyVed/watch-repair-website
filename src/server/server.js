@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const passport = require('./config/passport.js')
-const handleError = require('./config/middleware/handleError.js')
+const passport = require('./modules/passport.js')
+const handleError = require('./modules/middleware/handleError.js')
 const path = require('path')
-require('./config/syncDB.js')
+require('./db/index.js')
 const cors = require('cors')
 const pathToStatic = path.join(__dirname, '../../dist')
 

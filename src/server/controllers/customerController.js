@@ -1,5 +1,5 @@
 const { check, validationResult } = require('express-validator')
-const error = require('../services/modules.js').makeError
+const error = require('../modules/services.js').makeError
 const Customer = require('../models/customers.js')
 
 exports.list = function (req, res, next) {
@@ -45,7 +45,7 @@ exports.get = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  Customer.findByPk(req.query.id)
+  Customer.findByPk(req.params.id)
     .then((user) => {
       res.json(user)
     })
@@ -64,10 +64,10 @@ exports.remove = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Customer.destroy({
-    where: { id: req.query.id }
+    where: { id: req.params.id }
   })
     .then(result => {
-      res.json(req.query.id)
+      res.json(req.params.id)
     })
     .catch(err => {
       next(error(400, 'Error delete customer'))
@@ -89,10 +89,10 @@ exports.update = function (req, res, next) {
     name: req.body.name,
     email: req.body.email
   }, {
-    where: { id: req.query.id }
+    where: { id: req.params.id }
   })
     .then((result) => {
-      return Customer.findByPk(req.body.id)
+      return Customer.findByPk(req.params.id)
     })
     .then(customer => {
       res.json(customer)

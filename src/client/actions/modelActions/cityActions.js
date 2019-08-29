@@ -18,10 +18,6 @@ import axios from 'axios'
 
 export const loadCities = () => {
   return (dispatch) => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      axios.defaults.headers.common['authorization'] = token
-    }
     dispatch({ type: LOAD_CITIES_STARTED })
     return axios
       .get(`/api/cities/`)
@@ -55,7 +51,7 @@ export const editCityIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_CITIES_STARTED })
     axios
-      .put(`/api/cities/id?id=${values.id}`, values)
+      .put(`/api/cities/${values.id}`, values)
       .then(res => {
         dispatch(editCitiesSuccess(res.data))
       })
@@ -72,7 +68,7 @@ export const deleteCityFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_CITIES_STARTED })
     axios
-      .delete(`/api/cities/id?id=${id}`)
+      .delete(`/api/cities/${id}`)
       .then(res => {
         dispatch(deleteCitiesSuccess(res.data))
       })

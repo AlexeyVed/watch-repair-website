@@ -1,8 +1,8 @@
-const passport = require('../config/passport.js')
+const passport = require('../modules/passport.js')
 const { check, validationResult } = require('express-validator')
-const jwtConfig = require('../config/jwt.js').jwtConfig
+const config = require('../config/config.js')
 const jwt = require('jsonwebtoken')
-const error = require('../services/modules.js').makeError
+const error = require('../modules/services.js').makeError
 const User = require('../models/users.js')
 
 exports.loginValidation = [
@@ -27,7 +27,7 @@ exports.login = (req, res, next) => {
         }
       })
         .then(user => {
-          const token = jwt.sign({ email: user.email }, jwtConfig.secret)
+          const token = jwt.sign({ email: user.email }, config.jwt.secret)
           const obj = {
             auth: true,
             token: token,

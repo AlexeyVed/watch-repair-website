@@ -1,8 +1,8 @@
 const { check, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
-const error = require('../services/modules.js').makeError
-const getToday = require('../services/modules.js').getToday
-const sendMsg = require('../config/sendEmail.js').sendSuccessfullyMsg
+const error = require('../modules/services.js').makeError
+const getToday = require('../modules/services.js').getToday
+const sendMsg = require('../modules/sendEmail.js').sendSuccessfullyMsg
 const Order = require('../models/orders.js')
 const Master = require('../models/masters.js')
 const Clock = require('../models/clocks.js')
@@ -47,7 +47,7 @@ exports.get = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Order.findOne({
-    where: { id: req.query.id },
+    where: { id: req.params.id },
     include: [{ all: true }]
   })
     .then(order => {
@@ -68,10 +68,10 @@ exports.remove = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Order.destroy({
-    where: { id: req.query.id }
+    where: { id: req.params.id }
   })
     .then(result => {
-      res.json(req.query.id)
+      res.json(req.params.id)
     })
     .catch(err => {
       next(error(400, 'Error delete order'))
@@ -112,12 +112,12 @@ exports.update = function (req, res, next) {
         cityId: cityId,
         masterId: masterId
       }, {
-        where: { id: req.query.id }
+        where: { id: req.params.id }
       })
     })
     .then(result => {
       return Order.findOne({
-        where: { id: req.body.id },
+        where: { id: req.params.id },
         include: [{ all: true }]
       })
     })

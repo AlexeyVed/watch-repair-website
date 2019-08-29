@@ -18,8 +18,6 @@ import axios from 'axios'
 
 export const loadMasters = () => {
   return (dispatch) => {
-    const token = localStorage.getItem('token')
-    axios.defaults.headers.common['authorization'] = token
     dispatch({ type: LOAD_MASTERS_STARTED })
     return axios
       .get(`/api/masters/`)
@@ -53,7 +51,7 @@ export const editMastersIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_MASTERS_STARTED })
     axios
-      .put(`/api/masters/id?id=${values.id}`, values)
+      .put(`/api/masters/${values.id}`, values)
       .then(res => {
         dispatch(editMastersSuccess(res.data))
       })
@@ -70,7 +68,7 @@ export const deleteMastersFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_MASTERS_STARTED })
     axios
-      .delete(`/api/masters/id?id=${id}`)
+      .delete(`/api/masters/${id}`)
       .then(res => {
         dispatch(deleteMastersSuccess(res.data))
       })

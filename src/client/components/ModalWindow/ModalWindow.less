@@ -19,27 +19,39 @@
     text-align: center;
   }
 
-  &__description {
+  &__bttn-close {
     position: absolute;
-    font-size: 12px;
-    bottom: 20px;
-    width: 330px;
-    left: 30px;
-    text-align: center;
+    height: 30px;
+    width: 30px;
+    top: 12px;
+    right: 15px;
+    padding: 0;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    background-color: #fffdfe;
+    outline: none;
+    font-size: 30px;
+    color: black;
+  }
+
+  &__bttn-close:active {
+    transform: translateY(2px);
+    filter: saturate(150%);
+    color: #5d0000;
   }
 
   &__errors {
-    padding-top: 60px;
+    position: absolute;
+    top: 35%;
     width: 330px;
+    left: 30px;
     text-align: center;
-    margin: auto;
 
     div {
       padding-top: 20px;
     }
   }
-
-
 }
 
 .modal-info {
