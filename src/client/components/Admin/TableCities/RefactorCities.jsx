@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import AddCities from '../RefactorCities/AddCities.jsx'
 import EditCities from '../RefactorCities/EditCities.jsx'
+import NoMatchAdmin from '../../NoMatch/NoMatchAdmin.jsx'
 import { deleteCityFromDB, loadCities, loadDataEnd, setPage } from '../../../actions'
 
 import './RefactorCities.less'
@@ -80,31 +81,40 @@ class RefactorCities extends React.Component {
         </div>
       )
     })
-
+    const table = <React.Fragment> <div className='table-cities__title'>Table cities</div>
+      <div className='table-cities__table'>
+        <table>
+          <tbody>
+            <tr>
+              <th>№</th>
+              <th>City</th>
+              <th>Service</th>
+            </tr>
+            { renderItems }
+          </tbody>
+        </table>
+      </div>
+      <div className='table-cities__numbers-pages'>
+        { renderPageNumbers }
+      </div>
+      <div className='table-cities__bttn-add'>
+        <LinkButton to='/admin/cities/add' name='Add'/>
+      </div> </React.Fragment>
     return (
       <div className='table-cities'>
-        <div className='table-cities__title'>Table cities</div>
-        <div className='table-cities__table'>
-          <table>
-            <tbody>
-              <tr>
-                <th>№</th>
-                <th>City</th>
-                <th>Service</th>
-              </tr>
-              { renderItems }
-            </tbody>
-          </table>
-        </div>
-        <div className='table-cities__numbers-pages'>
-          { renderPageNumbers }
-        </div>
-        <div className='table-cities__bttn-add'>
-          <LinkButton to='/admin/cities/add' name='Add'/>
-        </div>
         <Switch>
-          <Route path='/admin/cities/add' component={AddCities}/>
-          <Route path='/admin/cities/edit/:id' component={EditCities}/>
+          <Route exact path='/admin/cities' render={() => (table)}/>
+          <Route path='/admin/cities/add' render={() => (
+            <React.Fragment>
+              {table}
+              <AddCities/>
+            </React.Fragment>)}/>
+          <Route path='/admin/cities/edit/:id' render={({ location }) => (
+            <React.Fragment>
+              {table}
+              <EditCities location={ location }/>
+            </React.Fragment>)}/>
+          <Route path='/admin/cities/*' component={NoMatchAdmin}/>
         </Switch>
       </div>
     )

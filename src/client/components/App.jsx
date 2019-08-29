@@ -40,7 +40,7 @@ class App extends React.Component {
             <Route exact path='/' component={MainOrder}/>
             <Route path='/login' component={MainOrder}/>
             <PrivateRoute path='/admin/' component={MainAdmin} auth={user}/>
-            <Route path='*' component={NoMatch} />
+            <Route component={NoMatch} />
           </Switch>
           <Footer/>
           { preloader }

@@ -14,6 +14,7 @@ import {
 } from '../../../actions'
 import AddOrder from '../RefactorOrders/AddOrder.jsx'
 import EditOrder from '../RefactorOrders/EditOrder.jsx'
+import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
 import './RefactorOrders.less'
 
@@ -94,35 +95,45 @@ class RefactorOrders extends React.Component {
         </div>
       )
     })
+    const table = <React.Fragment> <div className='table-orders__title'>Table orders</div>
+      <div className='table-orders__table'>
+        <table>
+          <tbody>
+            <tr>
+              <th>№</th>
+              <th>Client name</th>
+              <th>Client email</th>
+              <th>Type clock</th>
+              <th>City</th>
+              <th>Date</th>
+              <th>Master</th>
+              <th>Service</th>
+            </tr>
+            { renderItems }
+          </tbody>
+        </table>
+      </div>
+      <div className='table-orders__numbers-pages'>
+        { renderPageNumbers }
+      </div>
+      <div className='table-orders__bttn-add'>
+        <LinkButton to='/admin/orders/add' name='Add'/>
+      </div></React.Fragment>
     return (
       <div className='table-orders'>
-        <div className='table-orders__title'>Table orders</div>
-        <div className='table-orders__table'>
-          <table>
-            <tbody>
-              <tr>
-                <th>№</th>
-                <th>Client name</th>
-                <th>Client email</th>
-                <th>Type clock</th>
-                <th>City</th>
-                <th>Date</th>
-                <th>Master</th>
-                <th>Service</th>
-              </tr>
-              { renderItems }
-            </tbody>
-          </table>
-        </div>
-        <div className='table-orders__numbers-pages'>
-          { renderPageNumbers }
-        </div>
-        <div className='table-orders__bttn-add'>
-          <LinkButton to='/admin/orders/add' name='Add'/>
-        </div>
         <Switch>
-          <Route path='/admin/orders/add' component={AddOrder}/>
-          <Route path='/admin/orders/edit/:id' component={EditOrder}/>
+          <Route exact path='/admin/orders' render={() => (table)}/>
+          <Route path='/admin/orders/add' render={() => (
+            <React.Fragment>
+              {table}
+              <AddOrder/>
+            </React.Fragment>)}/>
+          <Route path='/admin/orders/edit/:id' render={({ location }) => (
+            <React.Fragment>
+              {table}
+              <EditOrder location={ location }/>
+            </React.Fragment>)}/>
+          <Route path='/admin/orders/*' component={NoMatchAdmin}/>
         </Switch>
       </div>
     )

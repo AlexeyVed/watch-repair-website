@@ -10,7 +10,7 @@ import RefactorClients from '../TableClients/RefactorClients'
 import RefactorClocks from '../TableClocks/RefactorClocks'
 import RefactorWorkers from '../TableWorkers/RefactorWorkers'
 import RefactorOrders from '../TableOrders/RefactorOrders'
-import NoMatch from '../../NoMatch/NoMatch.jsx'
+import NoMatchAdmin from '../../NoMatch/NoMatchAdmin.jsx'
 
 import './MainAdmin.less'
 
@@ -63,7 +63,7 @@ class MainAdmin extends React.Component {
               <Route path='/admin/clocks' component={RefactorClocks}/>
               <Route path='/admin/workers' component={RefactorWorkers}/>
               <Route path='/admin/orders' component={RefactorOrders}/>
-              <Route component={NoMatch}/>
+              <Route component={NoMatchAdmin}/>
             </Switch>
           </div>
         </div>

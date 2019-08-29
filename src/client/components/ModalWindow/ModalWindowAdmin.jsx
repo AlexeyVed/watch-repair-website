@@ -36,7 +36,7 @@ class ModalWindowAdmin extends React.Component {
 
       ReactDOM.createPortal(
         <div className='modal-info'>
-          <div className='modal-info__text' onClick={this.timeOutNull}>
+          <div className='modal-info__text'>
             <button className='modal-info__text__bttn-close' onClick={this.timeOutNull}>&times;</button>
             <div className='modal-info__text__errors'>
               { (clockMessage) ? <div>{ clockMessage }</div> : null }

@@ -19,9 +19,9 @@ class EditClients extends React.Component {
   }
 
   componentDidMount () {
-    const id = +this.props.match.params.id
+    const arr = this.props.location.pathname.split('/')
     axios
-      .get(`/api/customers/${id}`)
+      .get(`/api/customers/${arr[arr.length - 1]}`)
       .then(res => {
         this.setState(() => ({
           load: false
@@ -36,7 +36,7 @@ class EditClients extends React.Component {
 
   render () {
     const { handleSubmit, editClient, redirectBack } = this.props
-
+    const arr = this.props.location.pathname.split('/')
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/clients' }}/>
     }
@@ -57,7 +57,7 @@ class EditClients extends React.Component {
                 name='id'
                 component={myInput}
                 type='text'
-                placeholder={this.props.match.params.id}
+                placeholder={arr[arr.length - 1]}
                 input={{ disabled: true }}
               />
               <Field

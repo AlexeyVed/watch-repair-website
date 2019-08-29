@@ -6,6 +6,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteCustomersFromDB, loadCustomers, loadDataEnd, setPage } from '../../../actions'
 import AddClients from '../RefactorClients/AddClients.jsx'
 import EditClients from '../RefactorClients/EditClients.jsx'
+import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
 import './RefactorClients.less'
 
@@ -81,32 +82,41 @@ class RefactorClients extends React.Component {
         </div>
       )
     })
-
+    const table = <React.Fragment><div className='table-clients__title'>Table customers</div>
+      <div className='table-clients__table'>
+        <table>
+          <tbody>
+            <tr>
+              <th>№</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Service</th>
+            </tr>
+            { renderItems }
+          </tbody>
+        </table>
+      </div>
+      <div className='table-clients__numbers-pages'>
+        { renderPageNumbers }
+      </div>
+      <div className='table-clients__bttn-add'>
+        <LinkButton to='/admin/clients/add' name='Add'/>
+      </div></React.Fragment>
     return (
       <div className='table-clients'>
-        <div className='table-clients__title'>Table customers</div>
-        <div className='table-clients__table'>
-          <table>
-            <tbody>
-              <tr>
-                <th>№</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Service</th>
-              </tr>
-              { renderItems }
-            </tbody>
-          </table>
-        </div>
-        <div className='table-clients__numbers-pages'>
-          { renderPageNumbers }
-        </div>
-        <div className='table-clients__bttn-add'>
-          <LinkButton to='/admin/clients/add' name='Add'/>
-        </div>
         <Switch>
-          <Route path='/admin/clients/add' component={AddClients}/>
-          <Route path='/admin/clients/edit/:id' component={EditClients}/>
+          <Route exact path='/admin/clients' render={() => (table)}/>
+          <Route path='/admin/clients/add' render={() => (
+            <React.Fragment>
+              {table}
+              <AddClients/>
+            </React.Fragment>)}/>
+          <Route path='/admin/clients/edit/:id' render={({ location }) => (
+            <React.Fragment>
+              {table}
+              <EditClients location={ location }/>
+            </React.Fragment>)}/>
+          <Route path='/admin/clients/*' component={NoMatchAdmin}/>
         </Switch>
       </div>
     )

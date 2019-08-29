@@ -6,6 +6,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteClockFromDB, loadClocks, loadDataEnd, setPage } from '../../../actions'
 import AddClocks from '../RefactorClocks/AddClocks.jsx'
 import EditClocks from '../RefactorClocks/EditClocks.jsx'
+import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
 import './RefactorClocks.less'
 
@@ -81,32 +82,41 @@ class RefactorClocks extends React.Component {
         </div>
       )
     })
-
+    const table = <React.Fragment><div className='table-clocks__title'>Table clock</div>
+      <div className='table-clocks__table'>
+        <table>
+          <tbody>
+            <tr>
+              <th>ID</th>
+              <th>Type of Clock</th>
+              <th>Time of repair</th>
+              <th>Service</th>
+            </tr>
+            { renderItems }
+          </tbody>
+        </table>
+      </div>
+      <div className='table-clocks__numbers-pages'>
+        { renderPageNumbers }
+      </div>
+      <div className='table-clocks__bttn-add'>
+        <LinkButton to='/admin/clocks/add' name='Add'/>
+      </div></React.Fragment>
     return (
       <div className='table-clocks'>
-        <div className='table-clocks__title'>Table clock</div>
-        <div className='table-clocks__table'>
-          <table>
-            <tbody>
-              <tr>
-                <th>ID</th>
-                <th>Type of Clock</th>
-                <th>Time of repair</th>
-                <th>Service</th>
-              </tr>
-              { renderItems }
-            </tbody>
-          </table>
-        </div>
-        <div className='table-clocks__numbers-pages'>
-          { renderPageNumbers }
-        </div>
-        <div className='table-clocks__bttn-add'>
-          <LinkButton to='/admin/clocks/add' name='Add'/>
-        </div>
         <Switch>
-          <Route path='/admin/clocks/add' component={AddClocks}/>
-          <Route path='/admin/clocks/edit/:id' component={EditClocks}/>
+          <Route exact path='/admin/clocks' render={() => (table)}/>
+          <Route path='/admin/clocks/add' render={() => (
+            <React.Fragment>
+              {table}
+              <AddClocks/>
+            </React.Fragment>)}/>
+          <Route path='/admin/clocks/edit/:id' render={({ location }) => (
+            <React.Fragment>
+              {table}
+              <EditClocks location={ location }/>
+            </React.Fragment>)}/>
+          <Route path='/admin/clocks/*' component={NoMatchAdmin}/>
         </Switch>
       </div>
     )

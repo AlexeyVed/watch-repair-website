@@ -6,6 +6,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteMastersFromDB, loadCities, loadDataEnd, loadMasters, setPage } from '../../../actions'
 import AddWorkers from '../RefactorWorkers/AddWorkers.jsx'
 import EditWorkers from '../RefactorWorkers/EditWorkers.jsx'
+import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
 import './RefactorWorkers.less'
 
@@ -82,32 +83,43 @@ class RefactorWorkers extends React.Component {
         </div>
       )
     })
+    const table = <React.Fragment>
+      <div className='table-workers__title'>Table masters</div>
+      <div className='table-workers__table'>
+        <table>
+          <tbody>
+            <tr>
+              <th>№</th>
+              <th>Name</th>
+              <th>Where work</th>
+              <th>Rating</th>
+              <th>Service</th>
+            </tr>
+            { renderItems }
+          </tbody>
+        </table>
+      </div>
+      <div className='table-workers__numbers-pages'>
+        { renderPageNumbers }
+      </div>
+      <div className='table-workers__bttn-add'>
+        <LinkButton to='/admin/workers/add' name='Add'/>
+      </div> </React.Fragment>
     return (
       <div className='table-workers'>
-        <div className='table-workers__title'>Table masters</div>
-        <div className='table-workers__table'>
-          <table>
-            <tbody>
-              <tr>
-                <th>№</th>
-                <th>Name</th>
-                <th>Where work</th>
-                <th>Rating</th>
-                <th>Service</th>
-              </tr>
-              { renderItems }
-            </tbody>
-          </table>
-        </div>
-        <div className='table-workers__numbers-pages'>
-          { renderPageNumbers }
-        </div>
-        <div className='table-workers__bttn-add'>
-          <LinkButton to='/admin/workers/add' name='Add'/>
-        </div>
         <Switch>
-          <Route path='/admin/workers/add' component={AddWorkers}/>
-          <Route path='/admin/workers/edit/:id' component={EditWorkers}/>
+          <Route exact path='/admin/workers' render={() => (table)}/>
+          <Route path='/admin/workers/add' render={() => (
+            <React.Fragment>
+              {table}
+              <AddWorkers/>
+            </React.Fragment>)}/>
+          <Route path='/admin/workers/edit/:id' render={({ location }) => (
+            <React.Fragment>
+              {table}
+              <EditWorkers location={ location }/>
+            </React.Fragment>)}/>
+          <Route path='/admin/workers/*' component={NoMatchAdmin}/>
         </Switch>
       </div>
     )
