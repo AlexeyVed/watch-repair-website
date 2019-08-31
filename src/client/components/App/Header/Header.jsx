@@ -39,11 +39,6 @@ class Header extends React.Component {
     return (
       <div className='header'>
         <div className='container-logo' onClick={this.clickLogo}>
-          <div className='container-logo__logo'></div>
-          <div className='container-logo__description'>
-            <div className='container-logo__description company-name'>ClockWise</div>
-            <div className='container-logo__description tagline'>We make your time!</div>
-          </div>
         </div>
         {(!currentUser) ? <React.Fragment>
           <div className='container-user'>
