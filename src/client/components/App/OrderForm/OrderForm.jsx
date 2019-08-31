@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm, initialize } from 'redux-form'
+import MenuItem from '@material-ui/core/MenuItem'
 
-import myInput from '../../FieldRedux'
+import TextField from '../../ComponentMaterial/TextField/'
+import SelectField from '../../ComponentMaterial/SelectField/'
+import DateField from '../../ComponentMaterial/DateField/'
 import { makeOrder } from '../../../actions'
 import { validateEmail, required } from '../../../validation'
 import { getDate } from './logic.js'
@@ -40,7 +43,6 @@ class OrderForm extends Component {
 
   render () {
     const { handleSubmit, chooseClock, chooseCities, makeOrder, chooseMaster } = this.props
-
     if (chooseMaster) {
       return (
         <div className='main-form'>
@@ -61,57 +63,53 @@ class OrderForm extends Component {
           <Field
             label='Enter your name'
             name='name'
-            component={myInput}
+            component={TextField}
             type='text'
-            placeholder='Enter your name'
+            label='Enter your name'
             validate={required}
           />
           <Field
             label='Enter your email'
             name='email'
-            component={myInput}
+            component={TextField}
             type='text'
             placeholder='Enter your email'
             validate={[validateEmail, required]}
           />
-          <div className='main-form__order-select'>
-            <label>Choose your clock</label>
-            <Field
-              name='clockId'
-              component='select'
-              type='number'
-              validate={required}
-            >
-              <option key={0} value='' disabled hidden>Choose your clock</option>
-              {
-                chooseClock.map((clock, index) => (
-                  <option key={index} value={clock.id}>{clock.typeClock}</option>
-                ))
-              }
-            </Field>
-          </div>
-          <div className='main-form__order-select'>
-            <label>Choose your city</label>
-            <Field
-              name='cityId'
-              component='select'
-              type='text'
-              validate={required}
-            >
-              <option key={0} value='' disabled hidden>Choose your city</option>
-              {
-                chooseCities.map((item, index) => (
-                  <option key={index} value={item.id}>{item.city}</option>
-                ))
-              }
-            </Field>
-          </div>
+          <Field
+            name='clockId'
+            component={SelectField}
+            id='clock'
+            type='number'
+            label='Choose your clock'
+            validate={required}
+          >
+            {
+              chooseClock.map((clock, index) => (
+                <MenuItem key={index} value={clock.id}>{clock.typeClock}</MenuItem>
+              ))
+            }
+          </Field>
+          <Field
+            name='cityId'
+            component={SelectField}
+            id='city'
+            label='Choose your city'
+            type='number'
+            validate={required}
+          >
+            {
+              chooseCities.map((item, index) => (
+                <MenuItem key={index} value={item.id}>{item.city}</MenuItem>
+              ))
+            }
+          </Field>
           <Field
             label='Choose date'
             name='date'
-            min={ this.state.date.date }
-            max={'2020-12-25'}
-            component={myInput}
+            min={this.state.date.date}
+            max='2019-12-30'
+            component={DateField}
             type='date'
             onChange={() => {
               this.setState(() => ({
@@ -119,21 +117,20 @@ class OrderForm extends Component {
               }))
             }}
           />
-          <div className='main-form__order-select'>
-            <label>Choose convenient time</label>
-            <Field
-              name='time'
-              component='select'
-              type='number'
-              validate={required}
-            >
-              {
-                this.state.workHours.map((item) => {
-                  return <option key={item} value={Number(item)}>{item}:00</option>
-                })
-              }
-            </Field>
-          </div>
+          <Field
+            name='time'
+            component={SelectField}
+            id='time'
+            label='Choose convenient time'
+            type='number'
+            validate={required}
+          >
+            {
+              this.state.workHours.map((item) => {
+                return <MenuItem key={item} value={Number(item)}>{item}:00</MenuItem>
+              })
+            }
+          </Field>
           <button type='submit' label='submit'>Submit</button>
         </form>
       </div>

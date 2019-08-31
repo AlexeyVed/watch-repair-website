@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
-import myInput from '../../FieldRedux'
+import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editClockIntoDB } from '../../../actions'
@@ -54,7 +54,7 @@ class EditClocks extends React.Component {
               <Field
                 label='ID'
                 name='id'
-                component={myInput}
+                component={TextField}
                 type='text'
                 placeholder={arr[arr.length - 1]}
                 input={{ disabled: true }}
@@ -62,7 +62,7 @@ class EditClocks extends React.Component {
               <Field
                 label='Enter type of clock'
                 name='typeClock'
-                component={myInput}
+                component={TextField}
                 validate={[required]}
                 type='text'
                 placeholder='Enter type of clock'
@@ -70,7 +70,7 @@ class EditClocks extends React.Component {
               <Field
                 label='Enter time of repair clock'
                 name='timeRepair'
-                component={myInput}
+                component={TextField}
                 validate={[required]}
                 type='number'
                 placeholder='Enter time repair clock'

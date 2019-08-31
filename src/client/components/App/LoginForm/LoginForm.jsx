@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
-import myInput from '../../FieldRedux'
+import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 import { loginToApp, missLoginError } from '../../../actions'
@@ -48,7 +48,7 @@ class LoginForm extends React.Component {
               <Field
                 label='Your email'
                 name='email'
-                component={myInput}
+                component={TextField}
                 type='text'
                 placeholder='Enter your email'
                 validate={validateEmail}
@@ -62,7 +62,7 @@ class LoginForm extends React.Component {
               <Field
                 label='Your password'
                 name='password'
-                component={myInput}
+                component={TextField}
                 type='password'
                 placeholder='Enter your password'
                 validate={validatePassword}

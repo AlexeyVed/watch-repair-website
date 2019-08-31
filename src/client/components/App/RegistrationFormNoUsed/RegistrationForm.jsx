@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
-import myInput from '../../FieldRedux'
+import myInput from '../../ComponentMaterial/TextField'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 import { validateEmail, confirmEmail, confirmPassword, validatePassword } from '../../../validation'

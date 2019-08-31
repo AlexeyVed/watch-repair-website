@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
-import myInput from '../../FieldRedux'
+import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editMastersIntoDB } from '../../../actions'
@@ -55,7 +55,7 @@ class EditWorkers extends React.Component {
               <Field
                 label='ID'
                 name='id'
-                component={myInput}
+                component={TextField}
                 type='text'
                 placeholder={arr[arr.length - 1]}
                 input={{ disabled: true }}
@@ -63,7 +63,7 @@ class EditWorkers extends React.Component {
               <Field
                 label='Update worker name'
                 name='name'
-                component={myInput}
+                component={TextField}
                 validate={[required]}
                 type='text'
                 placeholder='Update worker name'

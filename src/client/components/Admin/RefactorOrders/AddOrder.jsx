@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
+import MenuItem from '@material-ui/core/MenuItem'
 
-import myInput from '../../FieldRedux'
+import SelectField from '../../ComponentMaterial/SelectField/'
+import DateField from '../../ComponentMaterial/DateField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addOrdersToDB } from '../../../actions'
 import { required } from '../../../validation'
@@ -20,6 +22,7 @@ class AddOrder extends React.Component {
       time: null
     }
   }
+
   componentDidMount () {
     const date = getDate()
 
@@ -61,76 +64,68 @@ class AddOrder extends React.Component {
             </div>
             <form
               onSubmit={handleSubmit(addOrder)}>
-              <div className='refactor-orders__order-select'>
-                <label>Choose client email</label>
-                <Field
-                  name='customerId'
-                  component='select'
-                  validate={[required]}
-                  type='text'
-                >
-                  <option key={0} value='' disabled hidden>Choose email</option>
-                  {
-                    chooseUsers.map((item, index) => (
-                      <option key={index} value={item.id}>{item.email}</option>
-                    ))
-                  }
-                </Field>
-              </div>
-              <div className='refactor-orders__order-select'>
-                <label>Choose master</label>
-                <Field
-                  name='masterId'
-                  component='select'
-                  validate={[required]}
-                  type='text'
-                >
-                  <option key={0} value='' disabled hidden>Choose master</option>
-                  {
-                    chooseWorkers.map((item, index) => (
-                      <option key={index} value={item.id}>{item.name}</option>
-                    ))
-                  }
-                </Field>
-              </div>
-              <div className='refactor-orders__order-select'>
-                <label>Choose your clock</label>
-                <Field
-                  name='clockId'
-                  component='select'
-                  validate={[required]}
-                  type='text'
-                >
-                  <option key={0} value='' disabled hidden>Choose your clock</option>
-                  {
-                    chooseClock.map((clock, index) => (
-                      <option key={index} value={clock.id}>{clock.typeClock}</option>
-                    ))
-                  }
-                </Field>
-              </div>
-              <div className='refactor-orders__order-select'>
-                <label>Choose your city</label>
-                <Field
-                  name='cityId'
-                  component='select'
-                  validate={[required]}
-                  type='text'
-                >
-                  <option key={0} value='' disabled hidden>Choose your city</option>
-                  {
-                    chooseCities.map((item, index) => (
-                      <option key={index} value={item.id}>{item.city}</option>
-                    ))
-                  }
-                </Field>
-              </div>
+              <Field
+                name='customerId'
+                id='customer'
+                label='Choose client email'
+                component={SelectField}
+                validate={[required]}
+                type='text'
+              >
+                {
+                  chooseUsers.map((item, index) => (
+                    <MenuItem key={index} value={item.id}>{item.email}</MenuItem>
+                  ))
+                }
+              </Field>
+              <Field
+                name='masterId'
+                id='master'
+                label='Choose master'
+                component={SelectField}
+                validate={[required]}
+                type='text'
+              >
+                {
+                  chooseWorkers.map((item, index) => (
+                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+                  ))
+                }
+              </Field>
+              <Field
+                name='clockId'
+                id='clock'
+                label='Choose your clock'
+                component={SelectField}
+                validate={[required]}
+                type='text'
+              >
+                {
+                  chooseClock.map((clock, index) => (
+                    <MenuItem key={index} value={clock.id}>{clock.typeClock}</MenuItem>
+                  ))
+                }
+              </Field>
+              <Field
+                name='cityId'
+                id='city'
+                label='Choose your city'
+                component={SelectField}
+                validate={[required]}
+                type='text'
+              >
+                {
+                  chooseCities.map((item, index) => (
+                    <MenuItem key={index} value={item.id}>{item.city}</MenuItem>
+                  ))
+                }
+              </Field>
               <Field
                 label='Choose date'
                 name='date'
-                min={ this.state.date.date }
-                max={'2020-12-25'}
-                component={myInput}
+                min={this.state.date.date}
+                max='2019-12-30'
+                component={DateField}
                 validate={[required]}
                 type='date'
                 onChange={() => {
@@ -139,25 +134,24 @@ class AddOrder extends React.Component {
                   }))
                 }}
               />
-              <div className='refactor-orders__order-select'>
-                <label>Choose convenient time</label>
-                <Field
-                  name='time'
-                  component='select'
-                  validate={[required]}
-                  type='text'
-                >
-                  <option key={0} value='' disabled hidden>Select time</option>
-                  {
-                    workHours.map((item) => {
-                      return <option key={item} value={item}>{item}:00</option>
-                    })
-                  }
-                </Field>
-              </div>
+              <Field
+                name='time'
+                id='clock'
+                label='Choose convenient time'
+                component={SelectField}
+                validate={[required]}
+                type='text'
+              >
+                {
+                  workHours.map((item) => {
+                    return <MenuItem key={item} value={item}>{item}:00</MenuItem>
+                  })
+                }
+              </Field>
               <button
                 type='submit'
-                label='submit'>Submit</button>
+                label='submit'>Submit
+              </button>
             </form>
           </div>
         </div>

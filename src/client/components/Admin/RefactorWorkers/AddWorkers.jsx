@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
-import myInput from '../../FieldRedux'
+import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addMastersToDB } from '../../../actions'
 import { required } from '../../../validation'
@@ -33,7 +33,7 @@ class AddWorkers extends React.Component {
               <Field
                 label='Enter workers name'
                 name='name'
-                component={myInput}
+                component={TextField}
                 validate={[required]}
                 type='text'
                 placeholder='Enter workers name'

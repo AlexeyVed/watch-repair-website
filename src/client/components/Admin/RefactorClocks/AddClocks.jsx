@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
-import myInput from '../../FieldRedux'
+import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addClockToDB } from '../../../actions'
 import { required } from '../../../validation'
@@ -33,7 +33,7 @@ class AddClocks extends React.Component {
               <Field
                 label='Enter type of clock'
                 name='typeClock'
-                component={myInput}
+                component={TextField}
                 validate={[required]}
                 type='text'
                 placeholder='Enter type of clock'
@@ -41,7 +41,7 @@ class AddClocks extends React.Component {
               <Field
                 label='Enter time of repair clock'
                 name='timeRepair'
-                component={myInput}
+                component={TextField}
                 validate={[required]}
                 type='number'
                 placeholder='Enter time repair clock'

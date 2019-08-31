@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 
-import myInput from '../../FieldRedux'
+import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import { validateEmail, required } from '../../../validation'
@@ -55,24 +55,24 @@ class EditClients extends React.Component {
               <Field
                 label='ID'
                 name='id'
-                component={myInput}
+                component={TextField}
                 type='text'
                 placeholder={arr[arr.length - 1]}
                 input={{ disabled: true }}
               />
               <Field
-                label='Your email'
+                label='Enter email'
                 name='email'
-                component={myInput}
+                component={TextField}
                 type='text'
                 placeholder='Enter your email'
                 validate={[validateEmail, required]}
                 required
               />
               <Field
-                label='Create a password'
+                label='Enter name'
                 name='name'
-                component={myInput}
+                component={TextField}
                 type='text'
                 placeholder='Enter your password'
                 validate={[required]}
