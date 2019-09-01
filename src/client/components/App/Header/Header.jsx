@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { logOutApp } from '../../../actions'
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded'
 
 import './header.less'
 
@@ -53,7 +54,7 @@ class Header extends React.Component {
             <button
               className='container-buttons__button-logout header-buttons'
               onClick={this.handleClickLogOut}>
-            Log Out
+              {<ExitToAppRoundedIcon/>}
             </button>
           </div>
         </React.Fragment>

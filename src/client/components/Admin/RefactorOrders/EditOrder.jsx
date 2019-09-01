@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 import { getDate } from '../../App/OrderForm/logic'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import SelectField from '../../ComponentMaterial/SelectField/'
@@ -92,7 +93,7 @@ class EditOrder extends React.Component {
               >
                 {
                   chooseUsers.map((item, index) => (
-                    <option key={index} value={item.id}>{item.email}</option>
+                    <MenuItem key={index} value={item.id}>{item.email}</MenuItem>
                   ))
                 }
               </Field>
@@ -106,7 +107,7 @@ class EditOrder extends React.Component {
               >
                 {
                   chooseWorkers.map((item, index) => (
-                    <option key={index} value={item.id}>{item.name}</option>
+                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
                   ))
                 }
               </Field>
@@ -120,7 +121,7 @@ class EditOrder extends React.Component {
               >
                 {
                   chooseClock.map((clock, index) => (
-                    <option key={index} value={clock.id}>{clock.timeRepair}</option>
+                    <MenuItem key={index} value={clock.id}>{clock.timeRepair}</MenuItem>
                   ))
                 }
               </Field>
@@ -135,7 +136,7 @@ class EditOrder extends React.Component {
               >
                 {
                   chooseCities.map((item, index) => (
-                    <option key={index} value={item.id}>{item.city}</option>
+                    <MenuItem key={index} value={item.id}>{item.city}</MenuItem>
                   ))
                 }
               </Field>
@@ -158,7 +159,7 @@ class EditOrder extends React.Component {
               >
                 {
                   workHours.map((item) => (
-                    <option key={item} value={item}>{item}:00</option>
+                    <MenuItem key={item} value={item}>{item}:00</MenuItem>
                   ))
                 }
               </Field>

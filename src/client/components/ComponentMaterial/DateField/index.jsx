@@ -10,7 +10,6 @@ import './DateField.less'
 const MaterialUIPickers = props => {
   const { input, label, min, max } = props
   const onChange = date => {
-    console.log(date)
     Date.parse(date) ? input.onChange(date.toISOString().split('T')[0]) : input.onChange(null)
   }
   return (
