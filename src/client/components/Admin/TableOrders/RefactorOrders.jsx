@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import {
@@ -73,8 +75,8 @@ class RefactorOrders extends React.Component {
         <td>{item.date} / {item.time}</td>
         <td>{(item.master !== null) ? item.master.name : <b>Master was deleted</b>}</td>
         <td>
-          <LinkButton to={`/admin/orders/edit/${item.id}`} name='Edit'/>
-          <button onClick={ () => deleteOrder(item.id) }>Delete</button>
+          <LinkButton to={`/admin/orders/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
+          <button onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })

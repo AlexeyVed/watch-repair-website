@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import TextField from '../../ComponentMaterial/TextField/'
+import SelectField from '../../ComponentMaterial/SelectField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addMastersToDB } from '../../../actions'
 import { required } from '../../../validation'
@@ -38,41 +40,38 @@ class AddWorkers extends React.Component {
                 type='text'
                 placeholder='Enter workers name'
               />
-              <div className='refactor-workers__select'>
-                <label>Enter city</label>
-                <Field
-                  name='cityId'
-                  component='select'
-                  validate={[required]}
-                  type='text'
-                >
-                  <option key={0} value='' disabled hidden>Choose city</option>
-                  {
-                    chooseCities.map(item => (
-                      <option key={item.id} value={item.id}>{item.city}</option>
-                    ))
-                  }
-                </Field>
-              </div>
-              <div className='refactor-workers__select'>
-                <label>Enter rating</label>
-                <Field
-                  name='rating'
-                  component='select'
-                  validate={[required]}
-                  type='text'
-                >
-                  <option key={0} value='' disabled hidden>Choose Rating</option>
-                  <option key={1} value={1}>1</option>
-                  <option key={2} value={2}>2</option>
-                  <option key={3} value={3}>3</option>
-                  <option key={4} value={4}>4</option>
-                  <option key={5} value={5}>5</option>
-                </Field>
-              </div>
+              <Field
+                name='cityId'
+                id='city'
+                label='Enter city'
+                component={SelectField}
+                validate={[required]}
+                type='text'
+              >
+                {
+                  chooseCities.map(item => (
+                    <MenuItem key={item.id} value={item.id}>{item.city}</MenuItem>
+                  ))
+                }
+              </Field>
+              <Field
+                name='rating'
+                id='rating'
+                label='Choose rating'
+                component={SelectField}
+                validate={[required]}
+                type='number'
+              >
+                <MenuItem key={1} value={1}>1</MenuItem>
+                <MenuItem key={2} value={2}>2</MenuItem>
+                <MenuItem key={3} value={3}>3</MenuItem>
+                <MenuItem key={4} value={4}>4</MenuItem>
+                <MenuItem key={5} value={5}>5</MenuItem>
+              </Field>
               <button
                 type='submit'
-                label='submit'>Submit</button>
+                label='submit'>Submit
+              </button>
             </form>
           </div>
         </div>

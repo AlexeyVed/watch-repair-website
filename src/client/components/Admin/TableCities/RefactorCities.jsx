@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import AddCities from '../RefactorCities/AddCities.jsx'
@@ -59,8 +61,8 @@ class RefactorCities extends React.Component {
         <td>{indexes()}</td>
         <td>{item.city}</td>
         <td>
-          <LinkButton to={`/admin/cities/edit/${item.id}`} name='Edit'/>
-          <button onClick={ () => deleteCity(item.id) }>Delete</button>
+          <LinkButton to={`/admin/cities/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
+          <button onClick={ () => deleteCity(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })

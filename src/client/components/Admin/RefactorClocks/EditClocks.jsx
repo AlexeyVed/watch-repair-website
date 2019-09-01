@@ -52,11 +52,10 @@ class EditClocks extends React.Component {
             <form
               onSubmit={handleSubmit(editClock)}>
               <Field
-                label='ID'
+                label={`ID: ${arr[arr.length - 1]}`}
                 name='id'
                 component={TextField}
                 type='text'
-                placeholder={arr[arr.length - 1]}
                 input={{ disabled: true }}
               />
               <Field

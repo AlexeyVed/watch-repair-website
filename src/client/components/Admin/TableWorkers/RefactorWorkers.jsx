@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteMastersFromDB, loadCities, loadDataEnd, loadMasters, setPage } from '../../../actions'
@@ -61,8 +63,8 @@ class RefactorWorkers extends React.Component {
         <td>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
         <td>{item.rating}</td>
         <td>
-          <LinkButton to={`/admin/workers/edit/${item.id}`} name='Edit'/>
-          <button onClick={ () => deleteWorker(item.id) }>Delete</button>
+          <LinkButton to={`/admin/workers/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
+          <button onClick={ () => deleteWorker(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })

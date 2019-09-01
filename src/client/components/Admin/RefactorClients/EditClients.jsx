@@ -53,11 +53,10 @@ class EditClients extends React.Component {
             <form
               onSubmit={handleSubmit(editClient)}>
               <Field
-                label='ID'
+                label={`ID: ${arr[arr.length - 1]}`}
                 name='id'
                 component={TextField}
                 type='text'
-                placeholder={arr[arr.length - 1]}
                 input={{ disabled: true }}
               />
               <Field

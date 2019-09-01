@@ -29,7 +29,7 @@
       }
 
       tr:first-child {
-        background-color: #f1efe4;
+        background-color: rgba(169, 169, 169, 0.04);
         height: 50px;
         border-bottom: none;
       }
@@ -64,7 +64,7 @@
       }
 
       th:nth-child(8) {
-        width: 120px;
+        width: 100px;
       }
 
       td {
@@ -109,12 +109,12 @@
           height: 28px;
           padding: 0;
           border: none;
-          background-color: #f1efe4;
           font-size: 13px;
           color: black;
           cursor: pointer;
           outline: none;
-          border-right: 1px solid #e6e6e2;
+          background-color: inherit;
+          border-left: 1px solid rgba(105, 105, 105, 0.65);
         }
 
         a > button {
@@ -122,27 +122,24 @@
           height: 28px;
           padding: 0;
           border: none;
-          background-color: #f1efe4;
+          background-color: inherit;
           font-size: 13px;
           color: black;
           cursor: pointer;
           outline: none;
-          border-left: 1px solid #e6e6e2;
-          border-right: 1px solid #e6e6e2;
         }
       }
-
     }
   }
   &__numbers-pages {
     display: flex;
     width: 97.7%;
-    background-color: #f1efe4;
-    border-top: 1px solid #bfbfbf;
-    border-bottom: 1px solid #b4b4b4;
     height: 30px;
     align-items: center;
     justify-content: center;
+    border: 1px solid #bfbfbf;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 10px;
 
     div {
       width: 25px;
@@ -176,15 +173,16 @@
 
     a > button {
       height: 100%;
-      width: 120px;
+      width: 110px;
       padding: 0;
-      color: inherit;
+      border: none;
+      font: inherit;
+      color: black;
       cursor: pointer;
-      background-color: #f1efe4;
+      background-color: rgba(238, 238, 228, 0.51);
       outline: none;
       border: 1px solid #b9b9b5;
-      border-top: none;
-      color: black;
+      border-radius: 10px;
     }
   }
 }

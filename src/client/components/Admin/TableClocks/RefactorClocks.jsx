@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteClockFromDB, loadClocks, loadDataEnd, setPage } from '../../../actions'
@@ -60,8 +62,8 @@ class RefactorClocks extends React.Component {
         <td>{item.typeClock}</td>
         <td>{item.timeRepair}</td>
         <td>
-          <LinkButton to={`/admin/clocks/edit/${item.id}`} name='Edit'/>
-          <button onClick={ () => deleteClock(item.id) }>Delete</button>
+          <LinkButton to={`/admin/clocks/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
+          <button onClick={ () => deleteClock(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })

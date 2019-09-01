@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Tooltip from '@material-ui/core/Tooltip'
 
 import { addOrder, setChooseWorker, returnPageHome } from '../../../actions'
 
@@ -47,7 +48,11 @@ class ChooseWorker extends React.Component {
       }
       buttonConf = <button onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
     } else {
-      buttonConf = <button disabled onClick={ () => (addOrder()) }>Confirm</button>
+      buttonConf = <Tooltip title='You must choose master.'>
+        <span>
+          <button disabled onClick={ () => (addOrder()) }>Confirm</button>
+        </span>
+      </Tooltip>
     }
 
     return (

@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteCustomersFromDB, loadCustomers, loadDataEnd, setPage } from '../../../actions'
@@ -60,8 +62,8 @@ class RefactorClients extends React.Component {
         <td>{item.email}</td>
         <td>{item.name}</td>
         <td>
-          <LinkButton to={`/admin/clients/edit/${item.id}`} name='Edit'/>
-          <button onClick={ () => deleteClient(item.id) }>Delete</button>
+          <LinkButton to={`/admin/clients/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
+          <button onClick={ () => deleteClient(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
