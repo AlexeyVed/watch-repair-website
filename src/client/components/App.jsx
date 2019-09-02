@@ -31,8 +31,6 @@ class App extends React.Component {
         isOrder || false
     return (
       <div className = 'app'>
-        <div className='app-admin'>
-        </div>
         <div className= 'app-main'>
           <Header/>
           <Switch>

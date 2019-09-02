@@ -1,104 +1,207 @@
 @headerColor: rgb(230, 231, 245);
 
-.header {
-  flex: 0 0 80px;
-  background-color: @headerColor;
-  min-width: 695px;
-  display: flex;
-  border-left: 1px solid rgba(128, 128, 128, 0.4);
-  border-bottom: 1px solid rgba(128, 128, 128, 0.4);
-  border-right: 1px solid rgba(128, 128, 128, 0.4);
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-
-  .container-logo {
-    flex: 0 1 220px;
-    min-width: 225px;
-    align-items: center;
-    margin-left: 30px;
+@media screen and (max-width:600px) {
+  .header {
+    flex: 0 0 60px;
+    background-color: @headerColor;
+    width: 100%;
     display: flex;
-    cursor: pointer;
-    background: url(../../../image/logo.png) no-repeat left;
-    background-size: 220px 75px;
-  }
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 
-  .container-user {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    font-weight: 500;
-    font-size: 17px;
+    .container-logo {
+      flex: 0 1 170px;
+      min-width: 170px;
+      align-items: center;
+      margin-left: 10px;
+      display: flex;
+      cursor: pointer;
+      background: url(../../../image/logo.png) no-repeat left;
+      background-size: 170px 60px;
+    }
 
-    &__user {
-      margin-right: 40px;
-      height: 30px;
-      width: 160px;
+    .container-user {
+      flex: 1;
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
+      justify-content: flex-end;
+      font-weight: 500;
+      font-size: 14px;
 
-    &__user:hover {
-      color: #535353;
-    }
-  }
+      &__user {
+        margin-right: 5px;
+        height: 30px;
+        width: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
 
-  .container-buttons {
-    flex: 0 0 100px;
-    display: flex;
-    font-family: Verdana;
-    font-weight: 500;
-    font-size: 18px;
-
-    button {
-      border-bottom-right-radius: 10px;
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      border: none;
-      font: inherit;
-      color: inherit;
-      cursor: pointer;
-      background-color: @headerColor;
-      outline: none;
-      border-left: 1px solid #a9b0b4;
-      border-right: 1px solid #e6e6e2;
-
-      .MuiSvgIcon-root {
-        font-size: 30px;
+      &__user:hover {
+        color: #535353;
       }
     }
 
-    a {
-      width: 50%;
-      height: 100%;
-      color: black;
-    }
+    .container-buttons {
+      flex: 0 0 60px;
+      display: flex;
+      font-family: Verdana;
+      font-weight: 500;
+      font-size: 18px;
 
-    a > button {
-      width: 100%;
-      height: 100%;
-      border-bottom-right-radius: 10px;
-    }
+      button {
+        border-bottom-right-radius: 10px;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: none;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        background-color: @headerColor;
+        outline: none;
+        border-left: 1px solid #a9b0b4;
 
-    a > button {
-      height: 100%;
-      padding: 0;
-      border: none;
-      font: inherit;
-      color: inherit;
+        .MuiSvgIcon-root {
+          font-size: 20px;
+        }
+      }
+
+      a {
+        width: 50%;
+        height: 100%;
+        color: black;
+      }
+
+      a > button {
+        width: 100%;
+        height: 100%;
+        border-bottom-right-radius: 10px;
+      }
+
+      a > button {
+        height: 100%;
+        padding: 0;
+        border: none;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        background-color: @headerColor;
+        outline: none;
+        border-left: 1px solid #e6e6e2;
+
+      }
+
+      button:hover {
+        background-color: rgb(226, 227, 241);
+      }
+    }
+  }
+}
+
+@media screen and (min-width:600px) {
+  .header {
+    flex: 0 0 80px;
+    background-color: @headerColor;
+    min-width: 695px;
+    display: flex;
+    border-left: 1px solid rgba(128, 128, 128, 0.4);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    border-right: 1px solid rgba(128, 128, 128, 0.4);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+    .container-logo {
+      flex: 0 1 220px;
+      min-width: 225px;
+      align-items: center;
+      margin-left: 30px;
+      display: flex;
       cursor: pointer;
-      background-color: @headerColor;
-      outline: none;
-      border-left: 1px solid #e6e6e2;
-
+      background: url(../../../image/logo.png) no-repeat left;
+      background-size: 220px 75px;
     }
 
-    button:hover {
-      background-color: rgb(226, 227, 241);
+    .container-user {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-weight: 500;
+      font-size: 17px;
+
+      &__user {
+        margin-right: 40px;
+        height: 30px;
+        width: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      &__user:hover {
+        color: #535353;
+      }
+    }
+
+    .container-buttons {
+      flex: 0 0 100px;
+      display: flex;
+      font-family: Verdana;
+      font-weight: 500;
+      font-size: 18px;
+
+      button {
+        border-bottom-right-radius: 10px;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: none;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        background-color: @headerColor;
+        outline: none;
+        border-left: 1px solid #a9b0b4;
+        border-right: 1px solid #e6e6e2;
+
+        .MuiSvgIcon-root {
+          font-size: 30px;
+        }
+      }
+
+      a {
+        width: 50%;
+        height: 100%;
+        color: black;
+      }
+
+      a > button {
+        width: 100%;
+        height: 100%;
+        border-bottom-right-radius: 10px;
+      }
+
+      a > button {
+        height: 100%;
+        padding: 0;
+        border: none;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        background-color: @headerColor;
+        outline: none;
+        border-left: 1px solid #e6e6e2;
+
+      }
+
+      button:hover {
+        background-color: rgb(226, 227, 241);
+      }
     }
   }
 }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
+import AddRoundedIcon from '@material-ui/icons/AddRounded'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import AddCities from '../RefactorCities/AddCities.jsx'
@@ -97,11 +98,13 @@ class RefactorCities extends React.Component {
         </table>
       </div>
       <div className='table-cities__numbers-pages'>
-        { renderPageNumbers }
-      </div>
-      <div className='table-cities__bttn-add'>
-        <LinkButton to='/admin/cities/add' name='Add'/>
-      </div> </React.Fragment>
+        <div className='table-orders__numbers-pages__container'>
+          { renderPageNumbers }
+        </div>
+        <div className='table-cities__numbers-pages__bttn-add'>
+          <LinkButton to='/admin/cities/add' name={<AddRoundedIcon/>}/>
+        </div>
+      </div></React.Fragment>
     return (
       <div className='table-cities'>
         <Switch>
