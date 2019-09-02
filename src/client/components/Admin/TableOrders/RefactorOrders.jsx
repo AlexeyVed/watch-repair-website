@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
+import AddRoundedIcon from '@material-ui/icons/AddRounded'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import {
@@ -116,10 +117,12 @@ class RefactorOrders extends React.Component {
         </table>
       </div>
       <div className='table-orders__numbers-pages'>
-        { renderPageNumbers }
-      </div>
-      <div className='table-orders__bttn-add'>
-        <LinkButton to='/admin/orders/add' name='Add'/>
+        <div className='table-orders__numbers-pages__container'>
+          { renderPageNumbers }
+        </div>
+        <div className='table-orders__numbers-pages__bttn-add'>
+          <LinkButton to='/admin/orders/add' name={<AddRoundedIcon/>}/>
+        </div>
       </div></React.Fragment>
     return (
       <div className='table-orders'>

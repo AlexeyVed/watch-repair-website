@@ -135,58 +135,78 @@
     display: flex;
     width: 97.7%;
     height: 30px;
-    align-items: center;
-    justify-content: center;
     border: 1px solid #bfbfbf;
-    background-color: rgba(0, 0, 0, 0.03);
-    border-radius: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border-collapse: collapse;
 
-    div {
-      width: 25px;
-      height: 25px;
-      border-right: 1px solid grey;
+    &__container {
+      flex: 1;
+      display: flex;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.03);
+      align-items: center;
+      justify-content: center;
+      border-collapse: collapse;
+
+      div {
+        width: 30px;
+        height: 30px;
+        border-right: 1px solid #b9b9b5;
+        border-left: 1px solid #b9b9b5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-right: 5px;
+        padding-left: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 3px;
+      }
+
+      .active {
+        background-color: rgba(209, 212, 209, 0.8);
+        cursor: default;
+      }
+
+      div:hover {
+        background-color: #d1d4d1;
+      }
+    }
+
+    &__bttn-add {
+      flex: 0 0 85px;
+      height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-right: 5px;
-      padding-left: 5px;
-    }
 
-    .active {
-      background-color: #d1d4d1;
-    }
+      a {
+        width: 100%;
+        height: 100%;
+      }
 
-    div:hover {
-      background-color: #d1d4d1;
-    }
+      a > button {
+        height: 30px;
+        width: 85px;
+        padding: 0;
+        border: none;
+        font: inherit;
+        color: black;
+        cursor: pointer;
+        outline: none;
+        border-left: 1px solid #b9b9b5;
+        border-radius: 5px;
+        background-color: #f4f4f0;
 
-    div:first-child {
-      border-left: 1px solid grey;
-    }
-  }
+        .MuiSvgIcon-root {
+          font-size: 28px;
+        }
+      }
 
-  &__bttn-add {
-    display: flex;
-    width: 97.7%;
-    height: 30px;
-    flex-direction: row-reverse;
-
-    a > button {
-      height: 100%;
-      width: 110px;
-      padding: 0;
-      border: none;
-      font: inherit;
-      color: black;
-      cursor: pointer;
-      outline: none;
-      border: 1px solid #b9b9b5;
-      border-radius: 10px;
-      background-color: rgba(236, 236, 232, 0.8);
-    }
-
-    a > button:hover {
-      background-color: rgba(225, 225, 221, 0.8);
+      a > button:hover {
+        background-color: #f0f0ec;
+      }
     }
   }
 }
