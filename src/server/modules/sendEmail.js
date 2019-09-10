@@ -1,17 +1,21 @@
 const nodemailer = require('nodemailer')
-const config = require('../config/config.js')
+const devConfig = require('../config/devConfig.js').mail
+const prodConfig = require('../config/prodConfig.js').mail
+
+const isProd = process.env.NODE_ENV || 'development'
+const mailConfig = (isProd === 'production') ? prodConfig : devConfig
 
 const transporter = nodemailer.createTransport({
-  service: config.mail.service,
+  service: mailConfig.service,
   auth: {
-    user: config.mail.user,
-    pass: config.mail.pass
+    user: mailConfig.user,
+    pass: mailConfig.pass
   }
 })
 
 exports.sendSuccessfullyMsg = order => {
   const mailOptions = {
-    from: config.mail.from,
+    from: mailConfig.from,
     to: order.customer.email,
     subject: 'Your order has been successfully accepted.',
     text: `Respected, ${order.customer.name}! Your clock "${order.clock.typeClock}" will be repaired ${order.date} at ${order.time} o\`clock.`

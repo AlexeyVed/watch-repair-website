@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize')
-const config = require('../config/config.js')
+const devConfig = require('../config/devConfig.js').db
+const prodConfig = require('../config/prodConfig.js').db
 
 const mode = process.env.NODE_ENV || 'development'
 
-let dbConfig = (mode === 'production') ? config.db.postgresql : config.db.mysql
+let dbConfig = (mode === 'production') ? prodConfig : devConfig
 
 const db = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
   dialect: dbConfig.dialect,

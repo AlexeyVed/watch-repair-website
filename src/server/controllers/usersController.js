@@ -1,9 +1,13 @@
 const passport = require('../modules/passport.js')
 const { checkSchema, validationResult } = require('express-validator')
-const config = require('../config/config.js')
+const prodConfig = require('../config/prodConfig.js').jwt
+const devConfig = require('../config/devConfig.js').jwt
 const jwt = require('jsonwebtoken')
 const error = require('../modules/services.js').makeError
 const User = require('../models/users.js')
+
+const isProd = process.env.NODE_ENV || 'development'
+const jwtConfig = (isProd === 'production') ? prodConfig : devConfig
 
 exports.loginValidation = checkSchema({
   email: {
@@ -39,7 +43,7 @@ exports.login = (req, res, next) => {
         }
       })
         .then(user => {
-          const token = jwt.sign({ email: user.email }, config.jwt.secret)
+          const token = jwt.sign({ email: user.email }, jwtConfig.secret)
           const obj = {
             auth: true,
             token: token,
