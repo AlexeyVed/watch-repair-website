@@ -5,7 +5,7 @@ import { missErrors } from '../../actions'
 
 import './ModalWindow.less'
 
-class ModalWindowAdmin extends React.Component {
+export class ModuleWindowAdmin extends React.Component {
   state = {
     timeOut: 2500,
     interval: null
@@ -56,7 +56,7 @@ class ModalWindowAdmin extends React.Component {
             </div>
           </div>
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -85,4 +85,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ModalWindowAdmin)
+)(ModuleWindowAdmin)

@@ -5,7 +5,7 @@ import { missErrors } from '../../actions'
 
 import './ModalWindow.less'
 
-class ModalWindowApp extends React.Component {
+export class ModuleWindowApp extends React.Component {
   state = {
     timeOut: 3000,
     interval: null
@@ -35,7 +35,7 @@ class ModalWindowApp extends React.Component {
             </div>
           </div>
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -55,4 +55,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ModalWindowApp)
+)(ModuleWindowApp)
