@@ -4,7 +4,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 import './AdminBar.less'
 
-class AdminBar extends React.Component {
+export class ModuleAdminBar extends React.Component {
   componentDidUpdate (prevProps, prevState) {
     const buttons = document.querySelectorAll('.button-bar')
     buttons.forEach(button => {
@@ -20,11 +20,11 @@ class AdminBar extends React.Component {
     return (
       <div className='bar-choose-item'>
         <div className="bar-choose-item__buttons">
-          <LinkButton className='button-bar orders' to='/admin/orders' name='Control orders'/>
           <LinkButton className='button-bar cities' to='/admin/cities' name='Control cities'/>
           <LinkButton className='button-bar masters' to='/admin/workers' name='Control masters'/>
           <LinkButton className='button-bar clocks' to='/admin/clocks' name='Control clocks'/>
           <LinkButton className='button-bar customers' to='/admin/clients' name='Control clients'/>
+          <LinkButton className='button-bar orders' to='/admin/orders' name='Control orders'/>
         </div>
       </div>
     )
@@ -40,4 +40,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   null
-)(AdminBar)
+)(ModuleAdminBar)

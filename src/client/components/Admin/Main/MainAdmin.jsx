@@ -14,7 +14,7 @@ import NoMatchAdmin from '../../NoMatch/NoMatchAdmin.jsx'
 
 import './MainAdmin.less'
 
-class MainAdmin extends React.Component {
+export class ModuleMainAdmin extends React.Component {
   render () {
     const {
       isRefCity,
@@ -90,4 +90,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   null
-)(MainAdmin)
+)(ModuleMainAdmin)

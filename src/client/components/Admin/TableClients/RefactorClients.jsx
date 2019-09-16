@@ -13,7 +13,7 @@ import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
 import './RefactorClients.less'
 
-class RefactorClients extends React.Component {
+export class ModuleRefactorClients extends React.Component {
   state = {
     currentPage: 1,
     itemsPerPage: 10
@@ -144,4 +144,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RefactorClients)
+export default connect(mapStateToProps, mapDispatchToProps)(ModuleRefactorClients)

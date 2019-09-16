@@ -13,7 +13,7 @@ import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
 import './RefactorClocks.less'
 
-class RefactorClocks extends React.Component {
+export class ModuleRefactorClocks extends React.Component {
   state = {
     currentPage: 1,
     itemsPerPage: 10
@@ -144,4 +144,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RefactorClocks)
+export default connect(mapStateToProps, mapDispatchToProps)(ModuleRefactorClocks)

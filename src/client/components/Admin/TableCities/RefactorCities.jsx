@@ -13,7 +13,7 @@ import { deleteCityFromDB, loadCities, loadDataEnd, setPage } from '../../../act
 
 import './RefactorCities.less'
 
-class RefactorCities extends React.Component {
+export class ModuleRefactorCities extends React.Component {
   state = {
     currentPage: 1,
     itemsPerPage: 10
@@ -141,4 +141,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RefactorCities)
+export default connect(mapStateToProps, mapDispatchToProps)(ModuleRefactorCities)

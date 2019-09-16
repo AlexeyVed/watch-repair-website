@@ -21,7 +21,7 @@ import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
 import './RefactorOrders.less'
 
-class RefactorOrders extends React.Component {
+export class ModuleRefactorOrders extends React.Component {
   state = {
     currentPage: 1,
     itemsPerPage: 10
@@ -66,8 +66,7 @@ class RefactorOrders extends React.Component {
       return ++num
     }
 
-    const renderItems = currentItem.map((item, index) => {
-      return <tr key={item.id}>
+    const renderItems = currentItem.map((item, index) => (<tr key={item.id}>
         <td>{indexes()}</td>
         <td>{(item.customer !== null) ? item.customer.name : null }</td>
         <td>{(item.customer !== null) ? item.customer.email : <b>Customer was deleted</b>}</td>
@@ -80,7 +79,7 @@ class RefactorOrders extends React.Component {
           <button onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
-    })
+    ))
 
     const pageNumbers = []
     for (let i = 1; i <= Math.ceil(orders.length / itemsPerPage); i++) {
@@ -164,4 +163,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RefactorOrders)
+export default connect(mapStateToProps, mapDispatchToProps)(ModuleRefactorOrders)
