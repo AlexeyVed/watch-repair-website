@@ -4,10 +4,10 @@ import { Route, Switch } from 'react-router-dom'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
-
-import LinkButton from '../../LinkButton/LinkButton.jsx'
 import AddCities from '../RefactorCities/AddCities.jsx'
 import EditCities from '../RefactorCities/EditCities.jsx'
+
+import LinkButton from '../../LinkButton/LinkButton.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin.jsx'
 import { deleteCityFromDB, loadCities, loadDataEnd, setPage } from '../../../actions'
 
@@ -26,7 +26,7 @@ export class ModuleRefactorCities extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const pages = document.querySelectorAll('.page')
+    const pages = document.querySelectorAll('.page') || this.props.testPages
     pages.forEach(page => {
       if (+page.id === this.state.currentPage) {
         page.classList.add('active')
@@ -39,7 +39,7 @@ export class ModuleRefactorCities extends React.Component {
   componentDidMount () {
     this.props.loadCities()
       .then(res => {
-        this.props.loadEnd()
+        return this.props.loadEnd()
       })
     this.props.setPage('cities')
   }
@@ -63,7 +63,7 @@ export class ModuleRefactorCities extends React.Component {
         <td>{item.city}</td>
         <td>
           <LinkButton to={`/admin/cities/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteCity(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className='bttn-delete-city' onClick={ () => deleteCity(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
@@ -98,7 +98,7 @@ export class ModuleRefactorCities extends React.Component {
         </table>
       </div>
       <div className='table-cities__numbers-pages'>
-        <div className='table-orders__numbers-pages__container'>
+        <div className='table-cities__numbers-pages__container'>
           { renderPageNumbers }
         </div>
         <div className='table-cities__numbers-pages__bttn-add'>
@@ -126,13 +126,13 @@ export class ModuleRefactorCities extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     cities: state.cityReducer.data
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     deleteCity: id => dispatch(deleteCityFromDB(id)),
     loadCities: () => dispatch(loadCities()),

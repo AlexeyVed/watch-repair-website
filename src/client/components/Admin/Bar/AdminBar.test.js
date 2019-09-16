@@ -1,7 +1,7 @@
 import { ModuleAdminBar } from './AdminBar.jsx'
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router'
 
 describe('Admin Bar', () => {
     test('Render admin bar', () => {
@@ -13,15 +13,15 @@ describe('Admin Bar', () => {
 
     test('Render admin bar', () => {
         const wrapper = TestRenderer.create(
-            <BrowserRouter>
+            <MemoryRouter>
                 <ModuleAdminBar/>
-            </BrowserRouter>
+            </MemoryRouter>
         )
 
         const JSONwrapper = wrapper.toJSON()
-        wrapper.update(<BrowserRouter>
+        wrapper.update(<MemoryRouter>
             <ModuleAdminBar page = 'cities'/>
-        </BrowserRouter>)
+        </MemoryRouter>)
         expect(wrapper.toJSON()).not.toEqual(JSONwrapper);
     })
 })
