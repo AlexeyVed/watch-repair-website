@@ -17,7 +17,7 @@ import { required } from '../../../validation'
 import './RefactorOrders.less'
 import axios from 'axios'
 
-class EditOrder extends React.Component {
+export class ModuleEditOrder extends React.Component {
   state = {
     workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
     date: {
@@ -171,7 +171,7 @@ class EditOrder extends React.Component {
           </div>
           {(this.state.load ? <Preloader/> : null)}
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -195,7 +195,7 @@ const mapDispatchToProps = dispatch => {
 const exportEditOrder = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditOrder)
+)(ModuleEditOrder)
 
 export default reduxForm({
   form: 'editOrder'

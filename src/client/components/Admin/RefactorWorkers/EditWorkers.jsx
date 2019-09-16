@@ -15,7 +15,7 @@ import { required } from '../../../validation'
 import './RefactorWorkers.less'
 import axios from 'axios'
 
-class EditWorkers extends React.Component {
+export class ModuleEditWorkers extends React.Component {
   state = {
     load: true
   }
@@ -105,7 +105,7 @@ class EditWorkers extends React.Component {
           </div>
           {(this.state.load ? <Preloader/> : null)}
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -126,7 +126,7 @@ const mapDispatchToProps = dispatch => {
 const exportEditWorkers = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditWorkers)
+)(ModuleEditWorkers)
 
 export default reduxForm({
   form: 'editWorker'

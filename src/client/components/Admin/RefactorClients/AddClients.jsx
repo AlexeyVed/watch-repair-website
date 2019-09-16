@@ -11,7 +11,7 @@ import { addCustomersToDB } from '../../../actions'
 
 import './RefactorClients.less'
 
-class AddClients extends React.Component {
+export class ModuleAddClients extends React.Component {
   render () {
     const { handleSubmit, addUser, redirectBack } = this.props
 
@@ -54,7 +54,7 @@ class AddClients extends React.Component {
             </form>
           </div>
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -74,7 +74,7 @@ const mapDispatchToProps = dispatch => {
 const exportAddClients = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddClients)
+)(ModuleAddClients)
 
 export default reduxForm({
   form: 'addUser'

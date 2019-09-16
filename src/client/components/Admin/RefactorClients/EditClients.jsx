@@ -13,7 +13,7 @@ import { editCustomersIntoDB } from '../../../actions'
 import './RefactorClients.less'
 import axios from 'axios'
 
-class EditClients extends React.Component {
+export class ModuleEditClients extends React.Component {
   state = {
     load: true
   }
@@ -84,7 +84,7 @@ class EditClients extends React.Component {
           </div>
           {(this.state.load ? <Preloader/> : null)}
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -104,7 +104,7 @@ const mapDispatchToProps = dispatch => {
 const exportEditClients = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditClients)
+)(ModuleEditClients)
 
 export default reduxForm({
   form: 'editClient'

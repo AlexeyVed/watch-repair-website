@@ -11,7 +11,7 @@ import { required } from '../../../validation'
 
 import './RefactorClocks.less'
 
-class AddClocks extends React.Component {
+export class ModuleAddClocks extends React.Component {
   render () {
     const { handleSubmit, addClock, redirectBack } = this.props
 
@@ -52,7 +52,7 @@ class AddClocks extends React.Component {
             </form>
           </div>
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -72,7 +72,7 @@ const mapDispatchToProps = dispatch => {
 const exportAddClocks = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddClocks)
+)(ModuleAddClocks)
 
 export default reduxForm({
   form: 'addClock'

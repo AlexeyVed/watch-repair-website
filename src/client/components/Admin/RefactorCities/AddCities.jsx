@@ -11,7 +11,7 @@ import { required } from '../../../validation'
 
 import './RefactorCities.less'
 
-class AddCities extends React.Component {
+export class ModuleAddCities extends React.Component {
   render () {
     const { handleSubmit, addCity, redirectBack } = this.props
 
@@ -45,7 +45,7 @@ class AddCities extends React.Component {
             </form>
           </div>
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -65,7 +65,7 @@ const mapDispatchToProps = dispatch => {
 const exportAddCities = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddCities)
+)(ModuleAddCities)
 
 export default reduxForm({
   form: 'addCity'

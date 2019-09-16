@@ -13,7 +13,7 @@ import { required } from '../../../validation'
 
 import './RefactorWorkers.less'
 
-class AddWorkers extends React.Component {
+export class ModuleAddWorkers extends React.Component {
   render () {
     const { handleSubmit, addWorker, chooseCities, redirectBack } = this.props
 
@@ -75,7 +75,7 @@ class AddWorkers extends React.Component {
             </form>
           </div>
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -96,7 +96,7 @@ const mapDispatchToProps = dispatch => {
 const exportAddWorkers = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddWorkers)
+)(ModuleAddWorkers)
 
 export default reduxForm({
   form: 'addWorker'

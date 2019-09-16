@@ -13,7 +13,7 @@ import { required } from '../../../validation'
 
 import './RefactorCities.less'
 
-class EditCities extends React.Component {
+export class ModuleEditCities extends React.Component {
   state = {
     load: true
   }
@@ -69,7 +69,7 @@ class EditCities extends React.Component {
           </div>
           {(this.state.load ? <Preloader/> : null)}
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -89,7 +89,7 @@ const mapDispatchToProps = dispatch => {
 const exportEditCities = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditCities)
+)(ModuleEditCities)
 
 export default reduxForm({
   form: 'editCity'

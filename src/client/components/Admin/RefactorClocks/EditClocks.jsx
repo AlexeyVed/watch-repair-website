@@ -13,7 +13,7 @@ import { required } from '../../../validation'
 import './RefactorClocks.less'
 import axios from 'axios'
 
-class EditClocks extends React.Component {
+export class ModuleEditClocks extends React.Component {
   state = {
     load: true
   }
@@ -81,7 +81,7 @@ class EditClocks extends React.Component {
           </div>
           {(this.state.load ? <Preloader/> : null)}
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -101,7 +101,7 @@ const mapDispatchToProps = dispatch => {
 const exportEditClocks = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditClocks)
+)(ModuleEditClocks)
 
 export default reduxForm({
   form: 'editClock'

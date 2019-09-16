@@ -14,7 +14,7 @@ import { required } from '../../../validation'
 import './RefactorOrders.less'
 import { getDate } from '../../App/OrderForm/logic'
 
-class AddOrder extends React.Component {
+export class ModuleAddOrder extends React.Component {
   state = {
     workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
     date: {
@@ -155,7 +155,7 @@ class AddOrder extends React.Component {
             </form>
           </div>
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -179,7 +179,7 @@ const mapDispatchToProps = dispatch => {
 const exportAddOrder = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddOrder)
+)(ModuleAddOrder)
 
 export default reduxForm({
   form: 'addOrder'
