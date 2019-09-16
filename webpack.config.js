@@ -40,14 +40,20 @@ module.exports = {
     ]
   },
   devServer: {
-    host: 'localhost',
     port: 3000,
-    open: true,
+    hot: false,
+    inline: false,
+    liveReload: false,
     publicPath: '/',
     proxy: {
       '/api': 'http://localhost:4000'
     },
     historyApiFallback: true
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
   },
   plugins: [
     new CleanWebpackPlugin([outputDirectory]),
