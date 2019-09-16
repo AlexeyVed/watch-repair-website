@@ -33,7 +33,7 @@ export const loadClocks = () => {
 export const addClockToDB = (values) => {
   return (dispatch) => {
     dispatch({ type: ADD_CLOCKS_STARTED })
-    axios
+    return axios
       .post(`/api/clocks/`, values)
       .then(res => {
         dispatch(addClocksSuccess(res.data))
@@ -50,7 +50,7 @@ export const addClockToDB = (values) => {
 export const editClockIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_CLOCKS_STARTED })
-    axios
+    return axios
       .put(`/api/clocks/${values.id}`, values)
       .then(res => {
         dispatch(editClocksSuccess(res.data))
@@ -67,7 +67,7 @@ export const editClockIntoDB = (values) => {
 export const deleteClockFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_CLOCKS_STARTED })
-    axios
+    return axios
       .delete(`/api/clocks/${id}`)
       .then(res => {
         dispatch(deleteClocksSuccess(res.data))
@@ -78,44 +78,44 @@ export const deleteClockFromDB = (id) => {
   }
 }
 
-const loadClocksFailure = err => ({
+export const loadClocksFailure = err => ({
   type: LOAD_CLOCKS_FAILURE,
   payload: err
 })
 
-const loadClocksSuccess = data => ({
+export const loadClocksSuccess = data => ({
   type: LOAD_CLOCKS_SUCCESS,
   payload: data
 })
 
-const addClocksFailure = (err) => ({
+export const addClocksFailure = (err) => ({
   type: ADD_CLOCKS_FAILURE,
   payload: err
 })
 
-const deleteClocksFailure = (err) => ({
+export const deleteClocksFailure = (err) => ({
   type: DELETE_CLOCKS_FAILURE,
   payload: err
 })
 
-const editClocksFailure = (err) => ({
+export const editClocksFailure = (err) => ({
   type: EDIT_CLOCKS_FAILURE,
   payload: err
 })
 
-const addClocksSuccess = data => ({
+export const addClocksSuccess = data => ({
   type: ADD_CLOCKS_SUCCESS,
   message: 'Clock was successfully added.',
   payload: data
 })
 
-const deleteClocksSuccess = data => ({
+export const deleteClocksSuccess = data => ({
   type: DELETE_CLOCKS_SUCCESS,
   message: 'Clock was successfully removed.',
   payload: data
 })
 
-const editClocksSuccess = data => ({
+export const editClocksSuccess = data => ({
   type: EDIT_CLOCKS_SUCCESS,
   message: 'Clock was successfully edited.',
   payload: data

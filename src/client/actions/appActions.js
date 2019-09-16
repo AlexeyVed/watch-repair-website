@@ -27,9 +27,11 @@ export const makeOrder = (values) => {
           data: res.data,
           values
         }
+        console.log(obj)
         dispatch(makeOrderSuccess(obj))
       })
       .catch(err => {
+        console.log(err)
         dispatch(makeOrderFailure(err.response.data))
       })
   }
@@ -50,17 +52,14 @@ export const addOrder = (values) => {
 }
 
 export const setPage = data => {
-  return (dispatch) => {
-    dispatch({
-      type: CHANGE_PAGE,
-      payload: data })
+  return {
+    type: CHANGE_PAGE,
+    payload: data
   }
 }
 
 export const returnPageHome = () => {
-  return (dispatch) => {
-    dispatch({ type: RETURN_HOME_PAGE })
-  }
+  return { type: RETURN_HOME_PAGE }
 }
 
 export const setChooseWorker = id => ({
@@ -73,9 +72,7 @@ export const missErrors = () => ({
 })
 
 export const loadDataEnd = () => {
-  return (dispatch) => {
-    dispatch({ type: END_LOAD_DATA })
-  }
+  return { type: END_LOAD_DATA }
 }
 
 const makeOrderSuccess = (data) => ({
