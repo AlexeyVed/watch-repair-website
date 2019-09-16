@@ -11,7 +11,7 @@ import MainOrder from './App/MainOrder/MainOrder.jsx'
 import MainAdmin from './Admin/Main/MainAdmin'
 import NoMatch from './NoMatch/NoMatch'
 
-class App extends React.Component {
+export class ModuleApp extends React.Component {
   constructor (props) {
     super()
     const token = localStorage.getItem('token')
@@ -63,4 +63,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   null
-)(App)
+)(ModuleApp)

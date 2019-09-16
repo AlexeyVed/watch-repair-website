@@ -12,7 +12,7 @@ import { getDate } from './logic.js'
 
 import './OrderForm.less'
 
-class OrderForm extends Component {
+export class ModuleOrderForm extends Component {
   state = {
     workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
     date: {
@@ -156,7 +156,7 @@ const mapDispatchToProps = (dispatch) => {
 const exportOrderForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(OrderForm)
+)(ModuleOrderForm)
 
 export default reduxForm({
   form: 'orderForm'

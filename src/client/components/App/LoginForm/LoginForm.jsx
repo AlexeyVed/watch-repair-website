@@ -12,7 +12,7 @@ import { validateEmail, validatePassword } from '../../../validation'
 
 import './LoginForm.less'
 
-class LoginForm extends React.Component {
+export class ModuleLoginForm extends React.Component {
   render () {
     const {
       handleSubmit,
@@ -74,7 +74,7 @@ class LoginForm extends React.Component {
             </form>
           </div>
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
@@ -96,7 +96,7 @@ const mapDispatchToProps = dispatch => {
 const exportLoginForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginForm)
+)(ModuleLoginForm)
 
 export default reduxForm({
   form: 'login'

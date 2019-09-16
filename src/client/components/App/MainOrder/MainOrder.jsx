@@ -9,7 +9,7 @@ import LoginForm from '../LoginForm/LoginForm.jsx'
 import ModalWindow from '../../ModalWindow/ModalWindowApp.jsx'
 import ModalWindowAdmin from '../../ModalWindow/ModalWindowAdmin.jsx'
 
-class MainOrder extends Component {
+export class ModuleMainOrder extends Component {
   componentDidMount () {
     return Promise.all([this.props.loadClocks(),
       this.props.loadCities()])
@@ -52,4 +52,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainOrder)
+export default connect(mapStateToProps, mapDispatchToProps)(ModuleMainOrder)

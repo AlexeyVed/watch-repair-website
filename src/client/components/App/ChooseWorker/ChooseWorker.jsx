@@ -5,8 +5,9 @@ import Tooltip from '@material-ui/core/Tooltip'
 import { addOrder, setChooseWorker, returnPageHome } from '../../../actions'
 
 import './ChooseWorker.less'
+import store from '../../../store'
 
-class ChooseWorker extends React.Component {
+export class ModuleChooseWorker extends React.Component {
   componentDidUpdate (prevProps, prevState) {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
@@ -46,11 +47,11 @@ class ChooseWorker extends React.Component {
         ...order,
         masterId
       }
-      buttonConf = <button onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
+      buttonConf = <button alt='buttonConf' onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
     } else {
       buttonConf = <Tooltip title='You must choose master.'>
         <span>
-          <button disabled onClick={ () => (addOrder()) }>Confirm</button>
+          <button disabled>Confirm</button>
         </span>
       </Tooltip>
     }
@@ -100,4 +101,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ChooseWorker)
+)(ModuleChooseWorker)

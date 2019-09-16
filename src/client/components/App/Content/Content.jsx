@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import HomePage from '../HomePage/HomePage.jsx'
 import ChooseWorker from '../ChooseWorker/ChooseWorker.jsx'
 
-class Content extends Component {
+export class ModuleContent extends Component {
   render () {
     const { chooseMaster } = this.props
 
@@ -30,4 +30,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Content)
+export default connect(mapStateToProps, mapDispatchToProps)(ModuleContent)
