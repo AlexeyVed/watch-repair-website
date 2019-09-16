@@ -64,14 +64,13 @@ export class ModuleHeader extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
-    currentUser: state.loginReducer.singInUser,
-    redirectLogOut: state.loginReducer.redirectLogOut
+    currentUser: state.loginReducer.singInUser
   }
 }
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return {
     logOut: () => dispatch(logOutApp())
   }
