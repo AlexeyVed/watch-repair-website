@@ -4,11 +4,11 @@
   "description": "",
   "main": "src/server/index.js",
   "scripts": {
-    "heroku-postbuild": "webpack -p",
+    "heroku-postbuild": "webpack --config webpack.prod.js",
     "start": "node src/server/server.js",
-    "start-dev": "start webpack-dev-server --mode development --history-api-fallback",
-    "server-dev": "start nodemon src/server/server.js",
-    "all-start": "npm-run-all --parallel start-dev server-dev",
+    "dev": "start webpack-dev-server --config webpack.dev.js --history-api-fallback",
+    "server": "start nodemon src/server/server.js",
+    "start-dev-server": "npm-run-all --parallel dev server",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -72,7 +72,8 @@
     "redux-form": "^8.2.3",
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.13.0",
-    "sequelize-cli": "^5.5.0"
+    "sequelize-cli": "^5.5.0",
+    "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -102,6 +103,7 @@
     "moxios": "^0.4.0",
     "node-fetch": "^2.6.0",
     "npm-run-all": "^4.1.5",
+    "null-loader": "^3.0.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-mock-store": "^1.5.3",
     "sinon": "^7.4.2",
