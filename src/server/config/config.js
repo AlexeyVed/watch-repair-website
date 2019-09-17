@@ -1,4 +1,3 @@
-
 const development = {
   db: {
     mysql: {
@@ -23,6 +22,34 @@ const development = {
   },
   jwt: {
     secret: 'secret_development'
+  }
+}
+
+const test = {
+  db: {
+    mysql: {
+      dialect: 'postgres',
+      database: 'dc8mqa68q4p4qt',
+      username: 'kxzddwqyrdjfet',
+      password: '80b1daa1d854be71ac54a1ef845e478538377dfbd1a0dcc11e11186cda639463',
+      host: 'ec2-174-129-229-106.compute-1.amazonaws.com',
+      port: 5432,
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      }
+    }
+  },
+  mail: {
+    service: 'gmail',
+    user: 'watches.repair.quick@gmail.com',
+    pass: 'watchrepair86',
+    from: 'watches.repair.quick@gmail.com'
+  },
+  jwt: {
+    secret: 'secret_test'
   }
 }
 
@@ -54,4 +81,6 @@ const production = {
   }
 }
 
-module.exports = process.env.NODE_ENV ? production : development
+const mode = process.env.NODE_ENV
+
+module.exports = mode === 'poduction' ? production : mode === 'test' ? test : development
