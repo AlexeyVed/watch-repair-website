@@ -1,7 +1,6 @@
 import React from 'react'
 import { ModuleRefactorCities, mapDispatchToProps, mapStateToProps } from './RefactorCities.jsx'
 import { MemoryRouter } from 'react-router'
-import configureMockStore from 'redux-mock-store'
 
 describe('Testing admin table cities', () => {
 
@@ -48,38 +47,65 @@ describe('Testing admin table cities', () => {
         expect(spy.calledOnce).toBe(true)
     })
 
-    // test('Click delete button', () => {
-    //     let count = 1
-    //     const cities = []
-    //     while (count <= 13 ) {
-    //         cities.push({
-    //             id: count,
-    //             city: "Some city"
-    //         })
-    //         count++
-    //     }
-    //     const mockStore = configureMockStore()
-    //     const store = mockStore({})
-    //     const spy = sinon.spy()
+    test('Render modal add', () => {
+        let count = 1
+        const cities = []
+        while (count <= 2 ) {
+            cities.push({
+                id: count,
+                city: "Some city"
+            })
+            count++
+        }
    
-    //     const wrapper = mount(
-    //         <MemoryRouter initialEntries={[ { pathname: '/admin/cities/add', key: 'testKey' } ]}>
-    //             <ModuleRefactorCities
-    //             store = { store }
-    //             deleteCity = { spy }
-    //             loadCities = { () => {
-    //                 return new Promise( (res, rej) => {
-    //                     true ? res('true') : rej('false')
-    //                 })
-    //             } }
-    //             loadEnd = { jest.fn() }
-    //             setPage = { jest.fn() }
-    //             cities = { cities }/>
-    //         </MemoryRouter>
-    //     )
+        const wrapper = mount(
+            <MemoryRouter initialEntries={[ { pathname: '/admin/cities/add', key: 'testKey' } ]}>
+                <ModuleRefactorCities
+                deleteCity = { jest.fn() }
+                loadCities = { () => {
+                    return new Promise( (res, rej) => {
+                        true ? res('true') : rej('false')
+                    })
+                } }
+                loadEnd = { jest.fn() }
+                setPage = { jest.fn() }
+                cities = { cities }
+                testRender = { true }/>
+            </MemoryRouter>
+        )
         
-    //     expect(wrapper.find('.add-city')).toHaveLength(1)
-    // })
+        expect(wrapper).toMatchSnapshot()
+    })
+
+    test('Render modal edit', () => {
+        let count = 1
+        const cities = []
+        while (count <= 2 ) {
+            cities.push({
+                id: count,
+                city: "Some city"
+            })
+            count++
+        }
+   
+        const wrapper = mount(
+            <MemoryRouter initialEntries={[ { pathname: '/admin/cities/edit/1', key: 'testKey' } ]}>
+                <ModuleRefactorCities
+                deleteCity = { jest.fn() }
+                loadCities = { () => {
+                    return new Promise( (res, rej) => {
+                        true ? res('true') : rej('false')
+                    })
+                } }
+                loadEnd = { jest.fn() }
+                setPage = { jest.fn() }
+                cities = { cities }
+                testRender = { true }/>
+            </MemoryRouter>
+        )
+        
+        expect(wrapper).toMatchSnapshot()
+    })
 
     test('Testing map dispatch to props', () => {
         const test = mapDispatchToProps(jest.fn())

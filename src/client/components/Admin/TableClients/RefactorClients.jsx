@@ -26,7 +26,7 @@ export class ModuleRefactorClients extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const pages = document.querySelectorAll('.page')
+    const pages = this.props.testPages || document.querySelectorAll('.page')
     pages.forEach(page => {
       if (+page.id === this.state.currentPage) {
         page.classList.add('active')
@@ -39,12 +39,12 @@ export class ModuleRefactorClients extends React.Component {
   componentDidMount () {
     this.props.loadClients()
       .then(() => {
-        this.props.loadEnd()
+        return this.props.loadEnd()
       })
     this.props.setPage('customers')
   }
   render () {
-    const { customers, deleteClient } = this.props
+    const { customers, deleteClient, testRender } = this.props
     const { currentPage, itemsPerPage } = this.state
 
     const indexOfLastItem = currentPage * itemsPerPage
@@ -64,7 +64,7 @@ export class ModuleRefactorClients extends React.Component {
         <td>{item.name}</td>
         <td>
           <LinkButton to={`/admin/clients/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteClient(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className = 'bttn-delete-client' onClick={ () => deleteClient(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
@@ -114,12 +114,12 @@ export class ModuleRefactorClients extends React.Component {
           <Route path='/admin/clients/add' render={() => (
             <React.Fragment>
               {table}
-              <AddClients/>
+              { !testRender ? <AddClients/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/clients/edit/:id' render={({ location }) => (
             <React.Fragment>
               {table}
-              <EditClients location={ location }/>
+              { !testRender ? <EditClients location={ location }/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/clients/*' component={NoMatchAdmin}/>
         </Switch>
@@ -128,14 +128,13 @@ export class ModuleRefactorClients extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     customers: state.customerReducer.data
-
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     deleteClient: id => dispatch(deleteCustomersFromDB(id)),
     loadClients: () => dispatch(loadCustomers()),

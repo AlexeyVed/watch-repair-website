@@ -26,7 +26,7 @@ export class ModuleRefactorClocks extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const pages = document.querySelectorAll('.page')
+    const pages = this.props.testPages || document.querySelectorAll('.page')
     pages.forEach(page => {
       if (+page.id === this.state.currentPage) {
         page.classList.add('active')
@@ -39,12 +39,12 @@ export class ModuleRefactorClocks extends React.Component {
   componentDidMount () {
     this.props.loadClocks()
       .then(() => {
-        this.props.loadEnd()
+        return this.props.loadEnd()
       })
     this.props.setPage('clocks')
   }
   render () {
-    const { clocks, deleteClock } = this.props
+    const { clocks, deleteClock, testRender } = this.props
     const { currentPage, itemsPerPage } = this.state
 
     const indexOfLastItem = currentPage * itemsPerPage
@@ -64,7 +64,7 @@ export class ModuleRefactorClocks extends React.Component {
         <td>{item.timeRepair}</td>
         <td>
           <LinkButton to={`/admin/clocks/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteClock(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className = 'bttn-delete-clock' onClick={ () => deleteClock(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
@@ -114,12 +114,12 @@ export class ModuleRefactorClocks extends React.Component {
           <Route path='/admin/clocks/add' render={() => (
             <React.Fragment>
               {table}
-              <AddClocks/>
+              { !testRender ? <AddClocks/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/clocks/edit/:id' render={({ location }) => (
             <React.Fragment>
               {table}
-              <EditClocks location={ location }/>
+              { !testRender ? <EditClocks location={ location }/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/clocks/*' component={NoMatchAdmin}/>
         </Switch>
@@ -128,14 +128,14 @@ export class ModuleRefactorClocks extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     clocks: state.clockReducer.data
 
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     deleteClock: id => dispatch(deleteClockFromDB(id)),
     loadClocks: () => dispatch(loadClocks()),

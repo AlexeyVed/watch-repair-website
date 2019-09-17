@@ -34,7 +34,7 @@ export class ModuleRefactorOrders extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const pages = document.querySelectorAll('.page')
+    const pages = this.props.testPages || document.querySelectorAll('.page')
     pages.forEach(page => {
       if (+page.id === this.state.currentPage) {
         page.classList.add('active')
@@ -48,12 +48,12 @@ export class ModuleRefactorOrders extends React.Component {
     const { loadOrders, loadClocks, loadWorkers, loadCities, loadClients } = this.props
     Promise.all([loadOrders(), loadClocks(), loadWorkers(), loadCities(), loadClients()])
       .then((res) => {
-        this.props.loadEnd()
+        return this.props.loadEnd()
       })
     this.props.setPage('orders')
   }
   render () {
-    const { orders, deleteOrder } = this.props
+    const { orders, deleteOrder, testRender } = this.props
     const { currentPage, itemsPerPage } = this.state
 
     const indexOfLastItem = currentPage * itemsPerPage
@@ -76,7 +76,7 @@ export class ModuleRefactorOrders extends React.Component {
         <td>{(item.master !== null) ? item.master.name : <b>Master was deleted</b>}</td>
         <td>
           <LinkButton to={`/admin/orders/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className='bttn-delete-order' onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     ))
@@ -130,12 +130,12 @@ export class ModuleRefactorOrders extends React.Component {
           <Route path='/admin/orders/add' render={() => (
             <React.Fragment>
               {table}
-              <AddOrder/>
+              { !testRender ? <AddOrder/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/orders/edit/:id' render={({ location }) => (
             <React.Fragment>
               {table}
-              <EditOrder location={ location }/>
+              { !testRender ? <EditOrder location={ location }/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/orders/*' component={NoMatchAdmin}/>
         </Switch>
@@ -144,13 +144,13 @@ export class ModuleRefactorOrders extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     orders: state.orderReducer.data
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     deleteOrder: id => dispatch(deleteOrdersFromDB(id)),
     loadOrders: () => dispatch(loadOrders()),

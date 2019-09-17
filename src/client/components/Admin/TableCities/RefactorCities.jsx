@@ -26,7 +26,7 @@ export class ModuleRefactorCities extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const pages = document.querySelectorAll('.page') || this.props.testPages
+    const pages = this.props.testPages || document.querySelectorAll('.page')
     pages.forEach(page => {
       if (+page.id === this.state.currentPage) {
         page.classList.add('active')
@@ -44,7 +44,7 @@ export class ModuleRefactorCities extends React.Component {
     this.props.setPage('cities')
   }
   render () {
-    const { cities, deleteCity } = this.props
+    const { cities, deleteCity, testRender } = this.props
     const { currentPage, itemsPerPage } = this.state
 
     const indexOfLastItem = currentPage * itemsPerPage
@@ -112,12 +112,12 @@ export class ModuleRefactorCities extends React.Component {
           <Route path='/admin/cities/add' render={() => (
             <React.Fragment>
               {table}
-              <AddCities/>
+              { !testRender ? <AddCities/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/cities/edit/:id' render={({ location }) => (
             <React.Fragment>
               {table}
-              <EditCities location={ location }/>
+              { !testRender ? <EditCities location={ location }/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/cities/*' component={NoMatchAdmin}/>
         </Switch>

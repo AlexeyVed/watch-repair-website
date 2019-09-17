@@ -26,7 +26,7 @@ export class ModuleRefactorWorkers extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const pages = document.querySelectorAll('.page')
+    const pages = this.props.testPages || document.querySelectorAll('.page')
     pages.forEach(page => {
       if (+page.id === this.state.currentPage) {
         page.classList.add('active')
@@ -39,12 +39,12 @@ export class ModuleRefactorWorkers extends React.Component {
   componentDidMount () {
     Promise.all([this.props.loadWorkers(), this.props.loadCities()])
       .then((res) => {
-        this.props.loadEnd()
+        return this.props.loadEnd()
       })
     this.props.setPage('masters')
   }
   render () {
-    const { workers, deleteWorker } = this.props
+    const { workers, deleteWorker, testRender } = this.props
     const { currentPage, itemsPerPage } = this.state
 
     const indexOfLastItem = currentPage * itemsPerPage
@@ -65,7 +65,7 @@ export class ModuleRefactorWorkers extends React.Component {
         <td>{item.rating}</td>
         <td>
           <LinkButton to={`/admin/workers/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteWorker(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className='bttn-delete-master' onClick={ () => deleteWorker(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
@@ -117,12 +117,12 @@ export class ModuleRefactorWorkers extends React.Component {
           <Route path='/admin/workers/add' render={() => (
             <React.Fragment>
               {table}
-              <AddWorkers/>
+              { !testRender ? <AddWorkers/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/workers/edit/:id' render={({ location }) => (
             <React.Fragment>
               {table}
-              <EditWorkers location={ location }/>
+              { !testRender ? <EditWorkers location={ location }/> : null }
             </React.Fragment>)}/>
           <Route path='/admin/workers/*' component={NoMatchAdmin}/>
         </Switch>
@@ -131,13 +131,13 @@ export class ModuleRefactorWorkers extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     workers: state.masterReducer.data
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     deleteWorker: id => dispatch(deleteMastersFromDB(id)),
     loadWorkers: () => dispatch(loadMasters()),
