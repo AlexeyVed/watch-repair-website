@@ -3,6 +3,14 @@ const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
   devtool: 'inline-source-map',
+  rules: [
+    {
+      enforce: 'pre',
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      loader: 'eslint-loader'
+    }
+  ],
   devServer: {
     port: 3000,
     hot: true,
