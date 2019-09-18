@@ -75,6 +75,12 @@ module.exports = {
         }
       )
     })
+    .then(() => {
+      return queryInterface.bulkInsert('users', [{
+        email: 'admin@example.com',
+        password: 'passwordsecret'
+      }], {})
+    })
   },
 
   down: (queryInterface, Sequelize) => {
@@ -105,6 +111,9 @@ module.exports = {
         'orders',
         'masterId'
       )
+    })
+    .then(() => {
+      return queryInterface.bulkDelete('users', null, {});
     })
   }
 };
