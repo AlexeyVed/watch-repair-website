@@ -1,7 +1,18 @@
+@import '../../../style/global-variable.less';
+
 .admin-main {
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  .admin-content {
+    flex: 1 0;
+ 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
 }
 
 @media screen and (max-width:600px) {
@@ -13,7 +24,12 @@
     font-size: 14px;
 
     
-
+    .admin-content {
+      min-width: 430px;
+      background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
+      background-size: 450px 300px;
+      background-color: @tables-color;
+   
       &__navigation {
         position: absolute;
         right: 0;
@@ -56,36 +72,7 @@
     margin-bottom: 5px;
     margin-top: 5px;
 
-    .admin-content {
-      flex: 1 0;
-      min-width: 430px;
-      box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
-      background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
-      background-size: 450px 300px;
-      background-color: #f4f4f0;
-      margin-top: 1px;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-
-      .admin-content {
-        flex: 1 0;
-        min-width: 430px;
-        box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-        background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
-        background-size: 450px 300px;
-        background-color: #f4f4f0;
-  
-
-
-    .admin-content {
-      flex: 1 0;
+    .admin-content {   
       min-width: 695px;
       border: 1px solid rgba(128, 128, 128, 0.4);
       box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
@@ -93,9 +80,7 @@
       border-bottom-right-radius: 5px;
       background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
       background-size: 450px 300px;
-      background-color: #f4f4f0;
-
-
+      background-color: @tables-color;
 
       &__navigation {
         position: absolute;
