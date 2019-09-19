@@ -1,7 +1,9 @@
 const db = require('../db/db-config.js')
 
+const mode = process.env.NODE_ENV || 'development'
+
 const development = {
-  db: db.development,
+  db: db[mode],
   mail: {
     service: 'gmail',
     user: 'watches.repair.quick@gmail.com',
@@ -14,7 +16,7 @@ const development = {
 }
 
 const staging = {
-  db: db.staging,
+  db: db[mode],
   mail: {
     service: 'gmail',
     user: 'watches.repair.quick@gmail.com',
@@ -27,7 +29,7 @@ const staging = {
 }
 
 const production = {
-  db: db.prodution,
+  db: db[mode],
   mail: {
     service: 'gmail',
     user: 'watches.repair.quick@gmail.com',
@@ -38,7 +40,5 @@ const production = {
     secret: 'secret_production'
   }
 }
-
-const mode = process.env.NODE_ENV
 
 module.exports = (mode === 'poduction') ? production : (mode === 'staging') ? staging : development
