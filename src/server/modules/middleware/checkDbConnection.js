@@ -1,4 +1,4 @@
-const db = require('../../db/db-connection-config.js')
+const db = require('../../db/db-connection.js')
 
 module.exports = function (req, res, next) {
   return db
@@ -7,6 +7,9 @@ module.exports = function (req, res, next) {
       next()
     })
     .catch(err => {
+      if (err) {
+        return next(err)
+      }
       return res.status(500).json('Miss connection to database.')
     })
 }

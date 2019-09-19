@@ -31,3 +31,6 @@ _ReSharper*/
 packages/
 node_modules/
 package-lock.json
+__snapshots__/
+coverage/
+dist
