@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('customers', {
@@ -20,9 +20,9 @@ module.exports = {
           isEmail: true
         }
       }
-    });
+    })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('customers');
+    return queryInterface.dropTable('customers')
   }
-};
+}

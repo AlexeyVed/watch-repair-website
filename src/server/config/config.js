@@ -1,4 +1,4 @@
-const db = require('../db/db-config.js')
+const db = require('./db-config.js')
 
 const mode = process.env.NODE_ENV || 'development'
 

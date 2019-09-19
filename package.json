@@ -11,7 +11,9 @@
     "start-dev-server": "npm-run-all --parallel dev server",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "lint": "eslint ./src ",
+    "lint-fix": "eslint ./src --fix"
   },
   "jest": {
     "automock": false,

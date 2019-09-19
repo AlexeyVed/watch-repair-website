@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const db = require('../db/db-connection-config.js')
+const db = require('../db/db-connection.js')
 
 const User = db.define('users', {
   email: {

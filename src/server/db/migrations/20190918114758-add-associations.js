@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -9,78 +9,78 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'cities',
-          key: 'id',
+          key: 'id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'SET NULL'
       }
     )
-    .then( () => {
-      return queryInterface.addColumn(
-        'orders',
-        'customerId',
-        {
-          type: Sequelize.INTEGER,
-          references: {
-            model: 'customers',
-            key: 'id',
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'SET NULL',
-        }
-      )
-    })
-    .then( () => {
-      return queryInterface.addColumn(
-        'orders',
-        'clockId',
-        {
-          type: Sequelize.INTEGER,
-          references: {
-            model: 'clocks',
-            key: 'id',
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'SET NULL',
-        }
-      )
-    })
-    .then( () => {
-      return queryInterface.addColumn(
-        'orders',
-        'cityId',
-        {
-          type: Sequelize.INTEGER,
-          references: {
-            model: 'cities',
-            key: 'id',
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'SET NULL',
-        }
-      )
-    })
-    .then( () => {
-      return queryInterface.addColumn(
-        'orders',
-        'masterId',
-        {
-          type: Sequelize.INTEGER,
-          references: {
-            model: 'masters',
-            key: 'id',
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'SET NULL',
-        }
-      )
-    })
-    .then(() => {
-      return queryInterface.bulkInsert('users', [{
-        email: 'admin@example.com',
-        password: 'passwordsecret'
-      }], {})
-    })
+      .then(() => {
+        return queryInterface.addColumn(
+          'orders',
+          'customerId',
+          {
+            type: Sequelize.INTEGER,
+            references: {
+              model: 'customers',
+              key: 'id'
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL'
+          }
+        )
+      })
+      .then(() => {
+        return queryInterface.addColumn(
+          'orders',
+          'clockId',
+          {
+            type: Sequelize.INTEGER,
+            references: {
+              model: 'clocks',
+              key: 'id'
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL'
+          }
+        )
+      })
+      .then(() => {
+        return queryInterface.addColumn(
+          'orders',
+          'cityId',
+          {
+            type: Sequelize.INTEGER,
+            references: {
+              model: 'cities',
+              key: 'id'
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL'
+          }
+        )
+      })
+      .then(() => {
+        return queryInterface.addColumn(
+          'orders',
+          'masterId',
+          {
+            type: Sequelize.INTEGER,
+            references: {
+              model: 'masters',
+              key: 'id'
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL'
+          }
+        )
+      })
+      .then(() => {
+        return queryInterface.bulkInsert('users', [{
+          email: 'admin@example.com',
+          password: 'passwordsecret'
+        }], {})
+      })
   },
 
   down: (queryInterface, Sequelize) => {
@@ -88,32 +88,32 @@ module.exports = {
       'masters',
       'cityId'
     )
-    .then(() => {
-      return queryInterface.removeColumn(
-        'orders',
-        'customerId'
-      )
-    })
-    .then(() => {
-      return queryInterface.removeColumn(
-        'orders',
-        'clockId'
-      )
-    })
-    .then(() => {
-      return queryInterface.removeColumn(
-        'orders',
-        'cityId'
-      )
-    })
-    .then(() => {
-      return queryInterface.removeColumn(
-        'orders',
-        'masterId'
-      )
-    })
-    .then(() => {
-      return queryInterface.bulkDelete('users', null, {});
-    })
+      .then(() => {
+        return queryInterface.removeColumn(
+          'orders',
+          'customerId'
+        )
+      })
+      .then(() => {
+        return queryInterface.removeColumn(
+          'orders',
+          'clockId'
+        )
+      })
+      .then(() => {
+        return queryInterface.removeColumn(
+          'orders',
+          'cityId'
+        )
+      })
+      .then(() => {
+        return queryInterface.removeColumn(
+          'orders',
+          'masterId'
+        )
+      })
+      .then(() => {
+        return queryInterface.bulkDelete('users', null, {})
+      })
   }
-};
+}

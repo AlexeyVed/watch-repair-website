@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('cities', {
@@ -12,9 +12,9 @@ module.exports = {
         type: Sequelize.STRING(191),
         allowNull: false
       }
-    });
+    })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('cities');
+    return queryInterface.dropTable('cities')
   }
-};
+}
