@@ -23,7 +23,7 @@ const development = {
   }
 }
 
-const test = {
+const staging = {
   db: {
     dialect: 'postgres', 
     database: 'dc8mqa68q4p4qt',
@@ -77,4 +77,4 @@ const production = {
 
 const mode = process.env.NODE_ENV
 
-module.exports = (mode === 'poduction') ? production : (mode === 'test') ? test : development
+module.exports = (mode === 'poduction') ? production : (mode === 'staging') ? staging : development

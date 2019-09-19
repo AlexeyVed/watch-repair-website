@@ -5,6 +5,8 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   devServer: {
     port: 3000,
+    open: true,
+    inline: true,
     hot: true,
     liveReload: true,
     publicPath: '/',
