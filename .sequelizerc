@@ -2,7 +2,5 @@ const path = require('path');
 
 module.exports = {
   'config': path.resolve('src/server/db', 'db-config.js'),
-  'models-path': path.resolve('src/server/db', 'models'),
-  'seeders-path': path.resolve('src/server/db', 'seeders'),
   'migrations-path': path.resolve('src/server/db', 'migrations')
 }
