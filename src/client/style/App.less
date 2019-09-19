@@ -9,28 +9,38 @@ body {
     font-family: Verdana;
 }
 
+.app {
+    height: 100vh;
+    position: relative;
+}
+
+.app-main {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    margin: auto;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
 @media screen and (min-width:600px) {
     .app {
         width: 100vw;
-        height: 100vh;
-        position: relative;
     }
 
     .app-main {
-        display: flex;
-        flex-direction: column;
         width: 80%;
-        height: 100%;
         margin: auto;
     }
 
-    .main {
-        flex: 1;
-        margin-bottom: 5px;
-        margin-top: 5px;
-        display: flex;
+    .main {       
         min-width: 695px;
-
 
         .content {
             flex: 2 1 66%;
@@ -38,7 +48,7 @@ body {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             border-radius: 5px;
             border-bottom-left-radius: 10px;
-            border-bottom-top-radius: 10px;
+            border-bottom-right-radius: 10px;
             background: url(../image/background.png) no-repeat right -10px bottom -10px;
             background-size: 450px 300px;
             background-color: #f5f5eb;
@@ -78,35 +88,27 @@ body {
 }
 
 @media screen and (max-width:600px) {
-    .app {
-        height: 100vh;
-        width: calc(100vw - (100vw - 100%));
-        position: relative;
-    }
-
     body {
         font-size: 13px;
     }
+
+    .app {
+        width: calc(100vw - (100vw - 100%));
+    }
+
     .app-main {
-        display: flex;
-        flex-direction: column;
         width: 100%;
-        min-width: 430px;
-        height: 100%;
+        min-width: 410px;
     }
 
     .main {
-        flex: 1;
-        margin-bottom: 5px;
-        margin-top: 5px;
-        display: flex;
         flex-direction: column-reverse;
 
         .content {
             flex: 0 0 450px;
             border-radius: 5px;
             border-bottom-left-radius: 10px;
-            border-bottom-top-radius: 10px;
+            border-bottom-right-radius: 10px;
             background: url(../image/background.png) no-repeat right -10px bottom -10px;
             background-size: 240px 160px;
             background-color: #f5f5eb;
