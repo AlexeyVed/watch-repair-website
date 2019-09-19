@@ -4,7 +4,6 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background: @app-background-color;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -27,8 +26,9 @@ body {
 .main {
     flex: 1;
     display: flex;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    border-radius: 5px;
+    background-color: inherit;
+    overflow: auto;
 
     .content {
         background: url(../image/background.png) no-repeat right -10px bottom -10px;
@@ -57,6 +57,10 @@ body {
 }
 
 @media screen and (min-width:600px) {
+    body {
+        background: @app-background-color;
+    }
+
     .app {
         width: 100vw;
     }
@@ -68,7 +72,10 @@ body {
 
     .main {       
         min-width: 695px;
-
+        box-shadow: @app-box-shadows;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        
         .content {
             flex: 2 1 66%;
             border-radius: 5px;
@@ -96,10 +103,33 @@ body {
             font-size: 14px;
         }
     }
+
+    ::-webkit-scrollbar{
+        border-color: rgba(0, 4, 41, 0.29);
+        width: 14px;
+        background-color: rgba(0, 4, 41, 0.05);
+    }
+    ::-webkit-scrollbar-thumb{
+        border-width:1px 1px 1px 2px;
+        border-color: rgba(0, 4, 41, 0.40);
+        background-color: rgba(0, 4, 41, 0.09);
+    }
+    ::-webkit-scrollbar-thumb:hover{
+        border-width: 1px 1px 1px 2px;
+        border-color: rgba(0, 4, 41, 0.40);
+        background-color: rgba(0, 4, 41, 0.10);
+    }
+    ::-webkit-scrollbar-track{
+        border-width:0;
+    }
+    ::-webkit-scrollbar-track:hover{
+        background-color: rgba(0, 4, 41, 0.05);
+    }
 }
 
 @media screen and (max-width:600px) {
     body {
+        background: @mobile-app-background-color;
         font-size: 13px;
     }
 
@@ -114,11 +144,16 @@ body {
 
     .main {
         flex-direction: column-reverse;
+        margin-bottom: 2px;
+        margin-top: 2px;
+        overflow: auto;
 
         .content {
-            flex: 0 0 450px;
+            padding-top: 70px;
+            flex: 1 0 300px;
             background-size: 240px 160px;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
+            max-height: 400px;
         }
     }
 
@@ -129,26 +164,27 @@ body {
             font-size: 11px;
         }
     }
-}
 
-::-webkit-scrollbar{
-    border-color: rgba(0, 4, 41, 0.29);
-    width: 14px;
-    background-color: rgba(0, 4, 41, 0.05);
-}
-::-webkit-scrollbar-thumb{
-    border-width:1px 1px 1px 2px;
-    border-color: rgba(0, 4, 41, 0.40);
-    background-color: rgba(0, 4, 41, 0.09);
-}
-::-webkit-scrollbar-thumb:hover{
-    border-width: 1px 1px 1px 2px;
-    border-color: rgba(0, 4, 41, 0.40);
-    background-color: rgba(0, 4, 41, 0.10);
-}
-::-webkit-scrollbar-track{
-    border-width:0;
-}
-::-webkit-scrollbar-track:hover{
-    background-color: rgba(0, 4, 41, 0.05);
+    ::-webkit-scrollbar{
+        border-color: @tables-color;
+        width: 14px;
+        background-color: rgba(0, 4, 41, 0.05);
+    }
+    ::-webkit-scrollbar-thumb{
+        border-width:1px 1px 1px 2px;
+        border-color: rgba(0, 4, 41, 0.40);
+        background-color:  #e4ded8;
+    }
+    ::-webkit-scrollbar-thumb:hover{
+        border-width: 1px 1px 1px 2px;
+        border-color: rgba(0, 4, 41, 0.40);
+        background-color: rgba(0, 4, 41, 0.10);
+    }
+    ::-webkit-scrollbar-track{
+        background-color: @tables-color;
+        border-width:0;
+    }
+    ::-webkit-scrollbar-track:hover{
+        background-color: @tables-color;
+    }
 }

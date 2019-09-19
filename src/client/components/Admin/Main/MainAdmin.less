@@ -1,30 +1,18 @@
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 @media screen and (max-width:600px) {
   .admin-main {
-    flex: 1;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    display: flex;
+    margin-bottom: 2px;
+    margin-top: 2px;
     width: 100%;
     min-width: 430px;
-    flex-direction: column;
     font-size: 14px;
 
-
-    .admin-content {
-      flex: 1 0;
-      min-width: 430px;
-      box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
-      background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
-      background-size: 450px 300px;
-      background-color: #f4f4f0;
-      margin-top: 1px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      magrin: auto;
-      position: relative;
+    
 
       &__navigation {
         position: absolute;
@@ -57,19 +45,43 @@
         width: 90%;
         margin-top: 2%;
         overflow: auto;
-        magrin: auto;
+  
       }
     }
   }
 }
 
-@media screen and (min-width:600px) {
+@media screen and (min-width:600px) { 
   .admin-main {
-    flex: 1;
     margin-bottom: 5px;
     margin-top: 5px;
-    display: flex;
-    flex-direction: column;
+
+    .admin-content {
+      flex: 1 0;
+      min-width: 430px;
+      box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
+      background-size: 450px 300px;
+      background-color: #f4f4f0;
+      margin-top: 1px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+
+      .admin-content {
+        flex: 1 0;
+        min-width: 430px;
+        box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
+        background-size: 450px 300px;
+        background-color: #f4f4f0;
+  
 
 
     .admin-content {
@@ -82,12 +94,8 @@
       background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
       background-size: 450px 300px;
       background-color: #f4f4f0;
-      margin-top: 1px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      magrin: auto;
-      position: relative;
+
+
 
       &__navigation {
         position: absolute;
@@ -120,7 +128,7 @@
         width: 90%;
         margin-top: 2%;
         overflow: auto;
-        magrin: auto;
+    
       }
     }
   }
