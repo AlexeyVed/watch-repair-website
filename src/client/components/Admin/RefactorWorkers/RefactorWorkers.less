@@ -1,38 +1,23 @@
+@import '../../../style/global-variable.less';
+@import '../../../style/mixins/index.less';
+
 .refactor-workers {
-  position: relative;
+  .basic-style-modal-refactor;
   top: 13vh;
-  margin: auto;
   width: 340px;
   height: 430px;
-  background-color: #f4f4ea;
-  border: 2px solid #b5b5b5;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 2;
+ 
 
   &__header {
-    text-align: center;
-    width: 100%;
-    padding-top: 40px;
-    margin-bottom: 15px;
-    font-size: 20px;
-    position: relative;
+    .basic-style-header;
 
     a > &__right-button-close {
+      .basic-style-button;
       position: absolute;
       height: 30px;
       width: 30px;
       top: 15px;
       right: 15px;
-      padding: 0;
-      border: none;
-      color: inherit;
-      cursor: pointer;
-      background-color: inherit;
-      outline: none;
       font-size: 30px;
       color: black;
     }
@@ -45,32 +30,14 @@
   }
 
   form {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    & > .input-with-label > input {
-      width: 65%;
-      height: 30px;
-      margin-top: 20px;
-      border-radius: 5px;
-      border: 1px solid gray;
-      padding-left: 10px;
-    }
+    .form-for-refactor
 
     & > button {
+      .basic-style-button;
       height: 35px;
       margin-top: 25px;
       width: 110px;
       font-size: 15px;
-      padding: 0;
-      border: none;
-      font: inherit;
-      color: black;
-      cursor: pointer;
-      outline: none;
       border: 1px solid #b9b9b5;
       border-radius: 10px;
       background-color: rgba(236, 236, 232, 0.8);
@@ -87,12 +54,5 @@
 }
 
 .modal-window {
-  position: absolute;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(32, 34, 33, 0.37);
-  z-index: 2;
+  .modal-window-for-refactor;
 }
-
-

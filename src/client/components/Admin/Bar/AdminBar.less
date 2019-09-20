@@ -18,15 +18,15 @@
     border-collapse: collapse;
     width: 100%;
 
-    a:first-child {
-      border-left: none;
-    }
-
     a {
       flex: 1;
       width: 100px;
       height: 40px;
       border-left: 1px solid #9da79d;
+
+      &:first-child {
+        border-left: none;
+      }
 
       .button-bar {
         height: 40px;
@@ -38,15 +38,15 @@
         cursor: pointer;
         background-color: #f4f4f0;
         outline: none;
+
+        &:hover {
+          background-color: #f5f5f5;
+          color: #1a5500;
+        }
       }
 
       .active {
         background-color: rgb(233, 232, 233);
-      }
-
-      .button-bar:hover {
-        background-color: #f5f5f5;
-        color: #1a5500;
       }
     }
   }
@@ -55,21 +55,22 @@
 @media screen and (min-width:600px) {
   .bar-choose-item {
     min-width: 695px;
-    border: 1px solid rgba(128, 128, 128, 0.4);
+    border: @app-border-style;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     font-size: 15px;
-
+    
     &__buttons {
-      
-    a:first-child > button {
-      border-top-left-radius: 10px;
-    }
+      a {
+        &:first-child > button {
+          border-top-left-radius: 10px;
+        }
 
-    a:last-child > button:last-child {
-      border-bottom-right-radius: 10px;
-      border-top-right-radius: 10px;
-    }
+        &:last-child > button:last-child {
+          border-bottom-right-radius: 10px;
+          border-top-right-radius: 10px;
+        }
+      }
     }
   }
 }
