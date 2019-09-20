@@ -7,11 +7,17 @@
 
   .admin-content {
     flex: 1 0;
- 
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
+  }
+
+  .work-space {
+    height: 90%;
+    width: 90%;
+    margin-top: 2%;
+    overflow: auto;
   }
 }
 
@@ -20,49 +26,14 @@
     margin-bottom: 2px;
     margin-top: 2px;
     width: 100%;
-    min-width: 430px;
+    min-width: 410px;
     font-size: 14px;
 
-    
     .admin-content {
-      min-width: 430px;
-      background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
-      background-size: 450px 300px;
+      min-width: 410px;
+      background: url(../../../image/background.png) no-repeat right -10px bottom 60px;
+      background-size: 240px 160px;
       background-color: @tables-color;
-   
-      &__navigation {
-        position: absolute;
-        right: 0;
-        top: 10px;
-
-        a {
-          width: 130px;
-          height: 20px;
-          color: #7c7f7c;
-          display: flex;
-          justify-content: right;
-        }
-
-        a > button {
-          height: 100%;
-          width: 100%;
-          padding: 0;
-          border: none;
-          font: inherit;
-          color: inherit;
-          background-color: inherit;
-          cursor: pointer;
-          outline: none;
-        }
-      }
-
-      .work-space {
-        height: 90%;
-        width: 90%;
-        margin-top: 2%;
-        overflow: auto;
-  
-      }
     }
   }
 }
@@ -73,6 +44,7 @@
     margin-top: 5px;
 
     .admin-content {   
+      box-sizing: border-box;
       min-width: 695px;
       border: 1px solid rgba(128, 128, 128, 0.4);
       box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
@@ -81,40 +53,6 @@
       background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
       background-size: 450px 300px;
       background-color: @tables-color;
-
-      &__navigation {
-        position: absolute;
-        right: 0;
-        top: 10px;
-
-        a {
-          width: 130px;
-          height: 20px;
-          color: #7c7f7c;
-          display: flex;
-          justify-content: right;
-        }
-
-        a > button {
-          height: 100%;
-          width: 100%;
-          padding: 0;
-          border: none;
-          font: inherit;
-          color: inherit;
-          background-color: inherit;
-          cursor: pointer;
-          outline: none;
-        }
-      }
-
-      .work-space {
-        height: 90%;
-        width: 90%;
-        margin-top: 2%;
-        overflow: auto;
-    
-      }
     }
   }
 }

@@ -1,7 +1,6 @@
 .table-cities {
   display: flex;
   flex-direction: column;
-  font-size: 16px;
   height: 100%;
 
   &__title {
@@ -22,16 +21,17 @@
       flex: 1;
 
       tr {
-        height: 40px;
         margin-top: 5px;
+        background-color: rgba(169, 169, 169, 0.04);
+        height: 50px;
         border-bottom: 1px solid grey;
       }
 
-      tr:first-child {
-        background-color: rgba(169, 169, 169, 0.04);
-        height: 50px;
+      th {
+        padding-left: 10px;
+        padding-right: 10px;
       }
-
+      
       th:nth-child(1) {
         width: 50px;
         border-right: 1px solid grey;
@@ -43,10 +43,13 @@
 
       th:nth-child(3) {
         width: 100px;
+        min-width: 100px;
       }
 
       td {
         text-align: center;
+        padding-left: 10px;
+        padding-right: 10px;
       }
 
       td:nth-child(1) {
@@ -60,10 +63,10 @@
       }
 
       td:nth-child(3) {
+
         button {
           width: 50%;
           height: 28px;
-          padding: 0;
           border: none;
           font-size: 13px;
           color: black;
@@ -76,7 +79,6 @@
         a > button {
           width: 50%;
           height: 28px;
-          padding: 0;
           border: none;
           background-color: inherit;
           font-size: 13px;
@@ -166,3 +168,15 @@
     }
   }
 }
+
+@media screen and (max-width:600px) {
+  .table-cities {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width:600px) {
+  .table-cities {
+    font-size: 16px;
+  }
+}
+

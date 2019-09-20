@@ -51,6 +51,7 @@ body {
     }
 
     a:nth-child(2) {
+        box-sizing: border-box;
         border-left: 1px solid #babab0;
         border-right: 1px solid #babab0;
     }
@@ -58,7 +59,7 @@ body {
 
 @media screen and (min-width:600px) {
     body {
-        background: @app-background-color;
+        background: content-box @app-background-color no-repeat;
     }
 
     .app {
@@ -79,10 +80,9 @@ body {
         .content {
             flex: 2 1 66%;
             border-radius: 5px;
+            box-sizing: border-box;
             border: @app-border-style;
             box-shadow: @app-box-shadows;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
             background-size: 450px 300px;
             align-items: center;
             margin-left: 5px;
@@ -92,6 +92,7 @@ body {
     .footer {
         flex: 0 0 30px;
         min-width: 695px;
+        box-sizing: border-box;
         box-shadow: @app-box-shadows;
         border-left: @app-border-style;
         border-top: @app-border-style;
@@ -147,9 +148,9 @@ body {
         margin-bottom: 2px;
         margin-top: 2px;
         overflow: auto;
+        position: relative;
 
         .content {
-            padding-top: 70px;
             flex: 1 0 300px;
             background-size: 240px 160px;
             margin-bottom: 2px;

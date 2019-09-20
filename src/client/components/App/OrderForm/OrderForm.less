@@ -17,8 +17,6 @@
   &__order-form > button {
     letter-spacing: 1px;
     margin-top: 15px;
-    height: 40px;
-    width: 110px;
     padding: 0;
     border: none;
     font: inherit;
@@ -44,9 +42,11 @@
 @media screen and (min-width:600px) {
   .main-form {
     flex: 0 0 300px;
+    box-sizing: border-box;
     border: @app-border-style;
     border-radius: 5px;
     box-shadow: @app-box-shadows;
+    
 
     &__title {
       padding-top: 30px;
@@ -56,31 +56,30 @@
 
     &__order-form > button {
       font-size: 16px;
+      height: 40px;
+      width: 110px;
     }
   }
 }
 
 @media screen and (max-width:600px) {
   .main-form {
+    background: @image-background;
+    background-color: @tables-color;
     flex: 0 0 450px;
+    background-size: 240px 160px;
  
     &__title {
-      padding-top: 40px;
+      padding-top: 20px;
       margin-bottom: 5px;
       font-size: 17px;
     }
 
-    &__order-form {
-      padding-bottom: 25px;
-    }
-
     &__order-form > button {
-      font-size: 14px;
+      font-size: 13px;
       margin-bottom: 30px;
-    }
-
-    .choosing-master {     
-      padding-top: 30%;
+      height: 35px;
+      width: 100px;
     }
   }
 }

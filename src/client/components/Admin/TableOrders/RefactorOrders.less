@@ -1,7 +1,6 @@
 .table-orders {
   display: flex;
   flex-direction: column;
-  font-size: 16px;
   height: 100%;
 
   &__title {
@@ -19,95 +18,15 @@
     table {
       border-collapse: collapse;
       width: 100%;
-
       flex: 1;
 
-      tr {
-        height: 40px;
-        margin-top: 5px;
-        border-bottom: 1px solid grey;
-      }
-
-      tr:first-child {
-        background-color: rgba(169, 169, 169, 0.04);
-        height: 50px;
-        border-bottom: none;
-      }
-
-      th:nth-child(1) {
-        width: 50px;
-        border-right: 1px solid grey;
-      }
-
-      th:nth-child(2) {
-        border-right: 1px solid grey;
-      }
-
-      th:nth-child(3) {
-        border-right: 1px solid grey;
-      }
-
-      th:nth-child(4) {
-        border-right: 1px solid grey;
-      }
-
-      th:nth-child(5) {
-        border-right: 1px solid grey;
-      }
-
-      th:nth-child(6) {
-        border-right: 1px solid grey;
-      }
-
-      th:nth-child(7) {
-        border-right: 1px solid grey;
-      }
-
-      th:nth-child(8) {
-        width: 100px;
-      }
-
-      td {
-        text-align: center;
-      }
-
-      td:nth-child(1) {
-        border-right: 1px solid grey;
-      }
-
-      td:nth-child(2) {
-        text-align: left;
-        padding-left: 10px;
-        border-right: 1px solid grey;
-      }
-
-      td:nth-child(3) {
-        text-align: left;
-        padding-left: 10px;
-        border-right: 1px solid grey;
-      }
-
-      td:nth-child(4) {
-        border-right: 1px solid grey;
-      }
-
-      td:nth-child(5) {
-        border-right: 1px solid grey;
-      }
-
-      td:nth-child(6) {
-        border-right: 1px solid grey;
-      }
-
-      td:nth-child(7) {
-        border-right: 1px solid grey;
-      }
-
       td:nth-child(8) {
+        padding-right: 10px;
+        padding-left: 10px;
+
         button {
           width: 50%;
           height: 28px;
-          padding: 0;
           border: none;
           font-size: 13px;
           color: black;
@@ -116,11 +35,10 @@
           background-color: inherit;
           border-left: 1px solid rgba(105, 105, 105, 0.65);
         }
-
+  
         a > button {
           width: 50%;
           height: 28px;
-          padding: 0;
           border: none;
           background-color: inherit;
           font-size: 13px;
@@ -131,6 +49,7 @@
       }
     }
   }
+
   &__numbers-pages {
     display: flex;
     width: 97.7%;
@@ -210,3 +129,127 @@
     }
   }
 }
+
+@media screen and (min-width:600px) {
+  .table-orders {
+    font-size: 16px;
+
+    &__table {
+      table {
+        tr {
+          margin-top: 5px;
+          border-bottom: 1px solid grey;
+          background-color: rgba(169, 169, 169, 0.04);
+          height: 50px;
+        }
+
+        th {
+          border-right: 1px solid grey;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+    
+        th:nth-child(1) {
+          width: 50px;
+        }
+    
+        th:nth-child(8) {
+          width: 100px;
+          min-width: 100px;
+          border: none;
+        }
+    
+        td {
+          text-align: center;
+          padding-left: 20px;
+          padding-right: 10px;
+        }
+    
+        td {
+          border-right: 1px solid grey;
+        }
+    
+        td:nth-child(2) {
+          text-align: left;
+        }
+    
+        td:nth-child(3) {
+          text-align: left;
+        }
+    
+        td:nth-child(8) {
+          border: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width:600px) {
+  .table-orders {
+    font-size: 14px;
+    &__table {
+      table {
+        tr {
+          margin-top: 5px;
+          border-bottom: 1px solid grey;
+          background-color: rgba(169, 169, 169, 0.04);
+          height: 50px;
+        }
+
+        th {
+          border-right: 1px solid grey;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+    
+        th:nth-child(1) {
+          width: 50px;
+        }
+    
+        th:nth-child(8) {
+          width: 100px;
+          min-width: 100px;
+          border: none;
+        }
+    
+        td {
+          text-align: center;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+    
+        td {
+          border-right: 1px solid grey;
+        }
+    
+        td:nth-child(2) {
+          text-align: left;
+          padding-left: 10px;
+        }
+    
+        td:nth-child(3) {
+          text-align: left;
+          padding-left: 10px;
+        }
+    
+        td:nth-child(8) {
+          width: 100px;
+          border: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width:600px) {
+  .table-orders {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width:600px) {
+  .table-orders {
+    font-size: 16px;
+  }
+}
+

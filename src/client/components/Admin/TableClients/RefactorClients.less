@@ -26,12 +26,13 @@
         height: 40px;
         margin-top: 5px;
         border-bottom: 1px solid grey;
-      }
-
-      tr:first-child {
         background-color: rgba(169, 169, 169, 0.04);
         height: 50px;
-        border-bottom: none;
+      }
+
+      th {
+        padding-left: 10px;
+        padding-right: 10px;
       }
 
       th:nth-child(1) {
@@ -49,10 +50,13 @@
 
       th:nth-child(4) {
         width: 100px;
+        min-width: 100px;
       }
 
       td {
         text-align: center;
+        padding-left: 10px;
+        padding-right: 10px;
       }
 
       td:nth-child(1) {
@@ -75,7 +79,6 @@
         button {
           width: 50%;
           height: 28px;
-          padding: 0;
           border: none;
           font-size: 13px;
           color: black;
@@ -88,7 +91,6 @@
         a > button {
           width: 50%;
           height: 28px;
-          padding: 0;
           border: none;
           background-color: inherit;
           font-size: 13px;
@@ -180,4 +182,16 @@
     }
   }
 }
+
+@media screen and (max-width:600px) {
+  .table-clients {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width:600px) {
+  .table-clients {
+    font-size: 16px;
+  }
+}
+
 
