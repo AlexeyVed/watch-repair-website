@@ -11,16 +11,17 @@ import {
 
 import axios from 'axios'
 
-export const loginToApp = (values) => {
+export const loginToApp = (values, test) => {
   return (dispatch) => {
     dispatch({ type: SING_IN_STARTED })
-
-    axios
+    return axios
       .post(`/api/users/login`, values)
       .then(res => {
         localStorage.setItem('user', res.data.user.email)
         localStorage.setItem('token', res.data.token)
-        axios.defaults.headers.common['authorization'] = res.data.token
+        if (!test) {
+          axios.defaults.headers.common['authorization'] = res.data.token
+        }
         dispatch(singInSuccess(res.data.user.email))
       })
       .catch(err => {
@@ -31,7 +32,7 @@ export const loginToApp = (values) => {
 
 export const logOutApp = () => {
   return (dispatch) => {
-    axios
+    return axios
       .post(`/api/users/logout`)
       .then(res => {
         localStorage.removeItem('user')
@@ -45,18 +46,16 @@ export const logOutApp = () => {
   }
 }
 
-export const missLoginError = () => {
-  return (dispatch) => {
-    dispatch({ type: LOGIN_ERROR_NULL })
-  }
-}
+export const missLoginError = () => ({
+  type: LOGIN_ERROR_NULL
+})
 
-const singInSuccess = user => ({
+export const singInSuccess = user => ({
   type: SING_IN_SUCCESS,
   payload: user
 })
 
-const singInFailure = error => ({
+export const singInFailure = error => ({
   type: SING_IN_FAILURE,
   payload: error
 })

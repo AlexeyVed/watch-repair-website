@@ -33,7 +33,7 @@ export const loadCustomers = () => {
 export const addCustomersToDB = (values) => {
   return (dispatch) => {
     dispatch({ type: ADD_CUSTOMERS_STARTED })
-    axios
+    return axios
       .post(`/api/customers/`, values)
       .then(res => {
         dispatch(addCustomersSuccess(res.data))
@@ -50,7 +50,7 @@ export const addCustomersToDB = (values) => {
 export const editCustomersIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_CUSTOMERS_STARTED })
-    axios
+    return axios
       .put(`/api/customers/${values.id}`, values)
       .then(res => {
         dispatch(editCustomersSuccess(res.data))
@@ -67,7 +67,7 @@ export const editCustomersIntoDB = (values) => {
 export const deleteCustomersFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_CUSTOMERS_STARTED })
-    axios
+    return axios
       .delete(`/api/customers/${id}`)
       .then(res => {
         dispatch(deleteCustomersSuccess(res.data))
@@ -78,44 +78,44 @@ export const deleteCustomersFromDB = (id) => {
   }
 }
 
-const loadCustomersFailure = err => ({
+export const loadCustomersFailure = err => ({
   type: LOAD_CUSTOMERS_FAILURE,
   payload: err
 })
 
-const loadCustomersSuccess = data => ({
+export const loadCustomersSuccess = data => ({
   type: LOAD_CUSTOMERS_SUCCESS,
   payload: data
 })
 
-const addCustomersFailure = (err) => ({
+export const addCustomersFailure = (err) => ({
   type: ADD_CUSTOMERS_FAILURE,
   payload: err
 })
 
-const deleteCustomersFailure = (err) => ({
+export const deleteCustomersFailure = (err) => ({
   type: DELETE_CUSTOMERS_FAILURE,
   payload: err
 })
 
-const editCustomersFailure = (err) => ({
+export const editCustomersFailure = (err) => ({
   type: EDIT_CUSTOMERS_FAILURE,
   payload: err
 })
 
-const addCustomersSuccess = data => ({
+export const addCustomersSuccess = data => ({
   type: ADD_CUSTOMERS_SUCCESS,
   message: 'Customer was successfully added.',
   payload: data
 })
 
-const deleteCustomersSuccess = data => ({
+export const deleteCustomersSuccess = data => ({
   type: DELETE_CUSTOMERS_SUCCESS,
   message: 'Customer was successfully removed.',
   payload: data
 })
 
-const editCustomersSuccess = data => ({
+export const editCustomersSuccess = data => ({
   type: EDIT_CUSTOMERS_SUCCESS,
   message: 'Customer was successfully edited.',
   payload: data
