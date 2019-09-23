@@ -2,6 +2,17 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const User = require('../models/users.js')
 
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
+
+passport.deserializeUser((id, done) => {
+  User.findByPk(id)
+    .then((err, user) => {
+      err ? done(err) : done(null, user)
+    })
+})
+
 passport.use('login',
   new LocalStrategy(
     {
