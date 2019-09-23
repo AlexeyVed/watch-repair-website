@@ -33,13 +33,15 @@
     outline: none;
     font-size: 30px;
     color: black;
+
+    &:active {
+      transform: translateY(2px);
+      filter: saturate(150%);
+      color: #5d0000;
+    }
   }
 
-  &__bttn-close:active {
-    transform: translateY(2px);
-    filter: saturate(150%);
-    color: #5d0000;
-  }
+
 
   &__errors {
     position: absolute;
@@ -62,5 +64,3 @@
   background-color: rgba(127, 129, 128, 0.37);
   z-index: 5;
 }
-
-

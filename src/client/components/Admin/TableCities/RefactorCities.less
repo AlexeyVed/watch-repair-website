@@ -1,169 +1,106 @@
+@import '../../../style/global-variable.less';
+@import '../../../style/mixins/index.less';
+
 .table-cities {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  .root-table;
 
   &__title {
-    height: 10px;
-    font-weight: bold;
-    font-size: 18px;
-    padding-left: 70px;
+    .table-title;
   }
 
   &__table {
-    flex: 1;
-    overflow: auto;
-    margin-top: 23px;
+    .root-table__table;
 
     table {
-      border-collapse: collapse;
-      width: 100%;
-      flex: 1;
+      .html-table;
 
       tr {
-        margin-top: 5px;
         background-color: rgba(169, 169, 169, 0.04);
         height: 50px;
         border-bottom: 1px solid grey;
       }
 
-      th {
+      th, td {
         padding-left: 10px;
         padding-right: 10px;
       }
-      
-      th:nth-child(1) {
-        width: 50px;
-        border-right: 1px solid grey;
-      }
 
-      th:nth-child(2) {
+      th {
         border-right: 1px solid grey;
-      }
 
-      th:nth-child(3) {
-        width: 100px;
-        min-width: 100px;
+        &:nth-child(1) {
+          width: 50px;
+        }
+
+        &:nth-child(3) {
+          width: 100px;
+          min-width: 100px;
+          border-right: none;
+        }
       }
 
       td {
         text-align: center;
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-
-      td:nth-child(1) {
         border-right: 1px solid grey;
-      }
 
-      td:nth-child(2) {
-        text-align: left;
-        padding-left: 20px;
-        border-right: 1px solid grey;
-      }
-
-      td:nth-child(3) {
-
-        button {
-          width: 50%;
-          height: 28px;
-          border: none;
-          font-size: 13px;
-          color: black;
-          cursor: pointer;
-          outline: none;
-          background-color: inherit;
-          border-left: 1px solid rgba(105, 105, 105, 0.65);
+        &:nth-child(2) {
+          text-align: left;
+          padding-left: 20px;
         }
 
-        a > button {
-          width: 50%;
-          height: 28px;
-          border: none;
-          background-color: inherit;
-          font-size: 13px;
-          color: black;
-          cursor: pointer;
-          outline: none;
+        &:nth-child(3) {
+          border-right: none;
+          button {
+            .button-refactor-models;
+            border-left: 1px solid rgba(105, 105, 105, 0.65);
+          }
+
+          a > button {
+            .button-refactor-models;
+          }
         }
       }
     }
   }
 
   &__numbers-pages {
-    display: flex;
-    width: 97.7%;
-    height: 30px;
-    border: 1px solid #bfbfbf;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    .numbers-pages;
 
     &__container {
-      flex: 1;
-      display: flex;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.03);
-      align-items: center;
-      justify-content: center;
-      border-collapse: collapse;
+      .container-number-pages;
 
       div {
-        width: 30px;
-        height: 30px;
-        border-right: 1px solid #b9b9b5;
-        border-left: 1px solid #b9b9b5;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-right: 5px;
-        padding-left: 5px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-left: 3px;
+        .number-one-page;
+        
+        &:hover {
+          background-color: #d1d4d1;
+        }
       }
 
       .active {
         background-color: rgba(209, 212, 209, 0.8);
         cursor: default;
       }
-
-      div:hover {
-        background-color: #d1d4d1;
-      }
     }
 
     &__bttn-add {
-      flex: 0 0 85px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      .container-bttn-add;
 
       a {
         width: 100%;
         height: 100%;
-      }
 
-      a > button {
-        height: 30px;
-        width: 85px;
-        padding: 0;
-        border: none;
-        font: inherit;
-        color: black;
-        cursor: pointer;
-        outline: none;
-        border-left: 1px solid #b9b9b5;
-        border-radius: 5px;
-        background-color: #f4f4f0;
+        & > button {
+          .container-bttn-add__bttn-add;
 
-        .MuiSvgIcon-root {
-          font-size: 28px;
+          .MuiSvgIcon-root {
+            font-size: 28px;
+          }
+
+          &:hover {
+            background-color: #f0f0ec;
+          }
         }
-      }
-
-      a > button:hover {
-        background-color: #f0f0ec;
       }
     }
   }
@@ -174,9 +111,9 @@
     font-size: 14px;
   }
 }
+
 @media screen and (min-width:600px) {
   .table-cities {
     font-size: 16px;
   }
 }
-
