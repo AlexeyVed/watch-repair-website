@@ -1,7 +1,6 @@
-const merge = require('webpack-merge')
 const common = require('./webpack.common.js')
 
-module.exports = merge(common, {
+module.exports = Object.assign(common, {
   devtool: 'inline-source-map',
   devServer: {
     port: 3000,
