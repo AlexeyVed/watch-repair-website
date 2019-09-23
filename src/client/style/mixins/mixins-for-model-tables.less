@@ -1,31 +1,31 @@
 @import '../global-variable.less';
 
-.root-table {
+.root-table() {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.root-table__table {
+.root-table__table() {
     flex: 1;
     overflow: auto;
     margin-top: 23px;
 }
 
-.html-table {
+.html-table() {
     border-collapse: collapse;
     width: 100%;
     flex: 1;
 }
 
-.table-title {
+.table-title() {
     height: 10px;
     font-weight: bold;
     font-size: 18px;
     padding-left: 70px;
 }
 
-.button-refactor-models {
+.button-refactor-models() {
     width: 50%;
     height: 28px;
     border: none;
@@ -36,7 +36,7 @@
     background-color: inherit;
 }
 
-.numbers-pages {
+.numbers-pages() {
     display: flex;
     width: 97.7%;
     height: 30px;
@@ -45,7 +45,7 @@
     margin-bottom: 5px;
 }
 
-.number-one-page {
+.number-one-page() {
     width: 30px;
     height: 30px;
     border-right: 1px solid #b9b9b5;
@@ -60,7 +60,7 @@
     margin-left: 3px;
 }
 
-.container-number-pages {
+.container-number-pages() {
     flex: 1;
     display: flex;
     height: 100%;
@@ -70,7 +70,7 @@
     border-collapse: collapse;
 }
 
-.container-bttn-add {
+.container-bttn-add() {
     flex: 0 0 85px;
     height: 30px;
     display: flex;
@@ -78,7 +78,7 @@
     justify-content: center;
 }
 
-.container-bttn-add__bttn-add {
+.container-bttn-add__bttn-add() {
     height: 30px;
     width: 85px;
     padding: 0;
