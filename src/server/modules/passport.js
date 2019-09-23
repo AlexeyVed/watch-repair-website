@@ -8,8 +8,11 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   User.findByPk(id)
-    .then((err, user) => {
-      err ? done(err) : done(null, user)
+    .then(user => {
+      done(null, user)
+    })
+    .catch(error => {
+      done(error)
     })
 })
 
