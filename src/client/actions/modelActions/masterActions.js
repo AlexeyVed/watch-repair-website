@@ -33,7 +33,7 @@ export const loadMasters = () => {
 export const addMastersToDB = (values) => {
   return (dispatch) => {
     dispatch({ type: ADD_MASTERS_STARTED })
-    axios
+    return axios
       .post(`/api/masters/`, values)
       .then(res => {
         dispatch(addMastersSuccess(res.data))
@@ -50,7 +50,7 @@ export const addMastersToDB = (values) => {
 export const editMastersIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_MASTERS_STARTED })
-    axios
+    return axios
       .put(`/api/masters/${values.id}`, values)
       .then(res => {
         dispatch(editMastersSuccess(res.data))
@@ -67,7 +67,7 @@ export const editMastersIntoDB = (values) => {
 export const deleteMastersFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_MASTERS_STARTED })
-    axios
+    return axios
       .delete(`/api/masters/${id}`)
       .then(res => {
         dispatch(deleteMastersSuccess(res.data))
@@ -78,44 +78,44 @@ export const deleteMastersFromDB = (id) => {
   }
 }
 
-const loadMastersFailure = err => ({
+export const loadMastersFailure = err => ({
   type: LOAD_MASTERS_FAILURE,
   payload: err
 })
 
-const loadMastersSuccess = data => ({
+export const loadMastersSuccess = data => ({
   type: LOAD_MASTERS_SUCCESS,
   payload: data
 })
 
-const addMastersFailure = (err) => ({
+export const addMastersFailure = (err) => ({
   type: ADD_MASTERS_FAILURE,
   payload: err
 })
 
-const deleteMastersFailure = (err) => ({
+export const deleteMastersFailure = (err) => ({
   type: DELETE_MASTERS_FAILURE,
   payload: err
 })
 
-const editMastersFailure = (err) => ({
+export const editMastersFailure = (err) => ({
   type: EDIT_MASTERS_FAILURE,
   payload: err
 })
 
-const addMastersSuccess = data => ({
+export const addMastersSuccess = data => ({
   type: ADD_MASTERS_SUCCESS,
   message: 'Master was successfully added.',
   payload: data
 })
 
-const deleteMastersSuccess = data => ({
+export const deleteMastersSuccess = data => ({
   type: DELETE_MASTERS_SUCCESS,
   message: 'Master was successfully removed.',
   payload: data
 })
 
-const editMastersSuccess = data => ({
+export const editMastersSuccess = data => ({
   type: EDIT_MASTERS_SUCCESS,
   message: 'Master was successfully edited.',
   payload: data
