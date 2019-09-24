@@ -6,7 +6,7 @@ import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded'
 
 import './header.less'
 
-class Header extends React.Component {
+export class ModuleHeader extends React.Component {
   state = {
     redirect: false,
     redirectAdmin: false
@@ -64,14 +64,14 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     redirectLogOut: state.loginReducer.redirectLogOut
   }
 }
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return {
     logOut: () => dispatch(logOutApp())
   }
@@ -80,4 +80,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Header)
+)(ModuleHeader)
