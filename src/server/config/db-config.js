@@ -5,6 +5,8 @@ module.exports = {
     database: 'clockwise',
     host: 'localhost',
     dialect: 'mysql',
+    seederStorage: 'sequelize',
+    seederStorageTableName: 'sequelizemeta',
     operatorsAliases: false,
     port: 3306,
     pool: {
@@ -19,6 +21,8 @@ module.exports = {
     database: 'dc8mqa68q4p4qt',
     host: 'ec2-174-129-229-106.compute-1.amazonaws.com',
     dialect: 'postgres',
+    seederStorage: 'sequelize',
+    seederStorageTableName: 'sequelizemeta',
     operatorsAliases: false,
     port: 5432,
     pool: {
@@ -34,6 +38,8 @@ module.exports = {
     database: 'ddhe17nk5stidt',
     host: 'ec2-174-129-242-183.compute-1.amazonaws.com',
     dialect: 'postgres',
+    seederStorage: 'sequelize',
+    seederStorageTableName: 'sequelizemeta',
     operatorsAliases: false,
     port: 5432,
     pool: {
