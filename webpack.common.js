@@ -39,15 +39,6 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    port: 3000,
-    open: true,
-    publicPath: '/',
-    proxy: {
-      '/api': 'http://localhost:4000'
-    },
-    historyApiFallback: true
-  },
   plugins: [
     new CleanWebpackPlugin([outputDirectory]),
     new HtmlWebpackPlugin({

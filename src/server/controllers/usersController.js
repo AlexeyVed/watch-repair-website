@@ -33,6 +33,9 @@ exports.login = (req, res, next) => {
       return next(error(info.code, info.message))
     }
     req.logIn(user, err => {
+      if (err) {
+        return next(err)
+      }
       return User.findOne({
         where: {
           email: user.email

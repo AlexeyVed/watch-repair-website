@@ -1,6 +1,0 @@
---colors
---recursive
---require @babel/register
---require @babel/polyfill
-src/**/*.test.js
--r ./config/mocha-setup.js
