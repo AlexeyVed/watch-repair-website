@@ -6,9 +6,6 @@ module.exports = {
       email: 'admin@example.com',
       password: 'passwordsecret'
     }], {})
-      .catch(() => {
-        return null
-      })
   },
 
   down: (queryInterface, Sequelize) => {
