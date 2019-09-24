@@ -9,6 +9,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addCityToDB } from '../../../actions'
 import { required } from '../../../validation'
 
+import '../../../style/global-style/refactor-modal.less'
 import './RefactorCities.less'
 
 class AddCities extends React.Component {
@@ -22,13 +23,14 @@ class AddCities extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-city add-city'>
-            <div className="refactor-city__header">
+        <div className='modal-window modal-window-for-refactor'>
+          <div className='refactor-city basic-style-modal-refactor add-city'>
+            <div className="refactor-city__header basic-style-header">
               Add city
               <LinkButton to='/admin/cities' name='&times;' className='refactor-city__header__right-button-close'/>
             </div>
             <form
+              className='form-for-refactor'
               onSubmit={handleSubmit(addCity)}>
               <Field
                 label='Enter city'
@@ -39,6 +41,7 @@ class AddCities extends React.Component {
                 placeholder='Enter new city'
               />
               <button
+                className='basic-style-button'
                 type='submit'
                 label='submit'
                 className='refactor-city__submit'>Submit</button>

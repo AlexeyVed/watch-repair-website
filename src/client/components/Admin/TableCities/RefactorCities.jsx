@@ -11,6 +11,7 @@ import EditCities from '../RefactorCities/EditCities.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin.jsx'
 import { deleteCityFromDB, loadCities, loadDataEnd, setPage } from '../../../actions'
 
+import '../../../style/global-style/model-tables.less'
 import './RefactorCities.less'
 
 class RefactorCities extends React.Component {
@@ -63,7 +64,7 @@ class RefactorCities extends React.Component {
         <td>{item.city}</td>
         <td>
           <LinkButton to={`/admin/cities/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteCity(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className='button-refactor-models' onClick={ () => deleteCity(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
@@ -75,7 +76,7 @@ class RefactorCities extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <div className='page'
+        <div className='page number-one-page'
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -84,9 +85,9 @@ class RefactorCities extends React.Component {
         </div>
       )
     })
-    const table = <React.Fragment> <div className='table-cities__title'>Table cities</div>
-      <div className='table-cities__table'>
-        <table>
+    const table = <React.Fragment> <div className='table-cities__title table-title'>Table cities</div>
+      <div className='table-cities__table root-table__table'>
+        <table className='html-table'>
           <tbody>
             <tr>
               <th>№</th>
@@ -97,16 +98,16 @@ class RefactorCities extends React.Component {
           </tbody>
         </table>
       </div>
-      <div className='table-cities__numbers-pages'>
-        <div className='table-orders__numbers-pages__container'>
+      <div className='table-cities__numbers-pages numbers-pages'>
+        <div className='table-orders__numbers-pages__container container-number-pages'>
           { renderPageNumbers }
         </div>
-        <div className='table-cities__numbers-pages__bttn-add'>
+        <div className='table-cities__numbers-pages__bttn-add container-bttn-add'>
           <LinkButton to='/admin/cities/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>
     return (
-      <div className='table-cities'>
+      <div className='table-cities root-table'>
         <Switch>
           <Route exact path='/admin/cities' render={() => (table)}/>
           <Route path='/admin/cities/add' render={() => (

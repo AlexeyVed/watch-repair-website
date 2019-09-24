@@ -1,17 +1,19 @@
 @import '../../../style/global-variable.less';
-@import '../../../style/mixins/index.less';
 
 .refactor-clocks {
-  .basic-style-modal-refactor;
   top: 15vh;
   width: 340px;
   height: 370px;
 
   &__header {
-    .basic-style-header;
 
     a > &__right-button-close {
-      .basic-style-button;
+      padding: 0;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      background-color: inherit;
+      outline: none;
       position: absolute;
       height: 30px;
       width: 30px;
@@ -29,10 +31,8 @@
   }
 
   form {
-    .form-for-refactor;
 
     & > button {
-      .basic-style-button;
       height: 35px;
       margin-top: 25px;
       width: 110px;
@@ -50,8 +50,4 @@
 
 .add-clock {
   height: 310px;
-}
-
-.modal-window {
-  .modal-window-for-refactor;
 }

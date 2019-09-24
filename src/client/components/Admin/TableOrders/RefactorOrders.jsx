@@ -19,6 +19,7 @@ import AddOrder from '../RefactorOrders/AddOrder.jsx'
 import EditOrder from '../RefactorOrders/EditOrder.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
+import '../../../style/global-style/model-tables.less'
 import './RefactorOrders.less'
 
 class RefactorOrders extends React.Component {
@@ -77,7 +78,7 @@ class RefactorOrders extends React.Component {
         <td>{(item.master !== null) ? item.master.name : <b>Master was deleted</b>}</td>
         <td>
           <LinkButton to={`/admin/orders/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className='button-refactor-models' onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
@@ -89,7 +90,7 @@ class RefactorOrders extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <div className='page'
+        <div className='number-one-page page'
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -98,9 +99,9 @@ class RefactorOrders extends React.Component {
         </div>
       )
     })
-    const table = <React.Fragment> <div className='table-orders__title'>Table orders</div>
-      <div className='table-orders__table'>
-        <table>
+    const table = <React.Fragment> <div className='table-orders__title table-title'>Table orders</div>
+      <div className='table-orders__table root-table__table'>
+        <table className='html-table'>
           <tbody>
             <tr>
               <th>№</th>
@@ -116,16 +117,16 @@ class RefactorOrders extends React.Component {
           </tbody>
         </table>
       </div>
-      <div className='table-orders__numbers-pages'>
-        <div className='table-orders__numbers-pages__container'>
+      <div className='table-orders__numbers-pages numbers-pages'>
+        <div className='table-orders__numbers-pages__container container-number-pages'>
           { renderPageNumbers }
         </div>
-        <div className='table-orders__numbers-pages__bttn-add'>
+        <div className='table-orders__numbers-pages__bttn-add container-bttn-add'>
           <LinkButton to='/admin/orders/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>
     return (
-      <div className='table-orders'>
+      <div className='table-orders root-table'>
         <Switch>
           <Route exact path='/admin/orders' render={() => (table)}/>
           <Route path='/admin/orders/add' render={() => (

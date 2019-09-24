@@ -10,6 +10,7 @@ import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editClockIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
+import '../../../style/global-style/refactor-modal.less'
 import './RefactorClocks.less'
 import axios from 'axios'
 
@@ -43,13 +44,14 @@ class EditClocks extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-clocks'>
-            <div className="refactor-clocks__header">
+        <div className='modal-window modal-window-for-refactor'>
+          <div className='refactor-clocks basic-style-modal-refactor'>
+            <div className="refactor-clocks__header basic-style-header">
               Edit Clock
               <LinkButton to='/admin/clocks' name='&times;' className='refactor-clocks__header__right-button-close'/>
             </div>
             <form
+              className='form-for-refactor'
               onSubmit={handleSubmit(editClock)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -75,6 +77,7 @@ class EditClocks extends React.Component {
                 placeholder='Enter time repair clock'
               />
               <button
+                className='basic-style-button'
                 type='submit'
                 label='submit'>Submit</button>
             </form>

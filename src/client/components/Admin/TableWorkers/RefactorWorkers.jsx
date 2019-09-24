@@ -11,6 +11,7 @@ import AddWorkers from '../RefactorWorkers/AddWorkers.jsx'
 import EditWorkers from '../RefactorWorkers/EditWorkers.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
+import '../../../style/global-style/model-tables.less'
 import './RefactorWorkers.less'
 
 class RefactorWorkers extends React.Component {
@@ -65,7 +66,7 @@ class RefactorWorkers extends React.Component {
         <td>{item.rating}</td>
         <td>
           <LinkButton to={`/admin/workers/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteWorker(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className='button-refactor-models' onClick={ () => deleteWorker(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
@@ -77,7 +78,7 @@ class RefactorWorkers extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <div className='page'
+        <div className='page number-one-page'
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -87,9 +88,9 @@ class RefactorWorkers extends React.Component {
       )
     })
     const table = <React.Fragment>
-      <div className='table-workers__title'>Table masters</div>
-      <div className='table-workers__table'>
-        <table>
+      <div className='table-workers__title table-title'>Table masters</div>
+      <div className='table-workers__table root-table__table'>
+        <table className='html-table'>
           <tbody>
             <tr>
               <th>№</th>
@@ -102,16 +103,16 @@ class RefactorWorkers extends React.Component {
           </tbody>
         </table>
       </div>
-      <div className='table-workers__numbers-pages'>
-        <div className='table-workers__numbers-pages__container'>
+      <div className='table-workers__numbers-pages numbers-pages'>
+        <div className='table-workers__numbers-pages__container container-number-pages'>
           { renderPageNumbers }
         </div>
-        <div className='table-workers__numbers-pages__bttn-add'>
+        <div className='table-workers__numbers-pages__bttn-add container-bttn-add'>
           <LinkButton to='/admin/workers/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>
     return (
-      <div className='table-workers'>
+      <div className='table-workers root-table'>
         <Switch>
           <Route exact path='/admin/workers' render={() => (table)}/>
           <Route path='/admin/workers/add' render={() => (

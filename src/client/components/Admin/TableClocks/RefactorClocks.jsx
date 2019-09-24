@@ -11,6 +11,7 @@ import AddClocks from '../RefactorClocks/AddClocks.jsx'
 import EditClocks from '../RefactorClocks/EditClocks.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
+import '../../../style/global-style/model-tables.less'
 import './RefactorClocks.less'
 
 class RefactorClocks extends React.Component {
@@ -64,7 +65,7 @@ class RefactorClocks extends React.Component {
         <td>{item.timeRepair}</td>
         <td>
           <LinkButton to={`/admin/clocks/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteClock(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className='button-refactor-models' onClick={ () => deleteClock(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
@@ -76,7 +77,7 @@ class RefactorClocks extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <div className='page'
+        <div className='page number-one-page'
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -85,9 +86,9 @@ class RefactorClocks extends React.Component {
         </div>
       )
     })
-    const table = <React.Fragment><div className='table-clocks__title'>Table clock</div>
-      <div className='table-clocks__table'>
-        <table>
+    const table = <React.Fragment><div className='table-clocks__title table-title'>Table clock</div>
+      <div className='table-clocks__table root-table__table'>
+        <table className='html-table'>
           <tbody>
             <tr>
               <th>ID</th>
@@ -99,16 +100,16 @@ class RefactorClocks extends React.Component {
           </tbody>
         </table>
       </div>
-      <div className='table-clocks__numbers-pages'>
-        <div className='table-clocks__numbers-pages__container'>
+      <div className='table-clocks__numbers-pages numbers-pages'>
+        <div className='table-clocks__numbers-pages__container container-number-pages'>
           { renderPageNumbers }
         </div>
-        <div className='table-clocks__numbers-pages__bttn-add'>
+        <div className='table-clocks__numbers-pages__bttn-add container-bttn-add'>
           <LinkButton to='/admin/clocks/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>
     return (
-      <div className='table-clocks'>
+      <div className='table-clocks root-table'>
         <Switch>
           <Route exact path='/admin/clocks' render={() => (table)}/>
           <Route path='/admin/clocks/add' render={() => (

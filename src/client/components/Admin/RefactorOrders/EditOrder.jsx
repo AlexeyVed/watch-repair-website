@@ -14,6 +14,7 @@ import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editOrdersIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
+import '../../../style/global-style/refactor-modal.less'
 import './RefactorOrders.less'
 import axios from 'axios'
 
@@ -68,13 +69,14 @@ class EditOrder extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-orders edit-order'>
-            <div className="refactor-orders__header">
+        <div className='modal-window modal-window-for-refactor'>
+          <div className='refactor-orders basic-style-modal-refactor edit-order'>
+            <div className="refactor-orders__header basic-style-header">
               Edit Order
               <LinkButton to='/admin/orders' name='&times;' className='refactor-orders__header__right-button-close'/>
             </div>
             <form
+              className='form-for-refactor'
               onSubmit={handleSubmit(editOrder)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -164,6 +166,7 @@ class EditOrder extends React.Component {
                 }
               </Field>
               <button
+                className='basic-style-button'
                 type='submit'
                 label='submit'>Submit
               </button>

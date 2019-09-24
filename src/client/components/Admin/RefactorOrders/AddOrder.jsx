@@ -11,6 +11,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addOrdersToDB } from '../../../actions'
 import { required } from '../../../validation'
 
+import '../../../style/global-style/refactor-modal.less'
 import './RefactorOrders.less'
 import { getDate } from '../../App/OrderForm/logic'
 
@@ -56,13 +57,14 @@ class AddOrder extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-orders'>
-            <div className='refactor-orders__header'>
+        <div className='modal-window modal-window-for-refactor'>
+          <div className='refactor-orders basic-style-modal-refactor'>
+            <div className='refactor-orders__header basic-style-header'>
               Add Order
               <LinkButton to='/admin/orders' name='&times;' className='refactor-orders__header__right-button-close'/>
             </div>
             <form
+              className='form-for-refactor'
               onSubmit={handleSubmit(addOrder)}>
               <Field
                 name='customerId'
@@ -149,6 +151,7 @@ class AddOrder extends React.Component {
                 }
               </Field>
               <button
+                className='basic-style-button'
                 type='submit'
                 label='submit'>Submit
               </button>

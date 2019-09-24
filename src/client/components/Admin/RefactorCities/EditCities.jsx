@@ -11,6 +11,7 @@ import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editCityIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
+import '../../../style/global-style/refactor-modal.less'
 import './RefactorCities.less'
 
 class EditCities extends React.Component {
@@ -40,13 +41,14 @@ class EditCities extends React.Component {
 
     return (
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-city'>
-            <div className="refactor-city__header">
+        <div className='modal-window modal-window-for-refactor'>
+          <div className='refactor-city basic-style-modal-refactor'>
+            <div className="refactor-city__header basic-style-header">
               Edit city
               <LinkButton to='/admin/cities' name='&times;' className='refactor-city__header__right-button-close'/>
             </div>
             <form
+              className='form-for-refactor'
               onSubmit={handleSubmit(editCity)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -63,6 +65,7 @@ class EditCities extends React.Component {
                 type='text'
               />
               <button
+                className='basic-style-button'
                 type='submit'
                 label='submit'>Submit</button>
             </form>

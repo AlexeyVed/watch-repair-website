@@ -12,6 +12,7 @@ import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editMastersIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
+import '../../../style/global-style/refactor-modal.less'
 import './RefactorWorkers.less'
 import axios from 'axios'
 
@@ -46,13 +47,14 @@ class EditWorkers extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-workers'>
-            <div className="refactor-workers__header">
+        <div className='modal-window modal-window-for-refactor'>
+          <div className='refactor-workers basic-style-modal-refactor'>
+            <div className="refactor-workers__header basic-style-header">
               Edit Worker
               <LinkButton to='/admin/workers' name='&times;' className='refactor-workers__header__right-button-close'/>
             </div>
             <form
+              className='form-for-refactor'
               onSubmit={handleSubmit(editWorker)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -98,6 +100,7 @@ class EditWorkers extends React.Component {
                 <MenuItem key={5} value={5}>5</MenuItem>
               </Field>
               <button
+                className='basic-style-button'
                 type='submit'
                 label='submit'>Submit
               </button>

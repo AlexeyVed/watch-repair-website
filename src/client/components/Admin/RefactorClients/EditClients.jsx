@@ -10,6 +10,7 @@ import Preloader from '../../App/Preloader/Preloader.jsx'
 import { validateEmail, required } from '../../../validation'
 import { editCustomersIntoDB } from '../../../actions'
 
+import '../../../style/global-style/refactor-modal.less'
 import './RefactorClients.less'
 import axios from 'axios'
 
@@ -44,13 +45,14 @@ class EditClients extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-clients edit-client'>
-            <div className="refactor-clients__header">
+        <div className='modal-window modal-window-for-refactor'>
+          <div className='refactor-clients basic-style-modal-refactor edit-client'>
+            <div className="refactor-clients__header basic-style-header">
               Edit Client
               <LinkButton to='/admin/clients' name='&times;' className='refactor-clients__header__right-button-close'/>
             </div>
             <form
+              className='form-for-refactor'
               onSubmit={handleSubmit(editClient)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -78,6 +80,7 @@ class EditClients extends React.Component {
                 required
               />
               <button
+                className='basic-style-button'
                 type='submit'
                 label='submit'>Submit</button>
             </form>

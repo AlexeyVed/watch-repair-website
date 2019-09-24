@@ -9,6 +9,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { validateEmail, required } from '../../../validation'
 import { addCustomersToDB } from '../../../actions'
 
+import '../../../style/global-style/refactor-modal.less'
 import './RefactorClients.less'
 
 class AddClients extends React.Component {
@@ -22,13 +23,14 @@ class AddClients extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-clients'>
-            <div className="refactor-clients__header">
+        <div className='modal-window modal-window-for-refactor'>
+          <div className='refactor-clients basic-style-modal-refactor'>
+            <div className="refactor-clients__header basic-style-header">
               Add Client
               <LinkButton to='/admin/clients' name='&times;' className='refactor-clients__header__right-button-close'/>
             </div>
             <form
+              className='form-for-refactor'
               onSubmit={handleSubmit(addUser)}>
               <Field
                 label='Your email'
@@ -49,6 +51,7 @@ class AddClients extends React.Component {
                 required
               />
               <button
+                className='basic-style-button'
                 type='submit'
                 label='submit'>Submit</button>
             </form>

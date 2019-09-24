@@ -1,18 +1,10 @@
 @import '../../../style/global-variable.less';
-@import '../../../style/mixins/index.less';
 
 .table-clocks {
-  .root-table;
-
-  &__title {
-    .table-title;
-  }
 
   &__table {
-    .root-table__table;
 
     table {
-      .html-table;
 
       tr {
         border-bottom: 1px solid grey;
@@ -46,12 +38,18 @@
           border-right: none;
 
           button {
-            .button-refactor-models;
             border-left: 1px solid rgba(105, 105, 105, 0.65);
           }
   
           a > button {
-            .button-refactor-models;
+            width: 50%;
+            height: 28px;
+            border: none;
+            font-size: 13px;
+            color: black;
+            cursor: pointer;
+            outline: none;
+            background-color: inherit;
           }
         }
       }
@@ -59,13 +57,10 @@
   }
 
   &__numbers-pages {
-    .numbers-pages;
 
     &__container {
-      .container-number-pages;
 
       div {
-        .number-one-page;
         
         &:hover {
           background-color: #d1d4d1;
@@ -79,14 +74,23 @@
     }
 
     &__bttn-add {
-      .container-bttn-add;
 
       a {
         width: 100%;
         height: 100%;
 
         & > button {
-          .container-bttn-add__bttn-add;
+          height: 30px;
+          width: 85px;
+          padding: 0;
+          border: none;
+          font: inherit;
+          color: black;
+          cursor: pointer;
+          outline: none;
+          border-left: 1px solid #b9b9b5;
+          border-radius: 5px;
+          background-color: #f4f4f0;
 
           .MuiSvgIcon-root {
             font-size: 28px;
