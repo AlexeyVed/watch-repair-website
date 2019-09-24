@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const db = require('../db/db-connection-config.js')
+const db = require('../db/db-connection.js')
 const Customer = require('./customers.js')
 const Clock = require('./clocks.js')
 const City = require('./cities.js')
