@@ -5,9 +5,9 @@ import { missErrors } from '../../actions'
 
 import './ModalWindow.less'
 
-class ModalWindowApp extends React.Component {
+export class ModuleWindowApp extends React.Component {
   state = {
-    timeOut: 3000,
+    timeOut: process.env.NODE_ENV !== 'test' ? 3000 : null,
     interval: null
   }
 
@@ -17,6 +17,7 @@ class ModalWindowApp extends React.Component {
   }
   componentDidMount () {
     let timerId = setTimeout(() => {
+      console.log('here')
       this.props.missAppError()
     }, this.state.timeOut)
     this.setState(() => ({
@@ -35,18 +36,18 @@ class ModalWindowApp extends React.Component {
             </div>
           </div>
         </div>
-        , document.getElementById('modal-root'))
+        , document.getElementById('modal-root') || document.createElement('div'))
     )
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     makeOrderError: state.appReducer.error
   }
 }
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return {
     missAppError: () => dispatch(missErrors())
   }
@@ -55,4 +56,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ModalWindowApp)
+)(ModuleWindowApp)

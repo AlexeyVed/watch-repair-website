@@ -10,7 +10,7 @@ class Preloader extends React.Component {
         <div className='preloader'>
           <div className='loader'></div>
         </div>
-        , document.getElementById('preloader'))
+        , document.getElementById('preloader') || document.createElement('div'))
     )
   }
 }

@@ -5,14 +5,8 @@ import MainAdmin from '../Admin/Main/MainAdmin'
 function PrivateRoute ({ component: Component, auth, ...rest }) {
   return (
     <Route
-      render={props => {
-        if (auth === 'admin@example.com') {
-          return <MainAdmin/>
-        } else {
-          return (
-            <Redirect to={{ pathname: '/login' }}/>
-          )
-        }
+      render={ () => {
+        return (auth === 'admin@example.com') ? <MainAdmin/> : <Redirect to={{ pathname: '/login' }}/>
       }}
     />
   )
