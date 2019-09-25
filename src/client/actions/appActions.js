@@ -20,7 +20,7 @@ export const makeOrder = (values) => {
     values.clockId = Number(values.clockId)
     values.time = Number(values.time)
     dispatch({ type: MAKE_ORDER_STARTED })
-    axios
+    return axios
       .post(`/api/orders/freeMasters`, values)
       .then(res => {
         const obj = {
@@ -38,7 +38,7 @@ export const makeOrder = (values) => {
 export const addOrder = (values) => {
   return (dispatch) => {
     dispatch({ type: MAKE_ORDER_WITH_MASTER_STARTED })
-    axios
+    return axios
       .post(`/api/orders/`, values)
       .then(res => {
         dispatch({ type: MAKE_ORDER_WITH_MASTER_SUCCESS })
@@ -50,17 +50,14 @@ export const addOrder = (values) => {
 }
 
 export const setPage = data => {
-  return (dispatch) => {
-    dispatch({
-      type: CHANGE_PAGE,
-      payload: data })
+  return {
+    type: CHANGE_PAGE,
+    payload: data
   }
 }
 
 export const returnPageHome = () => {
-  return (dispatch) => {
-    dispatch({ type: RETURN_HOME_PAGE })
-  }
+  return { type: RETURN_HOME_PAGE }
 }
 
 export const setChooseWorker = id => ({
@@ -73,22 +70,20 @@ export const missErrors = () => ({
 })
 
 export const loadDataEnd = () => {
-  return (dispatch) => {
-    dispatch({ type: END_LOAD_DATA })
-  }
+  return { type: END_LOAD_DATA }
 }
 
-const makeOrderSuccess = (data) => ({
+export const makeOrderSuccess = (data) => ({
   type: MAKE_ORDER_SUCCESS,
   payload: data
 })
 
-const makeOrderFailure = err => ({
+export const makeOrderFailure = err => ({
   type: MAKE_ORDER_FAILURE,
   payload: err
 })
 
-const makeOrderMasterFailure = err => ({
+export const makeOrderMasterFailure = err => ({
   type: MAKE_ORDER_WITH_MASTER_FAILURE,
   payload: err
 })

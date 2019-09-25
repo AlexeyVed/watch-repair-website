@@ -35,8 +35,7 @@ export const addOrdersToDB = (values) => {
   values.masterID = Number(values.masterID)
   return (dispatch) => {
     dispatch({ type: ADD_ORDERS_STARTED })
-
-    axios
+    return axios
       .post(`/api/orders/admin`, values)
       .then(res => {
         dispatch(addOrdersSuccess(res.data))
@@ -57,7 +56,7 @@ export const editOrdersIntoDB = (values) => {
   values.masterId = Number(values.masterId)
   return (dispatch) => {
     dispatch({ type: EDIT_ORDERS_STARTED })
-    axios
+    return axios
       .put(`/api/orders/${values.id}`, values)
       .then(res => {
         dispatch(editOrdersSuccess(res.data))
@@ -74,7 +73,7 @@ export const editOrdersIntoDB = (values) => {
 export const deleteOrdersFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_ORDERS_STARTED })
-    axios
+    return axios
       .delete(`/api/orders/${id}`)
       .then(res => {
         dispatch(deleteOrdersSuccess(res.data))
@@ -85,44 +84,44 @@ export const deleteOrdersFromDB = (id) => {
   }
 }
 
-const loadOrdersFailure = err => ({
+export const loadOrdersFailure = err => ({
   type: LOAD_ORDERS_FAILURE,
   payload: err
 })
 
-const loadOrdersSuccess = data => ({
+export const loadOrdersSuccess = data => ({
   type: LOAD_ORDERS_SUCCESS,
   payload: data
 })
 
-const addOrdersFailure = (err) => ({
+export const addOrdersFailure = (err) => ({
   type: ADD_ORDERS_FAILURE,
   payload: err
 })
 
-const deleteOrdersFailure = (err) => ({
+export const deleteOrdersFailure = (err) => ({
   type: DELETE_ORDERS_FAILURE,
   payload: err
 })
 
-const editOrdersFailure = (err) => ({
+export const editOrdersFailure = (err) => ({
   type: EDIT_ORDERS_FAILURE,
   payload: err
 })
 
-const addOrdersSuccess = data => ({
+export const addOrdersSuccess = data => ({
   type: ADD_ORDERS_SUCCESS,
   message: 'Order was successfully added.',
   payload: data
 })
 
-const deleteOrdersSuccess = data => ({
+export const deleteOrdersSuccess = data => ({
   type: DELETE_ORDERS_SUCCESS,
   message: 'Order was successfully removed.',
   payload: data
 })
 
-const editOrdersSuccess = data => ({
+export const editOrdersSuccess = data => ({
   type: EDIT_ORDERS_SUCCESS,
   message: 'Order was successfully edited.',
   payload: data
