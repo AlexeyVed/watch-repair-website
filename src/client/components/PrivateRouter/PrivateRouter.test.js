@@ -1,15 +1,27 @@
 import PrivateRoute from './PrivateRouter.jsx'
+import { MemoryRouter } from 'react-router'
+import Footer from '../App/Footer/Footer.jsx'
 
-test('Make private route', () => {
-    const wrapper = shallow(
-        PrivateRoute({ component: null, auth: 'admin@example.com' })
-    )
-    expect(wrapper).toMatchSnapshot();
+let wrapper
+
+afterEach(() => {
+  wrapper.unmount()
 })
 
 test('Make private route', () => {
-    const wrapper = shallow(
-        PrivateRoute({ component: null, auth: 'noAdmin@example.com' })
-    )
-    expect(wrapper).toMatchSnapshot();
+  wrapper = mount(
+    <MemoryRouter initialEntries={[ { pathname: '/admin/orders', key: 'key' } ]}>
+      <PrivateRoute auth='admin@example.com' component={ Footer }/>
+    </MemoryRouter>
+  )
+  expect(wrapper).toMatchSnapshot()
+})
+
+test('Make private route', () => {
+  wrapper = mount(
+    <MemoryRouter initialEntries={[ { pathname: '/admin/orders', key: 'key' } ]}>
+      <PrivateRoute auth={ null } component={ Footer }/>
+    </MemoryRouter>
+  )
+  expect(wrapper.find('.admin-main').length).toBe(0)
 })

@@ -7,7 +7,7 @@ import './ModalWindow.less'
 
 export class ModuleWindowApp extends React.Component {
   state = {
-    timeOut: process.env.NODE_ENV !== 'test' ? 3000 : null,
+    timeOut: 3000,
     interval: null
   }
 
@@ -17,7 +17,6 @@ export class ModuleWindowApp extends React.Component {
   }
   componentDidMount () {
     let timerId = setTimeout(() => {
-      console.log('here')
       this.props.missAppError()
     }, this.state.timeOut)
     this.setState(() => ({
