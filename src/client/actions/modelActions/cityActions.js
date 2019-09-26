@@ -33,7 +33,7 @@ export const loadCities = () => {
 export const addCityToDB = (values) => {
   return (dispatch) => {
     dispatch({ type: ADD_CITIES_STARTED })
-    axios
+    return axios
       .post(`/api/cities/`, values)
       .then(res => {
         dispatch(addCitiesSuccess(res.data))
@@ -50,7 +50,7 @@ export const addCityToDB = (values) => {
 export const editCityIntoDB = (values) => {
   return (dispatch) => {
     dispatch({ type: EDIT_CITIES_STARTED })
-    axios
+    return axios
       .put(`/api/cities/${values.id}`, values)
       .then(res => {
         dispatch(editCitiesSuccess(res.data))
@@ -67,7 +67,7 @@ export const editCityIntoDB = (values) => {
 export const deleteCityFromDB = (id) => {
   return (dispatch) => {
     dispatch({ type: DELETE_CITIES_STARTED })
-    axios
+    return axios
       .delete(`/api/cities/${id}`)
       .then(res => {
         dispatch(deleteCitiesSuccess(res.data))
@@ -78,44 +78,44 @@ export const deleteCityFromDB = (id) => {
   }
 }
 
-const loadCitiesFailure = err => ({
+export const loadCitiesFailure = err => ({
   type: LOAD_CITIES_FAILURE,
   payload: err
 })
 
-const loadCitiesSuccess = data => ({
+export const loadCitiesSuccess = data => ({
   type: LOAD_CITIES_SUCCESS,
   payload: data
 })
 
-const addCitiesFailure = (err) => ({
+export const addCitiesFailure = (err) => ({
   type: ADD_CITIES_FAILURE,
   payload: err
 })
 
-const deleteCitiesFailure = (err) => ({
+export const deleteCitiesFailure = (err) => ({
   type: DELETE_CITIES_FAILURE,
   payload: err
 })
 
-const editCitiesFailure = (err) => ({
+export const editCitiesFailure = (err) => ({
   type: EDIT_CITIES_FAILURE,
   payload: err
 })
 
-const addCitiesSuccess = data => ({
+export const addCitiesSuccess = data => ({
   type: ADD_CITIES_SUCCESS,
   message: 'City was successfully added.',
   payload: data
 })
 
-const deleteCitiesSuccess = data => ({
+export const deleteCitiesSuccess = data => ({
   type: DELETE_CITIES_SUCCESS,
   message: 'City was successfully removed.',
   payload: data
 })
 
-const editCitiesSuccess = data => ({
+export const editCitiesSuccess = data => ({
   type: EDIT_CITIES_SUCCESS,
   message: 'City was successfully edited.',
   payload: data
