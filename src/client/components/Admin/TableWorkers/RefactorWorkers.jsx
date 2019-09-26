@@ -12,7 +12,6 @@ import EditWorkers from '../RefactorWorkers/EditWorkers.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
 import '../../../style/model-tables.less'
-import './RefactorWorkers.less'
 
 class RefactorWorkers extends React.Component {
   state = {
@@ -62,8 +61,8 @@ class RefactorWorkers extends React.Component {
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{item.name}</td>
-        <td>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
-        <td>{item.rating}</td>
+        <td className='text-to-center'>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
+        <td className='text-to-center'>{item.rating}</td>
         <td>
           <LinkButton to={`/admin/workers/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
           <button className='button-refactor-models' onClick={ () => deleteWorker(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
@@ -78,7 +77,7 @@ class RefactorWorkers extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <div className='page number-one-page'
+        <div className='table-model__numbers-pages__container__page page'
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -88,31 +87,31 @@ class RefactorWorkers extends React.Component {
       )
     })
     const table = <React.Fragment>
-      <div className='table-workers__title table-title'>Table masters</div>
-      <div className='table-workers__table root-table__table'>
-        <table className='html-table'>
+      <div className='table-model__title'>Table masters</div>
+      <div className='table-model__container'>
+        <table className='table-model__container__table'>
           <tbody>
             <tr>
               <th>№</th>
               <th>Name</th>
-              <th>Where work</th>
-              <th>Rating</th>
+              <th className='text-to-center'>Where work</th>
+              <th className='text-to-center'>Rating</th>
               <th>Service</th>
             </tr>
             { renderItems }
           </tbody>
         </table>
       </div>
-      <div className='table-workers__numbers-pages numbers-pages'>
-        <div className='table-workers__numbers-pages__container container-number-pages'>
+      <div className='table-model__numbers-pages'>
+        <div className='table-model__numbers-pages__container'>
           { renderPageNumbers }
         </div>
-        <div className='table-workers__numbers-pages__bttn-add container-bttn-add'>
+        <div className='table-model__numbers-pages__bttn-add'>
           <LinkButton to='/admin/workers/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>
     return (
-      <div className='table-workers root-table'>
+      <div className='table-model'>
         <Switch>
           <Route exact path='/admin/workers' render={() => (table)}/>
           <Route path='/admin/workers/add' render={() => (

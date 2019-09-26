@@ -1,6 +1,5 @@
 .modal-info__text {
   position: relative;
-  top: 15vh;
   width: 370px;
   height: 220px;
   background-color: #f4f4ea;
@@ -12,8 +11,7 @@
   z-index: 5;
 
   &__info {
-    position: absolute;
-    top: 40%;
+    padding-top: 80px;
     width: 320px;
     padding-left: 25px;
     text-align: center;
@@ -41,11 +39,8 @@
     }
   }
 
-
-
   &__errors {
-    position: absolute;
-    top: 32%;
+    padding-top: 80px;
     width: 320px;
     padding-left: 25px;
     text-align: center;
@@ -58,6 +53,7 @@
 
 .modal-info {
   position: absolute;
+  display: flex;
   top: 0;
   height: 100%;
   width: 100%;
