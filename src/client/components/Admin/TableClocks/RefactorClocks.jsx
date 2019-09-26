@@ -11,7 +11,7 @@ import AddClocks from '../RefactorClocks/AddClocks.jsx'
 import EditClocks from '../RefactorClocks/EditClocks.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
-import '../../../style/global-style/model-tables.less'
+import '../../../style/model-tables.less'
 import './RefactorClocks.less'
 
 class RefactorClocks extends React.Component {

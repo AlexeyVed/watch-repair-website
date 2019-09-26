@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
@@ -10,9 +11,7 @@ import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editClockIntoDB } from '../../../actions'
 import { required } from '../../../validation'
 
-import '../../../style/global-style/refactor-modal.less'
-import './RefactorClocks.less'
-import axios from 'axios'
+import '../../../style/refactor-modal.less'
 
 class EditClocks extends React.Component {
   state = {
@@ -44,14 +43,14 @@ class EditClocks extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window modal-window-for-refactor'>
-          <div className='refactor-clocks basic-style-modal-refactor'>
-            <div className="refactor-clocks__header basic-style-header">
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Edit Clock
-              <LinkButton to='/admin/clocks' name='&times;' className='refactor-clocks__header__right-button-close'/>
+              <LinkButton to='/admin/clocks' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
-              className='form-for-refactor'
+              className='refactor-model__form'
               onSubmit={handleSubmit(editClock)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -77,7 +76,7 @@ class EditClocks extends React.Component {
                 placeholder='Enter time repair clock'
               />
               <button
-                className='basic-style-button'
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit</button>
             </form>

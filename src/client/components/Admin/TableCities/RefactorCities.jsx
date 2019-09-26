@@ -11,7 +11,7 @@ import EditCities from '../RefactorCities/EditCities.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin.jsx'
 import { deleteCityFromDB, loadCities, loadDataEnd, setPage } from '../../../actions'
 
-import '../../../style/global-style/model-tables.less'
+import '../../../style/model-tables.less'
 import './RefactorCities.less'
 
 class RefactorCities extends React.Component {

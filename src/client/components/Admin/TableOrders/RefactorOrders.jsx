@@ -18,8 +18,7 @@ import {
 import AddOrder from '../RefactorOrders/AddOrder.jsx'
 import EditOrder from '../RefactorOrders/EditOrder.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
-
-import '../../../style/global-style/model-tables.less'
+import '../../../style/model-tables.less'
 import './RefactorOrders.less'
 
 class RefactorOrders extends React.Component {

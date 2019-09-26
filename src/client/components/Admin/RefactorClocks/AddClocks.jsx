@@ -9,8 +9,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addClockToDB } from '../../../actions'
 import { required } from '../../../validation'
 
-import '../../../style/global-style/refactor-modal.less'
-import './RefactorClocks.less'
+import '../../../style/refactor-modal.less'
 
 class AddClocks extends React.Component {
   render () {
@@ -23,14 +22,14 @@ class AddClocks extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window modal-window-for-refactor'>
-          <div className='refactor-clocks basic-style-modal-refactor add-clock'>
-            <div className="refactor-clocks__header basic-style-header">
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Add Clock
-              <LinkButton to='/admin/clocks' name='&times;' className='refactor-clocks__header__right-button-close'/>
+              <LinkButton to='/admin/clocks' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
-              className='form-for-refactor'
+              className='refactor-model__form'
               onSubmit={handleSubmit(addClock)}>
               <Field
                 label='Enter type of clock'
@@ -49,7 +48,7 @@ class AddClocks extends React.Component {
                 placeholder='Enter time repair clock'
               />
               <button
-                className='basic-style-button'
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit</button>
             </form>

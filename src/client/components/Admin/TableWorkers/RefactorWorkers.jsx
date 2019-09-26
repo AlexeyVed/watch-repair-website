@@ -11,7 +11,7 @@ import AddWorkers from '../RefactorWorkers/AddWorkers.jsx'
 import EditWorkers from '../RefactorWorkers/EditWorkers.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
-import '../../../style/global-style/model-tables.less'
+import '../../../style/model-tables.less'
 import './RefactorWorkers.less'
 
 class RefactorWorkers extends React.Component {

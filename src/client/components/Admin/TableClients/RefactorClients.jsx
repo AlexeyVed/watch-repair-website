@@ -11,7 +11,7 @@ import AddClients from '../RefactorClients/AddClients.jsx'
 import EditClients from '../RefactorClients/EditClients.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
-import '../../../style/global-style/model-tables.less'
+import '../../../style/model-tables.less'
 import './RefactorClients.less'
 
 class RefactorClients extends React.Component {
