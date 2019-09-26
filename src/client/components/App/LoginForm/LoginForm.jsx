@@ -8,7 +8,7 @@ import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 import { loginToApp, missLoginError } from '../../../actions'
-import { validateEmail, validatePassword } from '../../../validation'
+import { validateEmail, validatePassword, required } from '../../../validation'
 
 import './LoginForm.less'
 
@@ -51,7 +51,7 @@ class LoginForm extends React.Component {
                 component={TextField}
                 type='text'
                 placeholder='Enter your email'
-                validate={validateEmail}
+                validate={ [validateEmail, required] }
               />
               { loginError &&
               !currentUser &&
@@ -65,7 +65,7 @@ class LoginForm extends React.Component {
                 component={TextField}
                 type='password'
                 placeholder='Enter your password'
-                validate={validatePassword}
+                validate={ [validatePassword, required] }
               />
               <button
                 type='submit'
