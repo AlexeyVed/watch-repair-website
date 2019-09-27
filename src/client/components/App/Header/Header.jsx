@@ -27,6 +27,7 @@ export class ModuleHeader extends React.Component {
 
   render () {
     const { currentUser } = this.props
+    let style
 
     if (this.state.redirect) {
       this.setState({ redirect: false })
@@ -37,9 +38,11 @@ export class ModuleHeader extends React.Component {
       this.setState({ redirectAdmin: false })
       return <Redirect to={{ pathname: '/admin/orders' }}/>
     }
+
+    currentUser ? style = 'container-logo' : style = 'container-logo full-logo'
     return (
       <div className='header'>
-        <div className='container-logo' onClick={this.clickLogo}>
+        <div className={`${style}`} onClick={this.clickLogo}>
         </div>
         {(!currentUser) ? <React.Fragment>
           <div className='container-user'>
