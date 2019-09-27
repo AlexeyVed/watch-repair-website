@@ -3,34 +3,21 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
-import axios from 'axios'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import Preloader from '../../App/Preloader/Preloader.jsx'
 import { validateEmail, required } from '../../../validation'
-import { editCustomersIntoDB } from '../../../actions'
+import { editCustomersIntoDB, getCustomer } from '../../../actions'
 
 import '../../../style/refactor-modal.less'
 
 class EditClients extends React.Component {
-  state = {
-    load: true
-  }
-
   componentDidMount () {
     const arr = this.props.location.pathname.split('/')
-    axios
-      .get(`/api/customers/${arr[arr.length - 1]}`)
+    const id = arr[arr.length - 1]
+    this.props.getCustomer(id)
       .then(res => {
-        this.setState(() => ({
-          load: false
-        }
-        ))
-        this.props.dispatch(initialize('editClient', res.data, ['id', 'email', 'name']))
-      })
-      .catch(err => {
-        console.log(err)
+        this.props.dispatch(initialize('editClient', this.props.customerForEdit, ['id', 'email', 'name']))
       })
   }
 
@@ -84,7 +71,6 @@ class EditClients extends React.Component {
                 label='submit'>Submit</button>
             </form>
           </div>
-          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -93,13 +79,15 @@ class EditClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    customerForEdit: state.customerReducer.customerForEdit,
     redirectBack: state.customerReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editClient: values => dispatch(editCustomersIntoDB(values))
+    editClient: values => dispatch(editCustomersIntoDB(values)),
+    getCustomer: id => dispatch(getCustomer(id))
   }
 }
 

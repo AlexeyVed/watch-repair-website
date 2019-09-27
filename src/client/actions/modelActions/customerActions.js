@@ -11,7 +11,10 @@ import {
   EDIT_CUSTOMERS_STARTED,
   EDIT_CUSTOMERS_FAILURE,
   EDIT_CUSTOMERS_SUCCESS,
-  REDIRECT_FROM_REFACTOR
+  REDIRECT_FROM_REFACTOR,
+  GET_CUSTOMER_FOR_EDIT_STARTED,
+  GET_CUSTOMER_FOR_EDIT_SUCCESS,
+  GET_CUSTOMER_FOR_EDIT_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -26,6 +29,20 @@ export const loadCustomers = () => {
       })
       .catch(err => {
         dispatch(loadCustomersFailure(err.response.data))
+      })
+  }
+}
+
+export const getCustomer = id => {
+  return (dispatch) => {
+    dispatch({ type: GET_CUSTOMER_FOR_EDIT_STARTED })
+    return axios
+      .get(`/api/customers/${id}`)
+      .then(res => {
+        dispatch({ type: GET_CUSTOMER_FOR_EDIT_SUCCESS, payload: res.data })
+      })
+      .catch(err => {
+        dispatch({ type: GET_CUSTOMER_FOR_EDIT_FAILURE, payload: err.response.data })
       })
   }
 }

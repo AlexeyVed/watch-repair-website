@@ -11,7 +11,10 @@ import {
   EDIT_CITIES_STARTED,
   EDIT_CITIES_FAILURE,
   EDIT_CITIES_SUCCESS,
-  REDIRECT_FROM_REFACTOR
+  REDIRECT_FROM_REFACTOR,
+  GET_CITY_FOR_EDIT_STARTED,
+  GET_CITY_FOR_EDIT_SUCCESS,
+  GET_CITY_FOR_EDIT_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -26,6 +29,20 @@ export const loadCities = () => {
       })
       .catch(err => {
         dispatch(loadCitiesFailure(err.response.data))
+      })
+  }
+}
+
+export const getCity = id => {
+  return (dispatch) => {
+    dispatch({ type: GET_CITY_FOR_EDIT_STARTED })
+    return axios
+      .get(`/api/cities/${id}`)
+      .then(res => {
+        dispatch({ type: GET_CITY_FOR_EDIT_SUCCESS, payload: res.data })
+      })
+      .catch(err => {
+        dispatch({ type: GET_CITY_FOR_EDIT_FAILURE, payload: err.response.data })
       })
   }
 }

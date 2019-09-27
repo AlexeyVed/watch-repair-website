@@ -13,11 +13,24 @@ import {
   EDIT_MASTERS_SUCCESS,
   REDIRECT_FROM_REFACTOR,
   MISS_ERRORS,
-  END_LOAD_DATA
+  END_LOAD_DATA,
+  GET_MASTER_FOR_EDIT_STARTED,
+  GET_MASTER_FOR_EDIT_SUCCESS,
+  GET_MASTER_FOR_EDIT_FAILURE
 } from '../../actions/types.js'
 
 const initialState = {
   data: [],
+  masterForEdit: {
+    id: null,
+    name: null,
+    rating: null,
+    cityId: null,
+    city: {
+      id: null,
+      city: null
+    }
+  },
   error: null,
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
@@ -46,6 +59,38 @@ const masterReducer = (state = initialState, action) => {
         ...state,
         data: [],
         showModal: true,
+        error: action.payload
+      }
+
+    case GET_MASTER_FOR_EDIT_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case GET_MASTER_FOR_EDIT_SUCCESS:
+      return {
+        ...state,
+        masterForEdit: action.payload,
+        error: null,
+        dataLoad: false
+      }
+
+    case GET_MASTER_FOR_EDIT_FAILURE:
+      return {
+        ...state,
+        masterForEdit: {
+          id: null,
+          name: null,
+          rating: null,
+          cityId: null,
+          city: {
+            id: null,
+            city: null
+          }
+        },
+        showModal: true,
+        dataLoad: false,
         error: action.payload
       }
 

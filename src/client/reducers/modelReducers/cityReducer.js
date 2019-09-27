@@ -13,11 +13,18 @@ import {
   EDIT_CITIES_SUCCESS,
   REDIRECT_FROM_REFACTOR,
   MISS_ERRORS,
-  END_LOAD_DATA
+  END_LOAD_DATA,
+  GET_CITY_FOR_EDIT_STARTED,
+  GET_CITY_FOR_EDIT_SUCCESS,
+  GET_CITY_FOR_EDIT_FAILURE
 } from '../../actions/types.js'
 
 const initialState = {
   data: [],
+  cityForEdit: {
+    id: null,
+    city: null
+  },
   error: null,
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
@@ -46,6 +53,32 @@ const cityReducer = (state = initialState, action) => {
         ...state,
         data: [],
         showModal: true,
+        error: action.payload
+      }
+
+    case GET_CITY_FOR_EDIT_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case GET_CITY_FOR_EDIT_SUCCESS:
+      return {
+        ...state,
+        cityForEdit: action.payload,
+        error: null,
+        dataLoad: false
+      }
+
+    case GET_CITY_FOR_EDIT_FAILURE:
+      return {
+        ...state,
+        cityForEdit: {
+          id: null,
+          city: null
+        },
+        showModal: true,
+        dataLoad: false,
         error: action.payload
       }
 

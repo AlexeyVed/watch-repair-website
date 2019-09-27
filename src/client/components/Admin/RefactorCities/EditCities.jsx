@@ -3,31 +3,21 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm, initialize } from 'redux-form'
 import { Redirect } from 'react-router-dom'
-import axios from 'axios'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import Preloader from '../../App/Preloader/Preloader.jsx'
-import { editCityIntoDB } from '../../../actions'
+import { editCityIntoDB, getCity } from '../../../actions'
 import { required } from '../../../validation'
 
 import '../../../style/refactor-modal.less'
 
 class EditCities extends React.Component {
-  state = {
-    load: true
-  }
-
   componentDidMount () {
     const arr = this.props.location.pathname.split('/')
-    axios
-      .get(`/api/cities/${arr[arr.length - 1]}`)
+    const id = arr[arr.length - 1]
+    this.props.getCity(id)
       .then(res => {
-        this.setState(() => ({
-          load: false
-        }
-        ))
-        this.props.dispatch(initialize('editCity', res.data, ['id', 'city']))
+        this.props.dispatch(initialize('editCity', this.props.cityForEdit, ['id', 'city']))
       })
   }
 
@@ -69,7 +59,6 @@ class EditCities extends React.Component {
                 label='submit'>Submit</button>
             </form>
           </div>
-          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -78,13 +67,15 @@ class EditCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    cityForEdit: state.cityReducer.cityForEdit,
     redirectBack: state.cityReducer.redirectBackFromRefactor
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editCity: values => dispatch(editCityIntoDB(values))
+    editCity: values => dispatch(editCityIntoDB(values)),
+    getCity: id => dispatch(getCity(id))
   }
 }
 

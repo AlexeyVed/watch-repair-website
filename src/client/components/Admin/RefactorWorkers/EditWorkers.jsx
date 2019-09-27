@@ -4,35 +4,22 @@ import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 import MenuItem from '@material-ui/core/MenuItem'
-import axios from 'axios'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import SelectField from '../../ComponentMaterial/SelectField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import Preloader from '../../App/Preloader/Preloader.jsx'
-import { editMastersIntoDB } from '../../../actions'
+import { editMastersIntoDB, getMaster } from '../../../actions'
 import { required } from '../../../validation'
 
 import '../../../style/refactor-modal.less'
 
 class EditWorkers extends React.Component {
-  state = {
-    load: true
-  }
-
   componentDidMount () {
     const arr = this.props.location.pathname.split('/')
-    axios
-      .get(`/api/masters/${arr[arr.length - 1]}`)
+    const id = arr[arr.length - 1]
+    this.props.getMaster(id)
       .then(res => {
-        this.setState(() => ({
-          load: false
-        }
-        ))
-        this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'rating', 'city']))
-      })
-      .catch(err => {
-        console.log(err)
+        this.props.dispatch(initialize('editWorker', this.props.masterForEdit, ['id', 'name', 'rating', 'city']))
       })
   }
 
@@ -105,7 +92,6 @@ class EditWorkers extends React.Component {
               </button>
             </form>
           </div>
-          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -114,6 +100,7 @@ class EditWorkers extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    masterForEdit: state.masterReducer.masterForEdit,
     chooseCities: state.cityReducer.data,
     redirectBack: state.masterReducer.redirectBackFromRefactor
   }
@@ -121,7 +108,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editWorker: values => dispatch(editMastersIntoDB(values))
+    editWorker: values => dispatch(editMastersIntoDB(values)),
+    getMaster: id => dispatch(getMaster(id))
   }
 }
 

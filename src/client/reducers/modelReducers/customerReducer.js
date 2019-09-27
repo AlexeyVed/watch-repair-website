@@ -13,11 +13,19 @@ import {
   EDIT_CUSTOMERS_SUCCESS,
   REDIRECT_FROM_REFACTOR,
   MISS_ERRORS,
-  END_LOAD_DATA
+  END_LOAD_DATA,
+  GET_CUSTOMER_FOR_EDIT_STARTED,
+  GET_CUSTOMER_FOR_EDIT_SUCCESS,
+  GET_CUSTOMER_FOR_EDIT_FAILURE
 } from '../../actions/types.js'
 
 const initialState = {
   data: [],
+  customerForEdit: {
+    id: null,
+    name: null,
+    email: null
+  },
   error: null,
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
@@ -45,6 +53,33 @@ const customerReducer = (state = initialState, action) => {
         ...state,
         data: [],
         showModal: true,
+        error: action.payload
+      }
+
+    case GET_CUSTOMER_FOR_EDIT_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case GET_CUSTOMER_FOR_EDIT_SUCCESS:
+      return {
+        ...state,
+        customerForEdit: action.payload,
+        error: null,
+        dataLoad: false
+      }
+
+    case GET_CUSTOMER_FOR_EDIT_FAILURE:
+      return {
+        ...state,
+        customerForEdit: {
+          id: null,
+          name: null,
+          email: null
+        },
+        showModal: true,
+        dataLoad: false,
         error: action.payload
       }
 

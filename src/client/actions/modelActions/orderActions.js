@@ -11,7 +11,10 @@ import {
   EDIT_ORDERS_STARTED,
   EDIT_ORDERS_FAILURE,
   EDIT_ORDERS_SUCCESS,
-  REDIRECT_FROM_REFACTOR
+  REDIRECT_FROM_REFACTOR,
+  GET_ORDER_FOR_EDIT_STARTED,
+  GET_ORDER_FOR_EDIT_SUCCESS,
+  GET_ORDER_FOR_EDIT_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -26,6 +29,20 @@ export const loadOrders = () => {
       })
       .catch(err => {
         dispatch(loadOrdersFailure(err.response.data))
+      })
+  }
+}
+
+export const getOrder = id => {
+  return (dispatch) => {
+    dispatch({ type: GET_ORDER_FOR_EDIT_STARTED })
+    return axios
+      .get(`/api/orders/${id}`)
+      .then(res => {
+        dispatch({ type: GET_ORDER_FOR_EDIT_SUCCESS, payload: res.data })
+      })
+      .catch(err => {
+        dispatch({ type: GET_ORDER_FOR_EDIT_FAILURE, payload: err.response.data })
       })
   }
 }

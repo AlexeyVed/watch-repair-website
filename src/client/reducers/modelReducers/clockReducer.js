@@ -13,12 +13,20 @@ import {
   EDIT_CLOCKS_SUCCESS,
   REDIRECT_FROM_REFACTOR,
   MISS_ERRORS,
-  END_LOAD_DATA
+  END_LOAD_DATA,
+  GET_CLOCK_FOR_EDIT_STARTED,
+  GET_CLOCK_FOR_EDIT_SUCCESS,
+  GET_CLOCK_FOR_EDIT_FAILURE
 } from '../../actions/types.js'
 
 const initialState = {
   error: null,
   data: [],
+  clockForEdit: {
+    id: null,
+    typeClock: null,
+    timeRepair: null
+  },
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
   showModal: false,
@@ -46,6 +54,33 @@ const clockReducer = (state = initialState, action) => {
         ...state,
         data: [],
         showModal: true,
+        error: action.payload
+      }
+
+    case GET_CLOCK_FOR_EDIT_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case GET_CLOCK_FOR_EDIT_SUCCESS:
+      return {
+        ...state,
+        clockForEdit: action.payload,
+        error: null,
+        dataLoad: false
+      }
+
+    case GET_CLOCK_FOR_EDIT_FAILURE:
+      return {
+        ...state,
+        clockForEdit: {
+          id: null,
+          typeClock: null,
+          timeRepair: null
+        },
+        showModal: true,
+        dataLoad: false,
         error: action.payload
       }
 

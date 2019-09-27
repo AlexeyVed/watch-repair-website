@@ -11,7 +11,10 @@ import {
   EDIT_MASTERS_STARTED,
   EDIT_MASTERS_FAILURE,
   EDIT_MASTERS_SUCCESS,
-  REDIRECT_FROM_REFACTOR
+  REDIRECT_FROM_REFACTOR,
+  GET_MASTER_FOR_EDIT_STARTED,
+  GET_MASTER_FOR_EDIT_SUCCESS,
+  GET_MASTER_FOR_EDIT_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -26,6 +29,20 @@ export const loadMasters = () => {
       })
       .catch(err => {
         dispatch(loadMastersFailure(err.response.data))
+      })
+  }
+}
+
+export const getMaster = id => {
+  return (dispatch) => {
+    dispatch({ type: GET_MASTER_FOR_EDIT_STARTED })
+    return axios
+      .get(`/api/masters/${id}`)
+      .then(res => {
+        dispatch({ type: GET_MASTER_FOR_EDIT_SUCCESS, payload: res.data })
+      })
+      .catch(err => {
+        dispatch({ type: GET_MASTER_FOR_EDIT_FAILURE, payload: err.response.data })
       })
   }
 }

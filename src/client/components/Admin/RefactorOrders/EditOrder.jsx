@@ -5,14 +5,12 @@ import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
 import { getDate } from '../../App/OrderForm/logic'
 import MenuItem from '@material-ui/core/MenuItem'
-import axios from 'axios'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import SelectField from '../../ComponentMaterial/SelectField/'
 import DateField from '../../ComponentMaterial/DateField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import Preloader from '../../App/Preloader/Preloader.jsx'
-import { editOrdersIntoDB } from '../../../actions'
+import { editOrdersIntoDB, getOrder } from '../../../actions'
 import { required } from '../../../validation'
 
 import '../../../style/refactor-modal.less'
@@ -23,8 +21,7 @@ class EditOrder extends React.Component {
     date: {
       date: null,
       time: null
-    },
-    load: true
+    }
   }
 
   componentDidMount () {
@@ -42,17 +39,10 @@ class EditOrder extends React.Component {
     }))
 
     const arr = this.props.location.pathname.split('/')
-    axios
-      .get(`/api/orders/${arr[arr.length - 1]}`)
+    const id = arr[arr.length - 1]
+    this.props.getOrder(id)
       .then(res => {
-        this.setState(() => ({
-          load: false
-        }
-        ))
-        this.props.dispatch(initialize('editOrder', res.data, ['id', 'customerID', 'masterID', 'cityID', 'time']))
-      })
-      .catch(err => {
-        console.log(err)
+        this.props.dispatch(initialize('editOrder', this.props.orderForEdit, ['id', 'customerID', 'masterID', 'cityID', 'time']))
       })
   }
 
@@ -171,7 +161,6 @@ class EditOrder extends React.Component {
               </button>
             </form>
           </div>
-          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -184,13 +173,15 @@ const mapStateToProps = (state) => {
     chooseCities: state.cityReducer.data,
     chooseUsers: state.customerReducer.data,
     redirectBack: state.orderReducer.redirectBackFromRefactor,
-    chooseWorkers: state.masterReducer.data
+    chooseWorkers: state.masterReducer.data,
+    orderForEdit: state.orderReducer.orderForEdit
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    editOrder: values => dispatch(editOrdersIntoDB(values))
+    editOrder: values => dispatch(editOrdersIntoDB(values)),
+    getOrder: id => dispatch(getOrder(id))
   }
 }
 

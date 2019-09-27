@@ -11,7 +11,10 @@ import {
   EDIT_CLOCKS_STARTED,
   EDIT_CLOCKS_FAILURE,
   EDIT_CLOCKS_SUCCESS,
-  REDIRECT_FROM_REFACTOR
+  REDIRECT_FROM_REFACTOR,
+  GET_CLOCK_FOR_EDIT_STARTED,
+  GET_CLOCK_FOR_EDIT_SUCCESS,
+  GET_CLOCK_FOR_EDIT_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -26,6 +29,20 @@ export const loadClocks = () => {
       })
       .catch(err => {
         dispatch(loadClocksFailure(err.response.data))
+      })
+  }
+}
+
+export const getClock = id => {
+  return (dispatch) => {
+    dispatch({ type: GET_CLOCK_FOR_EDIT_STARTED })
+    return axios
+      .get(`/api/clocks/${id}`)
+      .then(res => {
+        dispatch({ type: GET_CLOCK_FOR_EDIT_SUCCESS, payload: res.data })
+      })
+      .catch(err => {
+        dispatch({ type: GET_CLOCK_FOR_EDIT_FAILURE, payload: err.response.data })
       })
   }
 }
