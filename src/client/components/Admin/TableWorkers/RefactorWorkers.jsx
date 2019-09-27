@@ -61,8 +61,8 @@ class RefactorWorkers extends React.Component {
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{item.name}</td>
-        <td className='text-to-center'>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
-        <td className='text-to-center'>{item.rating}</td>
+        <td>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
+        <td>{item.rating}</td>
         <td>
           <LinkButton to={`/admin/workers/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
           <button className='button-refactor-models' onClick={ () => deleteWorker(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
@@ -94,8 +94,8 @@ class RefactorWorkers extends React.Component {
             <tr>
               <th>№</th>
               <th>Name</th>
-              <th className='text-to-center'>Where work</th>
-              <th className='text-to-center'>Rating</th>
+              <th>Where work</th>
+              <th>Rating</th>
               <th>Service</th>
             </tr>
             { renderItems }

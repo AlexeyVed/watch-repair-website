@@ -61,7 +61,7 @@ class RefactorClients extends React.Component {
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{item.email}</td>
-        <td className='text-to-center'>{item.name}</td>
+        <td>{item.name}</td>
         <td>
           <LinkButton to={`/admin/clients/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
           <button className='button-refactor-models' onClick={ () => deleteClient(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
@@ -92,7 +92,7 @@ class RefactorClients extends React.Component {
             <tr>
               <th>№</th>
               <th>Email</th>
-              <th className='text-to-center'>Name</th>
+              <th>Name</th>
               <th>Service</th>
             </tr>
             { renderItems }

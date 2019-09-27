@@ -69,12 +69,12 @@ class RefactorOrders extends React.Component {
     const renderItems = currentItem.map((item, index) => {
       return <tr key={item.id}>
         <td>{indexes()}</td>
-        <td>{(item.customer !== null) ? item.customer.name : null }</td>
         <td>{(item.customer !== null) ? item.customer.email : <b>Customer was deleted</b>}</td>
-        <td className='text-to-center'>{(item.clock !== null) ? item.clock.typeClock : <b>Clock was deleted</b>}</td>
-        <td className='text-to-center'>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
-        <td className='text-to-center'>{item.date} / {item.time}</td>
-        <td className='text-to-center'>{(item.master !== null) ? item.master.name : <b>Master was deleted</b>}</td>
+        <td>{(item.customer !== null) ? item.customer.name : null }</td>
+        <td>{(item.clock !== null) ? item.clock.typeClock : <b>Clock was deleted</b>}</td>
+        <td>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
+        <td>{item.date} / {item.time}</td>
+        <td>{(item.master !== null) ? item.master.name : <b>Master was deleted</b>}</td>
         <td>
           <LinkButton to={`/admin/orders/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
           <button className='button-refactor-models' onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
@@ -104,12 +104,12 @@ class RefactorOrders extends React.Component {
           <tbody>
             <tr>
               <th>№</th>
-              <th>Client name</th>
               <th>Client email</th>
-              <th className='text-to-center'>Type clock</th>
-              <th className='text-to-center'>City</th>
-              <th className='text-to-center'>Date</th>
-              <th className='text-to-center'>Master</th>
+              <th>Client name</th>
+              <th>Type clock</th>
+              <th>City</th>
+              <th>Date</th>
+              <th>Master</th>
               <th>Service</th>
             </tr>
             { renderItems }

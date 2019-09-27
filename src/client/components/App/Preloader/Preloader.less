@@ -18,7 +18,6 @@
   top: 50%;
   width: 80px;
   height: 80px;
-  margin: -40px 0 0 -40px;
   border-radius: 50%;
   border: 2px solid transparent;
   border-top-color: #db6e00;
@@ -26,7 +25,7 @@
   animation: spin 2s linear infinite;
   z-index: 4;
 
-  &:before {
+  &:before, &:after {
     content: "";
     position: absolute;
     top: 5px;
@@ -40,15 +39,11 @@
     animation: spin 3s linear infinite;
   }
   
-  &:after {
-    content: "";
-    position: absolute;
+  &:after { 
     top: 15px;
     left: 15px;
     right: 15px;
     bottom: 15px;
-    border-radius: 50%;
-    border: 2px solid transparent;
     border-top-color: #ffec00;
     -webkit-animation: spin 1.5s linear infinite;
     animation: spin 1.5s linear infinite;

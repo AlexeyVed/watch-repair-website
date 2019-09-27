@@ -3,6 +3,7 @@
 .main-form {
   background-color: @tables-color;
   position: relative;
+  padding-bottom: 30px;
 
   &__title {
     text-align: center;
@@ -39,7 +40,7 @@
   }
 }
 
-@media screen and (min-width:600px) {
+@media screen and (min-width:850px) {
   .main-form {
     flex: 0 0 300px;
     box-sizing: border-box;
@@ -62,8 +63,9 @@
   }
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:850px) {
   .main-form {
+    order: 2;
     background: @image-background;
     background-color: @tables-color;
     flex: 0 0 450px;
@@ -77,7 +79,6 @@
 
     &__order-form > button {
       font-size: 13px;
-      margin-bottom: 30px;
       height: 35px;
       width: 100px;
     }

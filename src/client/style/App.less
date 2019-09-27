@@ -12,15 +12,17 @@ body {
 
 .app {
     height: 100vh;
+    width: 100vw;
     position: relative;
+    overflow: hidden;
+    overflow-x: auto;
 }
 
 .app-main {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 80vw;
     height: 100%;
-    margin: auto;
 }
 
 .main {
@@ -28,7 +30,7 @@ body {
     display: flex;
     border-radius: 5px;
     background-color: inherit;
-    overflow: auto;
+    overflow-y: auto;
 
     .content {
         background: url(../image/background.png) no-repeat right -10px bottom -10px;
@@ -45,8 +47,6 @@ body {
     background-color: @footer-color;
 
     a {
-        padding-left: 50px;
-        padding-right: 50px;
         color: black;
     }
 
@@ -57,13 +57,9 @@ body {
     }
 }
 
-@media screen and (min-width:600px) {
+@media screen and (min-width:850px) {
     body {
         background: content-box @app-background-color no-repeat;
-    }
-
-    .app {
-        width: 100vw;
     }
 
     .app-main {
@@ -101,6 +97,8 @@ body {
         border-top-left-radius: 5px;
 
         a {
+            padding-left: 50px;
+            padding-right: 50px;
             font-size: 14px;
         }
     }
@@ -128,33 +126,29 @@ body {
     }
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:850px) {
     body {
         background: @mobile-app-background-color;
         font-size: 13px;
-    }
-
-    .app {
-        width: calc(100vw - (100vw - 100%));
+        overflow: hidden;
     }
 
     .app-main {
         width: 100%;
-        min-width: 410px;
+        min-width: 320px;
     }
 
     .main {
-        flex-direction: column-reverse;
+        flex-direction: column;
         margin-bottom: 2px;
         margin-top: 2px;
-        overflow: auto;
         position: relative;
 
         .content {
-            flex: 1 0 300px;
+            order: 1;
+            flex: 1 0 320px;
             background-size: 240px 160px;
             margin-bottom: 2px;
-            max-height: 400px;
         }
     }
 
@@ -162,13 +156,15 @@ body {
         flex: 0 0 35px;
 
         a {
+            padding-left: 20px;
+            padding-right: 20px;
             font-size: 11px;
         }
     }
 
     ::-webkit-scrollbar{
         border-color: @tables-color;
-        width: 14px;
+        width: 12px;
         background-color: rgba(0, 4, 41, 0.05);
     }
     ::-webkit-scrollbar-thumb{

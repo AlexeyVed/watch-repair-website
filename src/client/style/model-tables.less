@@ -33,6 +33,10 @@
         padding-right: 10px;
       }
 
+      th:not(:nth-child(2)):not(:last-child), td:not(:nth-child(2)):not(:last-child) {
+        text-align: center;
+      }
+
       th {
         border-right: 1px solid grey;
         
@@ -162,10 +166,6 @@
       }
     }
   }
-}
-
-.text-to-center {
-    text-align: center;
 }
 
 @media screen and (max-width:600px) {
