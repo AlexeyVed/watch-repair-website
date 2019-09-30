@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
-import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import DropMenu from '../../ComponentMaterial/DropMenuDelete'
 import AddCities from '../RefactorCities/AddCities.jsx'
 import EditCities from '../RefactorCities/EditCities.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin.jsx'
@@ -58,12 +58,13 @@ class RefactorCities extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
+      const deleteText =  `Delete city ${item.city}?` 
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{item.city}</td>
         <td>
           <LinkButton to={`/admin/cities/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteCity(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <DropMenu DropDelete={ deleteCity } DropCancel={ deleteCity } itemId={ item.id } text={ deleteText }/>
         </td>
       </tr>
     })
