@@ -9,7 +9,7 @@ import CloseIcon from '@material-ui/icons/Close'
 const useStyles = makeStyles(theme => ({
   root: {
     position: 'relative',
-    fontSize: '13px',
+    fontSize: '14px',
     fontWeight: 'bold',
     width: '49px',
     display: 'inline-block',
@@ -22,8 +22,10 @@ const useStyles = makeStyles(theme => ({
     width: '130px',
     height: '100px',
     display: 'flex',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+    border: '1px solid gray',
     flexDirection: 'column',
-    backgroundColor: '#f5f5eb',
+    backgroundColor: '#e3eff0',
     zIndex: 1
   },
   header: {
@@ -35,14 +37,11 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     flex: '0 0 40px',
-    width: '130px',
-    '&:nth-child(3)': {
-      borderLeft: '1px solid black'
-    }
+    width: '130px'
   },
   buttons: {
     margin: 'auto',
-    width: '65px',
+    width: '60px',
     height: '28px'
   }
 }))
