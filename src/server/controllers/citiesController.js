@@ -49,7 +49,6 @@ exports.addValidation = checkSchema({
 
 exports.add = function (req, res, next) {
   const errors = validationResult(req)
-  console.log(errors)
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }

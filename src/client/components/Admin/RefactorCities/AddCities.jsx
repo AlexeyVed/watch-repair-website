@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addCityToDB } from '../../../actions'
-import { required } from '../../../validation'
+import { required, validateOnlyLetter } from '../../../validation'
 
 import './RefactorCities.less'
 
@@ -34,7 +34,7 @@ class AddCities extends React.Component {
                 label='Enter city'
                 name='city'
                 component={TextField}
-                validate={required}
+                validate={[required, validateOnlyLetter]}
                 type='text'
                 placeholder='Enter new city'
               />
