@@ -22,7 +22,7 @@ export const required = value => value ? undefined : 'Required'
 export const validateTimeRepairClock = (input) => {
   if (input === void 0) {
 
-  } else if (input <= 0) {
+  } else if (input < 1) {
     return 'Must be equal or over 1  hour.'
   }
 }
