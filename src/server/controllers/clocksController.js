@@ -50,7 +50,12 @@ exports.addValidation = checkSchema({
     errorMessage: 'Time repair is wrong',
     isInt: true,
     toInt: true,
-    isEmpty: false
+    isEmpty: false,
+    custom: {
+      options: (value, { req, location, path }) => {
+        return req.body.timeRepair > 0 && req.body.timeRepair <= 12
+      }
+    }
   }
 })
 
@@ -116,7 +121,12 @@ exports.updateValidation = checkSchema({
     errorMessage: 'Time repair is wrong',
     isInt: true,
     toInt: true,
-    isEmpty: false
+    isEmpty: false,
+    custom: {
+      options: (value, { req, location, path }) => {
+        return req.body.timeRepair > 0 && req.body.timeRepair <= 12
+      }
+    }
   }
 })
 
