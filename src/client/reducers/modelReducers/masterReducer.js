@@ -21,16 +21,6 @@ import {
 
 const initialState = {
   data: [],
-  masterForEdit: {
-    id: null,
-    name: null,
-    rating: null,
-    cityId: null,
-    city: {
-      id: null,
-      city: null
-    }
-  },
   error: null,
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
@@ -71,7 +61,6 @@ const masterReducer = (state = initialState, action) => {
     case GET_MASTER_FOR_EDIT_SUCCESS:
       return {
         ...state,
-        masterForEdit: action.payload,
         error: null,
         dataLoad: false
       }
@@ -79,16 +68,6 @@ const masterReducer = (state = initialState, action) => {
     case GET_MASTER_FOR_EDIT_FAILURE:
       return {
         ...state,
-        masterForEdit: {
-          id: null,
-          name: null,
-          rating: null,
-          cityId: null,
-          city: {
-            id: null,
-            city: null
-          }
-        },
         showModal: true,
         dataLoad: false,
         error: action.payload

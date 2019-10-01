@@ -21,35 +21,6 @@ import {
 
 const initialState = {
   data: [],
-  orderForEdit: {
-    id: null,
-    date: null,
-    time: null,
-    customerId: null,
-    clockId: null,
-    cityId: null,
-    masterId: null,
-    customer: {
-      id: null,
-      name: null,
-      email: null
-    },
-    clock: {
-      id: null,
-      typeClock: null,
-      timeRepair: null
-    },
-    city: {
-      id: null,
-      city: null
-    },
-    master: {
-      id: null,
-      name: null,
-      rating: null,
-      cityId: null
-    }
-  },
   error: null,
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
@@ -90,7 +61,6 @@ const orderReducer = (state = initialState, action) => {
     case GET_ORDER_FOR_EDIT_SUCCESS:
       return {
         ...state,
-        orderForEdit: action.payload,
         error: null,
         dataLoad: false
       }
@@ -98,35 +68,6 @@ const orderReducer = (state = initialState, action) => {
     case GET_ORDER_FOR_EDIT_FAILURE:
       return {
         ...state,
-        orderForEdit: {
-          id: null,
-          date: null,
-          time: null,
-          customerId: null,
-          clockId: null,
-          cityId: null,
-          masterId: null,
-          customer: {
-            id: null,
-            name: null,
-            email: null
-          },
-          clock: {
-            id: null,
-            typeClock: null,
-            timeRepair: null
-          },
-          city: {
-            id: null,
-            city: null
-          },
-          master: {
-            id: null,
-            name: null,
-            rating: null,
-            cityId: null
-          }
-        },
         showModal: true,
         dataLoad: false,
         error: action.payload

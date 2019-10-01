@@ -17,7 +17,7 @@ class EditCities extends React.Component {
     const id = arr[arr.length - 1]
     this.props.getCity(id)
       .then(res => {
-        this.props.dispatch(initialize('editCity', this.props.cityForEdit, ['id', 'city']))
+        this.props.dispatch(initialize('editCity', res, ['id', 'city']))
       })
   }
 
@@ -67,7 +67,6 @@ class EditCities extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    cityForEdit: state.cityReducer.cityForEdit,
     redirectBack: state.cityReducer.redirectBackFromRefactor
   }
 }

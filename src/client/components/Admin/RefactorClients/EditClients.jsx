@@ -17,7 +17,7 @@ class EditClients extends React.Component {
     const id = arr[arr.length - 1]
     this.props.getCustomer(id)
       .then(res => {
-        this.props.dispatch(initialize('editClient', this.props.customerForEdit, ['id', 'email', 'name']))
+        this.props.dispatch(initialize('editClient', res, ['id', 'email', 'name']))
       })
   }
 
@@ -79,7 +79,6 @@ class EditClients extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    customerForEdit: state.customerReducer.customerForEdit,
     redirectBack: state.customerReducer.redirectBackFromRefactor
   }
 }

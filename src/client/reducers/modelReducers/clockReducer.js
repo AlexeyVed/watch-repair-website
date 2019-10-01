@@ -22,11 +22,6 @@ import {
 const initialState = {
   error: null,
   data: [],
-  clockForEdit: {
-    id: null,
-    typeClock: null,
-    timeRepair: null
-  },
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
   showModal: false,
@@ -66,7 +61,6 @@ const clockReducer = (state = initialState, action) => {
     case GET_CLOCK_FOR_EDIT_SUCCESS:
       return {
         ...state,
-        clockForEdit: action.payload,
         error: null,
         dataLoad: false
       }
@@ -74,11 +68,6 @@ const clockReducer = (state = initialState, action) => {
     case GET_CLOCK_FOR_EDIT_FAILURE:
       return {
         ...state,
-        clockForEdit: {
-          id: null,
-          typeClock: null,
-          timeRepair: null
-        },
         showModal: true,
         dataLoad: false,
         error: action.payload

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
-import { getDate } from '../../App/OrderForm/logic'
 import MenuItem from '@material-ui/core/MenuItem'
 
 import TextField from '../../ComponentMaterial/TextField/'
@@ -17,33 +16,19 @@ import '../../../style/refactor-modal.less'
 
 class EditOrder extends React.Component {
   state = {
-    workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
     date: {
-      date: null,
-      time: null
+      date: '2019-05-30'
     }
   }
 
   componentDidMount () {
-    const date = getDate()
-
-    this.setState(() => ({
-      workHours: this.state.workHours.filter(item => {
-        if (item >= date.time) {
-          return true
-        } else {
-          return false
-        }
-      }),
-      date: date
-    }))
-
     const arr = this.props.location.pathname.split('/')
     const id = arr[arr.length - 1]
     this.props.getOrder(id)
       .then(res => {
-        this.props.dispatch(initialize('editOrder', this.props.orderForEdit, ['id', 'customerID', 'masterID', 'cityID', 'time']))
+        this.props.dispatch(initialize('editOrder', res, ['id', 'customerID', 'masterID', 'cityID', 'time']))
       })
+    this.props.dispatch(initialize('editOrder', this.state.date, ['date']))
   }
 
   render () {
@@ -134,7 +119,8 @@ class EditOrder extends React.Component {
               <Field
                 label='Choose date'
                 name='date'
-                min={this.state.date.date}
+                min='2019-05-30'
+                value={ this.state.date.date }
                 max='2019-12-30'
                 component={DateField}
                 validate={[required]}
@@ -173,8 +159,7 @@ const mapStateToProps = (state) => {
     chooseCities: state.cityReducer.data,
     chooseUsers: state.customerReducer.data,
     redirectBack: state.orderReducer.redirectBackFromRefactor,
-    chooseWorkers: state.masterReducer.data,
-    orderForEdit: state.orderReducer.orderForEdit
+    chooseWorkers: state.masterReducer.data
   }
 }
 

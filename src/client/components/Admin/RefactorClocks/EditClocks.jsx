@@ -17,7 +17,7 @@ class EditClocks extends React.Component {
     const id = arr[arr.length - 1]
     this.props.getClock(id)
       .then(res => {
-        this.props.dispatch(initialize('editClock', this.props.clockForEdit, ['id', 'typeClock', 'timeRepair']))
+        this.props.dispatch(initialize('editClock', res, ['id', 'typeClock', 'timeRepair']))
       })
   }
   render () {
@@ -76,7 +76,6 @@ class EditClocks extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    clockForEdit: state.clockReducer.clockForEdit,
     redirectBack: state.clockReducer.redirectBackFromRefactor
   }
 }

@@ -19,7 +19,7 @@ class EditWorkers extends React.Component {
     const id = arr[arr.length - 1]
     this.props.getMaster(id)
       .then(res => {
-        this.props.dispatch(initialize('editWorker', this.props.masterForEdit, ['id', 'name', 'rating', 'city']))
+        this.props.dispatch(initialize('editWorker', res, ['id', 'name', 'rating', 'city']))
       })
   }
 
@@ -100,7 +100,6 @@ class EditWorkers extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    masterForEdit: state.masterReducer.masterForEdit,
     chooseCities: state.cityReducer.data,
     redirectBack: state.masterReducer.redirectBackFromRefactor
   }

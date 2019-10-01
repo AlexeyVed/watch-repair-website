@@ -21,11 +21,6 @@ import {
 
 const initialState = {
   data: [],
-  customerForEdit: {
-    id: null,
-    name: null,
-    email: null
-  },
   error: null,
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
@@ -65,7 +60,6 @@ const customerReducer = (state = initialState, action) => {
     case GET_CUSTOMER_FOR_EDIT_SUCCESS:
       return {
         ...state,
-        customerForEdit: action.payload,
         error: null,
         dataLoad: false
       }
@@ -73,11 +67,6 @@ const customerReducer = (state = initialState, action) => {
     case GET_CUSTOMER_FOR_EDIT_FAILURE:
       return {
         ...state,
-        customerForEdit: {
-          id: null,
-          name: null,
-          email: null
-        },
         showModal: true,
         dataLoad: false,
         error: action.payload

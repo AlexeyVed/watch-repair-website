@@ -21,10 +21,6 @@ import {
 
 const initialState = {
   data: [],
-  cityForEdit: {
-    id: null,
-    city: null
-  },
   error: null,
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
@@ -65,7 +61,6 @@ const cityReducer = (state = initialState, action) => {
     case GET_CITY_FOR_EDIT_SUCCESS:
       return {
         ...state,
-        cityForEdit: action.payload,
         error: null,
         dataLoad: false
       }
@@ -73,10 +68,6 @@ const cityReducer = (state = initialState, action) => {
     case GET_CITY_FOR_EDIT_FAILURE:
       return {
         ...state,
-        cityForEdit: {
-          id: null,
-          city: null
-        },
         showModal: true,
         dataLoad: false,
         error: action.payload

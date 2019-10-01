@@ -39,7 +39,8 @@ export const getCity = id => {
     return axios
       .get(`/api/cities/${id}`)
       .then(res => {
-        dispatch({ type: GET_CITY_FOR_EDIT_SUCCESS, payload: res.data })
+        dispatch({ type: GET_CITY_FOR_EDIT_SUCCESS })
+        return res.data
       })
       .catch(err => {
         dispatch({ type: GET_CITY_FOR_EDIT_FAILURE, payload: err.response.data })
