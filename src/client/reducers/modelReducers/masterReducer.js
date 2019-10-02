@@ -2,21 +2,21 @@ import {
   LOAD_MASTERS_STARTED,
   LOAD_MASTERS_SUCCESS,
   LOAD_MASTERS_FAILURE,
-  ADD_MASTERS_STARTED,
-  ADD_MASTERS_FAILURE,
-  ADD_MASTERS_SUCCESS,
-  DELETE_MASTERS_STARTED,
-  DELETE_MASTERS_FAILURE,
-  DELETE_MASTERS_SUCCESS,
-  EDIT_MASTERS_STARTED,
-  EDIT_MASTERS_FAILURE,
-  EDIT_MASTERS_SUCCESS,
+  ADD_MASTER_STARTED,
+  ADD_MASTER_FAILURE,
+  ADD_MASTER_SUCCESS,
+  DELETE_MASTER_STARTED,
+  DELETE_MASTER_FAILURE,
+  DELETE_MASTER_SUCCESS,
+  EDIT_MASTER_STARTED,
+  EDIT_MASTER_FAILURE,
+  EDIT_MASTER_SUCCESS,
   REDIRECT_FROM_REFACTOR,
   MISS_ERRORS,
   END_LOAD_DATA,
-  GET_MASTER_FOR_EDIT_STARTED,
-  GET_MASTER_FOR_EDIT_SUCCESS,
-  GET_MASTER_FOR_EDIT_FAILURE
+  GET_MASTER_STARTED,
+  GET_MASTER_SUCCESS,
+  GET_MASTER_FAILURE
 } from '../../actions/types.js'
 
 const initialState = {
@@ -52,20 +52,26 @@ const masterReducer = (state = initialState, action) => {
         error: action.payload
       }
 
-    case GET_MASTER_FOR_EDIT_STARTED:
+    case GET_MASTER_STARTED:
       return {
         ...state,
         dataLoad: true
       }
 
-    case GET_MASTER_FOR_EDIT_SUCCESS:
+    case GET_MASTER_SUCCESS:
       return {
         ...state,
+        data: state.data.map(worker => {
+          if (worker.id === action.payload.id) {
+            return action.payload
+          }
+          return worker
+        }),
         error: null,
         dataLoad: false
       }
 
-    case GET_MASTER_FOR_EDIT_FAILURE:
+    case GET_MASTER_FAILURE:
       return {
         ...state,
         showModal: true,
@@ -73,13 +79,13 @@ const masterReducer = (state = initialState, action) => {
         error: action.payload
       }
 
-    case ADD_MASTERS_STARTED:
+    case ADD_MASTER_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case ADD_MASTERS_SUCCESS:
+    case ADD_MASTER_SUCCESS:
       return {
         ...state,
         data: [
@@ -92,7 +98,7 @@ const masterReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case ADD_MASTERS_FAILURE:
+    case ADD_MASTER_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -100,13 +106,13 @@ const masterReducer = (state = initialState, action) => {
         showModal: true
       }
 
-    case EDIT_MASTERS_STARTED:
+    case EDIT_MASTER_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case EDIT_MASTERS_SUCCESS:
+    case EDIT_MASTER_SUCCESS:
       return {
         ...state,
         data: state.data.map(worker => {
@@ -123,7 +129,7 @@ const masterReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case EDIT_MASTERS_FAILURE:
+    case EDIT_MASTER_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -131,13 +137,13 @@ const masterReducer = (state = initialState, action) => {
         showModal: true
       }
 
-    case DELETE_MASTERS_STARTED:
+    case DELETE_MASTER_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case DELETE_MASTERS_SUCCESS:
+    case DELETE_MASTER_SUCCESS:
       return {
         ...state,
         data: state.data.filter(el => el.id !== +action.payload),
@@ -146,7 +152,7 @@ const masterReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case DELETE_MASTERS_FAILURE:
+    case DELETE_MASTER_FAILURE:
       return {
         ...state,
         error: action.payload,

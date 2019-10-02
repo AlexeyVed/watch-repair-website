@@ -2,21 +2,21 @@ import {
   LOAD_CUSTOMERS_STARTED,
   LOAD_CUSTOMERS_SUCCESS,
   LOAD_CUSTOMERS_FAILURE,
-  ADD_CUSTOMERS_STARTED,
-  ADD_CUSTOMERS_FAILURE,
-  ADD_CUSTOMERS_SUCCESS,
-  DELETE_CUSTOMERS_STARTED,
-  DELETE_CUSTOMERS_FAILURE,
-  DELETE_CUSTOMERS_SUCCESS,
-  EDIT_CUSTOMERS_STARTED,
-  EDIT_CUSTOMERS_FAILURE,
-  EDIT_CUSTOMERS_SUCCESS,
+  ADD_CUSTOMER_STARTED,
+  ADD_CUSTOMER_FAILURE,
+  ADD_CUSTOMER_SUCCESS,
+  DELETE_CUSTOMER_STARTED,
+  DELETE_CUSTOMER_FAILURE,
+  DELETE_CUSTOMER_SUCCESS,
+  EDIT_CUSTOMER_STARTED,
+  EDIT_CUSTOMER_FAILURE,
+  EDIT_CUSTOMER_SUCCESS,
   REDIRECT_FROM_REFACTOR,
   MISS_ERRORS,
   END_LOAD_DATA,
-  GET_CUSTOMER_FOR_EDIT_STARTED,
-  GET_CUSTOMER_FOR_EDIT_SUCCESS,
-  GET_CUSTOMER_FOR_EDIT_FAILURE
+  GET_CUSTOMER_STARTED,
+  GET_CUSTOMER_SUCCESS,
+  GET_CUSTOMER_FAILURE
 } from '../../actions/types.js'
 
 const initialState = {
@@ -51,20 +51,26 @@ const customerReducer = (state = initialState, action) => {
         error: action.payload
       }
 
-    case GET_CUSTOMER_FOR_EDIT_STARTED:
+    case GET_CUSTOMER_STARTED:
       return {
         ...state,
         dataLoad: true
       }
 
-    case GET_CUSTOMER_FOR_EDIT_SUCCESS:
+    case GET_CUSTOMER_SUCCESS:
       return {
         ...state,
+        data: state.data.map(user => {
+          if (user.id === action.payload.id) {
+            return action.payload
+          }
+          return user
+        }),
         error: null,
         dataLoad: false
       }
 
-    case GET_CUSTOMER_FOR_EDIT_FAILURE:
+    case GET_CUSTOMER_FAILURE:
       return {
         ...state,
         showModal: true,
@@ -72,13 +78,13 @@ const customerReducer = (state = initialState, action) => {
         error: action.payload
       }
 
-    case ADD_CUSTOMERS_STARTED:
+    case ADD_CUSTOMER_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case ADD_CUSTOMERS_SUCCESS:
+    case ADD_CUSTOMER_SUCCESS:
       return {
         ...state,
         data: [
@@ -91,7 +97,7 @@ const customerReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case ADD_CUSTOMERS_FAILURE:
+    case ADD_CUSTOMER_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -99,13 +105,13 @@ const customerReducer = (state = initialState, action) => {
         showModal: true
       }
 
-    case EDIT_CUSTOMERS_STARTED:
+    case EDIT_CUSTOMER_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case EDIT_CUSTOMERS_SUCCESS:
+    case EDIT_CUSTOMER_SUCCESS:
       return {
         ...state,
         data: state.data.map(user => {
@@ -121,7 +127,7 @@ const customerReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case EDIT_CUSTOMERS_FAILURE:
+    case EDIT_CUSTOMER_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -129,13 +135,13 @@ const customerReducer = (state = initialState, action) => {
         showModal: true
       }
 
-    case DELETE_CUSTOMERS_STARTED:
+    case DELETE_CUSTOMER_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case DELETE_CUSTOMERS_SUCCESS:
+    case DELETE_CUSTOMER_SUCCESS:
       return {
         ...state,
         data: state.data.filter(el => el.id !== +action.payload),
@@ -144,7 +150,7 @@ const customerReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case DELETE_CUSTOMERS_FAILURE:
+    case DELETE_CUSTOMER_FAILURE:
       return {
         ...state,
         error: action.payload,

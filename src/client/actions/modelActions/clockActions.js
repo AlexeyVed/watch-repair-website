@@ -2,19 +2,19 @@ import {
   LOAD_CLOCKS_STARTED,
   LOAD_CLOCKS_SUCCESS,
   LOAD_CLOCKS_FAILURE,
-  ADD_CLOCKS_STARTED,
-  ADD_CLOCKS_FAILURE,
-  ADD_CLOCKS_SUCCESS,
-  DELETE_CLOCKS_STARTED,
-  DELETE_CLOCKS_FAILURE,
-  DELETE_CLOCKS_SUCCESS,
-  EDIT_CLOCKS_STARTED,
-  EDIT_CLOCKS_FAILURE,
-  EDIT_CLOCKS_SUCCESS,
+  ADD_CLOCK_STARTED,
+  ADD_CLOCK_FAILURE,
+  ADD_CLOCK_SUCCESS,
+  DELETE_CLOCK_STARTED,
+  DELETE_CLOCK_FAILURE,
+  DELETE_CLOCK_SUCCESS,
+  EDIT_CLOCK_STARTED,
+  EDIT_CLOCK_FAILURE,
+  EDIT_CLOCK_SUCCESS,
   REDIRECT_FROM_REFACTOR,
-  GET_CLOCK_FOR_EDIT_STARTED,
-  GET_CLOCK_FOR_EDIT_SUCCESS,
-  GET_CLOCK_FOR_EDIT_FAILURE
+  GET_CLOCK_STARTED,
+  GET_CLOCK_SUCCESS,
+  GET_CLOCK_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -35,22 +35,22 @@ export const loadClocks = () => {
 
 export const getClock = id => {
   return (dispatch) => {
-    dispatch({ type: GET_CLOCK_FOR_EDIT_STARTED })
+    dispatch({ type: GET_CLOCK_STARTED })
     return axios
       .get(`/api/clocks/${id}`)
       .then(res => {
-        dispatch({ type: GET_CLOCK_FOR_EDIT_SUCCESS })
+        dispatch({ type: GET_CLOCK_SUCCESS, payload: res.data })
         return res.data
       })
       .catch(err => {
-        dispatch({ type: GET_CLOCK_FOR_EDIT_FAILURE, payload: err.response.data })
+        dispatch({ type: GET_CLOCK_FAILURE, payload: err.response.data })
       })
   }
 }
 
 export const addClockToDB = (values) => {
   return (dispatch) => {
-    dispatch({ type: ADD_CLOCKS_STARTED })
+    dispatch({ type: ADD_CLOCK_STARTED })
     return axios
       .post(`/api/clocks/`, values)
       .then(res => {
@@ -67,7 +67,7 @@ export const addClockToDB = (values) => {
 
 export const editClockIntoDB = (values) => {
   return (dispatch) => {
-    dispatch({ type: EDIT_CLOCKS_STARTED })
+    dispatch({ type: EDIT_CLOCK_STARTED })
     return axios
       .put(`/api/clocks/${values.id}`, values)
       .then(res => {
@@ -84,7 +84,7 @@ export const editClockIntoDB = (values) => {
 
 export const deleteClockFromDB = (id) => {
   return (dispatch) => {
-    dispatch({ type: DELETE_CLOCKS_STARTED })
+    dispatch({ type: DELETE_CLOCK_STARTED })
     return axios
       .delete(`/api/clocks/${id}`)
       .then(res => {
@@ -107,34 +107,34 @@ export const loadClocksSuccess = data => ({
 })
 
 export const addClocksFailure = (err) => ({
-  type: ADD_CLOCKS_FAILURE,
+  type: ADD_CLOCK_FAILURE,
   payload: err
 })
 
 export const deleteClocksFailure = (err) => ({
-  type: DELETE_CLOCKS_FAILURE,
+  type: DELETE_CLOCK_FAILURE,
   payload: err
 })
 
 export const editClocksFailure = (err) => ({
-  type: EDIT_CLOCKS_FAILURE,
+  type: EDIT_CLOCK_FAILURE,
   payload: err
 })
 
 export const addClocksSuccess = data => ({
-  type: ADD_CLOCKS_SUCCESS,
+  type: ADD_CLOCK_SUCCESS,
   message: 'Clock was successfully added.',
   payload: data
 })
 
 export const deleteClocksSuccess = data => ({
-  type: DELETE_CLOCKS_SUCCESS,
+  type: DELETE_CLOCK_SUCCESS,
   message: 'Clock was successfully removed.',
   payload: data
 })
 
 export const editClocksSuccess = data => ({
-  type: EDIT_CLOCKS_SUCCESS,
+  type: EDIT_CLOCK_SUCCESS,
   message: 'Clock was successfully edited.',
   payload: data
 })

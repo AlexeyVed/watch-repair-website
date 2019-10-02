@@ -2,19 +2,19 @@ import {
   LOAD_MASTERS_STARTED,
   LOAD_MASTERS_SUCCESS,
   LOAD_MASTERS_FAILURE,
-  ADD_MASTERS_STARTED,
-  ADD_MASTERS_FAILURE,
-  ADD_MASTERS_SUCCESS,
-  DELETE_MASTERS_STARTED,
-  DELETE_MASTERS_FAILURE,
-  DELETE_MASTERS_SUCCESS,
-  EDIT_MASTERS_STARTED,
-  EDIT_MASTERS_FAILURE,
-  EDIT_MASTERS_SUCCESS,
+  ADD_MASTER_STARTED,
+  ADD_MASTER_FAILURE,
+  ADD_MASTER_SUCCESS,
+  DELETE_MASTER_STARTED,
+  DELETE_MASTER_FAILURE,
+  DELETE_MASTER_SUCCESS,
+  EDIT_MASTER_STARTED,
+  EDIT_MASTER_FAILURE,
+  EDIT_MASTER_SUCCESS,
   REDIRECT_FROM_REFACTOR,
-  GET_MASTER_FOR_EDIT_STARTED,
-  GET_MASTER_FOR_EDIT_SUCCESS,
-  GET_MASTER_FOR_EDIT_FAILURE
+  GET_MASTER_STARTED,
+  GET_MASTER_SUCCESS,
+  GET_MASTER_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -35,22 +35,22 @@ export const loadMasters = () => {
 
 export const getMaster = id => {
   return (dispatch) => {
-    dispatch({ type: GET_MASTER_FOR_EDIT_STARTED })
+    dispatch({ type: GET_MASTER_STARTED })
     return axios
       .get(`/api/masters/${id}`)
       .then(res => {
-        dispatch({ type: GET_MASTER_FOR_EDIT_SUCCESS })
+        dispatch({ type: GET_MASTER_SUCCESS, payload: res.data })
         return res.data
       })
       .catch(err => {
-        dispatch({ type: GET_MASTER_FOR_EDIT_FAILURE, payload: err.response.data })
+        dispatch({ type: GET_MASTER_FAILURE, payload: err.response.data })
       })
   }
 }
 
 export const addMastersToDB = (values) => {
   return (dispatch) => {
-    dispatch({ type: ADD_MASTERS_STARTED })
+    dispatch({ type: ADD_MASTER_STARTED })
     return axios
       .post(`/api/masters/`, values)
       .then(res => {
@@ -67,7 +67,7 @@ export const addMastersToDB = (values) => {
 
 export const editMastersIntoDB = (values) => {
   return (dispatch) => {
-    dispatch({ type: EDIT_MASTERS_STARTED })
+    dispatch({ type: EDIT_MASTER_STARTED })
     return axios
       .put(`/api/masters/${values.id}`, values)
       .then(res => {
@@ -84,7 +84,7 @@ export const editMastersIntoDB = (values) => {
 
 export const deleteMastersFromDB = (id) => {
   return (dispatch) => {
-    dispatch({ type: DELETE_MASTERS_STARTED })
+    dispatch({ type: DELETE_MASTER_STARTED })
     return axios
       .delete(`/api/masters/${id}`)
       .then(res => {
@@ -107,34 +107,34 @@ export const loadMastersSuccess = data => ({
 })
 
 export const addMastersFailure = (err) => ({
-  type: ADD_MASTERS_FAILURE,
+  type: ADD_MASTER_FAILURE,
   payload: err
 })
 
 export const deleteMastersFailure = (err) => ({
-  type: DELETE_MASTERS_FAILURE,
+  type: DELETE_MASTER_FAILURE,
   payload: err
 })
 
 export const editMastersFailure = (err) => ({
-  type: EDIT_MASTERS_FAILURE,
+  type: EDIT_MASTER_FAILURE,
   payload: err
 })
 
 export const addMastersSuccess = data => ({
-  type: ADD_MASTERS_SUCCESS,
+  type: ADD_MASTER_SUCCESS,
   message: 'Master was successfully added.',
   payload: data
 })
 
 export const deleteMastersSuccess = data => ({
-  type: DELETE_MASTERS_SUCCESS,
+  type: DELETE_MASTER_SUCCESS,
   message: 'Master was successfully removed.',
   payload: data
 })
 
 export const editMastersSuccess = data => ({
-  type: EDIT_MASTERS_SUCCESS,
+  type: EDIT_MASTER_SUCCESS,
   message: 'Master was successfully edited.',
   payload: data
 })
