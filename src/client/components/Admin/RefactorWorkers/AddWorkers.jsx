@@ -9,7 +9,7 @@ import TextField from '../../ComponentMaterial/TextField/'
 import SelectField from '../../ComponentMaterial/SelectField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addMastersToDB } from '../../../actions'
-import { required } from '../../../validation'
+import { required, validateOnlyLetter } from '../../../validation'
 
 import './RefactorWorkers.less'
 
@@ -36,7 +36,7 @@ class AddWorkers extends React.Component {
                 label='Enter workers name'
                 name='name'
                 component={TextField}
-                validate={[required]}
+                validate={[required, validateOnlyLetter]}
                 type='text'
                 placeholder='Enter workers name'
               />
