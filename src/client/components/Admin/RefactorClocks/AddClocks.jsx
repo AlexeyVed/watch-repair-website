@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addClockToDB } from '../../../actions'
-import { required, validateOnlyLetter } from '../../../validation'
+import { required, validateOnlyLetter, validateTimeRepairClock } from '../../../validation'
 
 import './RefactorClocks.less'
 
@@ -42,7 +42,8 @@ class AddClocks extends React.Component {
                 label='Enter time of repair clock'
                 name='timeRepair'
                 component={TextField}
-                validate={[required]}
+                validate={[required, validateTimeRepairClock]}
+                inputProps={{ min: '1', max: '12', step: '1' }}
                 type='number'
                 placeholder='Enter time repair clock'
               />
