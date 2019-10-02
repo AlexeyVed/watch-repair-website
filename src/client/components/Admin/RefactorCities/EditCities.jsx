@@ -9,7 +9,7 @@ import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editCityIntoDB } from '../../../actions'
-import { required } from '../../../validation'
+import { required, validateOnlyLetter } from '../../../validation'
 
 import './RefactorCities.less'
 
@@ -59,7 +59,7 @@ class EditCities extends React.Component {
                 label='Enter city'
                 name='city'
                 component={TextField}
-                validate={required}
+                validate={[required, validateOnlyLetter]}
                 type='text'
               />
               <button
