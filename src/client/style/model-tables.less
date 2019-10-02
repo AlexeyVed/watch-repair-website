@@ -9,6 +9,7 @@
     height: 10px;
     font-weight: bold;
     font-size: 18px;
+    margin-top: 20px;
     padding-left: 70px;
   }
 
@@ -16,6 +17,7 @@
     flex: 1;
     overflow: auto;
     margin-top: 23px;
+    margin: 30px 30px 0 30px;
 
     &__table {
       border-collapse: collapse;
@@ -29,40 +31,27 @@
       }
 
       th, td {
+        border-right: 1px solid grey;
         padding-left: 10px;
         padding-right: 10px;
+
+        &:first-child {
+          width: 50px;
+        }
+
+        &:last-child {
+          width: 100px;
+          min-width: 100px;
+          border-right: none;
+        }
       }
 
       th:not(:nth-child(2)):not(:last-child), td:not(:nth-child(2)):not(:last-child) {
         text-align: center;
       }
 
-      th {
-        border-right: 1px solid grey;
-        
-        &:first-child {
-          width: 50px;
-        }
-        
-        &:last-child {
-            width: 100px;
-            min-width: 100px;
-            border-right: none;
-        }
-      }
-
       td {
-        border-right: 1px solid grey;
-        
-        &:first-child {
-          width: 50px;
-        }
-        
         &:last-child {
-          width: 100px;
-          min-width: 100px;
-          border-right: none;
-
           .button-refactor-models {
             width: 50%;
             height: 28px;
@@ -92,16 +81,14 @@
 
   &__numbers-pages {
     display: flex;
-    width: 97.7%;
     height: 30px;
     border: 1px solid #bfbfbf;
     border-radius: 5px;
-    margin-bottom: 5px;
+    margin: 0 30px 30px 30px;
 
     &__container {
       flex: 1;
       display: flex;
-      height: 100%;
       background-color: rgba(0, 0, 0, 0.03);
       align-items: center;
       justify-content: center;
@@ -131,7 +118,7 @@
       }
     }
 
-    &__bttn-add {
+    &__btn-add {
       flex: 0 0 85px;
       height: 30px;
       display: flex;

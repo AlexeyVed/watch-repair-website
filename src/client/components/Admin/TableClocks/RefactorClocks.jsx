@@ -90,7 +90,7 @@ class RefactorClocks extends React.Component {
         <table className='table-model__container__table'>
           <tbody>
             <tr>
-              <th>ID</th>
+              <th>№</th>
               <th>Type of Clock</th>
               <th>Time of repair</th>
               <th>Service</th>
@@ -103,7 +103,7 @@ class RefactorClocks extends React.Component {
         <div className='table-model__numbers-pages__container'>
           { renderPageNumbers }
         </div>
-        <div className='table-model__numbers-pages__bttn-add'>
+        <div className='table-model__numbers-pages__btn-add'>
           <LinkButton to='/admin/clocks/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>

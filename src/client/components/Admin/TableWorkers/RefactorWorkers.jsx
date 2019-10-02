@@ -106,7 +106,7 @@ class RefactorWorkers extends React.Component {
         <div className='table-model__numbers-pages__container'>
           { renderPageNumbers }
         </div>
-        <div className='table-model__numbers-pages__bttn-add'>
+        <div className='table-model__numbers-pages__btn-add'>
           <LinkButton to='/admin/workers/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>
