@@ -12,12 +12,12 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const renderTextField = props => {
-  const { label, input, meta, styles } = props
+  const { label, input, meta, inputProps, styles } = props
 
   const classes = styles || useStyles()
   return (<div className='input-material-ui'>
     <FormControl className={classes.formControl}>
-      <TextField label={label} type={props.type}{...input}/>
+      <TextField label={label} type={props.type} inputProps={inputProps} {...input}/>
       {meta.error &&
       meta.touched &&
       <div className='input-material-ui__error'>
