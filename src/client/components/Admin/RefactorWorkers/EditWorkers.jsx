@@ -10,7 +10,7 @@ import SelectField from '../../ComponentMaterial/SelectField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editMastersIntoDB } from '../../../actions'
-import { required } from '../../../validation'
+import { required, validateOnlyLetter } from '../../../validation'
 
 import './RefactorWorkers.less'
 import axios from 'axios'
@@ -65,7 +65,7 @@ class EditWorkers extends React.Component {
                 label='Update worker name'
                 name='name'
                 component={TextField}
-                validate={[required]}
+                validate={[required, validateOnlyLetter]}
                 type='text'
                 placeholder='Update worker name'
               />
