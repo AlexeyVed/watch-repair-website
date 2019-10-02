@@ -8,7 +8,7 @@ import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editClockIntoDB } from '../../../actions'
-import { required, validateTimeRepairClock } from '../../../validation'
+import { required, validateOnlyLetter, validateTimeRepairClock } from '../../../validation'
 
 import './RefactorClocks.less'
 import axios from 'axios'
@@ -62,7 +62,7 @@ class EditClocks extends React.Component {
                 label='Enter type of clock'
                 name='typeClock'
                 component={TextField}
-                validate={[required]}
+                validate={[required, validateOnlyLetter]}
                 type='text'
                 placeholder='Enter type of clock'
               />
