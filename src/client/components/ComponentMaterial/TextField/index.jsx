@@ -1,7 +1,7 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
-import { makeStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
 
 import './TextField.less'
 
@@ -12,8 +12,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const renderTextField = props => {
-  const { label, input, meta, inputProps } = props
-  const classes = useStyles()
+  const { label, input, meta, inputProps, styles } = props
+
+  const classes = styles || useStyles()
   return (<div className='input-material-ui'>
     <FormControl className={classes.formControl}>
       <TextField label={label} type={props.type} inputProps={inputProps} {...input}/>
