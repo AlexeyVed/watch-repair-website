@@ -15,8 +15,8 @@ import './OrderForm.less'
 class OrderForm extends Component {
   state = {
     workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
-    date: {
-      date: null,
+    today: {
+      date: new Date(),
       time: null
     }
   }
@@ -32,7 +32,7 @@ class OrderForm extends Component {
           return false
         }
       }),
-      date: date
+      today: date
     }))
     const initialValues = {
       date: date.date,
@@ -43,12 +43,13 @@ class OrderForm extends Component {
 
   render () {
     const { handleSubmit, chooseClock, chooseCities, makeOrder, chooseMaster } = this.props
+    const { today, workHours } = this.state
+
     if (chooseMaster) {
       return (
         <div className='main-form'>
           <div className='choosing-master'>
             Please, choose a free master.
-
           </div>
         </div>
       )
@@ -107,8 +108,8 @@ class OrderForm extends Component {
           <Field
             label='Choose date'
             name='date'
-            min={this.state.date.date}
-            max='2019-12-30'
+            min={ today.date }
+            max= { new Date(today.date.getFullYear(), today.date.getMonth() + 6, 0) }
             component={DateField}
             type='date'
             onChange={() => {
@@ -126,7 +127,7 @@ class OrderForm extends Component {
             validate={required}
           >
             {
-              this.state.workHours.map((item) => {
+              workHours.map((item) => {
                 return <MenuItem key={item} value={Number(item)}>{item}:00</MenuItem>
               })
             }

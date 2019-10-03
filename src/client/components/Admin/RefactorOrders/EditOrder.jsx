@@ -16,26 +16,37 @@ import '../../../style/refactor-modal.less'
 
 class EditOrder extends React.Component {
   state = {
-    date: {
-      date: '2019-05-30'
-    }
+    today: new Date(),
+    orderDate: new Date()
   }
-
   componentDidMount () {
+    this.props.dispatch(initialize('editOrder', { date: this.state.orderDate }, ['date']))
     const arr = this.props.location.pathname.split('/')
     const id = arr[arr.length - 1]
     this.props.getOrder(id)
       .then(res => {
         this.props.dispatch(initialize('editOrder', res, ['id', 'customerID', 'masterID', 'cityID', 'time']))
+        this.setState(() => ({
+          orderDate: new Date(res.date)
+        }))
       })
-    this.props.dispatch(initialize('editOrder', this.state.date, ['date']))
   }
 
   render () {
     const { handleSubmit, editOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
+    const { today, orderDate } = this.state
     const arr = this.props.location.pathname.split('/')
+    let min, max
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
+    }
+
+    if (today.setHours(0, 0, 0, 0) > orderDate.setHours(0, 0, 0, 0)) {
+      min = orderDate
+      max = orderDate
+    } else {
+      min = today
+      max = new Date(today.getFullYear(), today.getMonth() + 2, 0)
     }
 
     const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]
@@ -119,9 +130,8 @@ class EditOrder extends React.Component {
               <Field
                 label='Choose date'
                 name='date'
-                min='2019-05-30'
-                value={ this.state.date.date }
-                max='2019-12-30'
+                min={ min }
+                max={ max }
                 component={DateField}
                 validate={[required]}
                 type='date'
