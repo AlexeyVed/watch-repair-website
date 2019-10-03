@@ -1,8 +1,6 @@
 @import '../../../style/global-variable.less';
 
 .bar-choose-item {
-  width: 100%;
-  flex: 0 0 40px;
   box-shadow: @app-box-shadows;
   background-color: @tables-color;
   display: flex;
@@ -19,8 +17,6 @@
 
     a {
       flex: 1;
-      width: 100px;
-      height: 40px;
       border-left: 1px solid #9da79d;
 
       &:first-child {
@@ -31,11 +27,9 @@
         height: 40px;
         width: 100%;
         border: none;
-        padding: 0;
         font: inherit;
-        color: black;
         cursor: pointer;
-        background-color: #f4f4f0;
+        background-color: inherit;
         outline: none;
 
         &:hover {
@@ -51,7 +45,7 @@
   }
 }
 
-@media screen and (min-width:850px) {
+@media screen and (min-width:695px) {
   .bar-choose-item {
     min-width: 695px;
     border: @app-border-style;
@@ -74,7 +68,7 @@
   }
 }
 
-@media screen and (max-width:850px) {
+@media screen and (max-width:695px) {
   .bar-choose-item {
     min-width: 320px;
     font-size: 13px;

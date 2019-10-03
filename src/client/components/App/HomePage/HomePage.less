@@ -1,38 +1,45 @@
 @import '../../../style/global-variable.less';
 
 .home-page {
-  padding-top: 40px;
-  margin: auto;
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
+  height: 100%;
 
   &__welcome {
     letter-spacing: 0.4px;
     line-height: 2;
-    text-indent: 20px;
+    text-indent: 10px;
   }
 
   &__instruction {
+    margin: 40px 40px 0 40px;
     letter-spacing: 0.2px;
     line-height: 2;
   }
 }
 
-@media screen and (min-width:850px) {
+@media screen and (min-width:695px) {
   .home-page {
-    width: 85%;
-    height: 90%;
 
     &__welcome {
-      padding-top: 20px;
+      margin: 80px 40px 0 40px;
+    }
+
+    &__instruction {
+      margin: 40px 40px 0 40px;
     }
   }
 }
 
-@media screen and (max-width:850px) {
+@media screen and (max-width:695px) {
   .home-page {
-    width: 85%;
-    height: 100%;
+
+    &__welcome {
+      margin: 30px 30px 0 30px;
+    }
+
+    &__instruction {
+      margin: 20px 30px 0 30px;
+    }
   }
 }
