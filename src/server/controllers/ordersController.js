@@ -57,6 +57,9 @@ exports.get = function (req, res, next) {
     include: [{ all: true }]
   })
     .then(order => {
+      if (order === null) {
+        return next(error(404, `Order with id = ${req.params.id} not found!`))
+      }
       res.json(order)
     })
     .catch(() => {
@@ -175,6 +178,9 @@ exports.update = function (req, res, next) {
       })
     })
     .then((order) => {
+      if (order === null) {
+        return next(error(404, `Order with id = ${req.params.id} not found for update!`))
+      }
       res.json(order)
     })
     .catch(() => {

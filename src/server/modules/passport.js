@@ -34,8 +34,7 @@ passport.use('login',
           }
         })
           .then(dbUser => {
-            const json = JSON.stringify(dbUser)
-            const user = JSON.parse(json)
+            const user = dbUser.get()
             if (!user) {
               return done(null, false, {
                 code: 404,

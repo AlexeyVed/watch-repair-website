@@ -39,6 +39,9 @@ exports.get = function (req, res, next) {
     include: [ { model: City } ]
   })
     .then((worker) => {
+      if (worker === null) {
+        return next(error(404, `Master with id = ${req.params.id} not found!`))
+      }
       res.send(worker)
     })
     .catch(() => {
@@ -168,6 +171,9 @@ exports.update = function (req, res, next) {
       })
     })
     .then(master => {
+      if (master === null) {
+        return next(error(404, `Master with id = ${req.params.id} not found for update!`))
+      }
       res.status(201).json(master)
     })
     .catch(() => {
