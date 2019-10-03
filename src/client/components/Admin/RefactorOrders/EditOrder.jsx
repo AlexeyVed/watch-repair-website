@@ -46,7 +46,7 @@ class EditOrder extends React.Component {
       max = orderDate
     } else {
       min = today
-      max = new Date(today.getFullYear(), today.getMonth() + 2, 0)
+      max = new Date(today.getFullYear(), today.getMonth() + 6, 0)
     }
 
     const workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17]

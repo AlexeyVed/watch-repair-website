@@ -108,8 +108,8 @@ class OrderForm extends Component {
           <Field
             label='Choose date'
             name='date'
-            min={ today.date }
-            max= { new Date(today.date.getFullYear(), today.date.getMonth() + 6, 0) }
+            min={today.date}
+            max= {new Date(today.date.getFullYear(), today.date.getMonth() + 6, 0)}
             component={DateField}
             type='date'
             onChange={() => {
