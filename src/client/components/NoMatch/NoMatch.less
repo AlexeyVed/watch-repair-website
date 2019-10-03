@@ -1,6 +1,6 @@
 @import '../../style/global-variable.less';
 
-.main-no-match {
+.main-no-match, .main-no-match-admin {
   flex: 1;  
   display: flex;
   flex-direction: column;
@@ -25,25 +25,6 @@
 
 .main-no-match-admin {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
-
-
-  &__logo {
-    width: 80px;
-    height: 80px;
-    background: url(../../image/notFound.png) no-repeat;
-    margin-bottom: 30px;
-  }
-
-  &__text {
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 120px;
-  }
 }
 
 @media screen and (min-width:696px) {
