@@ -88,10 +88,7 @@ const masterReducer = (state = initialState, action) => {
     case ADD_MASTER_SUCCESS:
       return {
         ...state,
-        data: [
-          ...state.data,
-          action.payload
-        ],
+        data: state.data.concat(action.payload),
         redirectBackFromRefactor: true,
         refactorModelInProcess: false,
         showModal: true,
