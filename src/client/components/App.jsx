@@ -5,6 +5,7 @@ import axios from 'axios'
 
 import PrivateRoute from './PrivateRouter/PrivateRouter.jsx'
 import Preloader from './App/Preloader/Preloader.jsx'
+import AppSnackbars from './App/AlertsApp/AlertsApp.jsx'
 import Header from './App/Header/Header.jsx'
 import Footer from './App/Footer/Footer.jsx'
 import MainOrder from './App/MainOrder/MainOrder.jsx'
@@ -42,6 +43,7 @@ class App extends React.Component {
           <Footer/>
           {(isPreloader) ? <Preloader/> : null}
         </div>
+        <AppSnackbars/>
       </div>
     )
   }
