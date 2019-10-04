@@ -65,7 +65,7 @@ class RefactorCities extends React.Component {
         <td>{item.city}</td>
         <td>
           <LinkButton to={`/admin/cities/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <DropMenu DropDelete={ deleteCity } DropCancel={ deleteCity } itemId={ item.id } text={ deleteText }/>
+          <DropMenu className='button-refactor-models' DropDelete={ deleteCity } DropCancel={ deleteCity } itemId={ item.id } text={ deleteText }/>
         </td>
       </tr>
     })

@@ -19,8 +19,8 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 10,
     right: 30,
-    width: '130px',
-    height: '100px',
+    boxSizing: 'content-box',
+    minWidth: '150px',
     display: 'flex',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
     border: '1px solid gray',
@@ -31,13 +31,13 @@ const useStyles = makeStyles(theme => ({
   header: {
     flex: '1 0 30px',
     display: 'flex',
-    padding: '0 10px 0 10px',
-    alignItems: 'center',
-    justifyContent: 'center'
+    padding: '10px 10px 0 10px',
+    textAlign: 'center'
   },
   container: {
-    flex: '0 0 40px',
-    width: '130px'
+    flex: '0 0 28px',
+    margin: '10px 0 10px 0',
+    width: '100%'
   },
   buttons: {
     margin: 'auto',
