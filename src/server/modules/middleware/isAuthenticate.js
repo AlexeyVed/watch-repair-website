@@ -9,6 +9,6 @@ module.exports = (req, res, next) => {
       next()
     }
   } catch (err) {
-    res.redirect('/')
+    res.status(401).send('Auth failed')
   }
 }

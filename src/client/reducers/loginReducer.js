@@ -3,7 +3,10 @@ import {
   SING_IN_FAILURE,
   SING_IN_STARTED,
   LOG_OUT,
-  LOGIN_ERROR_NULL
+  LOGIN_ERROR_NULL,
+  CHECK_ACCESS_ADMIN_STARTED,
+  CHECK_ACCESS_ADMIN_SUCCESS,
+  CHECK_ACCESS_ADMIN_FAILURE
 } from '../actions/types.js'
 
 const client = localStorage.getItem('user')
@@ -11,7 +14,8 @@ const client = localStorage.getItem('user')
 const initialState = {
   singInUser: client || null,
   singInLoading: false,
-  singInError: null
+  singInError: null,
+  isAuth: false
 }
 
 const loginReducer = (state = initialState, action) => {
@@ -38,6 +42,29 @@ const loginReducer = (state = initialState, action) => {
         singInError: null
       }
 
+    case CHECK_ACCESS_ADMIN_STARTED:
+      return {
+        ...state,
+        singInLoading: true
+      }
+
+    case CHECK_ACCESS_ADMIN_SUCCESS:
+      return {
+        ...state,
+        singInLoading: false,
+        singInError: null,
+        isAuth: true
+      }
+
+    case CHECK_ACCESS_ADMIN_FAILURE:
+      return {
+        ...state,
+        singInUser: null,
+        singInLoading: false,
+        singInError: action.payload,
+        isAuth: false
+      }
+
     case LOG_OUT:
       return {
         ...state,
@@ -47,7 +74,8 @@ const loginReducer = (state = initialState, action) => {
     case LOGIN_ERROR_NULL:
       return {
         ...state,
-        singInError: null
+        singInError: null,
+        errorAuth: null
       }
 
     default:

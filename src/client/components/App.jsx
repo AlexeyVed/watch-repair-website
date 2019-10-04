@@ -20,7 +20,7 @@ class App extends React.Component {
     }
   }
   render () {
-    const { isOrder, isLogin, user, cityLoad, clockLoad, customerLoad, masterLoad, orderLoad } = this.props
+    const { isOrder, isLogin, cityLoad, clockLoad, customerLoad, masterLoad, orderLoad } = this.props
 
     const isPreloader = cityLoad ||
         clockLoad ||
@@ -36,7 +36,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={MainOrder}/>
             <Route path='/login' component={MainOrder}/>
-            <PrivateRoute path='/admin/' component={MainAdmin} auth={user}/>
+            <PrivateRoute path='/admin/' component={MainAdmin}/>
             <Route component={NoMatch} />
           </Switch>
           <Footer/>
