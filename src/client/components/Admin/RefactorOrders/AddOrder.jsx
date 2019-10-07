@@ -17,8 +17,8 @@ import '../../../style/refactor-modal.less'
 class AddOrder extends React.Component {
   state = {
     workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
-    date: {
-      date: null,
+    today: {
+      date: new Date(),
       time: null
     }
   }
@@ -34,7 +34,7 @@ class AddOrder extends React.Component {
           return false
         }
       }),
-      date: date
+      today: date
     }))
 
     const initialValues = {
@@ -46,6 +46,7 @@ class AddOrder extends React.Component {
 
   render () {
     const { handleSubmit, addOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
+    const { today } = this.state
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
@@ -124,8 +125,8 @@ class AddOrder extends React.Component {
               <Field
                 label='Choose date'
                 name='date'
-                min={this.state.date.date}
-                max='2019-12-30'
+                min={today.date}
+                max={new Date(today.date.getFullYear(), today.date.getMonth() + 6, 0)}
                 component={DateField}
                 validate={[required]}
                 type='date'
