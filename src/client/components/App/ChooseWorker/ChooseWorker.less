@@ -3,17 +3,10 @@
 .choose-worker {
   margin: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
 
-  .buttonHome {
-    font-size: 50px;
-    position: absolute;
-    left: 0;
-    padding: 0;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    outline: none;
+  &__header__title {
+    text-align: center;
   }
 
   &__table {
@@ -32,21 +25,7 @@
     }
   }
 
-  &__button-confirm {
-    button {
-      height: 35px;
-      width: 90px;
-      padding: 0;
-      border: none;
-      font: inherit;
-      color: inherit;
-      cursor: pointer;
-      background-color: #f2f2e8;
-      outline: none;
-      border: 1px solid #b5b5b5;
-      border-radius: 4px;
-    }
-  }
+  
 }
 
 @media screen and (max-width:695px) {
@@ -54,9 +33,18 @@
     width: 100%;
     height: 100%;
 
+    &__header {
+      height: 50px;
+
+      &__title {
+        font-size: 16px;
+        line-height: 50px;
+      }
+    }
+
     &__table {
       flex: 1 0;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
 
       &__worker {
         height: 45px;
@@ -95,32 +83,24 @@
             height: 60px;
             padding: 10px 20px 0 0;
             text-align: right;
-
           }
         }
       }
     }
 
-    &__button-confirm {
+    &__buttons {
       flex: 0 0 60px;
-      padding-left: 40px; 
-    }
+  
+      button {
+        margin: 5px 0 0 30px;
+        width: 90px;
+        font-size: 11px;
+        height: 30px;
 
-    &__header {
-      margin-top: 20px;
-      height: 40px;
-      text-align: center;
-      font-size: 20px;
-    }
-
-    .buttonHome {
-      height: calc(100% - 96px);
-      width: 45px;
-      background-color: rgba(158, 158, 158, 0.041);
-      color: rgba(132, 130, 138, 0.58);
-      z-index: 3;
-      position: fixed;
-      top: 62px;
+        .MuiSvgIcon-root {
+          font-size: 15px;
+        }
+      }
     }
   }
 }
@@ -130,9 +110,18 @@
     width: 100%;
     height: 100%;
 
+    &__header {
+      height: 90px;
+
+      &__title {
+        font-size: 20px;
+        line-height: 90px;
+      }
+    }
+
     &__table {
       flex: 1;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
 
       &__worker {
         height: 60px;
@@ -175,24 +164,17 @@
       }
     }
 
-    &__header {
-      height: 60px;
-      margin-top: 30px;
-      text-align: center;
-      font-size: 20px;
-    }
+    &__buttons {
+      flex: 0 0 90px;
+  
+      button {
+        margin: 10px 0 0 40px;
+        width: 100px;
+      }
 
-    &__button-confirm {
-      flex: 0 0 80px;
-      padding-left: 50px; 
-    }
-
-    .buttonHome {
-      top: 0;
-      height: 95vh;
-      width: 10vw;
-      background-color: rgba(255, 253, 241, 0);
-      color: #f5f5eb;
+      .MuiSvgIcon-root {
+        font-size: 20px;
+      }
     }
   }
 }
