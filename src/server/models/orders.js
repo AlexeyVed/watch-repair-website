@@ -13,6 +13,11 @@ const Order = db.define('orders', {
   time: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  duration: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0
   }
 },
 {

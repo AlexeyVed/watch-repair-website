@@ -4,12 +4,13 @@ const City = require('../models/cities.js')
 
 exports.list = function (req, res, next) {
   City.findAll({
-    order: [ ['city', 'ASC'] ]
+    order: [ ['name', 'ASC'] ]
   })
     .then(cities => {
       res.json(cities)
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       next(error(400, 'Error get list of cities'))
     })
 }
@@ -56,7 +57,8 @@ exports.add = function (req, res, next) {
     .then(result => {
       res.status(201).json(result)
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       next(error(400, 'Error add city'))
     })
 }

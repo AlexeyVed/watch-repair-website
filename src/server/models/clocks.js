@@ -2,11 +2,11 @@ const Sequelize = require('sequelize')
 const db = require('../db/db-connection.js')
 
 const Clock = db.define('clocks', {
-  typeClock: {
+  name: {
     type: Sequelize.STRING(191),
     allowNull: false
   },
-  timeRepair: {
+  duration: {
     type: Sequelize.INTEGER,
     allowNull: false
   }
