@@ -158,12 +158,12 @@ exports.update = function (req, res, next) {
     })
     .then(() => {
       return Order.update({
-        date: date,
-        time: time,
-        customer_id: customer_id,
-        clock_id: clock_id,
-        city_id: city_id,
-        master_id: master_id
+        date,
+        time,
+        customer_id,
+        clock_id,
+        city_id,
+        master_id
       }, {
         where: { id: req.params.id }
       })
@@ -222,8 +222,8 @@ exports.getWorkers = function (req, res, next) {
       req.body = { ...req.body, timeRepair: clock.duration }
       return Order.findAll({
         where: {
-          date: date,
-          city_id: city_id
+          date,
+          city_id
         },
         include: [ { model: Clock } ]
       })
@@ -337,12 +337,12 @@ exports.addAdmin = function (req, res, next) {
         return next(error(400, 'Master doesnt work in this town'))
       }
       return Order.create({
-        time: time,
-        date: date,
-        city_id: city_id,
-        clock_id: clock_id,
-        customer_id: customer_id,
-        master_id: master_id,
+        time,
+        date,
+        city_id,
+        clock_id,
+        customer_id,
+        master_id,
         duration: req.body.timeRepair
       })
     })
@@ -432,12 +432,12 @@ exports.add = function (req, res, next) {
         }).id
       }
       return Order.create({
-        time: time,
-        date: date,
+        time,
+        date,
         customer_id: req.body.customerId,
-        clock_id: clock_id,
-        city_id: city_id,
-        master_id: master_id,
+        clock_id,
+        city_id,
+        master_id,
         duration: req.body.timeRepair
       })
     })
