@@ -60,7 +60,7 @@ class RefactorCities extends React.Component {
     const renderItems = currentItem.map((item, index) => {
       return <tr key={item.id}>
         <td>{indexes()}</td>
-        <td>{item.city}</td>
+        <td>{item.name}</td>
         <td>
           <LinkButton to={`/admin/cities/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
           <button onClick={ () => deleteCity(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>

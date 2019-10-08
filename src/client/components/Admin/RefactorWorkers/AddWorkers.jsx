@@ -41,7 +41,7 @@ class AddWorkers extends React.Component {
                 placeholder='Enter workers name'
               />
               <Field
-                name='cityId'
+                name='city_id'
                 id='city'
                 label='Enter city'
                 component={SelectField}
@@ -50,7 +50,7 @@ class AddWorkers extends React.Component {
               >
                 {
                   chooseCities.map(item => (
-                    <MenuItem key={item.id} value={item.id}>{item.city}</MenuItem>
+                    <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
                   ))
                 }
               </Field>

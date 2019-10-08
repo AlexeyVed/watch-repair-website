@@ -2,78 +2,67 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.changeColumn('masters', 'city_id', {
-      type: Sequelize.INTEGER,
+    return queryInterface.addConstraint('masters', ['city_id'], {
+      type: 'foreign key',
+      name: 'masters_city_id_foreign_idx',
       allowNull: false,
-      onUpdate: 'CASCADE',
-      onDelete: 'RESTRICT'
+      references: {
+        table: 'cities',
+        field: 'id'
+      },
+      onDelete: 'RESTRICT',
+      onUpdate: 'CASCADE'
     })
       .then(() => {
-        return queryInterface.changeColumn('orders', 'city_id', {
-          type: Sequelize.INTEGER,
+        return queryInterface.addConstraint('orders', ['city_id'], {
+          type: 'foreign key',
+          name: 'orders_city_id_foreign_idx',
           allowNull: false,
-          onUpdate: 'CASCADE',
-          onDelete: 'RESTRICT'
+          references: {
+            table: 'cities',
+            field: 'id'
+          },
+          onDelete: 'RESTRICT',
+          onUpdate: 'CASCADE'
         })
       })
       .then(() => {
-        return queryInterface.changeColumn('orders', 'customer_id', {
-          type: Sequelize.INTEGER,
+        return queryInterface.addConstraint('orders', ['customer_id'], {
+          type: 'foreign key',
+          name: 'orders_customer_id_foreign_idx',
           allowNull: false,
-          onUpdate: 'CASCADE',
-          onDelete: 'RESTRICT'
+          references: {
+            table: 'customers',
+            field: 'id'
+          },
+          onDelete: 'RESTRICT',
+          onUpdate: 'CASCADE'
         })
       })
       .then(() => {
-        return queryInterface.changeColumn('orders', 'clock_id', {
-          type: Sequelize.INTEGER,
+        return queryInterface.addConstraint('orders', ['clock_id'], {
+          type: 'foreign key',
+          name: 'orders_clock_id_foreign_idx',
           allowNull: false,
-          onUpdate: 'CASCADE',
-          onDelete: 'RESTRICT'
+          references: {
+            table: 'clocks',
+            field: 'id'
+          },
+          onDelete: 'RESTRICT',
+          onUpdate: 'CASCADE'
         })
       })
       .then(() => {
-        return queryInterface.changeColumn('orders', 'master_id', {
-          type: Sequelize.INTEGER,
+        return queryInterface.addConstraint('orders', ['master_id'], {
+          type: 'foreign key',
+          name: 'orders_master_id_foreign_idx',
           allowNull: false,
-          onUpdate: 'CASCADE',
-          onDelete: 'RESTRICT'
-        })
-      })
-  },
-
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.changeColumn('masters', 'cidy_id', {
-      type: Sequelize.INTEGER,
-      onUpdate: 'CASCADE',
-      onDelete: 'SET NULL'
-    })
-      .then(() => {
-        return queryInterface.changeColumn('orders', 'city_id', {
-          type: Sequelize.INTEGER,
-          onUpdate: 'CASCADE',
-          onDelete: 'SET NULL'
-        })
-      })
-      .then(() => {
-        return queryInterface.changeColumn('orders', 'customer_id', {
-          type: Sequelize.INTEGER,
-          onUpdate: 'CASCADE',
-          onDelete: 'SET NULL'
-        })
-      })
-      .then(() => {
-        return queryInterface.changeColumn('orders', 'clock_id', {
-          type: Sequelize.INTEGER,
-          onUpdate: 'CASCADE',
-          onDelete: 'SET NULL'
-        })
-      })
-      .then(() => {
-        return queryInterface.changeColumn('orders', 'master_id', {
-          type: Sequelize.INTEGER,
-          onUpdate: 'CASCADE',
-          onDelete: 'SET NULL'
+          references: {
+            table: 'masters',
+            field: 'id'
+          },
+          onDelete: 'RESTRICT',
+          onUpdate: 'CASCADE'
         })
       })
   }

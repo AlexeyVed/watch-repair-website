@@ -98,28 +98,28 @@ exports.updateValidation = checkSchema({
     toInt: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  masterId: {
+  master_id: {
     in: ['body'],
     errorMessage: 'Master is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  customerId: {
+  customer_id: {
     in: ['body'],
     errorMessage: 'Customer is wrong',
     isInt: true,
@@ -145,13 +145,13 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, customerId, clockId, cityId, masterId } = req.body
-  Master.findByPk(masterId, {
+  const { date, time, customer_id, clock_id, city_id, master_id } = req.body
+  Master.findByPk(master_id, {
     raw: true,
     nest: true
   })
     .then(master => {
-      if (master.cityId !== +cityId) {
+      if (master.city_id !== +city_id) {
         return next(error(400, 'Master doesnt work in this town'))
       }
       return true
@@ -160,10 +160,10 @@ exports.update = function (req, res, next) {
       return Order.update({
         date: date,
         time: time,
-        customerId: customerId,
-        clockId: clockId,
-        cityId: cityId,
-        masterId: masterId
+        customer_id: customer_id,
+        clock_id: clock_id,
+        city_id: city_id,
+        master_id: master_id
       }, {
         where: { id: req.params.id }
       })
@@ -183,14 +183,14 @@ exports.update = function (req, res, next) {
 }
 
 exports.getWorkersValidation = checkSchema({
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
@@ -216,14 +216,14 @@ exports.getWorkers = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, clockId, cityId } = req.body
-  Clock.findByPk(clockId)
+  const { date, clock_id, city_id } = req.body
+  Clock.findByPk(clock_id)
     .then(clock => {
-      req.body = { ...req.body, timeRepair: clock.timeRepair }
+      req.body = { ...req.body, timeRepair: clock.duration }
       return Order.findAll({
         where: {
           date: date,
-          cityId: cityId
+          city_id: city_id
         },
         include: [ { model: Clock } ]
       })
@@ -237,10 +237,10 @@ exports.getWorkers = function (req, res, next) {
       })
     })
     .then(busyMasters => {
-      const arrayIdBusyMaster = busyMasters.map(master => master.masterId)
+      const arrayIdBusyMaster = busyMasters.map(master => master.master_id)
       return Master.findAll({
         where: {
-          cityId: req.body.cityId,
+          city_id: req.body.city_id,
           id: { [Op.notIn]: arrayIdBusyMaster }
         },
         include: [{ all: true }],
@@ -259,28 +259,28 @@ exports.getWorkers = function (req, res, next) {
 }
 
 exports.addAdminValidation = checkSchema({
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  masterId: {
+  master_id: {
     in: ['body'],
     errorMessage: 'Master is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  customerId: {
+  customer_id: {
     in: ['body'],
     errorMessage: 'Customer is wrong',
     isInt: true,
@@ -306,14 +306,14 @@ exports.addAdmin = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, customerId, clockId, cityId, masterId } = req.body
-  Clock.findByPk(clockId)
+  const { date, time, customer_id, clock_id, city_id, master_id } = req.body
+  Clock.findByPk(clock_id)
     .then(reqClock => {
-      req.body = { ...req.body, timeRepair: reqClock.timeRepair }
+      req.body = { ...req.body, timeRepair: reqClock.duration }
       return Order.findAll({
         where: {
-          masterId: masterId,
-          cityId: cityId,
+          master_id: master_id,
+          city_id: city_id,
           date: date
         },
         include: [{ model: Clock }],
@@ -324,25 +324,25 @@ exports.addAdmin = function (req, res, next) {
     .then(result => {
       const isCreated = result.filter(order => {
         return (order.time < time)
-          ? ((order.time + order.clock.timeRepair) >= time)
+          ? ((order.time + order.clock.duration) >= time)
           : ((time + req.body.timeRepair) >= order.time)
       })
       if (isCreated.length) {
         return next(error(400, 'Master already busy at this time.'))
       }
-      return Master.findByPk(masterId)
+      return Master.findByPk(master_id)
     })
     .then(master => {
-      if (master.cityId !== +cityId) {
+      if (master.city_id !== +city_id) {
         return next(error(400, 'Master doesnt work in this town'))
       }
       return Order.create({
         time: time,
         date: date,
-        cityId: cityId,
-        clockId: clockId,
-        customerId: customerId,
-        masterId: masterId
+        city_id: city_id,
+        clock_id: clock_id,
+        customer_id: customer_id,
+        master_id: master_id
       })
     })
     .then(order => {
@@ -366,21 +366,21 @@ exports.addValidation = checkSchema({
     isAlpha: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  masterId: {
+  master_id: {
     in: ['body'],
     errorMessage: 'Master is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
@@ -412,7 +412,7 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, email, clockId, cityId, masterId, name } = req.body
+  const { date, time, email, clock_id, city_id, master_id, name } = req.body
   Customer.findOrCreate({
     where: { email: email },
     defaults: { name: name }
@@ -427,15 +427,15 @@ exports.add = function (req, res, next) {
       return Order.create({
         time: time,
         date: date,
-        customerId: req.body.customerId,
-        clockId: clockId,
-        cityId: cityId,
-        masterId: masterId
+        customer_id: req.body.customerId,
+        clock_id: clock_id,
+        city_id: city_id,
+        master_id: master_id
       })
     })
     .then(result => {
       return Order.findOne({
-        where: { id: result.dataValues.id },
+        where: { id: result.get().id },
         include: [{ all: true }],
         raw: true,
         nest: true

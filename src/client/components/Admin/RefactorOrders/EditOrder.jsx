@@ -49,7 +49,7 @@ class EditOrder extends React.Component {
           load: false
         }
         ))
-        this.props.dispatch(initialize('editOrder', res.data, ['id', 'customerID', 'masterID', 'cityID', 'time']))
+        this.props.dispatch(initialize('editOrder', res.data, ['id', 'customer_id', 'master_id', 'city_id', 'time']))
       })
       .catch(err => {
         console.log(err)
@@ -84,7 +84,7 @@ class EditOrder extends React.Component {
                 input={{ disabled: true }}
               />
               <Field
-                name='customerId'
+                name='customer_id'
                 id='customer'
                 label='Choose client email'
                 component={SelectField}
@@ -98,7 +98,7 @@ class EditOrder extends React.Component {
                 }
               </Field>
               <Field
-                name='masterId'
+                name='master_id'
                 id='master'
                 label='Choose master'
                 component={SelectField}
@@ -112,7 +112,7 @@ class EditOrder extends React.Component {
                 }
               </Field>
               <Field
-                name='clockId'
+                name='clock_id'
                 id='clock'
                 label='Choose time repair'
                 component={SelectField}
@@ -121,13 +121,13 @@ class EditOrder extends React.Component {
               >
                 {
                   chooseClock.map((clock, index) => (
-                    <MenuItem key={index} value={clock.id}>{clock.timeRepair}</MenuItem>
+                    <MenuItem key={index} value={clock.id}>{clock.name}</MenuItem>
                   ))
                 }
               </Field>
 
               <Field
-                name='cityId'
+                name='city_id'
                 id='city'
                 label='Choose your city'
                 component={SelectField}
@@ -136,7 +136,7 @@ class EditOrder extends React.Component {
               >
                 {
                   chooseCities.map((item, index) => (
-                    <MenuItem key={index} value={item.id}>{item.city}</MenuItem>
+                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
                   ))
                 }
               </Field>

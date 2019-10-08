@@ -7,7 +7,7 @@ exports.list = function (req, res, next) {
   Master.findAll({
     include: [ { model: City } ],
     order: [
-      [City, 'city', 'ASC'],
+      [City, 'name', 'ASC'],
       ['name', 'ASC']
     ]
   })
@@ -60,7 +60,7 @@ exports.addValidation = checkSchema({
     isAlpha: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
@@ -77,7 +77,7 @@ exports.add = function (req, res, next) {
   Master.create({
     name: req.body.name,
     rating: req.body.rating,
-    cityId: req.body.cityId
+    city_id: req.body.city_id
   })
     .then(result => {
       return Master.findOne({
@@ -133,7 +133,7 @@ exports.updateValidation = checkSchema({
     isAlpha: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
@@ -157,7 +157,7 @@ exports.update = function (req, res, next) {
   Master.update({
     name: req.body.name,
     rating: req.body.rating,
-    cityId: req.body.cityId
+    city_id: req.body.city_id
   }, {
     where: { id: req.params.id }
   })

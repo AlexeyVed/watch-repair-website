@@ -44,7 +44,7 @@ class ChooseWorker extends React.Component {
     if (masterId) {
       const fullOrder = {
         ...order,
-        masterId
+        master_id: masterId
       }
       buttonConf = <button onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
     } else {
@@ -65,7 +65,7 @@ class ChooseWorker extends React.Component {
               <div className='worker-image'></div>
               <div className='worker-info'>
                 <div className='worker-info__name'>{item.name}</div>
-                <div className='worker-info__city'>Work in {(item.city !== null) ? item.city.city : null}</div>
+                <div className='worker-info__city'>Work in { item.city.name }</div>
                 <div className='worker-info__rating'>Rating: {item.rating}</div>
               </div>
             </div>

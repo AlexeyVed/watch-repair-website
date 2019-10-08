@@ -9,8 +9,7 @@ exports.list = function (req, res, next) {
     .then(cities => {
       res.json(cities)
     })
-    .catch((err) => {
-      console.log(err)
+    .catch(() => {
       next(error(400, 'Error get list of cities'))
     })
 }
@@ -40,7 +39,7 @@ exports.get = function (req, res, next) {
 }
 
 exports.addValidation = checkSchema({
-  city: {
+  name: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isAlpha: true,
@@ -53,12 +52,11 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  City.create({ city: req.body.city })
+  City.create({ name: req.body.name })
     .then(result => {
       res.status(201).json(result)
     })
-    .catch((err) => {
-      console.log(err)
+    .catch(() => {
       next(error(400, 'Error add city'))
     })
 }
@@ -97,7 +95,7 @@ exports.updateValidation = checkSchema({
     toInt: true,
     isEmpty: false
   },
-  city: {
+  name: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isAlpha: true,
@@ -111,7 +109,7 @@ exports.update = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   City.update({
-    city: req.body.city }, {
+    name: req.body.name }, {
     where: { id: req.params.id }
   })
     .then((result) => {

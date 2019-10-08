@@ -86,8 +86,7 @@ const cityReducer = (state = initialState, action) => {
       return {
         ...state,
         data: state.data.map(city => {
-          if (city.id === Number(action.payload.id)) {
-            action.payload.id = Number(action.payload.id)
+          if (city.id === action.payload.id) {
             return action.payload
           }
           return city

@@ -65,7 +65,7 @@ class AddOrder extends React.Component {
             <form
               onSubmit={handleSubmit(addOrder)}>
               <Field
-                name='customerId'
+                name='customer_id'
                 id='customer'
                 label='Choose client email'
                 component={SelectField}
@@ -79,7 +79,7 @@ class AddOrder extends React.Component {
                 }
               </Field>
               <Field
-                name='masterId'
+                name='master_id'
                 id='master'
                 label='Choose master'
                 component={SelectField}
@@ -93,7 +93,7 @@ class AddOrder extends React.Component {
                 }
               </Field>
               <Field
-                name='clockId'
+                name='clock_id'
                 id='clock'
                 label='Choose your clock'
                 component={SelectField}
@@ -102,12 +102,12 @@ class AddOrder extends React.Component {
               >
                 {
                   chooseClock.map((clock, index) => (
-                    <MenuItem key={index} value={clock.id}>{clock.typeClock}</MenuItem>
+                    <MenuItem key={index} value={clock.id}>{clock.name}</MenuItem>
                   ))
                 }
               </Field>
               <Field
-                name='cityId'
+                name='city_id'
                 id='city'
                 label='Choose your city'
                 component={SelectField}
@@ -116,7 +116,7 @@ class AddOrder extends React.Component {
               >
                 {
                   chooseCities.map((item, index) => (
-                    <MenuItem key={index} value={item.id}>{item.city}</MenuItem>
+                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
                   ))
                 }
               </Field>

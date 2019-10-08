@@ -29,7 +29,7 @@ class EditWorkers extends React.Component {
           load: false
         }
         ))
-        this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'rating', 'city']))
+        this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'rating', 'city_id']))
       })
       .catch(err => {
         console.log(err)
@@ -70,7 +70,7 @@ class EditWorkers extends React.Component {
                 placeholder='Update worker name'
               />
               <Field
-                name='cityId'
+                name='city_id'
                 id='city'
                 label='Enter city'
                 component={SelectField}
@@ -79,7 +79,7 @@ class EditWorkers extends React.Component {
               >
                 {
                   chooseCities.map(item => (
-                    <MenuItem key={item.id} value={item.id}>{item.city}</MenuItem>
+                    <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
                   ))
                 }
               </Field>

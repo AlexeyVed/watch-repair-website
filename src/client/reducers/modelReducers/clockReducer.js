@@ -86,9 +86,7 @@ const clockReducer = (state = initialState, action) => {
       return {
         ...state,
         data: state.data.map(clock => {
-          if (clock.id === Number(action.payload.id)) {
-            action.payload.id = Number(action.payload.id)
-            action.payload.timeRepair = Number(action.payload.timeRepair)
+          if (clock.id === action.payload.id) {
             return action.payload
           }
           return clock

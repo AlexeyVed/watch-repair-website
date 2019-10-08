@@ -27,7 +27,7 @@ class EditClocks extends React.Component {
           load: false
         }
         ))
-        this.props.dispatch(initialize('editClock', res.data, ['id', 'typeClock', 'timeRepair']))
+        this.props.dispatch(initialize('editClock', res.data, ['id', 'name', 'duration']))
       })
       .catch(err => {
         console.log(err)
@@ -60,7 +60,7 @@ class EditClocks extends React.Component {
               />
               <Field
                 label='Enter type of clock'
-                name='typeClock'
+                name='name'
                 component={TextField}
                 validate={[required, validateOnlyLetter]}
                 type='text'
@@ -68,7 +68,7 @@ class EditClocks extends React.Component {
               />
               <Field
                 label='Enter time of repair clock'
-                name='timeRepair'
+                name='duration'
                 component={TextField}
                 validate={[required, validateTimeRepairClock]}
                 inputProps={{ min: '1', max: '12', step: '1' }}

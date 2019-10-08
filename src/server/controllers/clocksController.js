@@ -4,7 +4,7 @@ const Clock = require('../models/clocks.js')
 
 exports.list = function (req, res, next) {
   Clock.findAll({
-    order: [ ['timeRepair', 'ASC'] ]
+    order: [ ['duration', 'ASC'] ]
   })
     .then(clocks => {
       res.json(clocks)
@@ -39,13 +39,13 @@ exports.get = function (req, res, next) {
 }
 
 exports.addValidation = checkSchema({
-  typeClock: {
+  name: {
     in: ['body'],
     errorMessage: 'Type of clock is wrong',
     isAlpha: true,
     isEmpty: false
   },
-  timeRepair: {
+  duration: {
     in: ['body'],
     errorMessage: 'Time repair is wrong',
     isInt: true,
@@ -53,7 +53,7 @@ exports.addValidation = checkSchema({
     isEmpty: false,
     custom: {
       options: (value, { req, location, path }) => {
-        return req.body.timeRepair > 0 && req.body.timeRepair <= 12
+        return req.body.duration > 0 && req.body.duration <= 12
       }
     }
   }
@@ -65,8 +65,8 @@ exports.add = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Clock.create({
-    typeClock: req.body.typeClock,
-    timeRepair: req.body.timeRepair
+    name: req.body.name,
+    duration: req.body.duration
   })
     .then(result => {
       res.status(201).json(result)
@@ -110,21 +110,20 @@ exports.updateValidation = checkSchema({
     toInt: true,
     isEmpty: false
   },
-  typeClock: {
+  name: {
     in: ['body'],
     errorMessage: 'Type of clock is wrong',
     isAlpha: true,
     isEmpty: false
   },
-  timeRepair: {
+  duration: {
     in: ['body'],
     errorMessage: 'Time repair is wrong',
     isInt: true,
-    toInt: true,
     isEmpty: false,
     custom: {
       options: (value, { req, location, path }) => {
-        return req.body.timeRepair > 0 && req.body.timeRepair <= 12
+        return req.body.duration > 0 && req.body.duration <= 12
       }
     }
   }
@@ -136,8 +135,8 @@ exports.update = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   Clock.update({
-    typeClock: req.body.typeClock,
-    timeRepair: req.body.timeRepair
+    name: req.body.name,
+    duration: req.body.duration
   }, {
     where: { id: req.params.id }
   })

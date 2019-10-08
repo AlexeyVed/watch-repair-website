@@ -86,9 +86,7 @@ const masterReducer = (state = initialState, action) => {
       return {
         ...state,
         data: state.data.map(worker => {
-          if (worker.id === Number(action.payload.id)) {
-            action.payload.id = Number(action.payload.id)
-            action.payload.rating = Number(action.payload.rating)
+          if (worker.id === action.payload.id) {
             return action.payload
           }
           return worker

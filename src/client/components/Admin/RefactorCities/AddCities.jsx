@@ -32,7 +32,7 @@ class AddCities extends React.Component {
               onSubmit={handleSubmit(addCity)}>
               <Field
                 label='Enter city'
-                name='city'
+                name='name'
                 component={TextField}
                 validate={[required, validateOnlyLetter]}
                 type='text'

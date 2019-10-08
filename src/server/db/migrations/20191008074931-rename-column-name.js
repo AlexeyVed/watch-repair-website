@@ -27,7 +27,7 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.renameColumn('masters', 'cityId', 'city_id')
+    return queryInterface.renameColumn('masters', 'city_id', 'cityId')
       .then(() => {
         return queryInterface.renameColumn('cities', 'name', 'city')
       })

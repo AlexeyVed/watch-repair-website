@@ -60,8 +60,8 @@ class RefactorClocks extends React.Component {
     const renderItems = currentItem.map((item, index) => {
       return <tr key={item.id}>
         <td>{indexes()}</td>
-        <td>{item.typeClock}</td>
-        <td>{item.timeRepair}</td>
+        <td>{item.name}</td>
+        <td>{item.duration}</td>
         <td>
           <LinkButton to={`/admin/clocks/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
           <button onClick={ () => deleteClock(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>

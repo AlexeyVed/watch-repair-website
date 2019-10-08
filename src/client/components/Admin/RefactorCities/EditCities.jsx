@@ -27,7 +27,7 @@ class EditCities extends React.Component {
           load: false
         }
         ))
-        this.props.dispatch(initialize('editCity', res.data, ['id', 'city']))
+        this.props.dispatch(initialize('editCity', res.data, ['id', 'name']))
       })
   }
 
@@ -57,7 +57,7 @@ class EditCities extends React.Component {
               />
               <Field
                 label='Enter city'
-                name='city'
+                name='name'
                 component={TextField}
                 validate={[required, validateOnlyLetter]}
                 type='text'
