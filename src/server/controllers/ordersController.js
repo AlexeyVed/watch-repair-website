@@ -342,7 +342,8 @@ exports.addAdmin = function (req, res, next) {
         city_id: city_id,
         clock_id: clock_id,
         customer_id: customer_id,
-        master_id: master_id
+        master_id: master_id,
+        duration: req.body.timeRepair
       })
     })
     .then(order => {
@@ -413,10 +414,16 @@ exports.add = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   const { date, time, email, clock_id, city_id, master_id, name } = req.body
-  Customer.findOrCreate({
-    where: { email: email },
-    defaults: { name: name }
-  })
+  Clock.findByPk(clock_id)
+    .then(reqClock => {
+      req.body = { ...req.body, timeRepair: reqClock.duration }
+    })
+    .then(() => {
+      return Customer.findOrCreate({
+        where: { email: email },
+        defaults: { name: name }
+      })
+    })
     .then(([user, created]) => {
       req.body = {
         ...req.body,
@@ -430,7 +437,8 @@ exports.add = function (req, res, next) {
         customer_id: req.body.customerId,
         clock_id: clock_id,
         city_id: city_id,
-        master_id: master_id
+        master_id: master_id,
+        duration: req.body.timeRepair
       })
     })
     .then(result => {

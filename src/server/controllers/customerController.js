@@ -91,7 +91,10 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(() => {
+    .catch(err => {
+      if (err.name === 'SequelizeForeignKeyConstraintError') {
+        return next(error(409, 'Customer already have an order.'))
+      }
       next(error(400, 'Error delete customer'))
     })
 }
