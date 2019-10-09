@@ -11,7 +11,7 @@ import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addMastersToDB } from '../../../actions'
 import { required, validateOnlyLetter } from '../../../validation'
 
-import './RefactorWorkers.less'
+import '../../../style/refactor-modal.less'
 
 class AddWorkers extends React.Component {
   render () {
@@ -24,13 +24,14 @@ class AddWorkers extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-workers add-worker'>
-            <div className="refactor-workers__header">
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Add Worker
-              <LinkButton to='/admin/workers' name='&times;' className='refactor-workers__header__right-button-close'/>
+              <LinkButton to='/admin/workers' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
+              className='refactor-model__form'
               onSubmit={handleSubmit(addWorker)}>
               <Field
                 label='Enter workers name'
@@ -69,6 +70,7 @@ class AddWorkers extends React.Component {
                 <MenuItem key={5} value={5}>5</MenuItem>
               </Field>
               <button
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit
               </button>

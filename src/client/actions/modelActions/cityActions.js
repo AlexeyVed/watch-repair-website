@@ -2,16 +2,19 @@ import {
   LOAD_CITIES_STARTED,
   LOAD_CITIES_SUCCESS,
   LOAD_CITIES_FAILURE,
-  ADD_CITIES_STARTED,
-  ADD_CITIES_FAILURE,
-  ADD_CITIES_SUCCESS,
-  DELETE_CITIES_STARTED,
-  DELETE_CITIES_FAILURE,
-  DELETE_CITIES_SUCCESS,
-  EDIT_CITIES_STARTED,
-  EDIT_CITIES_FAILURE,
-  EDIT_CITIES_SUCCESS,
-  REDIRECT_FROM_REFACTOR
+  ADD_CITY_STARTED,
+  ADD_CITY_FAILURE,
+  ADD_CITY_SUCCESS,
+  DELETE_CITY_STARTED,
+  DELETE_CITY_FAILURE,
+  DELETE_CITY_SUCCESS,
+  EDIT_CITY_STARTED,
+  EDIT_CITY_FAILURE,
+  EDIT_CITY_SUCCESS,
+  REDIRECT_FROM_REFACTOR,
+  GET_CITY_STARTED,
+  GET_CITY_SUCCESS,
+  GET_CITY_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -30,9 +33,24 @@ export const loadCities = () => {
   }
 }
 
+export const getCity = id => {
+  return (dispatch) => {
+    dispatch({ type: GET_CITY_STARTED })
+    return axios
+      .get(`/api/cities/${id}`)
+      .then(res => {
+        dispatch({ type: GET_CITY_SUCCESS, payload: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: GET_CITY_FAILURE, payload: err.response.data })
+      })
+  }
+}
+
 export const addCityToDB = (values) => {
   return (dispatch) => {
-    dispatch({ type: ADD_CITIES_STARTED })
+    dispatch({ type: ADD_CITY_STARTED })
     return axios
       .post(`/api/cities/`, values)
       .then(res => {
@@ -49,7 +67,7 @@ export const addCityToDB = (values) => {
 
 export const editCityIntoDB = (values) => {
   return (dispatch) => {
-    dispatch({ type: EDIT_CITIES_STARTED })
+    dispatch({ type: EDIT_CITY_STARTED })
     return axios
       .put(`/api/cities/${values.id}`, values)
       .then(res => {
@@ -66,7 +84,7 @@ export const editCityIntoDB = (values) => {
 
 export const deleteCityFromDB = (id) => {
   return (dispatch) => {
-    dispatch({ type: DELETE_CITIES_STARTED })
+    dispatch({ type: DELETE_CITY_STARTED })
     return axios
       .delete(`/api/cities/${id}`)
       .then(res => {
@@ -89,34 +107,34 @@ export const loadCitiesSuccess = data => ({
 })
 
 export const addCitiesFailure = (err) => ({
-  type: ADD_CITIES_FAILURE,
+  type: ADD_CITY_FAILURE,
   payload: err
 })
 
 export const deleteCitiesFailure = (err) => ({
-  type: DELETE_CITIES_FAILURE,
+  type: DELETE_CITY_FAILURE,
   payload: err
 })
 
 export const editCitiesFailure = (err) => ({
-  type: EDIT_CITIES_FAILURE,
+  type: EDIT_CITY_FAILURE,
   payload: err
 })
 
 export const addCitiesSuccess = data => ({
-  type: ADD_CITIES_SUCCESS,
+  type: ADD_CITY_SUCCESS,
   message: 'City was successfully added.',
   payload: data
 })
 
 export const deleteCitiesSuccess = data => ({
-  type: DELETE_CITIES_SUCCESS,
+  type: DELETE_CITY_SUCCESS,
   message: 'City was successfully removed.',
   payload: data
 })
 
 export const editCitiesSuccess = data => ({
-  type: EDIT_CITIES_SUCCESS,
+  type: EDIT_CITY_SUCCESS,
   message: 'City was successfully edited.',
   payload: data
 })

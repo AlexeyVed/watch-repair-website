@@ -1,4 +1,11 @@
 const getDate = () => {
+  if (process.env.NODE_ENV === 'test') {
+    return {
+      date: new Date('1970-01-01'),
+      time: 10
+    }
+  }
+
   const now = new Date()
   const tomorrowDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
 
@@ -29,7 +36,7 @@ const getDate = () => {
       if (day < 10) {
         day = '0' + day
       }
-      return `${year}-${month}-${day}`
+      return new Date(`${year}-${month}-${day}`)
     }
   }
 

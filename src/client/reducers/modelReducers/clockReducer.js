@@ -2,18 +2,21 @@ import {
   LOAD_CLOCKS_STARTED,
   LOAD_CLOCKS_SUCCESS,
   LOAD_CLOCKS_FAILURE,
-  ADD_CLOCKS_STARTED,
-  ADD_CLOCKS_FAILURE,
-  ADD_CLOCKS_SUCCESS,
-  DELETE_CLOCKS_STARTED,
-  DELETE_CLOCKS_FAILURE,
-  DELETE_CLOCKS_SUCCESS,
-  EDIT_CLOCKS_STARTED,
-  EDIT_CLOCKS_FAILURE,
-  EDIT_CLOCKS_SUCCESS,
+  ADD_CLOCK_STARTED,
+  ADD_CLOCK_FAILURE,
+  ADD_CLOCK_SUCCESS,
+  DELETE_CLOCK_STARTED,
+  DELETE_CLOCK_FAILURE,
+  DELETE_CLOCK_SUCCESS,
+  EDIT_CLOCK_STARTED,
+  EDIT_CLOCK_FAILURE,
+  EDIT_CLOCK_SUCCESS,
   REDIRECT_FROM_REFACTOR,
   MISS_ERRORS,
-  END_LOAD_DATA
+  END_LOAD_DATA,
+  GET_CLOCK_STARTED,
+  GET_CLOCK_SUCCESS,
+  GET_CLOCK_FAILURE
 } from '../../actions/types.js'
 
 const initialState = {
@@ -49,26 +52,50 @@ const clockReducer = (state = initialState, action) => {
         error: action.payload
       }
 
-    case ADD_CLOCKS_STARTED:
+    case GET_CLOCK_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case GET_CLOCK_SUCCESS:
+      return {
+        ...state,
+        data: state.data.map(clock => {
+          if (clock.id === action.payload.id) {
+            return action.payload
+          }
+          return clock
+        }),
+        error: null,
+        dataLoad: false
+      }
+
+    case GET_CLOCK_FAILURE:
+      return {
+        ...state,
+        showModal: true,
+        dataLoad: false,
+        error: action.payload
+      }
+
+    case ADD_CLOCK_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case ADD_CLOCKS_SUCCESS:
+    case ADD_CLOCK_SUCCESS:
       return {
         ...state,
-        data: [
-          ...state.data,
-          action.payload
-        ],
+        data: state.data.concat(action.payload),
         redirectBackFromRefactor: true,
         refactorModelInProcess: false,
         showModal: true,
         message: action.message
       }
 
-    case ADD_CLOCKS_FAILURE:
+    case ADD_CLOCK_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -76,19 +103,17 @@ const clockReducer = (state = initialState, action) => {
         showModal: true
       }
 
-    case EDIT_CLOCKS_STARTED:
+    case EDIT_CLOCK_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case EDIT_CLOCKS_SUCCESS:
+    case EDIT_CLOCK_SUCCESS:
       return {
         ...state,
         data: state.data.map(clock => {
-          if (clock.id === Number(action.payload.id)) {
-            action.payload.id = Number(action.payload.id)
-            action.payload.timeRepair = Number(action.payload.timeRepair)
+          if (clock.id === action.payload.id) {
             return action.payload
           }
           return clock
@@ -99,7 +124,7 @@ const clockReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case EDIT_CLOCKS_FAILURE:
+    case EDIT_CLOCK_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -107,13 +132,13 @@ const clockReducer = (state = initialState, action) => {
         showModal: true
       }
 
-    case DELETE_CLOCKS_STARTED:
+    case DELETE_CLOCK_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case DELETE_CLOCKS_SUCCESS:
+    case DELETE_CLOCK_SUCCESS:
       return {
         ...state,
         data: state.data.filter(el => el.id !== +action.payload),
@@ -122,7 +147,7 @@ const clockReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case DELETE_CLOCKS_FAILURE:
+    case DELETE_CLOCK_FAILURE:
       return {
         ...state,
         error: action.payload,

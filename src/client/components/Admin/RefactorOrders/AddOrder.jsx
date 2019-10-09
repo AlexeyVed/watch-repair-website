@@ -9,16 +9,16 @@ import SelectField from '../../ComponentMaterial/SelectField/'
 import DateField from '../../ComponentMaterial/DateField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addOrdersToDB } from '../../../actions'
+import { getDate } from '../../App/OrderForm/logic'
 import { required } from '../../../validation'
 
-import './RefactorOrders.less'
-import { getDate } from '../../App/OrderForm/logic'
+import '../../../style/refactor-modal.less'
 
 class AddOrder extends React.Component {
   state = {
     workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
-    date: {
-      date: null,
+    today: {
+      date: new Date(),
       time: null
     }
   }
@@ -34,7 +34,7 @@ class AddOrder extends React.Component {
           return false
         }
       }),
-      date: date
+      today: date
     }))
 
     const initialValues = {
@@ -46,6 +46,7 @@ class AddOrder extends React.Component {
 
   render () {
     const { handleSubmit, addOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
+    const { today } = this.state
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
@@ -56,13 +57,14 @@ class AddOrder extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-orders'>
-            <div className='refactor-orders__header'>
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Add Order
-              <LinkButton to='/admin/orders' name='&times;' className='refactor-orders__header__right-button-close'/>
+              <LinkButton to='/admin/orders' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
+              className='refactor-model__form'
               onSubmit={handleSubmit(addOrder)}>
               <Field
                 name='customerId'
@@ -123,8 +125,8 @@ class AddOrder extends React.Component {
               <Field
                 label='Choose date'
                 name='date'
-                min={this.state.date.date}
-                max='2019-12-30'
+                min={today.date}
+                max={new Date(today.date.getFullYear(), today.date.getMonth() + 6, 0)}
                 component={DateField}
                 validate={[required]}
                 type='date'
@@ -149,6 +151,7 @@ class AddOrder extends React.Component {
                 }
               </Field>
               <button
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit
               </button>
