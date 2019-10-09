@@ -3,34 +3,21 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, initialize, reduxForm } from 'redux-form'
 import { Redirect } from 'react-router-dom'
-import axios from 'axios'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import Preloader from '../../App/Preloader/Preloader.jsx'
-import { editClockIntoDB } from '../../../actions'
+import { editClockIntoDB, getClock } from '../../../actions'
 import { required, validateOnlyLetter, validateTimeRepairClock } from '../../../validation'
 
 import '../../../style/refactor-modal.less'
 
 class EditClocks extends React.Component {
-  state = {
-    load: true
-  }
-
   componentDidMount () {
     const arr = this.props.location.pathname.split('/')
-    axios
-      .get(`/api/clocks/${arr[arr.length - 1]}`)
+    const id = arr[arr.length - 1]
+    this.props.getClock(id)
       .then(res => {
-        this.setState(() => ({
-          load: false
-        }
-        ))
-        this.props.dispatch(initialize('editClock', res.data, ['id', 'typeClock', 'timeRepair']))
-      })
-      .catch(err => {
-        console.log(err)
+        this.props.dispatch(initialize('editClock', res, ['id', 'typeClock', 'timeRepair']))
       })
   }
   render () {
@@ -82,7 +69,6 @@ class EditClocks extends React.Component {
                 label='submit'>Submit</button>
             </form>
           </div>
-          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -97,7 +83,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editClock: values => dispatch(editClockIntoDB(values))
+    editClock: values => dispatch(editClockIntoDB(values)),
+    getClock: id => dispatch(getClock(id))
   }
 }
 
