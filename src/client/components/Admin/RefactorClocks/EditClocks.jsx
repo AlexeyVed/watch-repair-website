@@ -9,7 +9,7 @@ import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import { editClockIntoDB } from '../../../actions'
-import { required } from '../../../validation'
+import { required, validateOnlyLetter, validateTimeRepairClock } from '../../../validation'
 
 import '../../../style/refactor-modal.less'
 
@@ -63,7 +63,7 @@ class EditClocks extends React.Component {
                 label='Enter type of clock'
                 name='typeClock'
                 component={TextField}
-                validate={[required]}
+                validate={[required, validateOnlyLetter]}
                 type='text'
                 placeholder='Enter type of clock'
               />
@@ -71,7 +71,8 @@ class EditClocks extends React.Component {
                 label='Enter time of repair clock'
                 name='timeRepair'
                 component={TextField}
-                validate={[required]}
+                validate={[required, validateTimeRepairClock]}
+                inputProps={{ min: '1', max: '12', step: '1' }}
                 type='number'
                 placeholder='Enter time repair clock'
               />
