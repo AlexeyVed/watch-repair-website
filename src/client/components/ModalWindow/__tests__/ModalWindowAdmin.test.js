@@ -48,7 +48,7 @@ describe('Testing modal admin', () => {
 
   test('Testing map state to props', () => {
     const initialState = {
-      clockReducer : {
+      clockReducer: {
         message: 'Clock successfully added.',
         error: 'Clock failed to load added.'
       },

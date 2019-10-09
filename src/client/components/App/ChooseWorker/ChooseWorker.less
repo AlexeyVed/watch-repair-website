@@ -1,9 +1,10 @@
 @import '../../../style/global-variable.less';
 
 .choose-worker {
-  margin: auto;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 
   &__header__title {
     text-align: center;
@@ -15,7 +16,6 @@
     border-bottom: 2px solid #b5b5b56b;
     overflow: auto;
     
-
     &__worker:hover {
       background-color: rgba(213, 211, 200, 0.46);
     }
@@ -24,15 +24,10 @@
       background-color: rgba(0, 45, 121, 0.21);
     }
   }
-
-  
 }
 
 @media screen and (max-width:695px) {
   .choose-worker {
-    width: 100%;
-    height: 100%;
-
     &__header {
       height: 50px;
 
@@ -107,9 +102,6 @@
 
 @media screen and (min-width:696px) {
   .choose-worker {
-    width: 100%;
-    height: 100%;
-
     &__header {
       height: 90px;
 

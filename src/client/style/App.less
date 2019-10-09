@@ -43,12 +43,12 @@ body {
 
     a {
         color: black;
-    }
-
-    a:nth-child(2) {
         box-sizing: border-box;
         border-left: 1px solid #babab0;
-        border-right: 1px solid #babab0;
+    }
+
+    a:first-child {
+        border: none;
     }
 }
 
@@ -114,9 +114,8 @@ body {
         min-width: 695px;
         box-sizing: border-box;
         box-shadow: @app-box-shadows;
-        border-left: @app-border-style;
-        border-top: @app-border-style;
-        border-right: @app-border-style;
+        border: @app-border-style;
+        border-bottom: none;
         border-top-right-radius: 5px;
         border-top-left-radius: 5px;
 

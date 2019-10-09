@@ -1,7 +1,6 @@
 .modal-info__text {
   position: relative;
-  width: 370px;
-  height: 220px;
+  width: 320px;
   background-color: #f4f4ea;
   border: 2px solid #b5b5b5;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -10,25 +9,24 @@
   margin: auto;
   z-index: 5;
 
-  &__info {
-    padding-top: 80px;
-    width: 320px;
-    padding-left: 25px;
+  &__info, &__errors {
+    padding: 80px 20px;
     text-align: center;
+    
+    div {
+      padding-top: 10px;
+    }
   }
 
   &__bttn-close {
     position: absolute;
-    height: 30px;
     width: 30px;
     top: 15px;
     right: 15px;
     padding: 0;
     border: none;
-    color: inherit;
     cursor: pointer;
     background-color: inherit;
-    outline: none;
     font-size: 30px;
     color: black;
 
@@ -36,17 +34,6 @@
       transform: translateY(2px);
       filter: saturate(150%);
       color: #5d0000;
-    }
-  }
-
-  &__errors {
-    padding-top: 80px;
-    width: 320px;
-    padding-left: 25px;
-    text-align: center;
-
-    div {
-      padding-top: 10px;
     }
   }
 }
