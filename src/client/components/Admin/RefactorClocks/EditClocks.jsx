@@ -6,31 +6,18 @@ import { Redirect } from 'react-router-dom'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import Preloader from '../../App/Preloader/Preloader.jsx'
-import { editClockIntoDB } from '../../../actions'
+import { editClockIntoDB, getClock } from '../../../actions'
 import { required, validateOnlyLetter, validateTimeRepairClock } from '../../../validation'
 
-import './RefactorClocks.less'
-import axios from 'axios'
+import '../../../style/refactor-modal.less'
 
 class EditClocks extends React.Component {
-  state = {
-    load: true
-  }
-
   componentDidMount () {
     const arr = this.props.location.pathname.split('/')
-    axios
-      .get(`/api/clocks/${arr[arr.length - 1]}`)
+    const id = arr[arr.length - 1]
+    this.props.getClock(id)
       .then(res => {
-        this.setState(() => ({
-          load: false
-        }
-        ))
         this.props.dispatch(initialize('editClock', res.data, ['id', 'name', 'duration']))
-      })
-      .catch(err => {
-        console.log(err)
       })
   }
   render () {
@@ -43,13 +30,14 @@ class EditClocks extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-clocks'>
-            <div className="refactor-clocks__header">
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Edit Clock
-              <LinkButton to='/admin/clocks' name='&times;' className='refactor-clocks__header__right-button-close'/>
+              <LinkButton to='/admin/clocks' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
+              className='refactor-model__form'
               onSubmit={handleSubmit(editClock)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -76,11 +64,11 @@ class EditClocks extends React.Component {
                 placeholder='Enter time repair clock'
               />
               <button
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit</button>
             </form>
           </div>
-          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -95,7 +83,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editClock: values => dispatch(editClockIntoDB(values))
+    editClock: values => dispatch(editClockIntoDB(values)),
+    getClock: id => dispatch(getClock(id))
   }
 }
 

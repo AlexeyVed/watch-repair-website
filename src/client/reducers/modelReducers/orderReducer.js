@@ -2,18 +2,21 @@ import {
   LOAD_ORDERS_STARTED,
   LOAD_ORDERS_SUCCESS,
   LOAD_ORDERS_FAILURE,
-  ADD_ORDERS_STARTED,
-  ADD_ORDERS_FAILURE,
-  ADD_ORDERS_SUCCESS,
-  DELETE_ORDERS_STARTED,
-  DELETE_ORDERS_FAILURE,
-  DELETE_ORDERS_SUCCESS,
-  EDIT_ORDERS_STARTED,
-  EDIT_ORDERS_FAILURE,
-  EDIT_ORDERS_SUCCESS,
+  ADD_ORDER_STARTED,
+  ADD_ORDER_FAILURE,
+  ADD_ORDER_SUCCESS,
+  DELETE_ORDER_STARTED,
+  DELETE_ORDER_FAILURE,
+  DELETE_ORDER_SUCCESS,
+  EDIT_ORDER_STARTED,
+  EDIT_ORDER_FAILURE,
+  EDIT_ORDER_SUCCESS,
   REDIRECT_FROM_REFACTOR,
   MISS_ERRORS,
-  END_LOAD_DATA
+  END_LOAD_DATA,
+  GET_ORDER_STARTED,
+  GET_ORDER_SUCCESS,
+  GET_ORDER_FAILURE
 } from '../../actions/types.js'
 
 const initialState = {
@@ -49,26 +52,50 @@ const orderReducer = (state = initialState, action) => {
         error: action.payload
       }
 
-    case ADD_ORDERS_STARTED:
+    case GET_ORDER_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case GET_ORDER_SUCCESS:
+      return {
+        ...state,
+        data: state.data.map(order => {
+          if (order.id === action.payload.id) {
+            return action.payload
+          }
+          return order
+        }),
+        error: null,
+        dataLoad: false
+      }
+
+    case GET_ORDER_FAILURE:
+      return {
+        ...state,
+        showModal: true,
+        dataLoad: false,
+        error: action.payload
+      }
+
+    case ADD_ORDER_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case ADD_ORDERS_SUCCESS:
+    case ADD_ORDER_SUCCESS:
       return {
         ...state,
-        data: [
-          ...state.data,
-          action.payload
-        ],
+        data: state.data.concat(action.payload),
         redirectBackFromRefactor: true,
         refactorModelInProcess: false,
         showModal: true,
         message: action.message
       }
 
-    case ADD_ORDERS_FAILURE:
+    case ADD_ORDER_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -76,13 +103,13 @@ const orderReducer = (state = initialState, action) => {
         showModal: true
       }
 
-    case EDIT_ORDERS_STARTED:
+    case EDIT_ORDER_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case EDIT_ORDERS_SUCCESS:
+    case EDIT_ORDER_SUCCESS:
       return {
         ...state,
         data: state.data.map(order => {
@@ -97,7 +124,7 @@ const orderReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case EDIT_ORDERS_FAILURE:
+    case EDIT_ORDER_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -105,13 +132,13 @@ const orderReducer = (state = initialState, action) => {
         showModal: true
       }
 
-    case DELETE_ORDERS_STARTED:
+    case DELETE_ORDER_STARTED:
       return {
         ...state,
         refactorModelInProcess: true
       }
 
-    case DELETE_ORDERS_SUCCESS:
+    case DELETE_ORDER_SUCCESS:
       return {
         ...state,
         data: state.data.filter(el => el.id !== +action.payload),
@@ -120,7 +147,7 @@ const orderReducer = (state = initialState, action) => {
         message: action.message
       }
 
-    case DELETE_ORDERS_FAILURE:
+    case DELETE_ORDER_FAILURE:
       return {
         ...state,
         error: action.payload,

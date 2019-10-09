@@ -8,31 +8,18 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '../../ComponentMaterial/TextField/'
 import SelectField from '../../ComponentMaterial/SelectField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import Preloader from '../../App/Preloader/Preloader.jsx'
-import { editMastersIntoDB } from '../../../actions'
+import { editMastersIntoDB, getMaster } from '../../../actions'
 import { required, validateOnlyLetter } from '../../../validation'
 
-import './RefactorWorkers.less'
-import axios from 'axios'
+import '../../../style/refactor-modal.less'
 
 class EditWorkers extends React.Component {
-  state = {
-    load: true
-  }
-
   componentDidMount () {
     const arr = this.props.location.pathname.split('/')
-    axios
-      .get(`/api/masters/${arr[arr.length - 1]}`)
+    const id = arr[arr.length - 1]
+    this.props.getMaster(id)
       .then(res => {
-        this.setState(() => ({
-          load: false
-        }
-        ))
         this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'rating', 'city_id']))
-      })
-      .catch(err => {
-        console.log(err)
       })
   }
 
@@ -46,13 +33,14 @@ class EditWorkers extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-workers'>
-            <div className="refactor-workers__header">
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Edit Worker
-              <LinkButton to='/admin/workers' name='&times;' className='refactor-workers__header__right-button-close'/>
+              <LinkButton to='/admin/workers' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
+              className='refactor-model__form'
               onSubmit={handleSubmit(editWorker)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -98,12 +86,12 @@ class EditWorkers extends React.Component {
                 <MenuItem key={5} value={5}>5</MenuItem>
               </Field>
               <button
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit
               </button>
             </form>
           </div>
-          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -119,7 +107,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editWorker: values => dispatch(editMastersIntoDB(values))
+    editWorker: values => dispatch(editMastersIntoDB(values)),
+    getMaster: id => dispatch(getMaster(id))
   }
 }
 

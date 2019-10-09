@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Tooltip from '@material-ui/core/Tooltip'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import Button from '@material-ui/core/Button'
 
 import { addOrder, setChooseWorker, returnPageHome } from '../../../actions'
 
@@ -32,33 +34,27 @@ class ChooseWorker extends React.Component {
   render () {
     const { workers, addOrder, master_id, setWorker, order, chooseMaster, returnHomePage } = this.props
 
-    let buttonConf,
-      homeButton
-
-    if (chooseMaster) {
-      homeButton = <button className='buttonHome' onClick={ returnHomePage }>&lt;</button>
-    } else {
-      homeButton = null
-    }
+    let buttonConf
 
     if (master_id) {
       const fullOrder = {
         ...order,
         master_id
       }
-      buttonConf = <button onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
+      buttonConf = <Button variant='outlined' onClick={ () => (addOrder(fullOrder)) }>Confirm</Button>
     } else {
       buttonConf = <Tooltip title='You must choose master.'>
         <span>
-          <button disabled onClick={ () => (addOrder()) }>Confirm</button>
+          <Button disabled variant='outlined' onClick={ () => (addOrder()) }>Confirm</Button>
         </span>
       </Tooltip>
     }
 
     return (
       <div className='choose-worker'>
-        { homeButton }
-        <div className='choose-worker__header'>Choose Free Worker</div>
+        <div className='choose-worker__header'>
+          <div className='choose-worker__header__title'>Choose Free Worker</div>
+        </div>
         <div className='choose-worker__table'>
           { workers.map(item => (
             <div className='choose-worker__table__worker' id={item.id} key={item.id} onClick={() => { setWorker(item.id) }}>
@@ -72,7 +68,8 @@ class ChooseWorker extends React.Component {
           ))
           }
         </div>
-        <div className='choose-worker__button-confirm'>
+        <div className='choose-worker__buttons'>
+          <Button variant='outlined' onClick={ returnHomePage }>{<ArrowBackIosIcon/>} Back</Button>
           {buttonConf}
         </div>
       </div>

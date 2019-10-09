@@ -19,7 +19,7 @@ import AddOrder from '../RefactorOrders/AddOrder.jsx'
 import EditOrder from '../RefactorOrders/EditOrder.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
-import './RefactorOrders.less'
+import '../../../style/model-tables.less'
 
 class RefactorOrders extends React.Component {
   state = {
@@ -69,15 +69,15 @@ class RefactorOrders extends React.Component {
     const renderItems = currentItem.map((item, index) => {
       return <tr key={item.id}>
         <td>{indexes()}</td>
-        <td>{ item.customer.name }</td>
         <td>{ item.customer.email }</td>
+        <td>{ item.customer.name }</td>
         <td>{ item.clock.name }</td>
         <td>{ item.city.name }</td>
         <td>{item.date} / {`${item.time}h - ${item.time + item.duration}h`}</td>
         <td>{ item.master.name }</td>
         <td>
           <LinkButton to={`/admin/orders/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <button className='button-refactor-models' onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
         </td>
       </tr>
     })
@@ -89,7 +89,7 @@ class RefactorOrders extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <div className='page'
+        <div className='table-model__numbers-pages__container__page page'
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -98,14 +98,14 @@ class RefactorOrders extends React.Component {
         </div>
       )
     })
-    const table = <React.Fragment> <div className='table-orders__title'>Table orders</div>
-      <div className='table-orders__table'>
-        <table>
+    const table = <React.Fragment> <div className='table-model__title'>Table orders</div>
+      <div className='table-model__container'>
+        <table className='table-model__container__table'>
           <tbody>
             <tr>
               <th>№</th>
-              <th>Client name</th>
               <th>Client email</th>
+              <th>Client name</th>
               <th>Type clock</th>
               <th>City</th>
               <th>Date</th>
@@ -116,16 +116,16 @@ class RefactorOrders extends React.Component {
           </tbody>
         </table>
       </div>
-      <div className='table-orders__numbers-pages'>
-        <div className='table-orders__numbers-pages__container'>
+      <div className='table-model__numbers-pages'>
+        <div className='table-model__numbers-pages__container'>
           { renderPageNumbers }
         </div>
-        <div className='table-orders__numbers-pages__bttn-add'>
+        <div className='table-model__numbers-pages__btn-add'>
           <LinkButton to='/admin/orders/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>
     return (
-      <div className='table-orders'>
+      <div className='table-model'>
         <Switch>
           <Route exact path='/admin/orders' render={() => (table)}/>
           <Route path='/admin/orders/add' render={() => (
