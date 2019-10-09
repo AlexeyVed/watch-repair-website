@@ -34,11 +34,9 @@ export const checkAccesAdmin = email => {
     return axios
       .post(`/api/users/authAdmin`, { email })
       .then(res => {
-        console.log('im res from server', res)
         dispatch({ type: CHECK_ACCESS_ADMIN_SUCCESS })
       })
       .catch(err => {
-        console.log('im err from actions', err)
         dispatch({ type: CHECK_ACCESS_ADMIN_FAILURE, payload: err.response.data })
       })
   }

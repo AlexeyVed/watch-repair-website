@@ -4,24 +4,17 @@ import { connect } from 'react-redux'
 import { checkAccesAdmin } from '../../actions/'
 
 class PrivateRoute extends React.Component {
-  state = {
-    waitResponse: true
-  }
-
   componentDidMount () {
-    console.log('im wonna chek auth', this.props.user)
-    this.props.checkAuth(this.props.user)
-      .then(res => {
-        console.log('im chek auth with response', res)
-        this.setState(() => ({ waitResponse: false }))
-      })
+    if (this.props.user) {
+      this.props.checkAuth(this.props.user)
+    }
   }
   render () {
-    console.log(this.props.isAuth, this.props.user)
+    const { user, isAuth, inProcess } = this.props
     return (
       <Route
         render={ () => {
-          return this.state.waitResponse ? null : this.props.isAuth ? <this.props.component/> : <Redirect to={{ pathname: '/login' }}/>
+          return !user ? <Redirect to={{ pathname: '/login' }}/> : inProcess ? <div className='mask'></div> : isAuth ? <this.props.component/> : <Redirect to={{ pathname: '/login' }}/>
         }}
       />
     )

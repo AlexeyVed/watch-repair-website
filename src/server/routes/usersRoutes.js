@@ -4,10 +4,10 @@ const isAuthenticate = require('../modules/middleware/isAuthenticate.js')
 
 const customersRouter = express.Router()
 
-const { loginValidation, login, logout, authValidation, authAdmin } = customersController
+const { loginValidation, login, logout, checkAuth } = customersController
 
 customersRouter.use('/login', loginValidation, login)
-customersRouter.use('/authAdmin', isAuthenticate, authValidation, authAdmin)
+customersRouter.use('/authAdmin', isAuthenticate, checkAuth)
 customersRouter.use('/logout', logout)
 
 module.exports = customersRouter
