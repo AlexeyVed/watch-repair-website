@@ -1,6 +1,5 @@
 #preloader {
   z-index: 4;
-
 }
 
 .preloader {
@@ -26,33 +25,32 @@
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
   z-index: 4;
+
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #db9b00;
+    -webkit-animation: spin 3s linear infinite;
+    animation: spin 3s linear infinite;
+  }
+  
+  &:after { 
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-top-color: #ffec00;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+  }
 }
-.loader:before {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  right: 5px;
-  bottom: 5px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  border-top-color: #db9b00;
-  -webkit-animation: spin 3s linear infinite;
-  animation: spin 3s linear infinite;
-}
-.loader:after {
-  content: "";
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  border-top-color: #ffec00;
-  -webkit-animation: spin 1.5s linear infinite;
-  animation: spin 1.5s linear infinite;
-}
+
 @-webkit-keyframes spin {
   0%   {
     -webkit-transform: rotate(0deg);
@@ -65,6 +63,7 @@
     transform: rotate(360deg);
   }
 }
+
 @keyframes spin {
   0%   {
     -webkit-transform: rotate(0deg);

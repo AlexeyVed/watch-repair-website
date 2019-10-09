@@ -1,146 +1,85 @@
-@media screen and (min-width:600px) {
+@import '../../../style/global-variable.less';
+
+.main-form {
+  background-color: @tables-color;
+  position: relative;
+  padding-bottom: 30px;
+
+  &__title {
+    text-align: center;
+  }
+
+  &__order-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__order-form > button {
+    letter-spacing: 1px;
+    margin-top: 15px;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    background-color: #f2f2e8;
+    outline: none;
+    border: 1px solid #9f9f9f;
+    border-radius: 10px;
+  }
+  
+  .choosing-master {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width:696px) {
   .main-form {
     flex: 0 0 300px;
-    border: 1px solid rgba(128, 128, 128, 0.4);
+    box-sizing: border-box;
+    border: @app-border-style;
     border-radius: 5px;
-    background-color: #f5f5eb;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    position: relative;
+    border-top-left-radius: 10px;
+    box-shadow: @app-box-shadows;
+    overflow-y: auto;
 
     &__title {
-      text-align: center;
       padding-top: 30px;
       margin-bottom: 19px;
       font-size: 20px;
     }
 
-    &__order-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    &__order-form > .main-form__order-select {
-      width: 100%;
-      text-align: center;
-      position: relative;
-      height: 60px;
-
-      label {
-        font-size: 14px;
-        position: absolute;
-        left: 17%;
-        color: #212121;
-      }
-
-      select {
-        width: 70%;
-        height: 33px;
-        margin-top: 20px;
-        border-radius: 5px;
-        border: 1px solid gray;
-      }
-    }
-
     &__order-form > button {
-      letter-spacing: 1px;
-      margin-top: 15px;
+      font-size: 16px;
       height: 40px;
       width: 110px;
-      padding: 0;
-      border: none;
-      font: inherit;
-      color: inherit;
-      cursor: pointer;
-      background-color: #f2f2e8;
-      outline: none;
-      border: 1px solid #9f9f9f;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-
-    .choosing-master {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      flex-direction: column;
     }
   }
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:695px) {
   .main-form {
+    order: 2;
+    background: @image-background;
+    background-color: @tables-color;
     flex: 0 0 450px;
-    border-radius: 5px;
-    background-color: #f5f5eb;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    position: relative;
-
+    background-size: 240px 160px;
+ 
     &__title {
-      text-align: center;
-      padding-top: 25px;
+      padding-top: 20px;
       margin-bottom: 5px;
-      font-size: 15px;
-    }
-
-    &__order-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-bottom: 25px;
-    }
-
-    &__order-form > .main-form__order-select {
-      width: 100%;
-      text-align: center;
-      position: relative;
-      height: 60px;
-
-      label {
-        font-size: 14px;
-        position: absolute;
-        left: 17%;
-        color: #212121;
-      }
-
-      select {
-        width: 70%;
-        height: 33px;
-        margin-top: 20px;
-        border-radius: 5px;
-        border: 1px solid gray;
-      }
+      font-size: 17px;
     }
 
     &__order-form > button {
-      letter-spacing: 1px;
-      margin-top: 15px;
-      height: 40px;
-      width: 110px;
-      padding: 0;
-      border: none;
-      font: inherit;
-      color: inherit;
-      cursor: pointer;
-      background-color: #f2f2e8;
-      outline: none;
-      border: 1px solid #9f9f9f;
-      border-radius: 10px;
-      font-size: 14px;
-    }
-
-    .choosing-master {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      padding-top: 30%;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      flex-direction: column;
+      font-size: 13px;
+      height: 35px;
+      width: 100px;
     }
   }
 }
