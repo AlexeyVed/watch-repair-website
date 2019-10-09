@@ -74,10 +74,11 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { name, rating, city_id } = req.body
   Master.create({
-    name: req.body.name,
-    rating: req.body.rating,
-    city_id: req.body.city_id
+    name,
+    rating,
+    city_id
   })
     .then(result => {
       return Master.findOne({
@@ -157,10 +158,11 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { name, rating, city_id } = req.body
   Master.update({
-    name: req.body.name,
-    rating: req.body.rating,
-    city_id: req.body.city_id
+    name,
+    rating,
+    city_id
   }, {
     where: { id: req.params.id }
   })

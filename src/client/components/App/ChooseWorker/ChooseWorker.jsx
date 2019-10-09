@@ -10,7 +10,7 @@ class ChooseWorker extends React.Component {
   componentDidUpdate (prevProps, prevState) {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
-      if (+worker.id === this.props.masterId) {
+      if (+worker.id === this.props.master_id) {
         worker.classList.add('active')
       } else if (worker.classList.contains('active')) {
         worker.classList.remove('active')
@@ -21,7 +21,7 @@ class ChooseWorker extends React.Component {
   componentDidMount () {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
-      if (+worker.id === this.props.masterId) {
+      if (+worker.id === this.props.master_id) {
         worker.classList.add('active')
       } else if (worker.classList.contains('active')) {
         worker.classList.remove('active')
@@ -30,7 +30,7 @@ class ChooseWorker extends React.Component {
   }
 
   render () {
-    const { workers, addOrder, masterId, setWorker, order, chooseMaster, returnHomePage } = this.props
+    const { workers, addOrder, master_id, setWorker, order, chooseMaster, returnHomePage } = this.props
 
     let buttonConf,
       homeButton
@@ -41,10 +41,10 @@ class ChooseWorker extends React.Component {
       homeButton = null
     }
 
-    if (masterId) {
+    if (master_id) {
       const fullOrder = {
         ...order,
-        master_id: masterId
+        master_id
       }
       buttonConf = <button onClick={ () => (addOrder(fullOrder)) }>Confirm</button>
     } else {
@@ -83,7 +83,7 @@ class ChooseWorker extends React.Component {
 const mapStateToProps = (state) => {
   return {
     workers: state.appReducer.forOrder.freeWorkers,
-    masterId: state.appReducer.forOrder.masterId,
+    master_id: state.appReducer.forOrder.masterId,
     order: state.appReducer.forOrder.order,
     chooseMaster: state.appReducer.chooseWorker
   }

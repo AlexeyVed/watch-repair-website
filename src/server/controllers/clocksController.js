@@ -64,9 +64,10 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { name, duration } = req.body
   Clock.create({
-    name: req.body.name,
-    duration: req.body.duration
+    name,
+    duration
   })
     .then(result => {
       res.status(201).json(result)
@@ -137,9 +138,10 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { name, duration } = req.body
   Clock.update({
-    name: req.body.name,
-    duration: req.body.duration
+    name,
+    duration
   }, {
     where: { id: req.params.id }
   })

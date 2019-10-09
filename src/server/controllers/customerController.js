@@ -34,9 +34,10 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { email, name } = req.body
   Customer.create({
-    email: req.body.email,
-    name: req.body.name
+    email,
+    name
   })
     .then(result => {
       res.status(201).json(result)
@@ -126,9 +127,10 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { email, name } = req.body
   Customer.update({
-    name: req.body.name,
-    email: req.body.email
+    name,
+    email
   }, {
     where: { id: req.params.id }
   })
