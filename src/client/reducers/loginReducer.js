@@ -68,7 +68,8 @@ const loginReducer = (state = initialState, action) => {
     case LOG_OUT:
       return {
         ...state,
-        singInUser: null
+        singInUser: null,
+        isAuth: false
       }
 
     case LOGIN_ERROR_NULL:
