@@ -32,7 +32,7 @@ class ChooseWorker extends React.Component {
   }
 
   render () {
-    const { workers, addOrder, master_id, setWorker, order, chooseMaster, returnHomePage } = this.props
+    const { workers, addOrder, master_id, setWorker, order, returnHomePage } = this.props
 
     let buttonConf
 

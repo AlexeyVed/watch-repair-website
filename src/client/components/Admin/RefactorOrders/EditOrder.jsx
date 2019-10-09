@@ -28,7 +28,7 @@ class EditOrder extends React.Component {
         this.setState(() => ({
           orderDate: new Date(res.date)
         }))
-        this.props.dispatch(initialize('editOrder', res.data, ['id', 'customer_id', 'master_id', 'city_id', 'time']))
+        this.props.dispatch(initialize('editOrder', res, ['id', 'customer_id', 'master_id', 'city_id', 'time']))
       })
   }
 

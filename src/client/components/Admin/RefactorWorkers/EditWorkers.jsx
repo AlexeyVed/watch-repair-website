@@ -19,7 +19,7 @@ class EditWorkers extends React.Component {
     const id = arr[arr.length - 1]
     this.props.getMaster(id)
       .then(res => {
-        this.props.dispatch(initialize('editWorker', res.data, ['id', 'name', 'rating', 'city_id']))
+        this.props.dispatch(initialize('editWorker', res, ['id', 'name', 'rating', 'city_id']))
       })
   }
 

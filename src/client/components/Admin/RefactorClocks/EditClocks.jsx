@@ -17,7 +17,7 @@ class EditClocks extends React.Component {
     const id = arr[arr.length - 1]
     this.props.getClock(id)
       .then(res => {
-        this.props.dispatch(initialize('editClock', res.data, ['id', 'name', 'duration']))
+        this.props.dispatch(initialize('editClock', res, ['id', 'name', 'duration']))
       })
   }
   render () {
