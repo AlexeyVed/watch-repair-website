@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import axios from 'axios'
+import '../helpers/setupAxios.js'
 
 import PrivateRoute from './PrivateRouter/PrivateRouter.jsx'
 import Preloader from './App/Preloader/Preloader.jsx'
@@ -12,13 +12,6 @@ import MainAdmin from './Admin/Main/MainAdmin'
 import NoMatch from './NoMatch/NoMatch'
 
 class App extends React.Component {
-  constructor (props) {
-    super()
-    const token = localStorage.getItem('token')
-    if (token) {
-      axios.defaults.headers.common['authorization'] = token
-    }
-  }
   render () {
     const { isOrder, isLogin, user, cityLoad, clockLoad, customerLoad, masterLoad, orderLoad } = this.props
 
