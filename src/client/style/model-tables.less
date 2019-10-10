@@ -52,8 +52,8 @@
 
       td {
         &:last-child {
-          .button-refactor-models {
-            width: 50%;
+          button {
+            width: 50px;
             height: 28px;
             border: none;
             font-size: 13px;
@@ -61,18 +61,16 @@
             cursor: pointer;
             outline: none;
             background-color: inherit;
-            border-left: 1px solid rgba(105, 105, 105, 0.65);
+            margin: auto;
           }
-        
-          a > button {
-            width: 50%;
-            height: 28px;
-            border: none;
-            font-size: 13px;
-            color: black;
-            cursor: pointer;
-            outline: none;
-            background-color: inherit;
+
+          .button-delete-model {
+            color: green;
+            border-right: 1px solid grey;
+          }
+
+          .button-close-delete {
+            color: red
           }
         }
       }

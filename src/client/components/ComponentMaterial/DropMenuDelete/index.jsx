@@ -19,8 +19,8 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 10,
     right: 30,
-    width: '130px',
-    height: '100px',
+    boxSizing: 'content-box',
+    minWidth: '120px',
     display: 'flex',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
     border: '1px solid gray',
@@ -31,18 +31,14 @@ const useStyles = makeStyles(theme => ({
   header: {
     flex: '1 0 30px',
     display: 'flex',
-    padding: '0 10px 0 10px',
     alignItems: 'center',
+    padding: '10px 15px',
     justifyContent: 'center'
   },
   container: {
     flex: '0 0 40px',
-    width: '130px'
-  },
-  buttons: {
-    margin: 'auto',
-    width: '60px',
-    height: '28px'
+    display: 'flex',
+    padding: '0 0 5px 0'
   }
 }))
 
@@ -67,8 +63,8 @@ const ClickAway = props => {
             <Paper className={classes.paper}>
               <div className={classes.header}>{props.text}</div>
               <div className={classes.container}>
-                <button className={classes.buttons} onClick={ () => { props.DropDelete(props.itemId) }}><CheckIcon/></button>
-                <button className={classes.buttons} onClick={ handleClickAway }><CloseIcon/></button>
+                <button className='button-delete-model' onClick={ () => { props.DropDelete(props.itemId) }}><CheckIcon/></button>
+                <button className='button-close-delete' onClick={ handleClickAway }><CloseIcon/></button>
               </div>
             </Paper>
           ) : null}

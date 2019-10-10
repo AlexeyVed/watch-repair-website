@@ -68,7 +68,7 @@ class RefactorOrders extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
-      const deleteText = `Delete this order?`
+      const deleteText = `Delete ${item.customer.name}'s order?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{(item.customer !== null) ? item.customer.email : <b>Customer was deleted</b>}</td>
