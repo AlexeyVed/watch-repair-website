@@ -101,28 +101,28 @@ exports.updateValidation = checkSchema({
     toInt: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  masterId: {
+  master_id: {
     in: ['body'],
     errorMessage: 'Master is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  customerId: {
+  customer_id: {
     in: ['body'],
     errorMessage: 'Customer is wrong',
     isInt: true,
@@ -148,25 +148,25 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, customerId, clockId, cityId, masterId } = req.body
-  Master.findByPk(masterId, {
+  const { date, time, customer_id, clock_id, city_id, master_id } = req.body
+  Master.findByPk(master_id, {
     raw: true,
     nest: true
   })
     .then(master => {
-      if (master.cityId !== +cityId) {
+      if (master.city_id !== city_id) {
         return next(error(400, 'Master doesnt work in this town'))
       }
       return true
     })
     .then(() => {
       return Order.update({
-        date: date,
-        time: time,
-        customerId: customerId,
-        clockId: clockId,
-        cityId: cityId,
-        masterId: masterId
+        date,
+        time,
+        customer_id,
+        clock_id,
+        city_id,
+        master_id
       }, {
         where: { id: req.params.id }
       })
@@ -189,14 +189,14 @@ exports.update = function (req, res, next) {
 }
 
 exports.getWorkersValidation = checkSchema({
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
@@ -222,31 +222,32 @@ exports.getWorkers = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, clockId, cityId } = req.body
-  Clock.findByPk(clockId)
+  const { date, clock_id, city_id } = req.body
+  Clock.findByPk(clock_id)
     .then(clock => {
-      req.body = { ...req.body, timeRepair: clock.timeRepair }
+      const { duration } = clock
+      req.body = { ...req.body, duration }
       return Order.findAll({
         where: {
-          date: date,
-          cityId: cityId
+          date,
+          city_id
         },
         include: [ { model: Clock } ]
       })
     })
     .then(ordersInDate => {
-      const { time, timeRepair } = req.body
+      const { time, duration } = req.body
       return ordersInDate.filter(order => {
         return (order.time < time)
-          ? ((order.time + order.clock.timeRepair) >= time)
-          : ((time + timeRepair) >= order.time)
+          ? ((order.time + order.clock.duration) >= time)
+          : ((time + duration) >= order.time)
       })
     })
     .then(busyMasters => {
-      const arrayIdBusyMaster = busyMasters.map(master => master.masterId)
+      const arrayIdBusyMaster = busyMasters.map(master => master.master_id)
       return Master.findAll({
         where: {
-          cityId: req.body.cityId,
+          city_id,
           id: { [Op.notIn]: arrayIdBusyMaster }
         },
         include: [{ all: true }],
@@ -265,28 +266,28 @@ exports.getWorkers = function (req, res, next) {
 }
 
 exports.addAdminValidation = checkSchema({
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  masterId: {
+  master_id: {
     in: ['body'],
     errorMessage: 'Master is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  customerId: {
+  customer_id: {
     in: ['body'],
     errorMessage: 'Customer is wrong',
     isInt: true,
@@ -312,15 +313,16 @@ exports.addAdmin = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, customerId, clockId, cityId, masterId } = req.body
-  Clock.findByPk(clockId)
+  const { date, time, customer_id, clock_id, city_id, master_id } = req.body
+  Clock.findByPk(clock_id)
     .then(reqClock => {
-      req.body = { ...req.body, timeRepair: reqClock.timeRepair }
+      const { duration } = reqClock
+      req.body = { ...req.body, duration }
       return Order.findAll({
         where: {
-          masterId: masterId,
-          cityId: cityId,
-          date: date
+          master_id,
+          city_id,
+          date
         },
         include: [{ model: Clock }],
         raw: true,
@@ -330,25 +332,27 @@ exports.addAdmin = function (req, res, next) {
     .then(result => {
       const isCreated = result.filter(order => {
         return (order.time < time)
-          ? ((order.time + order.clock.timeRepair) >= time)
-          : ((time + req.body.timeRepair) >= order.time)
+          ? ((order.time + order.clock.duration) >= time)
+          : ((time + req.body.duration) >= order.time)
       })
       if (isCreated.length) {
         return next(error(400, 'Master already busy at this time.'))
       }
-      return Master.findByPk(masterId)
+      return Master.findByPk(master_id)
     })
     .then(master => {
-      if (master.cityId !== +cityId) {
+      if (master.city_id !== +city_id) {
         return next(error(400, 'Master doesnt work in this town'))
       }
+      const { duration } = req.body
       return Order.create({
-        time: time,
-        date: date,
-        cityId: cityId,
-        clockId: clockId,
-        customerId: customerId,
-        masterId: masterId
+        time,
+        date,
+        city_id,
+        clock_id,
+        customer_id,
+        master_id,
+        duration
       })
     })
     .then(order => {
@@ -372,21 +376,21 @@ exports.addValidation = checkSchema({
     isAlpha: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  masterId: {
+  master_id: {
     in: ['body'],
     errorMessage: 'Master is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
@@ -418,30 +422,41 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, email, clockId, cityId, masterId, name } = req.body
-  Customer.findOrCreate({
-    where: { email: email },
-    defaults: { name: name }
-  })
+  const { date, time, email, clock_id, city_id, master_id, name } = req.body
+  Clock.findByPk(clock_id)
+    .then(reqClock => {
+      const { duration } = reqClock
+      req.body = { ...req.body, duration }
+    })
+    .then(() => {
+      return Customer.findOrCreate({
+        where: { email },
+        defaults: { name }
+      })
+    })
     .then(([user, created]) => {
+      const customer = user.get({
+        plain: true
+      })
       req.body = {
         ...req.body,
-        customerId: user.get({
-          plain: true
-        }).id
+        name: customer.name,
+        customer_id: customer.id
       }
+      const { customer_id, duration } = req.body
       return Order.create({
-        time: time,
-        date: date,
-        customerId: req.body.customerId,
-        clockId: clockId,
-        cityId: cityId,
-        masterId: masterId
+        time,
+        date,
+        customer_id,
+        clock_id,
+        city_id,
+        master_id,
+        duration
       })
     })
     .then(result => {
       return Order.findOne({
-        where: { id: result.dataValues.id },
+        where: { id: result.get().id },
         include: [{ all: true }],
         raw: true,
         nest: true
@@ -453,7 +468,8 @@ exports.add = function (req, res, next) {
     .then(order => {
       res.status(201).json(order)
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       next(error(400, 'Error add order'))
     })
 }

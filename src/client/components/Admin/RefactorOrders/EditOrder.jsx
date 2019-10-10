@@ -25,10 +25,10 @@ class EditOrder extends React.Component {
     const id = arr[arr.length - 1]
     this.props.getOrder(id)
       .then(res => {
-        this.props.dispatch(initialize('editOrder', res, ['id', 'customerID', 'masterID', 'cityID', 'time']))
         this.setState(() => ({
           orderDate: new Date(res.date)
         }))
+        this.props.dispatch(initialize('editOrder', res, ['id', 'customer_id', 'master_id', 'city_id', 'time']))
       })
   }
 
@@ -71,7 +71,7 @@ class EditOrder extends React.Component {
                 input={{ disabled: true }}
               />
               <Field
-                name='customerId'
+                name='customer_id'
                 id='customer'
                 label='Choose client email'
                 component={SelectField}
@@ -85,7 +85,7 @@ class EditOrder extends React.Component {
                 }
               </Field>
               <Field
-                name='masterId'
+                name='master_id'
                 id='master'
                 label='Choose master'
                 component={SelectField}
@@ -99,7 +99,7 @@ class EditOrder extends React.Component {
                 }
               </Field>
               <Field
-                name='clockId'
+                name='clock_id'
                 id='clock'
                 label='Choose time repair'
                 component={SelectField}
@@ -108,13 +108,13 @@ class EditOrder extends React.Component {
               >
                 {
                   chooseClock.map((clock, index) => (
-                    <MenuItem key={index} value={clock.id}>{clock.timeRepair}</MenuItem>
+                    <MenuItem key={index} value={clock.id}>{clock.name}</MenuItem>
                   ))
                 }
               </Field>
 
               <Field
-                name='cityId'
+                name='city_id'
                 id='city'
                 label='Choose your city'
                 component={SelectField}
@@ -123,7 +123,7 @@ class EditOrder extends React.Component {
               >
                 {
                   chooseCities.map((item, index) => (
-                    <MenuItem key={index} value={item.id}>{item.city}</MenuItem>
+                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
                   ))
                 }
               </Field>

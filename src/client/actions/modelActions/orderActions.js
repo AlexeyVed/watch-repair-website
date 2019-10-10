@@ -49,8 +49,6 @@ export const getOrder = id => {
 }
 
 export const addOrdersToDB = (values) => {
-  values.time = Number(values.time)
-  values.masterID = Number(values.masterID)
   return (dispatch) => {
     dispatch({ type: ADD_ORDER_STARTED })
     return axios
@@ -68,10 +66,6 @@ export const addOrdersToDB = (values) => {
 }
 
 export const editOrdersIntoDB = (values) => {
-  values.clockId = Number(values.clockId)
-  values.cityId = Number(values.cityId)
-  values.customerId = Number(values.customerId)
-  values.masterId = Number(values.masterId)
   return (dispatch) => {
     dispatch({ type: EDIT_ORDER_STARTED })
     return axios

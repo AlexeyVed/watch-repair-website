@@ -16,9 +16,6 @@ import axios from 'axios'
 
 export const makeOrder = (values) => {
   return (dispatch) => {
-    values.cityId = Number(values.cityId)
-    values.clockId = Number(values.clockId)
-    values.time = Number(values.time)
     dispatch({ type: MAKE_ORDER_STARTED })
     return axios
       .post(`/api/orders/freeMasters`, values)

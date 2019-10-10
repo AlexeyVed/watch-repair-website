@@ -78,7 +78,7 @@ class OrderForm extends Component {
             validate={[validateEmail, required]}
           />
           <Field
-            name='clockId'
+            name='clock_id'
             component={SelectField}
             id='clock'
             type='number'
@@ -87,12 +87,12 @@ class OrderForm extends Component {
           >
             {
               chooseClock.map((clock, index) => (
-                <MenuItem key={index} value={clock.id}>{clock.typeClock}</MenuItem>
+                <MenuItem key={index} value={clock.id}>{clock.name}</MenuItem>
               ))
             }
           </Field>
           <Field
-            name='cityId'
+            name='city_id'
             component={SelectField}
             id='city'
             label='Choose your city'
@@ -101,7 +101,7 @@ class OrderForm extends Component {
           >
             {
               chooseCities.map((item, index) => (
-                <MenuItem key={index} value={item.id}>{item.city}</MenuItem>
+                <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
               ))
             }
           </Field>

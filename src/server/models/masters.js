@@ -17,8 +17,12 @@ const Master = db.define('masters', {
   updatedAt: false
 })
 
-City.hasMany(Master)
+City.hasMany(Master, {
+  foreignKey: 'city_id'
+})
 
-Master.belongsTo(City)
+Master.belongsTo(City, {
+  foreignKey: 'city_id'
+})
 
 module.exports = Master

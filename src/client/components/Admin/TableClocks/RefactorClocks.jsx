@@ -61,8 +61,8 @@ class RefactorClocks extends React.Component {
       const deleteText = `Delete clock: ${item.typeClock}?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
-        <td>{item.typeClock}</td>
-        <td>{item.timeRepair}</td>
+        <td>{item.name}</td>
+        <td>{item.duration}</td>
         <td>
           <LinkButton to={`/admin/clocks/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
           <DropMenu DropDelete={ deleteClock } itemId={ item.id } text={ deleteText }/>

@@ -17,7 +17,7 @@ class EditCities extends React.Component {
     const id = arr[arr.length - 1]
     this.props.getCity(id)
       .then(res => {
-        this.props.dispatch(initialize('editCity', res, ['id', 'city']))
+        this.props.dispatch(initialize('editCity', res, ['id', 'name']))
       })
   }
 
@@ -48,7 +48,7 @@ class EditCities extends React.Component {
               />
               <Field
                 label='Enter city'
-                name='city'
+                name='name'
                 component={TextField}
                 validate={[required, validateOnlyLetter]}
                 type='text'

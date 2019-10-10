@@ -70,12 +70,12 @@ class RefactorOrders extends React.Component {
       const deleteText = `Delete ${item.customer.name}'s order?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
-        <td>{(item.customer !== null) ? item.customer.email : <b>Customer was deleted</b>}</td>
-        <td>{(item.customer !== null) ? item.customer.name : null }</td>
-        <td>{(item.clock !== null) ? item.clock.typeClock : <b>Clock was deleted</b>}</td>
-        <td>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
-        <td>{item.date} / {item.time}</td>
-        <td>{(item.master !== null) ? item.master.name : <b>Master was deleted</b>}</td>
+        <td>{ item.customer.email }</td>
+        <td>{ item.customer.name }</td>
+        <td>{ item.clock.name }</td>
+        <td>{ item.city.name }</td>
+        <td>{item.date} / {`${item.time}:00 - ${item.time + item.duration}:00`}</td>
+        <td>{ item.master.name }</td>
         <td>
           <LinkButton to={`/admin/orders/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
           <DropMenu DropDelete={ deleteOrder } itemId={ item.id } text={ deleteText }/>
