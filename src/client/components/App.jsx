@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import '../helpers/setupAxios.js'
 
 import PrivateRoute from './PrivateRouter/PrivateRouter.jsx'
 import Preloader from './App/Preloader/Preloader.jsx'

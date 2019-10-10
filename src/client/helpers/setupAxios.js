@@ -1,9 +1,6 @@
 import axios from 'axios'
-import { logOutApp } from '../actions/loginActions.js'
-import store from '../store.js'
-const { dispatch } = store
 
-const setupAxiosInterceptors = logOutApp => {
+const setupAxiosInterceptors = callback => {
   const onRequestSuccess = config => {
     const token = localStorage.getItem('token')
     if (token) {
@@ -22,15 +19,11 @@ const setupAxiosInterceptors = logOutApp => {
   const onResponseFail = error => {
     const status = error.status || error.response.status
     if (status === 401) {
-      logOutApp()
+      callback()
     }
     return Promise.reject(error)
   }
   axios.interceptors.response.use(onResponseSuccess, onResponseFail)
 }
-
-setupAxiosInterceptors(() => {
-  dispatch(logOutApp())
-})
 
 export default setupAxiosInterceptors
