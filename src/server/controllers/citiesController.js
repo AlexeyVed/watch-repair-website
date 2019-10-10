@@ -31,6 +31,9 @@ exports.get = function (req, res, next) {
   }
   City.findByPk(req.params.id)
     .then(city => {
+      if (city === null) {
+        return next(error(404, `City with id = ${req.params.id} not found!`))
+      }
       res.json(city)
     })
     .catch(() => {
@@ -116,6 +119,9 @@ exports.update = function (req, res, next) {
       return City.findByPk(req.params.id)
     })
     .then(city => {
+      if (city === null) {
+        return next(error(404, `City with id = ${req.params.id} not found for update!`))
+      }
       res.json(city)
     })
     .catch(() => {

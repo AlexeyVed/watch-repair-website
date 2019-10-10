@@ -41,7 +41,10 @@ exports.add = function (req, res, next) {
     .then(result => {
       res.status(201).json(result)
     })
-    .catch(() => {
+    .catch((err) => {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        return next(error(409, `Customer with email '${req.body.email}' already exist.`))
+      }
       next(error(400, 'Error add customer'))
     })
 }
@@ -63,6 +66,9 @@ exports.get = function (req, res, next) {
   }
   Customer.findByPk(req.params.id)
     .then((user) => {
+      if (user === null) {
+        return next(error(404, `Customer with id = ${req.params.id} not found!`))
+      }
       res.json(user)
     })
     .catch(() => {
@@ -133,6 +139,9 @@ exports.update = function (req, res, next) {
       return Customer.findByPk(req.params.id)
     })
     .then(customer => {
+      if (customer === null) {
+        return next(error(404, `Customer with id = ${req.params.id} not found for update!`))
+      }
       res.json(customer)
     })
     .catch(() => {
