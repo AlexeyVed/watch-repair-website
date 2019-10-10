@@ -1,15 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
-import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
-import AddRoundedIcon from '@material-ui/icons/AddRounded'
 
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteMastersFromDB, loadCities, loadDataEnd, loadMasters, setPage } from '../../../actions'
 import AddWorkers from '../RefactorWorkers/AddWorkers.jsx'
 import EditWorkers from '../RefactorWorkers/EditWorkers.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
+import DropMenu from '../../ComponentMaterial/DropMenuDelete'
 
 import '../../../style/model-tables.less'
 
@@ -58,6 +58,7 @@ class RefactorWorkers extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
+      const deleteText = `Delete worker: ${item.name}?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{item.name}</td>
@@ -65,7 +66,7 @@ class RefactorWorkers extends React.Component {
         <td>{item.rating}</td>
         <td>
           <LinkButton to={`/admin/workers/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button className='button-refactor-models' onClick={ () => deleteWorker(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <DropMenu DropDelete={ deleteWorker } itemId={ item.id } text={ deleteText }/>
         </td>
       </tr>
     })
