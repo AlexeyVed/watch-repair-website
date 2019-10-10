@@ -374,8 +374,7 @@ exports.addAdmin = function (req, res, next) {
     .then(newOrder => {
       res.status(201).json(newOrder)
     })
-    .catch((err) => {
-      console.log(err)
+    .catch(() => {
       next(makeError(400, 'Error create order'))
     })
 }
