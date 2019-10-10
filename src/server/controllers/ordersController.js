@@ -348,7 +348,7 @@ exports.addAdmin = function (req, res, next) {
           : ((time + req.body.timeRepair) >= order.time)
       })
       if (isCreated.length) {
-        return next(error(400, 'Master already busy at this time.'))
+        return next(makeError(400, 'Master already busy at this time.'))
       }
       return Master.findByPk(masterId)
     })
@@ -374,7 +374,8 @@ exports.addAdmin = function (req, res, next) {
     .then(newOrder => {
       res.status(201).json(newOrder)
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       next(makeError(400, 'Error create order'))
     })
 }

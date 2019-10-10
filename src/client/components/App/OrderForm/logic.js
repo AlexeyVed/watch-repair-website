@@ -36,12 +36,13 @@ const getDate = () => {
       if (day < 10) {
         day = '0' + day
       }
-      return new Date(`${year}-${month}-${day}`)
+      return `${year}-${month}-${day}`
     }
   }
 
   return {
-    date: date.getFullDate(),
+    dateToString: date.getFullDate(),
+    date: new Date(date.getFullDate()),
     time: date.getHours()
   }
 }

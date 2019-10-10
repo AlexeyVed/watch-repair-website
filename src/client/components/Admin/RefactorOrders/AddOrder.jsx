@@ -38,7 +38,7 @@ class AddOrder extends React.Component {
     }))
 
     const initialValues = {
-      date: date.date,
+      date: date.dateToString,
       time: date.time
     }
     this.props.dispatch(initialize('addOrder', initialValues, ['date', 'time']))

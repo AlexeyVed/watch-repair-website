@@ -35,7 +35,7 @@ class OrderForm extends Component {
       today: date
     }))
     const initialValues = {
-      date: date.date,
+      date: date.dateToString,
       time: date.time
     }
     this.props.dispatch(initialize('orderForm', initialValues, ['date', 'time']))
