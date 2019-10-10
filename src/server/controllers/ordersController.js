@@ -151,7 +151,7 @@ exports.update = function (req, res, next) {
     nest: true
   })
     .then(master => {
-      if (master.city_id !== +city_id) {
+      if (master.city_id !== city_id) {
         return next(error(400, 'Master doesnt work in this town'))
       }
       return true
@@ -219,7 +219,8 @@ exports.getWorkers = function (req, res, next) {
   const { date, clock_id, city_id } = req.body
   Clock.findByPk(clock_id)
     .then(clock => {
-      req.body = { ...req.body, timeRepair: clock.duration }
+      const { duration } = clock
+      req.body = { ...req.body, duration }
       return Order.findAll({
         where: {
           date,
@@ -229,18 +230,18 @@ exports.getWorkers = function (req, res, next) {
       })
     })
     .then(ordersInDate => {
-      const { time, timeRepair } = req.body
+      const { time, duration } = req.body
       return ordersInDate.filter(order => {
         return (order.time < time)
-          ? ((order.time + order.clock.timeRepair) >= time)
-          : ((time + timeRepair) >= order.time)
+          ? ((order.time + order.clock.duration) >= time)
+          : ((time + duration) >= order.time)
       })
     })
     .then(busyMasters => {
       const arrayIdBusyMaster = busyMasters.map(master => master.master_id)
       return Master.findAll({
         where: {
-          city_id: req.body.city_id,
+          city_id,
           id: { [Op.notIn]: arrayIdBusyMaster }
         },
         include: [{ all: true }],
@@ -309,12 +310,13 @@ exports.addAdmin = function (req, res, next) {
   const { date, time, customer_id, clock_id, city_id, master_id } = req.body
   Clock.findByPk(clock_id)
     .then(reqClock => {
-      req.body = { ...req.body, timeRepair: reqClock.duration }
+      const { duration } = reqClock
+      req.body = { ...req.body, duration }
       return Order.findAll({
         where: {
-          master_id: master_id,
-          city_id: city_id,
-          date: date
+          master_id,
+          city_id,
+          date
         },
         include: [{ model: Clock }],
         raw: true,
@@ -325,7 +327,7 @@ exports.addAdmin = function (req, res, next) {
       const isCreated = result.filter(order => {
         return (order.time < time)
           ? ((order.time + order.clock.duration) >= time)
-          : ((time + req.body.timeRepair) >= order.time)
+          : ((time + req.body.duration) >= order.time)
       })
       if (isCreated.length) {
         return next(error(400, 'Master already busy at this time.'))
@@ -336,6 +338,7 @@ exports.addAdmin = function (req, res, next) {
       if (master.city_id !== +city_id) {
         return next(error(400, 'Master doesnt work in this town'))
       }
+      const { duration } = req.body
       return Order.create({
         time,
         date,
@@ -343,7 +346,7 @@ exports.addAdmin = function (req, res, next) {
         clock_id,
         customer_id,
         master_id,
-        duration: req.body.timeRepair
+        duration
       })
     })
     .then(order => {
@@ -416,29 +419,33 @@ exports.add = function (req, res, next) {
   const { date, time, email, clock_id, city_id, master_id, name } = req.body
   Clock.findByPk(clock_id)
     .then(reqClock => {
-      req.body = { ...req.body, timeRepair: reqClock.duration }
+      const { duration } = reqClock
+      req.body = { ...req.body, duration }
     })
     .then(() => {
       return Customer.findOrCreate({
-        where: { email: email },
-        defaults: { name: name }
+        where: { email },
+        defaults: { name }
       })
     })
     .then(([user, created]) => {
+      const customer = user.get({
+        plain: true
+      })
       req.body = {
         ...req.body,
-        customerId: user.get({
-          plain: true
-        }).id
+        name: customer.name,
+        customer_id: customer.id
       }
+      const { customer_id, duration } = req.body
       return Order.create({
         time,
         date,
-        customer_id: req.body.customerId,
+        customer_id,
         clock_id,
         city_id,
         master_id,
-        duration: req.body.timeRepair
+        duration
       })
     })
     .then(result => {
@@ -455,7 +462,8 @@ exports.add = function (req, res, next) {
     .then(order => {
       res.status(201).json(order)
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       next(error(400, 'Error add order'))
     })
 }

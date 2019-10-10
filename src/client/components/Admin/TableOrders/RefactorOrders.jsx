@@ -73,7 +73,7 @@ class RefactorOrders extends React.Component {
         <td>{ item.customer.name }</td>
         <td>{ item.clock.name }</td>
         <td>{ item.city.name }</td>
-        <td>{item.date} / {`${item.time}h - ${item.time + item.duration}h`}</td>
+        <td>{item.date} / {`${item.time}:00 - ${item.time + item.duration}:00`}</td>
         <td>{ item.master.name }</td>
         <td>
           <LinkButton to={`/admin/orders/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
