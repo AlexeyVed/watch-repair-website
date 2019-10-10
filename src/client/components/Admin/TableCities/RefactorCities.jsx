@@ -61,7 +61,7 @@ class RefactorCities extends React.Component {
       const deleteText = `Delete city: ${item.city}?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
-        <td>{item.city}</td>
+        <td>{item.name}</td>
         <td>
           <LinkButton to={`/admin/cities/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
           <DropMenu DropDelete={ deleteCity } itemId={ item.id } text={ deleteText }/>

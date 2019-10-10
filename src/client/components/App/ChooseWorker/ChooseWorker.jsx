@@ -12,7 +12,7 @@ class ChooseWorker extends React.Component {
   componentDidUpdate (prevProps, prevState) {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
-      if (+worker.id === this.props.masterId) {
+      if (+worker.id === this.props.master_id) {
         worker.classList.add('active')
       } else if (worker.classList.contains('active')) {
         worker.classList.remove('active')
@@ -23,7 +23,7 @@ class ChooseWorker extends React.Component {
   componentDidMount () {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
-      if (+worker.id === this.props.masterId) {
+      if (+worker.id === this.props.master_id) {
         worker.classList.add('active')
       } else if (worker.classList.contains('active')) {
         worker.classList.remove('active')
@@ -32,14 +32,14 @@ class ChooseWorker extends React.Component {
   }
 
   render () {
-    const { workers, addOrder, masterId, setWorker, order, returnHomePage } = this.props
+    const { workers, addOrder, master_id, setWorker, order, returnHomePage } = this.props
 
     let buttonConf
 
-    if (masterId) {
+    if (master_id) {
       const fullOrder = {
         ...order,
-        masterId
+        master_id
       }
       buttonConf = <Button variant='outlined' onClick={ () => (addOrder(fullOrder)) }>Confirm</Button>
     } else {
@@ -61,7 +61,7 @@ class ChooseWorker extends React.Component {
               <div className='worker-image'></div>
               <div className='worker-info'>
                 <div className='worker-info__name'>{item.name}</div>
-                <div className='worker-info__city'>Work in {(item.city !== null) ? item.city.city : null}</div>
+                <div className='worker-info__city'>Work in { item.city.name }</div>
                 <div className='worker-info__rating'>Rating: {item.rating}</div>
               </div>
             </div>
@@ -80,7 +80,7 @@ class ChooseWorker extends React.Component {
 const mapStateToProps = (state) => {
   return {
     workers: state.appReducer.forOrder.freeWorkers,
-    masterId: state.appReducer.forOrder.masterId,
+    master_id: state.appReducer.forOrder.masterId,
     order: state.appReducer.forOrder.order,
     chooseMaster: state.appReducer.chooseWorker
   }

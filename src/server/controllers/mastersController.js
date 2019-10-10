@@ -7,7 +7,7 @@ exports.list = function (req, res, next) {
   Master.findAll({
     include: [ { model: City } ],
     order: [
-      [City, 'city', 'ASC'],
+      [City, 'name', 'ASC'],
       ['name', 'ASC']
     ]
   })
@@ -63,7 +63,7 @@ exports.addValidation = checkSchema({
     isAlpha: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
@@ -77,10 +77,11 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { name, rating, city_id } = req.body
   Master.create({
-    name: req.body.name,
-    rating: req.body.rating,
-    cityId: req.body.cityId
+    name,
+    rating,
+    city_id
   })
     .then(result => {
       return Master.findOne({
@@ -117,7 +118,10 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(() => {
+    .catch(err => {
+      if (err.name === 'SequelizeForeignKeyConstraintError') {
+        return next(error(409, 'Master have an orders.'))
+      }
       next(error(400, 'Error delete master'))
     })
 }
@@ -136,7 +140,7 @@ exports.updateValidation = checkSchema({
     isAlpha: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
@@ -157,10 +161,11 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { name, rating, city_id } = req.body
   Master.update({
-    name: req.body.name,
-    rating: req.body.rating,
-    cityId: req.body.cityId
+    name,
+    rating,
+    city_id
   }, {
     where: { id: req.params.id }
   })

@@ -19,7 +19,7 @@ class EditWorkers extends React.Component {
     const id = arr[arr.length - 1]
     this.props.getMaster(id)
       .then(res => {
-        this.props.dispatch(initialize('editWorker', res, ['id', 'name', 'rating', 'city']))
+        this.props.dispatch(initialize('editWorker', res, ['id', 'name', 'rating', 'city_id']))
       })
   }
 
@@ -58,7 +58,7 @@ class EditWorkers extends React.Component {
                 placeholder='Update worker name'
               />
               <Field
-                name='cityId'
+                name='city_id'
                 id='city'
                 label='Enter city'
                 component={SelectField}
@@ -67,7 +67,7 @@ class EditWorkers extends React.Component {
               >
                 {
                   chooseCities.map(item => (
-                    <MenuItem key={item.id} value={item.id}>{item.city}</MenuItem>
+                    <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
                   ))
                 }
               </Field>
