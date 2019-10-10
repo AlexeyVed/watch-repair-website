@@ -18,3 +18,19 @@ export const confirmPassword = (input, allInputs) => (
   input === allInputs.password ? void 0 : 'Password does not match'
 )
 export const required = value => value ? undefined : 'Required'
+
+export const validateOnlyLetter = (input) => {
+  if (input === void 0) {
+
+  } else if (!/^[A-Z]+$/i.test(input)) {
+    return 'This input must contain only letter.'
+  }
+}
+
+export const validateTimeRepairClock = (input) => {
+  if (input === void 0) {
+
+  } else if (input < 1) {
+    return 'Must be equal or over 1  hour.'
+  }
+}

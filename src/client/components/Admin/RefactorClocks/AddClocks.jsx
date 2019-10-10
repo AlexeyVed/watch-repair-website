@@ -7,9 +7,9 @@ import { Redirect } from 'react-router-dom'
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addClockToDB } from '../../../actions'
-import { required } from '../../../validation'
+import { required, validateOnlyLetter, validateTimeRepairClock } from '../../../validation'
 
-import './RefactorClocks.less'
+import '../../../style/refactor-modal.less'
 
 class AddClocks extends React.Component {
   render () {
@@ -22,19 +22,20 @@ class AddClocks extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-clocks add-clock'>
-            <div className="refactor-clocks__header">
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Add Clock
-              <LinkButton to='/admin/clocks' name='&times;' className='refactor-clocks__header__right-button-close'/>
+              <LinkButton to='/admin/clocks' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
+              className='refactor-model__form'
               onSubmit={handleSubmit(addClock)}>
               <Field
                 label='Enter type of clock'
                 name='typeClock'
                 component={TextField}
-                validate={[required]}
+                validate={[required, validateOnlyLetter]}
                 type='text'
                 placeholder='Enter type of clock'
               />
@@ -42,11 +43,13 @@ class AddClocks extends React.Component {
                 label='Enter time of repair clock'
                 name='timeRepair'
                 component={TextField}
-                validate={[required]}
+                validate={[required, validateTimeRepairClock]}
+                inputProps={{ min: '1', max: '12', step: '1' }}
                 type='number'
                 placeholder='Enter time repair clock'
               />
               <button
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit</button>
             </form>

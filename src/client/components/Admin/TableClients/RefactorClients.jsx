@@ -12,7 +12,7 @@ import AddClients from '../RefactorClients/AddClients.jsx'
 import EditClients from '../RefactorClients/EditClients.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
 
-import './RefactorClients.less'
+import '../../../style/model-tables.less'
 
 class RefactorClients extends React.Component {
   state = {
@@ -78,7 +78,7 @@ class RefactorClients extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <div className='page'
+        <div className='table-model__numbers-pages__container__page page'
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -87,9 +87,9 @@ class RefactorClients extends React.Component {
         </div>
       )
     })
-    const table = <React.Fragment><div className='table-clients__title'>Table customers</div>
-      <div className='table-clients__table'>
-        <table>
+    const table = <React.Fragment><div className='table-model__title'>Table customers</div>
+      <div className='table-model__container'>
+        <table className='table-model__container__table'>
           <tbody>
             <tr>
               <th>№</th>
@@ -101,16 +101,16 @@ class RefactorClients extends React.Component {
           </tbody>
         </table>
       </div>
-      <div className='table-clients__numbers-pages'>
-        <div className='table-orders__numbers-pages__container'>
+      <div className='table-model__numbers-pages'>
+        <div className='table-model__numbers-pages__container'>
           { renderPageNumbers }
         </div>
-        <div className='table-clients__numbers-pages__bttn-add'>
+        <div className='table-model__numbers-pages__btn-add'>
           <LinkButton to='/admin/clients/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>
     return (
-      <div className='table-clients'>
+      <div className='table-model'>
         <Switch>
           <Route exact path='/admin/clients' render={() => (table)}/>
           <Route path='/admin/clients/add' render={() => (
