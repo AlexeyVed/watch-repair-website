@@ -2,16 +2,19 @@ import {
   LOAD_CUSTOMERS_STARTED,
   LOAD_CUSTOMERS_SUCCESS,
   LOAD_CUSTOMERS_FAILURE,
-  ADD_CUSTOMERS_STARTED,
-  ADD_CUSTOMERS_FAILURE,
-  ADD_CUSTOMERS_SUCCESS,
-  DELETE_CUSTOMERS_STARTED,
-  DELETE_CUSTOMERS_FAILURE,
-  DELETE_CUSTOMERS_SUCCESS,
-  EDIT_CUSTOMERS_STARTED,
-  EDIT_CUSTOMERS_FAILURE,
-  EDIT_CUSTOMERS_SUCCESS,
-  REDIRECT_FROM_REFACTOR
+  ADD_CUSTOMER_STARTED,
+  ADD_CUSTOMER_FAILURE,
+  ADD_CUSTOMER_SUCCESS,
+  DELETE_CUSTOMER_STARTED,
+  DELETE_CUSTOMER_FAILURE,
+  DELETE_CUSTOMER_SUCCESS,
+  EDIT_CUSTOMER_STARTED,
+  EDIT_CUSTOMER_FAILURE,
+  EDIT_CUSTOMER_SUCCESS,
+  REDIRECT_FROM_REFACTOR,
+  GET_CUSTOMER_STARTED,
+  GET_CUSTOMER_SUCCESS,
+  GET_CUSTOMER_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -30,9 +33,24 @@ export const loadCustomers = () => {
   }
 }
 
+export const getCustomer = id => {
+  return (dispatch) => {
+    dispatch({ type: GET_CUSTOMER_STARTED })
+    return axios
+      .get(`/api/customers/${id}`)
+      .then(res => {
+        dispatch({ type: GET_CUSTOMER_SUCCESS, payload: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: GET_CUSTOMER_FAILURE, payload: err.response.data })
+      })
+  }
+}
+
 export const addCustomersToDB = (values) => {
   return (dispatch) => {
-    dispatch({ type: ADD_CUSTOMERS_STARTED })
+    dispatch({ type: ADD_CUSTOMER_STARTED })
     return axios
       .post(`/api/customers/`, values)
       .then(res => {
@@ -49,7 +67,7 @@ export const addCustomersToDB = (values) => {
 
 export const editCustomersIntoDB = (values) => {
   return (dispatch) => {
-    dispatch({ type: EDIT_CUSTOMERS_STARTED })
+    dispatch({ type: EDIT_CUSTOMER_STARTED })
     return axios
       .put(`/api/customers/${values.id}`, values)
       .then(res => {
@@ -66,7 +84,7 @@ export const editCustomersIntoDB = (values) => {
 
 export const deleteCustomersFromDB = (id) => {
   return (dispatch) => {
-    dispatch({ type: DELETE_CUSTOMERS_STARTED })
+    dispatch({ type: DELETE_CUSTOMER_STARTED })
     return axios
       .delete(`/api/customers/${id}`)
       .then(res => {
@@ -89,34 +107,34 @@ export const loadCustomersSuccess = data => ({
 })
 
 export const addCustomersFailure = (err) => ({
-  type: ADD_CUSTOMERS_FAILURE,
+  type: ADD_CUSTOMER_FAILURE,
   payload: err
 })
 
 export const deleteCustomersFailure = (err) => ({
-  type: DELETE_CUSTOMERS_FAILURE,
+  type: DELETE_CUSTOMER_FAILURE,
   payload: err
 })
 
 export const editCustomersFailure = (err) => ({
-  type: EDIT_CUSTOMERS_FAILURE,
+  type: EDIT_CUSTOMER_FAILURE,
   payload: err
 })
 
 export const addCustomersSuccess = data => ({
-  type: ADD_CUSTOMERS_SUCCESS,
+  type: ADD_CUSTOMER_SUCCESS,
   message: 'Customer was successfully added.',
   payload: data
 })
 
 export const deleteCustomersSuccess = data => ({
-  type: DELETE_CUSTOMERS_SUCCESS,
+  type: DELETE_CUSTOMER_SUCCESS,
   message: 'Customer was successfully removed.',
   payload: data
 })
 
 export const editCustomersSuccess = data => ({
-  type: EDIT_CUSTOMERS_SUCCESS,
+  type: EDIT_CUSTOMER_SUCCESS,
   message: 'Customer was successfully edited.',
   payload: data
 })

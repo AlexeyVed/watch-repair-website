@@ -14,20 +14,20 @@ exports.list = function (req, res, next) {
     order: [
       ['date', 'ASC'],
       ['time', 'ASC']
-    ]
+    ],
+    raw: true,
+    nest: true
   })
     .then(orders => {
-      const string = JSON.stringify(orders)
-      const obj = JSON.parse(string)
       const today = getToday()
-      const indexToday = obj.findIndex((elem, index, array) => {
+      const indexToday = orders.findIndex((elem, index, array) => {
         const x = elem.date.split('-')
         return (Number(x[0]) >= today.year && Number(x[1]) >= today.month)
           ? (Number(x[2]) >= today.day) ? elem.time >= today.hour : false : false
       })
       if (indexToday !== -1) {
-        const oldOrders = obj.splice(0, indexToday)
-        const finallyObj = obj.concat(oldOrders)
+        const oldOrders = orders.splice(0, indexToday)
+        const finallyObj = orders.concat(oldOrders)
         return res.json(finallyObj)
       }
       res.json(orders)
@@ -146,11 +146,12 @@ exports.update = function (req, res, next) {
     return next(makeError(422, null, errors.array()))
   }
   const { date, time, customerId, clockId, cityId, masterId } = req.body
-  Master.findByPk(masterId)
+  Master.findByPk(masterId, {
+    raw: true,
+    nest: true
+  })
     .then(master => {
-      const stringMaster = JSON.stringify(master)
-      const objMaster = JSON.parse(stringMaster)
-      if (objMaster.cityId !== +cityId) {
+      if (master.cityId !== +cityId) {
         return next(makeError(400, 'Master doesnt work in this town'))
       }
       return true
@@ -335,19 +336,24 @@ exports.addAdmin = function (req, res, next) {
           cityId: cityId,
           date: date
         },
-        include: [{ model: Clock }]
+        include: [{ model: Clock }],
+        raw: true,
+        nest: true
       })
     })
     .then(result => {
-      if (filterBussyMaster(result, time, req.body.timeRepair).length) {
-        return next(makeError(400, 'Master already busy at this time.'))
+      const isCreated = result.filter(order => {
+        return (order.time < time)
+          ? ((order.time + order.clock.timeRepair) >= time)
+          : ((time + req.body.timeRepair) >= order.time)
+      })
+      if (isCreated.length) {
+        return next(error(400, 'Master already busy at this time.'))
       }
       return Master.findByPk(masterId)
     })
     .then(master => {
-      const stringMaster = JSON.stringify(master)
-      const objMaster = JSON.parse(stringMaster)
-      if (objMaster.cityId !== +cityId) {
+      if (master.cityId !== +cityId) {
         return next(makeError(400, 'Master doesnt work in this town'))
       }
       return Order.create({
@@ -448,19 +454,15 @@ exports.add = function (req, res, next) {
       })
     })
     .then(result => {
-      const string = JSON.stringify(result)
-      const obj = JSON.parse(string)
-      console.log('result order', obj)
       return Order.findOne({
-        where: { id: obj.id },
-        include: [{ all: true }]
+        where: { id: result.dataValues.id },
+        include: [{ all: true }],
+        raw: true,
+        nest: true
       })
     })
     .then(order => {
-      const string = JSON.stringify(order)
-      const obj = JSON.parse(string)
-      console.log('result order include', obj)
-      return sendMsg(obj)
+      return sendMsg(order)
     })
     .then(order => {
       res.status(201).json(order)
