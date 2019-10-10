@@ -1,5 +1,6 @@
 const { checkSchema, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
+const { format } = require('date-fns')
 const error = require('../modules/services.js').makeError
 const getToday = require('../modules/services.js').getToday
 const sendMsg = require('../modules/sendEmail.js').sendSuccessfullyMsg
@@ -30,6 +31,9 @@ exports.list = function (req, res, next) {
         const finallyObj = orders.concat(oldOrders)
         return res.json(finallyObj)
       }
+      orders.map((order) => {
+        order.date = format(new Date(order.date), 'MMMM dd, yyyy')
+      })
       res.json(orders)
     })
     .catch(() => {
@@ -60,6 +64,7 @@ exports.get = function (req, res, next) {
       if (order === null) {
         return next(error(404, `Order with id = ${req.params.id} not found!`))
       }
+      order.date = format(new Date(order.date), 'MMMM dd, yyyy')
       res.json(order)
     })
     .catch(() => {

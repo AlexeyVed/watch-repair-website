@@ -17,7 +17,7 @@ const MaterialUIPickers = props => {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
           disableToolbar
-          format='yyyy-MM-dd'
+          format='MMMM dd, yyyy'
           margin='normal'
           id='date-picker-dialog'
           label={label}
