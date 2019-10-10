@@ -186,6 +186,7 @@ exports.update = function (req, res, next) {
       if (order === null) {
         return next(error(404, `Order with id = ${req.params.id} not found for update!`))
       }
+      order.date = format(new Date(order.date), 'MMMM dd, yyyy')
       res.json(order)
     })
     .catch(() => {
@@ -367,6 +368,7 @@ exports.addAdmin = function (req, res, next) {
       })
     })
     .then(newOrder => {
+      newOrder.date = format(new Date(newOrder.date), 'MMMM dd, yyyy')
       res.status(201).json(newOrder)
     })
     .catch(() => {
