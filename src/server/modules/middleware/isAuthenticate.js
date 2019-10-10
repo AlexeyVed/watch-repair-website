@@ -22,6 +22,7 @@ module.exports = (req, res, next) => {
   } catch (err) {
     if (err.name === 'TokenExpiredError') {
       return next(error(401, 'Token is expired'))
+    }
     if (err.name === 'JsonWebTokenError') {
       return next(error(401, `Error get data. Reason: ${err.message}.`))
     }

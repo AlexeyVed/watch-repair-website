@@ -32,20 +32,21 @@ exports.login = (req, res, next) => {
     if (!user) {
       return next(error(info.code, info.message))
     }
+    const email = user.email
     req.logIn(user, err => {
       if (err) {
         return next(err)
       }
       return User.findOne({
         where: {
-          email: user.email
+          email
         }
       })
         .then(user => {
           if (user === null) {
-            return next(error(404, `User with email '${user.email}' not found!`))
+            return next(error(404, `User with email '${email}' not found!`))
           }
-          const token = jwt.sign({ email: user.email, exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60 }, config.jwt.secret)
+          const token = jwt.sign({ email, exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60 }, config.jwt.secret)
           const obj = {
             auth: true,
             token: token,
