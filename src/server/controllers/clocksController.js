@@ -31,6 +31,9 @@ exports.get = function (req, res, next) {
   }
   Clock.findByPk(req.params.id)
     .then((clock) => {
+      if (clock === null) {
+        return next(error(404, `Clock with id = ${req.params.id} not found!`))
+      }
       res.json(clock)
     })
     .catch(() => {
@@ -145,6 +148,9 @@ exports.update = function (req, res, next) {
       return Clock.findByPk(req.params.id)
     })
     .then(clock => {
+      if (clock === null) {
+        return next(error(404, `Clock with id = ${req.params.id} not found for update!`))
+      }
       res.json(clock)
     })
     .catch(() => {

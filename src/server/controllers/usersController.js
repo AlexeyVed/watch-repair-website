@@ -42,6 +42,9 @@ exports.login = (req, res, next) => {
         }
       })
         .then(user => {
+          if (user === null) {
+            return next(error(404, `User with email '${user.email}' not found!`))
+          }
           const token = jwt.sign({ email: user.email, exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60 }, config.jwt.secret)
           const obj = {
             auth: true,
