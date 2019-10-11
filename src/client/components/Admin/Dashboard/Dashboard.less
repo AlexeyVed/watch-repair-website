@@ -1,0 +1,80 @@
+.dashboard {
+    padding: 20px;
+
+    &__title-calendar {
+        border: 1px solid rgba(3, 0, 43, 0.705);
+        height: 35px;
+        padding-top: 10px;
+        font-size: 17px;
+        color: rgba(3, 0, 43, 0.705);
+        font-weight: bold;
+        text-align: center;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+
+    &__calendar-background {
+        box-sizing: content-box !important;
+    }
+}
+
+.calendar {
+    height: 100%;
+    td {
+        vertical-align: top;
+    }
+
+    &__week-title {
+        background-color: rgba(3, 0, 43, 0.705);
+
+        &__day {
+            font-size: 16px !important;
+            font-weight: bold !important;
+            color: white !important;
+            text-align: center !important;
+            padding: 10px !important;
+
+
+        }
+    }
+    
+    &__calendar-body {
+        td {
+            border: 1px solid rgba(128, 128, 128, 0.123);
+        }
+
+        &__row {
+            height: 120px;
+
+            &:first-child {
+                height: 20px;
+            }
+
+            &:nth-child(2n) {
+                background-color: rgba(0, 0, 0, 0.021);
+            }
+        }
+
+        &__day {
+            font-size: 14px !important;
+            font-weight: bold;
+        }
+        &__data {
+            padding-top: 5px;
+
+            &__order {
+                font-size: 13px;
+            }
+        }
+
+
+    }
+    
+    .start-empty {
+        background-color: rgba(0, 34, 109, 0.089) !important;
+    }
+
+    .end-empty {
+        background-color:  rgba(0, 34, 109, 0.089) !important;
+    }
+}
