@@ -29,6 +29,9 @@ exports.list = function (req, res, next) {
       if (indexToday !== -1) {
         const oldOrders = orders.splice(0, indexToday)
         const finallyObj = orders.concat(oldOrders)
+        finallyObj.map((order) => {
+          order.date = format(new Date(order.date), 'MMMM dd, yyyy')
+        })
         return res.json(finallyObj)
       }
       orders.map((order) => {
@@ -496,7 +499,7 @@ exports.add = function (req, res, next) {
     .then(order => {
       res.status(201).json(order)
     })
-    .catch((err) => {
+    .catch(() => {
       next(makeError(400, 'Error add order'))
     })
 }
