@@ -28,6 +28,9 @@ exports.list = function (req, res, next) {
       if (indexToday !== -1) {
         const oldOrders = orders.splice(0, indexToday)
         const finallyObj = orders.concat(oldOrders)
+        finallyObj.map((order) => {
+          order.date = format(new Date(order.date), 'MMMM dd, yyyy')
+        })
         return res.json(finallyObj)
       }
       orders.map((order) => {
