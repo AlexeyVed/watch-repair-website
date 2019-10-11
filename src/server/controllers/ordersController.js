@@ -1,7 +1,6 @@
 const { checkSchema, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
 const { format } = require('date-fns')
-const error = require('../modules/services.js').makeError
 const getToday = require('../modules/services.js').getToday
 const sendMsg = require('../modules/sendEmail.js').sendSuccessfullyMsg
 const Order = require('../models/orders.js')
@@ -476,7 +475,6 @@ exports.add = function (req, res, next) {
       res.status(201).json(order)
     })
     .catch((err) => {
-      console.log(err)
       next(error(400, 'Error add order'))
     })
 }
