@@ -21,12 +21,12 @@ class AdminBar extends React.Component {
     return (
       <div className='bar-choose-item'>
         <div className="bar-choose-item__buttons">
-          <LinkButton className='button-bar' to='/admin/dashboard' name={ <EventIcon/> }/>
-          <LinkButton className='button-bar' to='/admin/orders' name='Control orders'/>
-          <LinkButton className='button-bar' to='/admin/cities' name='Control cities'/>
-          <LinkButton className='button-bar' to='/admin/workers' name='Control masters'/>
-          <LinkButton className='button-bar' to='/admin/clocks' name='Control clocks'/>
-          <LinkButton className='button-bar' to='/admin/clients' name='Control clients'/>
+          <LinkButton className='button-bar board' to='/admin/dashboard' name={ <EventIcon/> }/>
+          <LinkButton className='button-bar orders' to='/admin/orders' name='Control orders'/>
+          <LinkButton className='button-bar cities' to='/admin/cities' name='Control cities'/>
+          <LinkButton className='button-bar masters' to='/admin/workers' name='Control masters'/>
+          <LinkButton className='button-bar clocks' to='/admin/clocks' name='Control clocks'/>
+          <LinkButton className='button-bar customers' to='/admin/clients' name='Control clients'/>
         </div>
       </div>
     )

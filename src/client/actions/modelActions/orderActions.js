@@ -14,7 +14,10 @@ import {
   REDIRECT_FROM_REFACTOR,
   GET_ORDER_STARTED,
   GET_ORDER_SUCCESS,
-  GET_ORDER_FAILURE
+  GET_ORDER_FAILURE,
+  LOAD_DATA_FOR_DASHBOARD_STARTED,
+  LOAD_DATA_FOR_DASHBOARD_SUCCESS,
+  LOAD_DATA_FOR_DASHBOARD_FAILURE
 } from '../types.js'
 
 import axios from 'axios'
@@ -29,6 +32,20 @@ export const loadOrders = () => {
       })
       .catch(err => {
         dispatch(loadOrdersFailure(err.response.data))
+      })
+  }
+}
+
+export const loadForDashboard = date => {
+  return (dispatch) => {
+    dispatch({ type: LOAD_DATA_FOR_DASHBOARD_STARTED })
+    return axios
+      .get(`/api/orders/?date=${date}`)
+      .then(res => {
+        dispatch({ type: LOAD_DATA_FOR_DASHBOARD_SUCCESS, payload: res.data })
+      })
+      .catch(err => {
+        dispatch({ type: LOAD_DATA_FOR_DASHBOARD_FAILURE, payload: err.response.data })
       })
   }
 }

@@ -1,46 +1,74 @@
+@import '../../../../client/style/global-variable.less';
+
 .dashboard {
     padding: 20px;
+    flex: 1;
 
     &__title-calendar {
-        border: 1px solid rgba(3, 0, 43, 0.705);
-        height: 35px;
-        padding-top: 10px;
-        font-size: 17px;
-        color: rgba(3, 0, 43, 0.705);
-        font-weight: bold;
-        text-align: center;
+        border: 1px solid rgba(0, 0, 0, 0.788);
+        background-color: white;
+        height: 45px;
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &__text {
+            flex: 1;
+            font-size: 17px;
+            color: @order-dashboard-color;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        button {
+            width: 50px;
+            height: 100%;
+        }
     }
 
     &__calendar-background {
         box-sizing: content-box !important;
     }
+
+    &__container-calendar {
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar{
+        border-color: @tables-color;
+        width: 1px;
+    }
 }
 
 .calendar {
-    height: 100%;
+    table-layout: fixed;
+    width: 100%;
+    
     td {
         vertical-align: top;
     }
 
     &__week-title {
-        background-color: rgba(3, 0, 43, 0.705);
+        background-color: rgba(0, 0, 0, 0.815);
 
         &__day {
             font-size: 16px !important;
             font-weight: bold !important;
             color: white !important;
             text-align: center !important;
-            padding: 10px !important;
-
-
+            padding: 5px !important;
         }
     }
     
     &__calendar-body {
         td {
-            border: 1px solid rgba(128, 128, 128, 0.123);
+            border: 1px solid rgba(128, 128, 128, 0.247);
+            padding: 5px;
+            position: relative;
+            background-color: inherit;
         }
 
         &__row {
@@ -56,25 +84,38 @@
         }
 
         &__day {
-            font-size: 14px !important;
+            text-align: end;
+            font-size: 12px !important;
             font-weight: bold;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgba(128, 128, 128, 0.199);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+        
         &__data {
-            padding-top: 5px;
-
-            &__order {
-                font-size: 13px;
-            }
+            letter-spacing: 0;
+            height: 100%;
+            max-height: 100px;
+            overflow-y: auto;
         }
 
 
     }
     
-    .start-empty {
+    .empty {
         background-color: rgba(0, 34, 109, 0.089) !important;
-    }
 
-    .end-empty {
-        background-color:  rgba(0, 34, 109, 0.089) !important;
+        .calendar__calendar-body__day {
+            color: grey;
+            background-color: none;
+        }
     }
 }

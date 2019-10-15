@@ -1,19 +1,25 @@
-import React from 'react';
+import React from 'react'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import Button from '@material-ui/core/Button'
+import CustomTooltip from '../../ComponentMaterial/TooltipOrder'
 import { format } from 'date-fns'
 import { connect } from 'react-redux'
+
+import { loadForDashboard, loadDataEnd, setPage } from '../../../actions'
 
 import './Dashboard.less'
 
 class Dashboard extends React.Component {
   state = {
-    year: 2019,
-    month: 10
+    year: new Date().getFullYear(),
+    month: new Date().getMonth()
   }
 
   getDay = date => {
@@ -22,40 +28,85 @@ class Dashboard extends React.Component {
     return day - 1
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    if (prevState.month !== this.state.month || prevState.year !== this.state.year) {
+      const string = this.state.month < 9 ? `${this.state.year}-0${this.state.month + 1}` : `${this.state.year}-${this.state.month + 1}`
+      this.props.loadOrders(string)
+        .then((res) => {
+          this.props.loadEnd()
+        })
+    }
+  }
+
+  nextMonth = () => {
+    if (this.state.month === 11) {
+      return this.setState(() => ({ month: 0, year: this.state.year + 1 }))
+    }
+    this.setState(() => ({ month: this.state.month + 1 }))
+  }
+
+  previousMonth = () => {
+    if (this.state.month === 0) {
+      return this.setState(() => ({ month: 11, year: this.state.year - 1 }))
+    }
+    this.setState(() => ({ month: this.state.month - 1 }))
+  }
+
+  componentDidMount () {
+    this.props.loadOrders(`${this.state.year}-${this.state.month + 1}`)
+      .then((res) => {
+        this.props.loadEnd()
+      })
+    this.props.setPage('board')
+  }
   render () {
     const { getDay } = this
     const { orders } = this.props
     const { year, month } = this.state
     let date = new Date(year, month)
-    console.log(date)
-    const startBlanks = []
+    const startBlanksReverse = []
     const endBlanks = []
     const daysInMonth = []
 
+    const lastDayOfLastMonth = new Date(year, month)
+    lastDayOfLastMonth.setDate(-1)
+    let lastDay = lastDayOfLastMonth.getDate() + 1
     for (let i = 0; i < getDay(date); i++) {
-      startBlanks.push(<td className='calendar-day start-empty' key={`start-empty-${i}`}>{''}</td>)
+      startBlanksReverse.push(<td className='calendar__calendar-body empty' onClick={this.previousMonth} key={`start-empty-${i}`}><div className='calendar__calendar-body__day'><span>{lastDay}</span></div></td>)
+      lastDay--
     }
+
+    const startBlanks = startBlanksReverse.reverse()
 
     while (date.getMonth() === month) {
       const ordersInDate = []
       const numberDay = date.getDate()
       for (let order of orders) {
-        if (format(new Date(order.date), 'yyyy-mm-dd') === format(date, 'yyyy-mm-dd')) {
+        if (format(new Date(order.date), 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')) {
           ordersInDate.push(order)
         }
       }
       daysInMonth.push(<td>
-        <div className='calendar__calendar-body__day'>{date.getDate()}</div>
-        <div className='calendar__calendar-body__data'>{ordersInDate.map(order => (
-          <div className='calendar__calendar-body__data__order'>city: {order.city.name} master: {order.master.name}</div>
-        ))}</div>
+        <div className='calendar__calendar-body__data' key={`day-${numberDay}`}>
+          <div className='calendar__calendar-body__day'>{numberDay}</div>
+          {ordersInDate.map(order => (
+            <CustomTooltip
+              master={order.master.name}
+              time={order.time}
+              duration={order.duration}
+              city={order.city.name}
+              clock={order.clock.name}
+              customer={order.customer.name}/>
+          ))}</div>
       </td>)
       date.setDate(numberDay + 1)
     }
 
     if (getDay(date) !== 0) {
+      let j = 1
       for (let i = getDay(date); i < 7; i++) {
-        endBlanks.push(<td className='calendar__calendar-body__day end-empty' key={`end-empty-${i}`}>{''}</td>)
+        endBlanks.push(<td className='calendar__calendar-body empty' onClick={this.nextMonth} key={`end-empty-${i}`}><div className='calendar__calendar-body__day'><span>{j}</span></div></td>)
+        j++
       }
     }
 
@@ -75,14 +126,19 @@ class Dashboard extends React.Component {
         rows.push(cells)
       }
     })
-
+    let numberRows = 0
     let calendar = rows.map(row => {
-      return <TableRow className='calendar__calendar-body__row'>{row}</TableRow>
+      numberRows++
+      return <TableRow className='calendar__calendar-body__row' key={`row-${numberRows}`}>{row}</TableRow>
     })
 
     return (
       <div className='dashboard'>
-        <div className='dashboard__title-calendar'>Year: {year}      Month: { month }</div>
+        <div className='dashboard__title-calendar'>
+          <Button onClick={this.previousMonth}><ChevronLeftIcon/></Button>
+          <div className='dashboard__title-calendar__text'>{ format(new Date(year, month), 'MMMM yyyy')}</div>
+          <Button onClick={this.nextMonth}><ChevronRightIcon/></Button>
+        </div>
         <Paper className='dashboard__calendar-background'>
           <Table className='calendar'>
             <TableHead>
@@ -96,10 +152,14 @@ class Dashboard extends React.Component {
                 <TableCell className='calendar__week-title__day'>Sunday</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody className='calendar__calendar-body'>
-              { calendar }
-            </TableBody>
           </Table>
+          <div className='dashboard__container-calendar'>
+            <Table className='calendar'>
+              <TableBody className='calendar__calendar-body'>
+                { calendar }
+              </TableBody>
+            </Table>
+          </div>
         </Paper>
       </div>
     )
@@ -108,11 +168,19 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    orders: state.orderReducer.data
+    orders: state.orderReducer.dashboardData
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadEnd: () => dispatch(loadDataEnd()),
+    loadOrders: date => dispatch(loadForDashboard(date)),
+    setPage: data => dispatch(setPage(data))
   }
 }
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Dashboard)

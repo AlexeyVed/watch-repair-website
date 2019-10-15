@@ -9,6 +9,26 @@ const Clock = require('../models/clocks.js')
 const Customer = require('../models/customers.js')
 
 exports.list = function (req, res, next) {
+  if (req.query.date) {
+    console.log('im hereeeeeeeeeeeeeeeeeeeeeeeeeee')
+    return Order.findAll({
+      include: [ { all: true } ],
+      where: {
+        date: {
+          [Op.startsWith]: req.query.date
+        }
+      },
+      order: [
+        ['date', 'ASC'],
+        ['time', 'ASC']
+      ],
+      raw: true,
+      nest: true
+    })
+      .then(orders => {
+        res.json(orders)
+      })
+  }
   Order.findAll({
     include: [ { all: true } ],
     order: [
