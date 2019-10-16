@@ -11,7 +11,7 @@ import './TooltipOrder.less'
 
 const TriggersTooltips = props => {
   const [open, setOpen] = React.useState(false)
-  const { master, city, clock, time, duration, customer } = props
+  const { master, city, clock, time, duration, customer, num } = props
 
   const handleTooltipClose = () => {
     setOpen(false)
@@ -43,7 +43,7 @@ const TriggersTooltips = props => {
         }
       >
         <div className='calendar__calendar-body__data__order' onClick={handleTooltipOpen}>
-          <QueryBuilderIcon/>{time}:00-{time + duration}:00, {city}
+          {num}. {time}:00-{time + duration}:00, {city}
         </div>
       </Tooltip>
     </ClickAwayListener>

@@ -14,21 +14,21 @@
     width: 1px;
   }
 
-  &__window {
-    position: relative;
+  &__window { 
     background-color: @tables-color;
     width: 300px;
     max-height: 400px;
     margin: auto;
     display: flex;
     flex-direction: column;
-
     border-radius: 10px;
     border: @app-border-style;
+    box-shadow: @app-box-shadows;
 
     &__container {
       margin: 10px;
       overflow: auto;
+      font-size: 15px;
 
       &__text {
         padding-top: 10px;
@@ -36,8 +36,7 @@
       }
   
       &__orders {
-        font-size: 15px;
-        padding: 10px 20px 20px 20px;
+        padding: 20px 20px 20px 20px;
   
         &__order {
           border-bottom: 1px solid gray;

@@ -87,12 +87,15 @@ class Dashboard extends React.Component {
           ordersInDate.push(order)
         }
       }
+      let i = 0
       daysInMonth.push(<td key={`day-${numberDay}`}>
         <PoratlOrders orders={ordersInDate} day={numberDay} year={year} month={month}/>
         <div className='calendar__calendar-body__data'>
           <div className='calendar__calendar-body__day'>{numberDay}</div>
-          {ordersInDate.map(order => (
-            <CustomTooltip
+          {ordersInDate.map(order => {
+            i++
+            return <CustomTooltip
+              num={i}
               master={order.master.name}
               time={order.time}
               duration={order.duration}
@@ -100,7 +103,7 @@ class Dashboard extends React.Component {
               clock={order.clock.name}
               customer={order.customer.name}
               key={`order-tooltip-${order.id}`}/>
-          ))}</div>
+          })}</div>
       </td>)
       date.setDate(numberDay + 1)
     }
