@@ -82,12 +82,12 @@ class Dashboard extends React.Component {
       const ordersInDate = []
       const numberDay = date.getDate()
       for (let order of orders) {
-        if (format(new Date(order.date), 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')) {
+        if (format(new Date(order.date), 'MM-dd') === format(date, 'MM-dd')) {
           ordersInDate.push(order)
         }
       }
-      daysInMonth.push(<td>
-        <div className='calendar__calendar-body__data' key={`day-${numberDay}`}>
+      daysInMonth.push(<td key={`day-${numberDay}`}>
+        <div className='calendar__calendar-body__data'>
           <div className='calendar__calendar-body__day'>{numberDay}</div>
           {ordersInDate.map(order => (
             <CustomTooltip
@@ -96,7 +96,8 @@ class Dashboard extends React.Component {
               duration={order.duration}
               city={order.city.name}
               clock={order.clock.name}
-              customer={order.customer.name}/>
+              customer={order.customer.name}
+              key={`order-tooltip-${order.id}`}/>
           ))}</div>
       </td>)
       date.setDate(numberDay + 1)
@@ -152,14 +153,10 @@ class Dashboard extends React.Component {
                 <TableCell className='calendar__week-title__day'>Sunday</TableCell>
               </TableRow>
             </TableHead>
+            <TableBody className='calendar__calendar-body'>
+              { calendar }
+            </TableBody>
           </Table>
-          <div className='dashboard__container-calendar'>
-            <Table className='calendar'>
-              <TableBody className='calendar__calendar-body'>
-                { calendar }
-              </TableBody>
-            </Table>
-          </div>
         </Paper>
       </div>
     )

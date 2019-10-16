@@ -1,8 +1,7 @@
 @import '../../../../client/style/global-variable.less';
 
 .dashboard {
-    padding: 20px;
-    flex: 1;
+    padding: 10px;
 
     &__title-calendar {
         border: 1px solid rgba(0, 0, 0, 0.788);
@@ -12,7 +11,6 @@
         border-top-left-radius: 10px;
         display: flex;
         align-items: center;
-        justify-content: center;
 
         &__text {
             flex: 1;
@@ -23,18 +21,8 @@
         }
 
         button {
-            width: 50px;
             height: 100%;
         }
-    }
-
-    &__calendar-background {
-        box-sizing: content-box !important;
-    }
-
-    &__container-calendar {
-        height: 100%;
-        overflow-y: auto;
     }
 
     ::-webkit-scrollbar{
@@ -46,46 +34,41 @@
 .calendar {
     table-layout: fixed;
     width: 100%;
-    
-    td {
-        vertical-align: top;
-    }
 
     &__week-title {
-        background-color: rgba(0, 0, 0, 0.815);
+        background-color: @order-dashboard-color;
 
         &__day {
             font-size: 16px !important;
             font-weight: bold !important;
             color: white !important;
             text-align: center !important;
-            padding: 5px !important;
+            padding: 10px 5px !important;
         }
     }
     
     &__calendar-body {
         td {
-            border: 1px solid rgba(128, 128, 128, 0.247);
+            border: 1px solid rgba(128, 128, 128, 0.384);
             padding: 5px;
             position: relative;
-            background-color: inherit;
+            vertical-align: bottom;
         }
 
         &__row {
             height: 120px;
 
             &:first-child {
-                height: 20px;
+                height: 10px;
             }
 
             &:nth-child(2n) {
-                background-color: rgba(0, 0, 0, 0.021);
+                background-color: rgba(0, 0, 0, 0.041);
             }
         }
 
         &__day {
-            text-align: end;
-            font-size: 12px !important;
+            font-size: 12px;
             font-weight: bold;
             position: absolute;
             right: 5px;
@@ -94,7 +77,7 @@
             width: 20px;
             height: 20px;
             background-color: rgb(255, 255, 255);
-            border: 1px solid rgba(128, 128, 128, 0.199);
+            border: 1px solid rgba(0, 0, 0, 0.473);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -106,16 +89,14 @@
             max-height: 100px;
             overflow-y: auto;
         }
-
-
     }
     
     .empty {
-        background-color: rgba(0, 34, 109, 0.089) !important;
+        background-color: rgba(24, 78, 82, 0.089);
 
         .calendar__calendar-body__day {
-            color: grey;
-            background-color: none;
+            background-color: white;
+            color: gray;
         }
     }
 }
