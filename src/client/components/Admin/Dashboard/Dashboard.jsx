@@ -9,6 +9,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import Button from '@material-ui/core/Button'
 import CustomTooltip from '../../ComponentMaterial/TooltipOrder'
+import PoratlOrders from '../../ComponentMaterial/PortalOrdersInDate'
 import { format } from 'date-fns'
 import { connect } from 'react-redux'
 
@@ -87,6 +88,7 @@ class Dashboard extends React.Component {
         }
       }
       daysInMonth.push(<td key={`day-${numberDay}`}>
+        <PoratlOrders orders={ordersInDate} day={numberDay} year={year} month={month}/>
         <div className='calendar__calendar-body__data'>
           <div className='calendar__calendar-body__day'>{numberDay}</div>
           {ordersInDate.map(order => (
@@ -144,13 +146,13 @@ class Dashboard extends React.Component {
           <Table className='calendar'>
             <TableHead>
               <TableRow className='calendar__week-title'>
-                <TableCell className='calendar__week-title__day'>Monday</TableCell>
-                <TableCell className='calendar__week-title__day'>Tuesday</TableCell>
-                <TableCell className='calendar__week-title__day'>Wednesday</TableCell>
-                <TableCell className='calendar__week-title__day'>Thursday</TableCell>
-                <TableCell className='calendar__week-title__day'>Friday</TableCell>
-                <TableCell className='calendar__week-title__day'>Saturday</TableCell>
-                <TableCell className='calendar__week-title__day'>Sunday</TableCell>
+                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Mon' : 'Monday'} </TableCell>
+                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Tue' : 'Tuesday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Wed' : 'Wednesday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Thu' : 'Thursday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Fri' : 'Friday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Sat' : 'Saturday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Sun' : 'Sunday'}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className='calendar__calendar-body'>

@@ -1,0 +1,66 @@
+@import '../../../style/global-variable.less';
+
+.orders-portal {
+  position: absolute;
+  display: flex;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(127, 129, 128, 0.37);
+  z-index: 5;
+
+  ::-webkit-scrollbar {
+    border-color: @tables-color;
+    width: 1px;
+  }
+
+  &__window {
+    position: relative;
+    background-color: @tables-color;
+    width: 300px;
+    max-height: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 10px;
+    border: @app-border-style;
+
+    &__container {
+      margin: 10px;
+      overflow: auto;
+
+      &__text {
+        padding-top: 10px;
+        text-align: center;
+      }
+  
+      &__orders {
+        font-size: 15px;
+        padding: 10px 20px 20px 20px;
+  
+        &__order {
+          border-bottom: 1px solid gray;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          padding-top: 10px;
+  
+          div {
+            flex: 0 0 50%;
+            height: 30px;
+  
+            &:last-child {
+              flex: 100%;
+              text-align: center;
+            }
+            
+            svg {
+              font-size: 17px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

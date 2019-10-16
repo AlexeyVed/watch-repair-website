@@ -56,7 +56,6 @@
         }
 
         &__row {
-            height: 120px;
 
             &:first-child {
                 height: 10px;
@@ -68,26 +67,17 @@
         }
 
         &__day {
-            font-size: 12px;
             font-weight: bold;
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            background-color: rgb(255, 255, 255);
-            border: 1px solid rgba(0, 0, 0, 0.473);
             display: flex;
             align-items: center;
             justify-content: center;
+            position: absolute;
         }
         
         &__data {
             letter-spacing: 0;
-            height: 100%;
-            max-height: 100px;
             overflow-y: auto;
+            max-height: 120px;
         }
     }
     
@@ -98,5 +88,82 @@
             background-color: white;
             color: gray;
         }
+    }
+}
+
+@media screen and (min-width:696px) {
+    .calendar {
+        &__calendar-body {
+            &__row {
+                height: 120px;
+            }
+
+            &__day {
+                font-size: 12px;
+                width: 20px;
+                height: 20px;
+                right: 5px;
+                top: 5px;
+                border: 1px solid rgba(0, 0, 0, 0.473);
+                border-radius: 50%;
+                background-color: rgb(255, 255, 255);
+            }
+
+            &__data-for-responsive {
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:696px) {
+    .calendar {
+        &__calendar-body {
+            td {
+                vertical-align: middle;
+            }
+
+            &__row {
+                height: 60px;
+            }
+
+            &__day {
+                font-size: 9px;
+                width: 14px;
+                height: 14px;
+                right: 0px;
+                top: 0px;
+                color: white;
+                background-color: @order-dashboard-color;
+            }
+
+            &__data {
+                display: none;
+            }
+
+            &__data-for-responsive {
+                max-height: 60px;
+    
+                &__container {
+                    max-height: 60px;
+
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.075);
+                        cursor: pointer;
+                    }
+                    
+                    &__title {
+                        font-size: 17px;
+                        text-align: center;
+                        color: blue;
+                    }
+                }
+            }
+        }
+
+        .calendar__calendar-body__day {
+            background-color: @order-dashboard-color;
+        }
+        
     }
 }
