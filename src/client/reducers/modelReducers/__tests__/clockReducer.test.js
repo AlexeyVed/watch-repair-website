@@ -50,7 +50,7 @@ describe('Clock reducer', () => {
 
   test('should add clocks failure', () => {
     const action = {
-      type: types.ADD_CLOCKS_FAILURE,
+      type: types.ADD_CLOCK_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -63,7 +63,7 @@ describe('Clock reducer', () => {
 
   test('should add clocks started', () => {
     const action = {
-      type: types.ADD_CLOCKS_STARTED
+      type: types.ADD_CLOCK_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -74,7 +74,7 @@ describe('Clock reducer', () => {
 
   test('should add clocks success', () => {
     const action = {
-      type: types.ADD_CLOCKS_SUCCESS,
+      type: types.ADD_CLOCK_SUCCESS,
       payload: 'clocks',
       message: 'hello'
     }
@@ -93,7 +93,7 @@ describe('Clock reducer', () => {
 
   test('should edit clocks started', () => {
     const action = {
-      type: types.EDIT_CLOCKS_STARTED
+      type: types.EDIT_CLOCK_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -104,7 +104,7 @@ describe('Clock reducer', () => {
 
   test('should edit clocks failure', () => {
     const action = {
-      type: types.EDIT_CLOCKS_FAILURE,
+      type: types.EDIT_CLOCK_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -117,7 +117,7 @@ describe('Clock reducer', () => {
 
   test('should edit clocks successes', () => {
     const action = {
-      type: types.EDIT_CLOCKS_SUCCESS,
+      type: types.EDIT_CLOCK_SUCCESS,
       payload: { id: 1, city: 'clocks' },
       message: 'hello'
     }
@@ -139,7 +139,7 @@ describe('Clock reducer', () => {
 
   test('should delete clocks failure', () => {
     const action = {
-      type: types.DELETE_CLOCKS_FAILURE,
+      type: types.DELETE_CLOCK_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -152,7 +152,7 @@ describe('Clock reducer', () => {
 
   test('should delete clocks started', () => {
     const action = {
-      type: types.DELETE_CLOCKS_STARTED
+      type: types.DELETE_CLOCK_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -163,7 +163,7 @@ describe('Clock reducer', () => {
 
   test('should delete clocks success', () => {
     const action = {
-      type: types.DELETE_CLOCKS_SUCCESS,
+      type: types.DELETE_CLOCK_SUCCESS,
       payload: 1,
       message: 'hello'
     }

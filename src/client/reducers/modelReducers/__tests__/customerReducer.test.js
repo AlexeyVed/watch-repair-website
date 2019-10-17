@@ -50,7 +50,7 @@ describe('Customer reducer', () => {
 
   test('should add customers failure', () => {
     const action = {
-      type: types.ADD_CUSTOMERS_FAILURE,
+      type: types.ADD_CUSTOMER_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -63,7 +63,7 @@ describe('Customer reducer', () => {
 
   test('should add customers started', () => {
     const action = {
-      type: types.ADD_CUSTOMERS_STARTED
+      type: types.ADD_CUSTOMER_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -74,7 +74,7 @@ describe('Customer reducer', () => {
 
   test('should add customers success', () => {
     const action = {
-      type: types.ADD_CUSTOMERS_SUCCESS,
+      type: types.ADD_CUSTOMER_SUCCESS,
       payload: 'customers',
       message: 'hello'
     }
@@ -93,7 +93,7 @@ describe('Customer reducer', () => {
 
   test('should edit customers started', () => {
     const action = {
-      type: types.EDIT_CUSTOMERS_STARTED
+      type: types.EDIT_CUSTOMER_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -104,7 +104,7 @@ describe('Customer reducer', () => {
 
   test('should edit customers failure', () => {
     const action = {
-      type: types.EDIT_CUSTOMERS_FAILURE,
+      type: types.EDIT_CUSTOMER_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -117,7 +117,7 @@ describe('Customer reducer', () => {
 
   test('should edit customers successes', () => {
     const action = {
-      type: types.EDIT_CUSTOMERS_SUCCESS,
+      type: types.EDIT_CUSTOMER_SUCCESS,
       payload: { id: 1, city: 'customers' },
       message: 'hello'
     }
@@ -139,7 +139,7 @@ describe('Customer reducer', () => {
 
   test('should delete customers failure', () => {
     const action = {
-      type: types.DELETE_CUSTOMERS_FAILURE,
+      type: types.DELETE_CUSTOMER_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -152,7 +152,7 @@ describe('Customer reducer', () => {
 
   test('should delete customers started', () => {
     const action = {
-      type: types.DELETE_CUSTOMERS_STARTED
+      type: types.DELETE_CUSTOMER_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -163,7 +163,7 @@ describe('Customer reducer', () => {
 
   test('should delete customers success', () => {
     const action = {
-      type: types.DELETE_CUSTOMERS_SUCCESS,
+      type: types.DELETE_CUSTOMER_SUCCESS,
       payload: 1,
       message: 'hello'
     }
