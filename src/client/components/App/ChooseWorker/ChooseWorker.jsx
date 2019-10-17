@@ -32,14 +32,14 @@ class ChooseWorker extends React.Component {
   }
 
   render () {
-    const { workers, addOrder, master_id, setWorker, order, returnHomePage } = this.props
+    const { workers, addOrder, masterId, setWorker, order, returnHomePage } = this.props
 
     let buttonConf
 
-    if (master_id) {
+    if (masterId) {
       const fullOrder = {
         ...order,
-        master_id
+        master_id: masterId
       }
       buttonConf = <Button variant='outlined' onClick={ () => (addOrder(fullOrder)) }>Confirm</Button>
     } else {
@@ -80,7 +80,7 @@ class ChooseWorker extends React.Component {
 const mapStateToProps = (state) => {
   return {
     workers: state.appReducer.forOrder.freeWorkers,
-    master_id: state.appReducer.forOrder.masterId,
+    masterId: state.appReducer.forOrder.masterId,
     order: state.appReducer.forOrder.order,
     chooseMaster: state.appReducer.chooseWorker
   }
