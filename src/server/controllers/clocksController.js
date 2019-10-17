@@ -4,7 +4,7 @@ const Clock = require('../models/clocks.js')
 
 exports.list = function (req, res, next) {
   Clock.findAll({
-    order: [ ['timeRepair', 'ASC'] ]
+    order: [ ['duration', 'ASC'] ]
   })
     .then(clocks => {
       res.json(clocks)
@@ -31,6 +31,9 @@ exports.get = function (req, res, next) {
   }
   Clock.findByPk(req.params.id)
     .then((clock) => {
+      if (clock === null) {
+        return next(error(404, `Clock with id = ${req.params.id} not found!`))
+      }
       res.json(clock)
     })
     .catch(() => {
@@ -39,13 +42,13 @@ exports.get = function (req, res, next) {
 }
 
 exports.addValidation = checkSchema({
-  typeClock: {
+  name: {
     in: ['body'],
     errorMessage: 'Type of clock is wrong',
     isAlpha: true,
     isEmpty: false
   },
-  timeRepair: {
+  duration: {
     in: ['body'],
     errorMessage: 'Time repair is wrong',
     isInt: true,
@@ -53,7 +56,7 @@ exports.addValidation = checkSchema({
     isEmpty: false,
     custom: {
       options: (value, { req, location, path }) => {
-        return req.body.timeRepair > 0 && req.body.timeRepair <= 12
+        return req.body.duration > 0 && req.body.duration <= 12
       }
     }
   }
@@ -64,9 +67,10 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { name, duration } = req.body
   Clock.create({
-    typeClock: req.body.typeClock,
-    timeRepair: req.body.timeRepair
+    name,
+    duration
   })
     .then(result => {
       res.status(201).json(result)
@@ -97,7 +101,10 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(() => {
+    .catch(err => {
+      if (err.name === 'SequelizeForeignKeyConstraintError') {
+        return next(error(409, 'This clock already have an order.'))
+      }
       next(error(400, 'Error delete clock'))
     })
 }
@@ -110,21 +117,20 @@ exports.updateValidation = checkSchema({
     toInt: true,
     isEmpty: false
   },
-  typeClock: {
+  name: {
     in: ['body'],
     errorMessage: 'Type of clock is wrong',
     isAlpha: true,
     isEmpty: false
   },
-  timeRepair: {
+  duration: {
     in: ['body'],
     errorMessage: 'Time repair is wrong',
     isInt: true,
-    toInt: true,
     isEmpty: false,
     custom: {
       options: (value, { req, location, path }) => {
-        return req.body.timeRepair > 0 && req.body.timeRepair <= 12
+        return req.body.duration > 0 && req.body.duration <= 12
       }
     }
   }
@@ -135,9 +141,10 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { name, duration } = req.body
   Clock.update({
-    typeClock: req.body.typeClock,
-    timeRepair: req.body.timeRepair
+    name,
+    duration
   }, {
     where: { id: req.params.id }
   })
@@ -145,6 +152,9 @@ exports.update = function (req, res, next) {
       return Clock.findByPk(req.params.id)
     })
     .then(clock => {
+      if (clock === null) {
+        return next(error(404, `Clock with id = ${req.params.id} not found for update!`))
+      }
       res.json(clock)
     })
     .catch(() => {

@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
-import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
-import AddRoundedIcon from '@material-ui/icons/AddRounded'
 
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import DropMenu from '../../ComponentMaterial/DropMenuDelete'
 import { deleteCustomersFromDB, loadCustomers, loadDataEnd, setPage } from '../../../actions'
 import AddClients from '../RefactorClients/AddClients.jsx'
 import EditClients from '../RefactorClients/EditClients.jsx'
@@ -58,13 +58,14 @@ class RefactorClients extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
+      const deleteText = `Delete customer: ${item.name}?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{item.email}</td>
         <td>{item.name}</td>
         <td>
           <LinkButton to={`/admin/clients/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button className='button-refactor-models' onClick={ () => deleteClient(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <DropMenu DropDelete={ deleteClient } itemId={ item.id } text={ deleteText }/>
         </td>
       </tr>
     })

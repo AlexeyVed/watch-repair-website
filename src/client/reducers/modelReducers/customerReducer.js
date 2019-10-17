@@ -112,8 +112,7 @@ const customerReducer = (state = initialState, action) => {
       return {
         ...state,
         data: state.data.map(user => {
-          if (user.id === Number(action.payload.id)) {
-            action.payload.id = Number(action.payload.id)
+          if (user.id === action.payload.id) {
             return action.payload
           }
           return user

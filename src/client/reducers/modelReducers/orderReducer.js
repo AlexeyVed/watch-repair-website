@@ -113,8 +113,7 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         data: state.data.map(order => {
-          if (order.id === Number(action.payload.id)) {
-            action.payload.masterID = Number(action.payload.masterID)
+          if (order.id === action.payload.id) {
             return action.payload
           }
           return order

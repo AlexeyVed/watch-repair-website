@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const config = require('../../config/config.js')
+const error = require('../services.js').makeError
 
 module.exports = (req, res, next) => {
   const token = req.headers['authorization']
@@ -9,6 +10,9 @@ module.exports = (req, res, next) => {
       next()
     }
   } catch (err) {
-    res.redirect('/')
+    if (err.name === 'JsonWebTokenError') {
+      return next(error(401, `Error get data. Reason: ${err.message}.`))
+    }
+    next(err)
   }
 }

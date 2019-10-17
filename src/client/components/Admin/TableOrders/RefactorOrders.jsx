@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
-import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
-import AddRoundedIcon from '@material-ui/icons/AddRounded'
 
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import DropMenu from '../../ComponentMaterial/DropMenuDelete'
 import {
   deleteOrdersFromDB,
   loadCities,
@@ -67,17 +67,18 @@ class RefactorOrders extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
+      const deleteText = `Delete ${item.customer.name}'s order?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
-        <td>{(item.customer !== null) ? item.customer.email : <b>Customer was deleted</b>}</td>
-        <td>{(item.customer !== null) ? item.customer.name : null }</td>
-        <td>{(item.clock !== null) ? item.clock.typeClock : <b>Clock was deleted</b>}</td>
-        <td>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
-        <td>{item.date} / {item.time}</td>
-        <td>{(item.master !== null) ? item.master.name : <b>Master was deleted</b>}</td>
+        <td>{ item.customer.email }</td>
+        <td>{ item.customer.name }</td>
+        <td>{ item.clock.name }</td>
+        <td>{ item.city.name }</td>
+        <td>{item.date} / {`${item.time}:00 - ${item.time + item.duration}:00`}</td>
+        <td>{ item.master.name }</td>
         <td>
           <LinkButton to={`/admin/orders/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button className='button-refactor-models' onClick={ () => deleteOrder(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <DropMenu DropDelete={ deleteOrder } itemId={ item.id } text={ deleteText }/>
         </td>
       </tr>
     })

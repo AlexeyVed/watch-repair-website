@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
-import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
-import AddRoundedIcon from '@material-ui/icons/AddRounded'
 
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
+import DropMenu from '../../ComponentMaterial/DropMenuDelete'
 import { deleteClockFromDB, loadClocks, loadDataEnd, setPage } from '../../../actions'
 import AddClocks from '../RefactorClocks/AddClocks.jsx'
 import EditClocks from '../RefactorClocks/EditClocks.jsx'
@@ -58,13 +58,14 @@ class RefactorClocks extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
+      const deleteText = `Delete clock: ${item.typeClock}?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
-        <td>{item.typeClock}</td>
-        <td>{item.timeRepair}</td>
+        <td>{item.name}</td>
+        <td>{item.duration}</td>
         <td>
           <LinkButton to={`/admin/clocks/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button className='button-refactor-models' onClick={ () => deleteClock(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <DropMenu DropDelete={ deleteClock } itemId={ item.id } text={ deleteText }/>
         </td>
       </tr>
     })

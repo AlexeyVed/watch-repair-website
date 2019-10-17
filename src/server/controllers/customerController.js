@@ -34,14 +34,18 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { email, name } = req.body
   Customer.create({
-    email: req.body.email,
-    name: req.body.name
+    email,
+    name
   })
     .then(result => {
       res.status(201).json(result)
     })
-    .catch(() => {
+    .catch((err) => {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        return next(error(409, `Customer with email '${req.body.email}' already exist.`))
+      }
       next(error(400, 'Error add customer'))
     })
 }
@@ -63,6 +67,9 @@ exports.get = function (req, res, next) {
   }
   Customer.findByPk(req.params.id)
     .then((user) => {
+      if (user === null) {
+        return next(error(404, `Customer with id = ${req.params.id} not found!`))
+      }
       res.json(user)
     })
     .catch(() => {
@@ -91,7 +98,10 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(() => {
+    .catch(err => {
+      if (err.name === 'SequelizeForeignKeyConstraintError') {
+        return next(error(409, 'Customer already have an order.'))
+      }
       next(error(400, 'Error delete customer'))
     })
 }
@@ -123,9 +133,10 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
+  const { email, name } = req.body
   Customer.update({
-    name: req.body.name,
-    email: req.body.email
+    name,
+    email
   }, {
     where: { id: req.params.id }
   })
@@ -133,6 +144,9 @@ exports.update = function (req, res, next) {
       return Customer.findByPk(req.params.id)
     })
     .then(customer => {
+      if (customer === null) {
+        return next(error(404, `Customer with id = ${req.params.id} not found for update!`))
+      }
       res.json(customer)
     })
     .catch(() => {
