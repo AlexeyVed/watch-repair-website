@@ -160,21 +160,21 @@ exports.update = function (req, res, next) {
       return true
     })
     .then(() => {
-      return Clock.findByPk(clockId)
+      return Clock.findByPk(clock_id)
     })
     .then(reqClock => {
-      req.body = { ...req.body, timeRepair: reqClock.timeRepair }
+      req.body = { ...req.body, duration: reqClock.duration }
       return Order.findAll({
         where: {
-          masterId: masterId,
-          cityId: cityId,
-          date: date
+          master_id,
+          city_id,
+          date
         },
         include: [{ model: Clock }]
       })
     })
     .then(result => {
-      if (filterBussyMaster(result, time, req.body.timeRepair).length) {
+      if (filterBussyMaster(result, time, req.body.duration).length) {
         return next(makeError(400, 'Master already busy at this time.'))
       }
       return true
@@ -199,7 +199,7 @@ exports.update = function (req, res, next) {
     })
     .then((order) => {
       if (order === null) {
-        return next(error(404, `Order with id = ${req.params.id} not found for update!`))
+        return next(makeError(404, `Order with id = ${req.params.id} not found for update!`))
       }
       res.json(order)
     })
@@ -488,7 +488,7 @@ exports.add = function (req, res, next) {
     .then(order => {
       res.status(201).json(order)
     })
-    .catch((err) => {
+    .catch(() => {
       next(makeError(400, 'Error add order'))
     })
 }
