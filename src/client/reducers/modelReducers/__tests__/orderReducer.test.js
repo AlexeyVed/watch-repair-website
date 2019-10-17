@@ -50,7 +50,7 @@ describe('Order reducer', () => {
 
   test('should add orders failure', () => {
     const action = {
-      type: types.ADD_ORDERS_FAILURE,
+      type: types.ADD_ORDER_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -63,7 +63,7 @@ describe('Order reducer', () => {
 
   test('should add orders started', () => {
     const action = {
-      type: types.ADD_ORDERS_STARTED
+      type: types.ADD_ORDER_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -74,7 +74,7 @@ describe('Order reducer', () => {
 
   test('should add orders success', () => {
     const action = {
-      type: types.ADD_ORDERS_SUCCESS,
+      type: types.ADD_ORDER_SUCCESS,
       payload: 'orders',
       message: 'hello'
     }
@@ -93,7 +93,7 @@ describe('Order reducer', () => {
 
   test('should edit orders started', () => {
     const action = {
-      type: types.EDIT_ORDERS_STARTED
+      type: types.EDIT_ORDER_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -104,7 +104,7 @@ describe('Order reducer', () => {
 
   test('should edit orders failure', () => {
     const action = {
-      type: types.EDIT_ORDERS_FAILURE,
+      type: types.EDIT_ORDER_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -117,7 +117,7 @@ describe('Order reducer', () => {
 
   test('should edit orders successes', () => {
     const action = {
-      type: types.EDIT_ORDERS_SUCCESS,
+      type: types.EDIT_ORDER_SUCCESS,
       payload: { id: 1, city: 'orders' },
       message: 'hello'
     }
@@ -139,7 +139,7 @@ describe('Order reducer', () => {
 
   test('should delete orders failure', () => {
     const action = {
-      type: types.DELETE_ORDERS_FAILURE,
+      type: types.DELETE_ORDER_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -152,7 +152,7 @@ describe('Order reducer', () => {
 
   test('should delete orders started', () => {
     const action = {
-      type: types.DELETE_ORDERS_STARTED
+      type: types.DELETE_ORDER_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -163,7 +163,7 @@ describe('Order reducer', () => {
 
   test('should delete orders success', () => {
     const action = {
-      type: types.DELETE_ORDERS_SUCCESS,
+      type: types.DELETE_ORDER_SUCCESS,
       payload: 1,
       message: 'hello'
     }
