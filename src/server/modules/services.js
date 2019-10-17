@@ -15,14 +15,3 @@ exports.getToday = () => {
     hour: now.getHours() + 1
   }
 }
-
-exports.filterBussyMaster = (result, time, timeRepair) => {
-  const string = JSON.stringify(result)
-  const obj = JSON.parse(string)
-  const isCreated = obj.filter(order => {
-    return (order.time < time)
-      ? ((order.time + order.clock.timeRepair) >= time)
-      : ((time + timeRepair) >= order.time)
-  })
-  return isCreated
-}

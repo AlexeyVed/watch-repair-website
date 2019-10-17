@@ -1,6 +1,8 @@
 const { checkSchema, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
-const { makeError, filterBussyMaster } = require('../modules/services.js')
+const Sequelize = require('sequelize')
+
+const { makeError } = require('../modules/services.js')
 const getToday = require('../modules/services.js').getToday
 const sendMsg = require('../modules/sendEmail.js').sendSuccessfullyMsg
 const Order = require('../models/orders.js')
@@ -157,29 +159,40 @@ exports.update = function (req, res, next) {
       if (master.city_id !== city_id) {
         return next(makeError(400, 'Master doesnt work in this town'))
       }
-      return true
-    })
-    .then(() => {
       return Clock.findByPk(clock_id)
     })
     .then(reqClock => {
-      req.body = { ...req.body, duration: reqClock.duration }
+      const { duration } = reqClock
+      req.body = { ...req.body, duration }
       return Order.findAll({
         where: {
           master_id,
           city_id,
-          date
-        },
-        include: [{ model: Clock }]
+          date,
+          [Op.or]: [
+            {
+              time: {
+                [Op.and]: [
+                  { [Op.gt]: time },
+                  { [Op.lte]: time + req.body.duration }
+                ]
+              }
+            }, {
+              time: {
+                [Op.and]: [
+                  { [Op.lte]: time },
+                  { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+                ]
+              }
+            }
+          ]
+        }
       })
     })
     .then(result => {
-      if (filterBussyMaster(result, time, req.body.duration).length) {
+      if (result.length) {
         return next(makeError(400, 'Master already busy at this time.'))
       }
-      return true
-    })
-    .then(() => {
       return Order.update({
         date,
         time,
@@ -242,7 +255,7 @@ exports.getWorkers = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(makeError(422, null, errors.array()))
   }
-  const { date, clock_id, city_id } = req.body
+  const { date, clock_id, city_id, time } = req.body
   Clock.findByPk(clock_id)
     .then(clock => {
       const { duration } = clock
@@ -250,21 +263,29 @@ exports.getWorkers = function (req, res, next) {
       return Order.findAll({
         where: {
           date,
-          city_id
-        },
-        include: [ { model: Clock } ]
+          city_id,
+          [Op.or]: [
+            {
+              time: {
+                [Op.and]: [
+                  { [Op.gt]: time },
+                  { [Op.lte]: time + req.body.duration }
+                ]
+              }
+            }, {
+              time: {
+                [Op.and]: [
+                  { [Op.lte]: time },
+                  { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+                ]
+              }
+            }
+          ]
+        }
       })
     })
-    .then(ordersInDate => {
-      const { time, duration } = req.body
-      return ordersInDate.filter(order => {
-        return (order.time < time)
-          ? ((order.time + order.clock.duration) >= time)
-          : ((time + duration) >= order.time)
-      })
-    })
-    .then(busyMasters => {
-      const arrayIdBusyMaster = busyMasters.map(master => master.master_id)
+    .then(orders => {
+      const arrayIdBusyMaster = orders.map(order => order.master_id)
       return Master.findAll({
         where: {
           city_id,
@@ -344,18 +365,30 @@ exports.addAdmin = function (req, res, next) {
           city_id,
           date
         },
+        [Op.or]: [
+          {
+            time: {
+              [Op.and]: [
+                { [Op.gt]: time },
+                { [Op.lte]: time + req.body.duration }
+              ]
+            }
+          }, {
+            time: {
+              [Op.and]: [
+                { [Op.lte]: time },
+                { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+              ]
+            }
+          }
+        ],
         include: [{ model: Clock }],
         raw: true,
         nest: true
       })
     })
     .then(result => {
-      const isCreated = result.filter(order => {
-        return (order.time < time)
-          ? ((order.time + order.clock.duration) >= time)
-          : ((time + req.body.duration) >= order.time)
-      })
-      if (isCreated.length) {
+      if (result.length) {
         return next(makeError(400, 'Master already busy at this time.'))
       }
       return Master.findByPk(master_id)
