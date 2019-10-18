@@ -5,7 +5,7 @@ const customersRouter = express.Router()
 
 const { loginValidation, login, logout } = customersController
 
-customersRouter.use('/login', loginValidation, login)
-customersRouter.use('/logout', logout)
+customersRouter.post('/login', loginValidation, login)
+customersRouter.get('/logout', logout)
 
 module.exports = customersRouter
