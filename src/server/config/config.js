@@ -48,7 +48,7 @@ const config = {
       from: 'watches.repair.quick@gmail.com'
     },
     jwt: {
-      secret: 'secret_development'
+      secret: 'secret_test'
     }
   }
 }
