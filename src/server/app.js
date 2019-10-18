@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const fs = require('fs')
 const bodyParser = require('body-parser')
 const passport = require('./modules/passport.js')
 const handleError = require('./modules/middleware/handleError.js')
@@ -31,8 +32,10 @@ app.use('/api/masters', workersRouter)
 app.use('/api/orders', ordersRouter)
 
 app.get('*', (req, res) => {
-  console.log(path.resolve(pathToStatic, 'index.html'))
-  res.sendFile(path.resolve(pathToStatic, 'index.html'))
+  if (fs.existsSync(pathToStatic, 'index.html')) {
+    return res.sendFile(path.resolve(pathToStatic, 'index.html'))
+  }
+  res.status(404).send('Page not found!')
 })
 
 app.use(handleError)

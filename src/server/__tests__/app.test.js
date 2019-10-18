@@ -3,9 +3,11 @@ const app = require('../app.js')
 
 describe('Test the root path', () => {
   test('It should response the GET method', (done) => {
-    request(app).get('/').then((response) => {
-      expect(response.statusCode).toBe(200)
-      done()
-    })
+    request(app).get('/')
+      .then((res) => {
+        expect(res.statusCode).toBe(404)
+        expect(res.error.text).toBe('Page not found!')
+        done()
+      })
   })
 })
