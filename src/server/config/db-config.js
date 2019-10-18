@@ -52,7 +52,7 @@ module.exports = {
   test: {
     username: 'root',
     password: 'e8zbprhH',
-    database: 'clockwise',
+    database: 'clockwise_test',
     host: 'localhost',
     dialect: 'mysql',
     seederStorage: 'sequelize',
