@@ -12,6 +12,8 @@
     "pretest": "cross-env NODE_ENV=test sequelize db:create && cross-env NODE_ENV=test npx sequelize db:migrate && cross-env NODE_ENV=test npx sequelize db:seed:all",
     "test": "jest",
     "posttest": "cross-env NODE_ENV=test npx sequelize db:drop",
+    "pretest:coverage": "cross-env NODE_ENV=test sequelize db:create && cross-env NODE_ENV=test npx sequelize db:migrate && cross-env NODE_ENV=test npx sequelize db:seed:all",
+    "posttest:coverage": "cross-env NODE_ENV=test npx sequelize db:drop",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lint": "eslint ./src ",

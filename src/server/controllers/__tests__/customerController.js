@@ -16,16 +16,6 @@ describe('Test the customerController', () => {
       })
   })
 
-  test('It should request for get customers, path = "/api/customers/"', (done) => {
-    return request(app)
-      .get('/api/customers/')
-      .set('Authorization', token)
-      .then((res) => {
-        expect(JSON.parse(res.text)).toEqual([])
-        done()
-      })
-  })
-
   test('It should request for create customer, path = "/api/customers/"', (done) => {
     return request(app)
       .post('/api/customers/')
@@ -34,6 +24,16 @@ describe('Test the customerController', () => {
       .set('Authorization', token)
       .then((res) => {
         expect(JSON.parse(res.text)).toEqual({ id: 1, name: 'Anton', email: 'anton@email.com' })
+        done()
+      })
+  })
+
+  test('It should request for get customers, path = "/api/customers/"', (done) => {
+    return request(app)
+      .get('/api/customers/')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual([{ id: 1, name: 'Anton', email: 'anton@email.com' }])
         done()
       })
   })

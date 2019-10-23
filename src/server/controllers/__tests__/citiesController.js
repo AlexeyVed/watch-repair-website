@@ -1,7 +1,7 @@
 const request = require('supertest')
 const app = require('../../app.js')
 
-describe('Test the clockController', () => {
+describe('Test the cityController', () => {
   let token
 
   test('It should request for login, path = "/login"', (done) => {
@@ -16,31 +16,32 @@ describe('Test the clockController', () => {
       })
   })
 
-  test('It should request for get clocks, path = "/api/clocks/"', (done) => {
+  test('It should request for create city, path = "/api/cities/"', (done) => {
     return request(app)
-      .get('/api/clocks/')
-      .then((res) => {
-        expect(JSON.parse(res.text)).toEqual([])
-        done()
-      })
-  })
-
-  test('It should request for create clock, path = "/api/clocks/"', (done) => {
-    return request(app)
-      .post('/api/clocks/')
-      .send({ name: 'Small', duration: 1 })
+      .post('/api/cities')
+      .send({ name: 'Dnipro' })
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
-        expect(JSON.parse(res.text)).toEqual({ id: 1, name: 'Small', duration: 1 })
+        console.log('create cityyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy', res)
+        expect(JSON.parse(res.text)).toEqual({ id: 1, name: 'Dnipro' })
         done()
       })
   })
 
-  test('It should request for create clock with error validation, path = "/api/clocks/"', (done) => {
+  test('It should request for get cities, path = "/api/cities/"', (done) => {
     return request(app)
-      .post('/api/clocks')
-      .send({ name: 2, duration: 2 })
+      .get('/api/cities/')
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual([{ id: 1, name: 'Dnipro' }])
+        done()
+      })
+  })
+
+  test('It should request for create city with error validation, path = "/api/cities/"', (done) => {
+    return request(app)
+      .post('/api/cities')
+      .send({ name: 2 })
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
@@ -49,9 +50,9 @@ describe('Test the clockController', () => {
       })
   })
 
-  test('It should request for get clock with error validation, path = "/api/clocks/"', (done) => {
+  test('It should request for get city with error validation, path = "/api/cities/"', (done) => {
     return request(app)
-      .get('/api/clocks/null')
+      .get('/api/cities/null')
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
@@ -60,67 +61,67 @@ describe('Test the clockController', () => {
       })
   })
 
-  test('It should request for get clock with error not found, path = "/api/clocks/"', (done) => {
+  test('It should request for get city with error not found, path = "/api/cities/"', (done) => {
     return request(app)
-      .get('/api/clocks/2')
+      .get('/api/cities/2')
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
-        expect(JSON.parse(res.text)).toEqual('Clock with id = 2 not found!')
+        expect(JSON.parse(res.text)).toEqual('City with id = 2 not found!')
         done()
       })
   })
 
-  test('It should request for get clock, path = "/api/clocks/"', (done) => {
+  test('It should request for get city, path = "/api/cities/"', (done) => {
     return request(app)
-      .get('/api/clocks/1')
+      .get('/api/cities/1')
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
-        expect(JSON.parse(res.text)).toEqual({ id: 1, name: 'Small', duration: 1 })
+        expect(JSON.parse(res.text)).toEqual({ id: 1, name: 'Dnipro' })
         done()
       })
   })
 
-  test('It should request for update clock with error validation, path = "/api/clocks/"', (done) => {
+  test('It should request for update city with error validation, path = "/api/cities/"', (done) => {
     return request(app)
-      .put('/api/clocks/null')
-      .send({ name: 1, duration: 'some' })
+      .put('/api/cities/null')
+      .send({ name: 1 })
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
-        expect(JSON.parse(res.text)).toEqual('Incorrect fields: id, name, duration, ')
+        expect(JSON.parse(res.text)).toEqual('Incorrect fields: id, name.')
         done()
       })
   })
 
-  test('It should request for update clock with error not found, path = "/api/clocks/"', (done) => {
+  test('It should request for update city with error not found, path = "/api/cities/"', (done) => {
     return request(app)
-      .put('/api/clocks/2')
-      .send({ name: 'Big', duration: 3 })
+      .put('/api/cities/2')
+      .send({ name: 'Uzghorod' })
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
-        expect(JSON.parse(res.text)).toEqual('Clock with id = 2 not found for update!')
+        expect(JSON.parse(res.text)).toEqual('City with id = 2 not found for update!')
         done()
       })
   })
 
-  test('It should request for update clock, path = "/api/clocks/"', (done) => {
+  test('It should request for update city, path = "/api/cities/"', (done) => {
     return request(app)
-      .put('/api/clocks/1')
-      .send({ name: 'Big', duration: 3 })
+      .put('/api/cities/1')
+      .send({ name: 'Uzghorod' })
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
-        expect(JSON.parse(res.text)).toEqual({ id: 1, name: 'Big', duration: 3 })
+        expect(JSON.parse(res.text)).toEqual({ id: 1, name: 'Uzghorod' })
         done()
       })
   })
 
-  test('It should request for delete clock with error validation, path = "/api/clocks/"', (done) => {
+  test('It should request for delete city with error validation, path = "/api/cities/"', (done) => {
     return request(app)
-      .delete('/api/clocks/null')
+      .delete('/api/cities/null')
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
@@ -129,9 +130,9 @@ describe('Test the clockController', () => {
       })
   })
 
-  test('It should request for delete clock, path = "/api/clocks/"', (done) => {
+  test('It should request for delete city, path = "/api/cities/"', (done) => {
     return request(app)
-      .delete('/api/clocks/1')
+      .delete('/api/cities/1')
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
