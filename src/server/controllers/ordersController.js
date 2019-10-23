@@ -22,6 +22,7 @@ exports.list = function (req, res, next) {
       const today = getToday()
       const indexToday = orders.findIndex((elem, index, array) => {
         const x = elem.date.split('-')
+        console.log(x)
         return (Number(x[0]) >= today.year && Number(x[1]) >= today.month)
           ? (Number(x[2]) >= today.day) ? elem.time >= today.hour : false : false
       })
@@ -477,7 +478,7 @@ exports.add = function (req, res, next) {
     .then(order => {
       res.status(201).json(order)
     })
-    .catch((err) => {
+    .catch(() => {
       next(error(400, 'Error add order'))
     })
 }
