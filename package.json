@@ -53,7 +53,6 @@
     "date-fns": "^2.0.0-beta.5",
     "express": "^4.16.3",
     "express-validator": "^6.1.1",
-    "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mysql2": "^1.6.5",
