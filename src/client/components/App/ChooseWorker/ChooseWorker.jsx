@@ -12,7 +12,7 @@ class ChooseWorker extends React.Component {
   componentDidUpdate (prevProps, prevState) {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
-      if (+worker.id === this.props.master_id) {
+      if (+worker.id === this.props.masterId) {
         worker.classList.add('active')
       } else if (worker.classList.contains('active')) {
         worker.classList.remove('active')
@@ -23,7 +23,7 @@ class ChooseWorker extends React.Component {
   componentDidMount () {
     const workers = document.querySelectorAll('.choose-worker__table__worker')
     workers.forEach(worker => {
-      if (+worker.id === this.props.master_id) {
+      if (+worker.id === this.props.masterId) {
         worker.classList.add('active')
       } else if (worker.classList.contains('active')) {
         worker.classList.remove('active')
