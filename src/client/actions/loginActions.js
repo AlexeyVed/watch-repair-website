@@ -3,7 +3,10 @@ import {
   SING_IN_FAILURE,
   SING_IN_STARTED,
   LOG_OUT,
-  LOGIN_ERROR_NULL
+  LOGIN_ERROR_NULL,
+  CHECK_ACCESS_ADMIN_STARTED,
+  CHECK_ACCESS_ADMIN_SUCCESS,
+  CHECK_ACCESS_ADMIN_FAILURE
 } from './types.js'
 
 import axios from 'axios'
@@ -20,6 +23,20 @@ export const loginToApp = values => {
       })
       .catch(err => {
         dispatch(singInFailure(err.response.data))
+      })
+  }
+}
+
+export const checkAccesAdmin = email => {
+  return (dispatch) => {
+    dispatch({ type: CHECK_ACCESS_ADMIN_STARTED })
+    return axios
+      .post(`/api/users/authAdmin`, { email })
+      .then(res => {
+        dispatch({ type: CHECK_ACCESS_ADMIN_SUCCESS })
+      })
+      .catch(err => {
+        dispatch({ type: CHECK_ACCESS_ADMIN_FAILURE, payload: err.response.data })
       })
   }
 }
