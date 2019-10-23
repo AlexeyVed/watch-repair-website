@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
     }
 
     if (currentUser) {
-      return <Redirect to={{ pathname: '/admin/dashboard' }}/>
+      return <Redirect to={{ pathname: '/admin' }}/>
     }
 
     return (

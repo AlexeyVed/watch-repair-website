@@ -36,7 +36,7 @@ export class ModuleHeader extends React.Component {
 
     if (this.state.redirectAdmin) {
       this.setState({ redirectAdmin: false })
-      return <Redirect to={{ pathname: '/admin/dashboard' }}/>
+      return <Redirect to={{ pathname: '/admin' }}/>
     }
 
     currentUser ? style = 'container-logo' : style = 'container-logo full-logo'

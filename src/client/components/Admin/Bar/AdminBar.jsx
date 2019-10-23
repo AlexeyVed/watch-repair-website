@@ -21,7 +21,7 @@ class AdminBar extends React.Component {
     return (
       <div className='bar-choose-item'>
         <div className="bar-choose-item__buttons">
-          <LinkButton className='button-bar board' to='/admin/dashboard' name={ <EventIcon/> }/>
+          <LinkButton className='button-bar board' to='/admin' name={ <EventIcon/> }/>
           <LinkButton className='button-bar orders' to='/admin/orders' name='Control orders'/>
           <LinkButton className='button-bar cities' to='/admin/cities' name='Control cities'/>
           <LinkButton className='button-bar masters' to='/admin/workers' name='Control masters'/>

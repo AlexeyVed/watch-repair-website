@@ -59,12 +59,12 @@ class MainAdmin extends React.Component {
         <div className='admin-content'>
           <div className='work-space'>
             <Switch>
-              <Route path='/admin/dashboard' component={Dashboard}/>
               <Route path='/admin/cities' component={RefactorCities}/>
               <Route path='/admin/clients' component={RefactorClients}/>
               <Route path='/admin/clocks' component={RefactorClocks}/>
               <Route path='/admin/workers' component={RefactorWorkers}/>
               <Route path='/admin/orders' component={RefactorOrders}/>
+              <Route exact path='/admin' component={Dashboard}/>
               <Route component={NoMatchAdmin}/>
             </Switch>
           </div>
