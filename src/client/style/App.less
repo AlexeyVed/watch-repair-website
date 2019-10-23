@@ -20,6 +20,14 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    .mask {
+        width: 100%;
+        height: 100%;
+        background: url(../image/background.png) no-repeat right -10px bottom -10px;
+        background-color: @tables-color;
+        box-sizing: border-box;
+    }
 }
 
 .main {
@@ -85,6 +93,16 @@ body {
         width: 80%;
         min-width: 695px;
         margin: auto;
+
+        .mask {
+            border: @app-border-style;
+            border-radius: 5px;
+            box-shadow: @app-box-shadows;
+            margin: 5px 0;
+            background-size: 450px 300px;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+        }
     }
 
     .main {       
@@ -93,8 +111,7 @@ body {
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
         box-shadow: @app-box-shadows;
-        margin-bottom: 5px;
-        margin-top: 5px;
+        margin: 5px 0;
         
         .content {
             flex: 2 1 66%;
@@ -124,9 +141,7 @@ body {
             padding-right: 50px;
             font-size: 14px;
         }
-    }
-
-    
+    }    
 }
 
 @media screen and (max-width:695px) {
@@ -139,6 +154,11 @@ body {
     .app-main {
         width: 100%;
         min-width: 320px;
+
+        .mask {
+            margin: 2px 0;
+            background-size: 240px 160px;
+        }
     }
 
     .main {
