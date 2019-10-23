@@ -10,7 +10,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import Button from '@material-ui/core/Button'
 import CustomTooltip from '../../ComponentMaterial/TooltipOrder'
 import PoratlOrders from '../../ComponentMaterial/PortalOrdersInDate'
-import { format } from 'date-fns'
+import { format, addMonths } from 'date-fns'
 import { connect } from 'react-redux'
 
 import { loadForDashboard, loadDataEnd, setPage } from '../../../actions'
@@ -20,7 +20,8 @@ import './Dashboard.less'
 class Dashboard extends React.Component {
   state = {
     year: new Date().getFullYear(),
-    month: new Date().getMonth()
+    month: new Date().getMonth(),
+    date: new Date()
   }
 
   getDay = date => {
@@ -30,8 +31,8 @@ class Dashboard extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (prevState.month !== this.state.month || prevState.year !== this.state.year) {
-      const string = this.state.month < 9 ? `${this.state.year}-0${this.state.month + 1}` : `${this.state.year}-${this.state.month + 1}`
+    if (prevState.date !== this.state.date) {
+      const string = format(this.state.date, 'yyyy-MM')
       this.props.loadOrders(string)
         .then((res) => {
           this.props.loadEnd()
@@ -40,17 +41,23 @@ class Dashboard extends React.Component {
   }
 
   nextMonth = () => {
-    if (this.state.month === 11) {
-      return this.setState(() => ({ month: 0, year: this.state.year + 1 }))
+    const nextMonth = addMonths(this.state.date, 1)
+    this.setState(() => ({
+      date: nextMonth,
+      year: nextMonth.getFullYear(),
+      month: nextMonth.getMonth()
     }
-    this.setState(() => ({ month: this.state.month + 1 }))
+    ))
   }
 
   previousMonth = () => {
-    if (this.state.month === 0) {
-      return this.setState(() => ({ month: 11, year: this.state.year - 1 }))
+    const previousMonth = addMonths(this.state.date, -1)
+    this.setState(() => ({
+      date: previousMonth,
+      year: previousMonth.getFullYear(),
+      month: previousMonth.getMonth()
     }
-    this.setState(() => ({ month: this.state.month - 1 }))
+    ))
   }
 
   componentDidMount () {
@@ -61,17 +68,18 @@ class Dashboard extends React.Component {
     this.props.setPage('board')
   }
   render () {
-    const { getDay } = this
+    const { getDay, previousMonth, nextMonth } = this
     const { orders } = this.props
     const { year, month } = this.state
+    const widthForResponsive = window.innerWidth < 695
     let date = new Date(year, month)
     const startBlanksReverse = []
     const endBlanks = []
     const daysInMonth = []
 
     const lastDayOfLastMonth = new Date(year, month)
-    lastDayOfLastMonth.setDate(-1)
-    let lastDay = lastDayOfLastMonth.getDate() + 1
+    lastDayOfLastMonth.setDate(0)
+    let lastDay = lastDayOfLastMonth.getDate()
     for (let i = 0; i < getDay(date); i++) {
       startBlanksReverse.push(<td className='calendar__calendar-body empty' onClick={this.previousMonth} key={`start-empty-${i}`}><div className='calendar__calendar-body__day'><span>{lastDay}</span></div></td>)
       lastDay--
@@ -141,21 +149,21 @@ class Dashboard extends React.Component {
     return (
       <div className='dashboard'>
         <div className='dashboard__title-calendar'>
-          <Button onClick={this.previousMonth}><ChevronLeftIcon/></Button>
+          <Button onClick={previousMonth}><ChevronLeftIcon/></Button>
           <div className='dashboard__title-calendar__text'>{ format(new Date(year, month), 'MMMM yyyy')}</div>
-          <Button onClick={this.nextMonth}><ChevronRightIcon/></Button>
+          <Button onClick={nextMonth}><ChevronRightIcon/></Button>
         </div>
         <Paper className='dashboard__calendar-background'>
           <Table className='calendar'>
             <TableHead>
               <TableRow className='calendar__week-title'>
-                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Mon' : 'Monday'} </TableCell>
-                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Tue' : 'Tuesday'}</TableCell>
-                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Wed' : 'Wednesday'}</TableCell>
-                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Thu' : 'Thursday'}</TableCell>
-                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Fri' : 'Friday'}</TableCell>
-                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Sat' : 'Saturday'}</TableCell>
-                <TableCell className='calendar__week-title__day'>{window.innerWidth < 695 ? 'Sun' : 'Sunday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{widthForResponsive ? 'Mon' : 'Monday'} </TableCell>
+                <TableCell className='calendar__week-title__day'>{widthForResponsive ? 'Tue' : 'Tuesday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{widthForResponsive ? 'Wed' : 'Wednesday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{widthForResponsive ? 'Thu' : 'Thursday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{widthForResponsive ? 'Fri' : 'Friday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{widthForResponsive ? 'Sat' : 'Saturday'}</TableCell>
+                <TableCell className='calendar__week-title__day'>{widthForResponsive ? 'Sun' : 'Sunday'}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className='calendar__calendar-body'>
