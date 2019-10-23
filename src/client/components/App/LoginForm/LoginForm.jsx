@@ -28,14 +28,11 @@ class LoginForm extends React.Component {
       setTimeout(missLoginError, 3000)
     }
 
-    if (currentUser === 'admin@example.com') {
+    if (currentUser) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
-    } else if (currentUser) {
-      return <Redirect to={{ pathname: '/' }}/>
     }
 
     return (
-
       ReactDOM.createPortal(
         <div className='modal-window'>
           <div className='login-form'>
