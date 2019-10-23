@@ -163,7 +163,6 @@ exports.update = function (req, res, next) {
     })
     .then(reqClock => {
       const { duration } = reqClock
-      req.body = { ...req.body, duration }
       return Order.findAll({
         where: {
           master_id,
@@ -174,7 +173,7 @@ exports.update = function (req, res, next) {
               time: {
                 [Op.and]: [
                   { [Op.gt]: time },
-                  { [Op.lte]: time + req.body.duration }
+                  { [Op.lte]: time + duration }
                 ]
               }
             }, {
@@ -259,7 +258,6 @@ exports.getWorkers = function (req, res, next) {
   Clock.findByPk(clock_id)
     .then(clock => {
       const { duration } = clock
-      req.body = { ...req.body, duration }
       return Order.findAll({
         where: {
           date,
@@ -269,7 +267,7 @@ exports.getWorkers = function (req, res, next) {
               time: {
                 [Op.and]: [
                   { [Op.gt]: time },
-                  { [Op.lte]: time + req.body.duration }
+                  { [Op.lte]: time + duration }
                 ]
               }
             }, {
@@ -363,26 +361,25 @@ exports.addAdmin = function (req, res, next) {
         where: {
           master_id,
           city_id,
-          date
+          date,
+          [Op.or]: [
+            {
+              time: {
+                [Op.and]: [
+                  { [Op.gt]: time },
+                  { [Op.lte]: time + duration }
+                ]
+              }
+            }, {
+              time: {
+                [Op.and]: [
+                  { [Op.lte]: time },
+                  { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+                ]
+              }
+            }
+          ]
         },
-        [Op.or]: [
-          {
-            time: {
-              [Op.and]: [
-                { [Op.gt]: time },
-                { [Op.lte]: time + req.body.duration }
-              ]
-            }
-          }, {
-            time: {
-              [Op.and]: [
-                { [Op.lte]: time },
-                { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
-              ]
-            }
-          }
-        ],
-        include: [{ model: Clock }],
         raw: true,
         nest: true
       })
