@@ -8,7 +8,7 @@ import SelectField from '../../ComponentMaterial/SelectField/'
 import DateField from '../../ComponentMaterial/DateField/'
 import { makeOrder } from '../../../actions'
 import { validateEmail, required } from '../../../validation'
-import { getDate } from './logic.js'
+import { getDate } from '../../../helpers/dateForOrders.js'
 
 import './OrderForm.less'
 
@@ -25,13 +25,7 @@ class OrderForm extends Component {
     const date = getDate()
 
     this.setState(() => ({
-      workHours: this.state.workHours.filter(item => {
-        if (item >= date.time) {
-          return true
-        } else {
-          return false
-        }
-      }),
+      workHours: this.state.workHours.filter(item => item >= date.time),
       today: date
     }))
     const initialValues = {
