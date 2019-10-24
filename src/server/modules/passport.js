@@ -34,13 +34,14 @@ passport.use('login',
           }
         })
           .then(dbUser => {
-            const user = dbUser.get()
-            if (!user) {
+            if (!dbUser) {
               return done(null, false, {
                 code: 404,
                 message: 'User not found.'
               })
-            } else if (!User.validPassword(password, user.password)) {
+            }
+            const user = dbUser.get()
+            if (!User.validPassword(password, user.password)) {
               return done(null, false, {
                 code: 422,
                 message: 'Wrong password.'
