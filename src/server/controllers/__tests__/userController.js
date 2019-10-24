@@ -1,14 +1,13 @@
 const request = require('supertest')
 const app = require('../../app.js')
 
-describe('Test the cityController', () => {
+describe('Test the userController', () => {
   test('It should request for login, path = "/login"', (done) => {
     return request(app)
       .post('/api/users/login')
       .send({ email: 'admin@example.com', password: 'passwordsecret' })
       .set('Accept', 'application/json')
       .then((res) => {
-        token = JSON.parse(res.text).token
         expect(JSON.parse(res.text).auth).toEqual(true)
         done()
       })
