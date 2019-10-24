@@ -1,5 +1,6 @@
 const { checkSchema, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
+const error = require('../modules/services.js').makeError
 const { format } = require('date-fns')
 const getToday = require('../modules/services.js').getToday
 const sendMsg = require('../modules/sendEmail.js').sendSuccessfullyMsg
@@ -22,7 +23,6 @@ exports.list = function (req, res, next) {
       const today = getToday()
       const indexToday = orders.findIndex((elem, index, array) => {
         const x = elem.date.split('-')
-        console.log(x)
         return (Number(x[0]) >= today.year && Number(x[1]) >= today.month)
           ? (Number(x[2]) >= today.day) ? elem.time >= today.hour : false : false
       })
