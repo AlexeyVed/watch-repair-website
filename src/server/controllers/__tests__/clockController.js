@@ -1,8 +1,21 @@
 const request = require('supertest')
 const app = require('../../app.js')
+const Clock = require('../../models/clocks.js')
+const db = require('../../db/db-connection.js')
 
 describe('Test the clockController', () => {
   let token
+
+  afterAll(() => {
+    return db
+      .query('SET FOREIGN_KEY_CHECKS = 0')
+      .then((res) => {
+        return Clock.destroy({ truncate: true, cascade: true })
+      })
+      .then(() => {
+        return db.query('SET FOREIGN_KEY_CHECKS = 1')
+      })
+  })
 
   test('It should request for login, path = "/login"', (done) => {
     return request(app)

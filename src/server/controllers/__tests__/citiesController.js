@@ -1,8 +1,21 @@
 const request = require('supertest')
 const app = require('../../app.js')
+const City = require('../../models/cities.js')
+const db = require('../../db/db-connection.js')
 
 describe('Test the cityController', () => {
   let token
+
+  afterAll(() => {
+    return db
+      .query('SET FOREIGN_KEY_CHECKS = 0')
+      .then((res) => {
+        return City.destroy({ truncate: true, cascade: true })
+      })
+      .then(() => {
+        return db.query('SET FOREIGN_KEY_CHECKS = 1')
+      })
+  })
 
   test('It should request for login, path = "/login"', (done) => {
     return request(app)
@@ -23,7 +36,6 @@ describe('Test the cityController', () => {
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .then((res) => {
-        console.log('create cityyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy', res)
         expect(JSON.parse(res.text)).toEqual({ id: 1, name: 'Dnipro' })
         done()
       })
