@@ -468,8 +468,7 @@ exports.add = function (req, res, next) {
     .then(order => {
       res.status(201).json(order)
     })
-    .catch((err) => {
-      console.log(err)
+    .catch(() => {
       next(error(400, 'Error add order'))
     })
 }

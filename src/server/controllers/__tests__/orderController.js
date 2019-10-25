@@ -373,61 +373,214 @@ describe('Test the orderController', () => {
       })
   })
 
-  // test('It should request for update order with error validation, path = "/api/orders/"', (done) => {
-  //   return request(app)
-  //     .put('/api/orders/1')
-  //     .send({ name: 'Anton', city_id: void 0, rating: void 0 })
-  //     .set('Accept', 'application/json')
-  //     .set('Authorization', token)
-  //     .then((res) => {
-  //       expect(JSON.parse(res.text)).toEqual('Incorrect fields: rating, city_id.')
-  //       done()
-  //     })
-  // })
+  test('It should request for get free workers for order, path = "/api/orders/freeMasters"', (done) => {
+    const create = {
+      city_id: 1,
+      clock_id: 2,
+      date: '2019-11-24',
+      time: 12
+    }
+    const expected = [{
+      city: city1,
+      city_id: 1,
+      id: 1,
+      name: 'Nick',
+      orders: [
+        {
+          city_id: 1,
+          clock_id: 1,
+          customer_id: 1,
+          date: '2019-11-24',
+          duration: 2,
+          id: 1,
+          master_id: 1,
+          time: 9
+        }],
+      rating: 5
+    }]
+    return request(app)
+      .post('/api/orders/freeMasters')
+      .send(create)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual(expected)
+        done()
+      })
+  })
 
-  // test('It should request for update order with error not found, path = "/api/orders/"', (done) => {
-  //   return request(app)
-  //     .put('/api/orders/2')
-  //     .send({ name: 'Sergey', city_id: 1, rating: 4 })
-  //     .set('Accept', 'application/json')
-  //     .set('Authorization', token)
-  //     .then((res) => {
-  //       expect(JSON.parse(res.text)).toEqual('Order with id = 2 not found for update!')
-  //       done()
-  //     })
-  // })
+  test('It should request for get free workers for order error not found, path = "/api/orders/freeMasters"', (done) => {
+    const create = {
+      city_id: 1,
+      clock_id: 2,
+      date: '2019-11-24',
+      time: 11
+    }
+    const expected = 'There are no free masters in your city at this time. Please choose other time.'
+    return request(app)
+      .post('/api/orders/freeMasters')
+      .send(create)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual(expected)
+        done()
+      })
+  })
 
-  // test('It should request for update order, path = "/api/orders/"', (done) => {
-  //   return request(app)
-  //     .put('/api/orders/1')
-  //     .send({ name: 'Sergey', city_id: 1, rating: 4 })
-  //     .set('Accept', 'application/json')
-  //     .set('Authorization', token)
-  //     .then((res) => {
-  //       expect(JSON.parse(res.text)).toEqual({ id: 1, name: 'Sergey', city_id: 1, city: { id: 1, name: 'Dnipro' }, rating: 4 })
-  //       done()
-  //     })
-  // })
+  test('It should request for get free workers for order error validation, path = "/api/orders/freeMasters"', (done) => {
+    const create = {
+      city_id: null,
+      clock_id: null,
+      date: '2019-11-24',
+      time: 11
+    }
+    return request(app)
+      .post('/api/orders/freeMasters')
+      .send(create)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual('Incorrect fields: city_id, clock_id.')
+        done()
+      })
+  })
 
-  // test('It should request for delete order with error validation, path = "/api/orders/"', (done) => {
-  //   return request(app)
-  //     .delete('/api/orders/null')
-  //     .set('Accept', 'application/json')
-  //     .set('Authorization', token)
-  //     .then((res) => {
-  //       expect(JSON.parse(res.text)).toEqual('Incorrect fields: id.')
-  //       done()
-  //     })
-  // })
+  test('It should request for update order from admin error master not work in town, path = "/api/orders/"', (done) => {
+    const create = {
+      city_id: 2,
+      master_id: 2,
+      clock_id: 2,
+      customer_id: 1,
+      date: '2019-11-25',
+      time: 12
+    }
+    return request(app)
+      .put('/api/orders/1')
+      .send(create)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual('Master doesnt work in this town')
+        done()
+      })
+  })
 
-  // test('It should request for delete order, path = "/api/orders/"', (done) => {
-  //   return request(app)
-  //     .delete('/api/orders/1')
-  //     .set('Accept', 'application/json')
-  //     .set('Authorization', token)
-  //     .then((res) => {
-  //       expect(JSON.parse(res.text)).toEqual(1)
-  //       done()
-  //     })
-  // })
+  test('It should request for update order from admin error not found, path = "/api/orders/"', (done) => {
+    const create = {
+      city_id: 1,
+      master_id: 2,
+      clock_id: 2,
+      customer_id: 1,
+      date: '2019-11-25',
+      time: 12
+    }
+    return request(app)
+      .put('/api/orders/10')
+      .send(create)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual('Order with id = 10 not found for update!')
+        done()
+      })
+  })
+
+  test('It should request for update order from admin, path = "/api/orders/"', (done) => {
+    const create = {
+      city_id: 2,
+      master_id: 3,
+      clock_id: 2,
+      customer_id: 1,
+      date: '2019-11-25',
+      time: 12
+    }
+    const expected = {
+      id: 1,
+      city_id: 2,
+      master_id: 3,
+      clock_id: 2,
+      customer_id: 1,
+      date: '2019-11-25',
+      time: 12,
+      duration: 2,
+      customer: customer1,
+      clock: clock2,
+      city: city2,
+      master: master3
+    }
+    return request(app)
+      .put('/api/orders/1')
+      .send(create)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual(expected)
+        done()
+      })
+  })
+
+  test('It should request for update order from admin error validation, path = "/api/orders/"', (done) => {
+    const create = {
+      city_id: void 0,
+      master_id: 'some',
+      clock_id: null,
+      customer_id: 1,
+      date: '2019-11-25',
+      time: 12
+    }
+    return request(app)
+      .put('/api/orders/1')
+      .send(create)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual('Incorrect fields: city_id, master_id, clock_id.')
+        done()
+      })
+  })
+
+  test('It should request for add order with error, path = "/api/orders/"', (done) => {
+    const create = {
+      city_id: 20,
+      master_id: 1,
+      clock_id: 1,
+      customer_id: 1,
+      date: '2019-11-25',
+      time: 12,
+      name: 'Some',
+      email: 'some@email.com'
+    }
+    return request(app)
+      .post('/api/orders/')
+      .send(create)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual('Error add order')
+        done()
+      })
+  })
+
+  test('It should request for delete order, path = "/api/orders/"', (done) => {
+    return request(app)
+      .delete('/api/orders/1')
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual(1)
+        done()
+      })
+  })
+
+  test('It should request for delete order, path = "/api/orders/"', (done) => {
+    return request(app)
+      .delete('/api/orders/null')
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .then((res) => {
+        expect(JSON.parse(res.text)).toEqual('Incorrect fields: id.')
+        done()
+      })
+  })
 })
