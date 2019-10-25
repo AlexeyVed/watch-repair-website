@@ -2,6 +2,7 @@ import reducer from '../loginReducer.js'
 import * as types from '../../actions/types.js'
 
 const initialState = {
+  isAuth: false,
   singInUser: null,
   singInLoading: false,
   singInError: null

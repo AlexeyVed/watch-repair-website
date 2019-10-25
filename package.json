@@ -13,9 +13,8 @@
     "test": "jest --runInBand --forceExit",
     "posttest": "cross-env NODE_ENV=test npx sequelize db:drop",
     "pretest:coverage": "cross-env NODE_ENV=test sequelize db:create && cross-env NODE_ENV=test npx sequelize db:migrate && cross-env NODE_ENV=test npx sequelize db:seed:all",
-    "posttest:coverage": "cross-env NODE_ENV=test npx sequelize db:drop",
-    "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --runInBand --forceExit",
+    "posttest:coverage": "cross-env NODE_ENV=test npx sequelize db:drop",
     "lint": "eslint ./src ",
     "lint-fix": "eslint ./src --fix"
   },

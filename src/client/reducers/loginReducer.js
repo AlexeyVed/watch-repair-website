@@ -75,8 +75,7 @@ const loginReducer = (state = initialState, action) => {
     case LOGIN_ERROR_NULL:
       return {
         ...state,
-        singInError: null,
-        errorAuth: null
+        singInError: null
       }
 
     default:
