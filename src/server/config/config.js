@@ -38,6 +38,18 @@ const config = {
     jwt: {
       secret: 'secret_production'
     }
+  },
+  test: {
+    db: db[mode],
+    mail: {
+      service: 'gmail',
+      user: 'watches.repair.quick@gmail.com',
+      pass: 'watchrepair86',
+      from: 'watches.repair.quick@gmail.com'
+    },
+    jwt: {
+      secret: 'secret_test'
+    }
   }
 }
 
