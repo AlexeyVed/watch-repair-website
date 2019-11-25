@@ -6,8 +6,8 @@ const customersRouter = express.Router()
 
 const { loginValidation, login, logout, checkAuth } = customersController
 
-customersRouter.use('/login', loginValidation, login)
+customersRouter.post('/login', loginValidation, login)
 customersRouter.use('/authAdmin', isAuthenticate, checkAuth)
-customersRouter.use('/logout', logout)
+customersRouter.get('/logout', logout)
 
 module.exports = customersRouter

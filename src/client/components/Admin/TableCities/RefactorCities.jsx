@@ -58,7 +58,7 @@ class RefactorCities extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
-      const deleteText = `Delete city: ${item.city}?`
+      const deleteText = `Delete city: ${item.name}?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{item.name}</td>

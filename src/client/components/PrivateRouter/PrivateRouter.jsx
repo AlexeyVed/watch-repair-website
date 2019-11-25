@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { checkAccesAdmin } from '../../actions/'
 
-class PrivateRoute extends React.Component {
+export class ModulePrivateRoute extends React.Component {
   componentDidMount () {
     if (this.props.user) {
       this.props.checkAuth(this.props.user)
@@ -21,7 +21,7 @@ class PrivateRoute extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     user: state.loginReducer.singInUser,
     isAuth: state.loginReducer.isAuth,
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return {
     checkAuth: email => dispatch(checkAccesAdmin(email))
   }
@@ -38,4 +38,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PrivateRoute)
+)(ModulePrivateRoute)

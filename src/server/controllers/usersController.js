@@ -3,7 +3,6 @@ const { checkSchema, validationResult } = require('express-validator')
 const config = require('../config/config.js')
 const jwt = require('jsonwebtoken')
 const error = require('../modules/services.js').makeError
-const User = require('../models/users.js')
 
 exports.loginValidation = checkSchema({
   email: {
@@ -37,23 +36,13 @@ exports.login = (req, res, next) => {
       if (err) {
         return next(err)
       }
-      return User.findOne({
-        where: {
-          email
-        }
-      })
-        .then(user => {
-          if (user === null) {
-            return next(error(404, `User with email '${email}' not found!`))
-          }
-          const token = jwt.sign({ email, exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60 }, config.jwt.secret)
-          const obj = {
-            auth: true,
-            token: token,
-            user: user
-          }
-          res.status(200).json(obj)
-        })
+      const token = jwt.sign({ email, exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60 }, config.jwt.secret)
+      const obj = {
+        auth: true,
+        token: token,
+        user: user
+      }
+      res.status(200).json(obj)
     })
   })(req, res, next)
 }

@@ -44,7 +44,7 @@ export const checkAccesAdmin = email => {
 export const logOutApp = () => {
   return (dispatch) => {
     return axios
-      .post(`/api/users/logout`)
+      .get(`/api/users/logout`)
       .then(res => {
         localStorage.removeItem('user')
         localStorage.removeItem('token')

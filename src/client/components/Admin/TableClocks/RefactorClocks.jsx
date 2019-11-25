@@ -58,7 +58,7 @@ class RefactorClocks extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
-      const deleteText = `Delete clock: ${item.typeClock}?`
+      const deleteText = `Delete clock: ${item.name}?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{item.name}</td>
