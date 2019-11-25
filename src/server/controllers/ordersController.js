@@ -13,6 +13,11 @@ const Customer = require('../models/customers.js')
 exports.list = function (req, res, next) {
   Order.findAll({
     include: [ { all: true } ],
+    where: !req.query.date ? null : {
+      date: {
+        [Op.startsWith]: req.query.date
+      }
+    },
     order: [
       ['date', 'ASC'],
       ['time', 'ASC']
