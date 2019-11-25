@@ -44,7 +44,7 @@ describe('City actions', () => {
   it('should create an action add failure', () => {
     const data = ['cities', 'orders']
     const testValue = data.map(elem => ({
-      type: types.ADD_CITIES_FAILURE,
+      type: types.ADD_CITY_FAILURE,
       payload: elem
     }))
     testValue.forEach(test => {
@@ -55,7 +55,7 @@ describe('City actions', () => {
   it('should create an action delete failure', () => {
     const data = ['cities', 'orders']
     const testValue = data.map(elem => ({
-      type: types.DELETE_CITIES_FAILURE,
+      type: types.DELETE_CITY_FAILURE,
       payload: elem
     }))
     testValue.forEach(test => {
@@ -66,7 +66,7 @@ describe('City actions', () => {
   it('should create an action edit failure', () => {
     const data = ['cities', 'orders']
     const testValue = data.map(elem => ({
-      type: types.EDIT_CITIES_FAILURE,
+      type: types.EDIT_CITY_FAILURE,
       payload: elem
     }))
     testValue.forEach(test => {
@@ -77,7 +77,7 @@ describe('City actions', () => {
   it('should create an action add successes', () => {
     const data = ['cities', 'orders']
     const testValue = data.map(elem => ({
-      type: types.ADD_CITIES_SUCCESS,
+      type: types.ADD_CITY_SUCCESS,
       message: 'City was successfully added.',
       payload: elem
     }))
@@ -89,7 +89,7 @@ describe('City actions', () => {
   it('should create an action delete successes', () => {
     const data = ['cities', 'orders']
     const testValue = data.map(elem => ({
-      type: types.DELETE_CITIES_SUCCESS,
+      type: types.DELETE_CITY_SUCCESS,
       message: 'City was successfully removed.',
       payload: elem
     }))
@@ -101,7 +101,7 @@ describe('City actions', () => {
   it('should create an action edit successes', () => {
     const data = ['cities', 'orders']
     const testValue = data.map(elem => ({
-      type: types.EDIT_CITIES_SUCCESS,
+      type: types.EDIT_CITY_SUCCESS,
       message: 'City was successfully edited.',
       payload: elem
     }))
@@ -160,8 +160,8 @@ describe('City actions', () => {
     })
 
     const expectedActions = [
-      { type: types.ADD_CITIES_STARTED },
-      { type: types.ADD_CITIES_SUCCESS, message: 'City was successfully added.', payload: ['uzgorod'] },
+      { type: types.ADD_CITY_STARTED },
+      { type: types.ADD_CITY_SUCCESS, message: 'City was successfully added.', payload: ['uzgorod'] },
       { type: types.REDIRECT_FROM_REFACTOR }
     ]
 
@@ -181,8 +181,8 @@ describe('City actions', () => {
     })
 
     const expectedActions = [
-      { type: types.ADD_CITIES_STARTED },
-      { type: types.ADD_CITIES_FAILURE, payload: ['uzgorod', 'dnipro'] }
+      { type: types.ADD_CITY_STARTED },
+      { type: types.ADD_CITY_FAILURE, payload: ['uzgorod', 'dnipro'] }
     ]
 
     return store.dispatch(actions.addCityToDB({}))
@@ -201,8 +201,8 @@ describe('City actions', () => {
     })
 
     const expectedActions = [
-      { type: types.EDIT_CITIES_STARTED },
-      { type: types.EDIT_CITIES_SUCCESS, message: 'City was successfully edited.', payload: ['uzgorod'] },
+      { type: types.EDIT_CITY_STARTED },
+      { type: types.EDIT_CITY_SUCCESS, message: 'City was successfully edited.', payload: ['uzgorod'] },
       { type: types.REDIRECT_FROM_REFACTOR }
     ]
 
@@ -222,8 +222,8 @@ describe('City actions', () => {
     })
 
     const expectedActions = [
-      { type: types.EDIT_CITIES_STARTED },
-      { type: types.EDIT_CITIES_FAILURE, payload: ['uzgorod', 'dnipro'] }
+      { type: types.EDIT_CITY_STARTED },
+      { type: types.EDIT_CITY_FAILURE, payload: ['uzgorod', 'dnipro'] }
     ]
 
     return store.dispatch(actions.editCityIntoDB({}))
@@ -242,8 +242,8 @@ describe('City actions', () => {
     })
 
     const expectedActions = [
-      { type: types.DELETE_CITIES_STARTED },
-      { type: types.DELETE_CITIES_SUCCESS, message: 'City was successfully removed.', payload: ['uzgorod'] }
+      { type: types.DELETE_CITY_STARTED },
+      { type: types.DELETE_CITY_SUCCESS, message: 'City was successfully removed.', payload: ['uzgorod'] }
     ]
 
     return store.dispatch(actions.deleteCityFromDB({}))
@@ -262,8 +262,8 @@ describe('City actions', () => {
     })
 
     const expectedActions = [
-      { type: types.DELETE_CITIES_STARTED },
-      { type: types.DELETE_CITIES_FAILURE, payload: ['uzgorod', 'dnipro'] }
+      { type: types.DELETE_CITY_STARTED },
+      { type: types.DELETE_CITY_FAILURE, payload: ['uzgorod', 'dnipro'] }
     ]
 
     return store.dispatch(actions.deleteCityFromDB({}))

@@ -50,7 +50,7 @@ describe('City reducer', () => {
 
   test('should add cities failure', () => {
     const action = {
-      type: types.ADD_CITIES_FAILURE,
+      type: types.ADD_CITY_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -63,7 +63,7 @@ describe('City reducer', () => {
 
   test('should add cities started', () => {
     const action = {
-      type: types.ADD_CITIES_STARTED
+      type: types.ADD_CITY_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -74,7 +74,7 @@ describe('City reducer', () => {
 
   test('should add cities success', () => {
     const action = {
-      type: types.ADD_CITIES_SUCCESS,
+      type: types.ADD_CITY_SUCCESS,
       payload: 'city',
       message: 'hello'
     }
@@ -93,7 +93,7 @@ describe('City reducer', () => {
 
   test('should edit cities started', () => {
     const action = {
-      type: types.EDIT_CITIES_STARTED
+      type: types.EDIT_CITY_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -104,7 +104,7 @@ describe('City reducer', () => {
 
   test('should edit cities failure', () => {
     const action = {
-      type: types.EDIT_CITIES_FAILURE,
+      type: types.EDIT_CITY_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -117,7 +117,7 @@ describe('City reducer', () => {
 
   test('should edit cities successes', () => {
     const action = {
-      type: types.EDIT_CITIES_SUCCESS,
+      type: types.EDIT_CITY_SUCCESS,
       payload: { id: 1, city: 'city' },
       message: 'hello'
     }
@@ -139,7 +139,7 @@ describe('City reducer', () => {
 
   test('should delete cities failure', () => {
     const action = {
-      type: types.DELETE_CITIES_FAILURE,
+      type: types.DELETE_CITY_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -152,7 +152,7 @@ describe('City reducer', () => {
 
   test('should delete cities started', () => {
     const action = {
-      type: types.DELETE_CITIES_STARTED
+      type: types.DELETE_CITY_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -163,7 +163,7 @@ describe('City reducer', () => {
 
   test('should delete cities success', () => {
     const action = {
-      type: types.DELETE_CITIES_SUCCESS,
+      type: types.DELETE_CITY_SUCCESS,
       payload: 1,
       message: 'hello'
     }

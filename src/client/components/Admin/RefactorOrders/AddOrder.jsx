@@ -9,7 +9,7 @@ import SelectField from '../../ComponentMaterial/SelectField/'
 import DateField from '../../ComponentMaterial/DateField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addOrdersToDB } from '../../../actions'
-import { getDate } from '../../App/OrderForm/logic'
+import { getDate } from '../../../helpers/dateForOrders.js'
 import { required } from '../../../validation'
 
 import '../../../style/refactor-modal.less'
@@ -27,13 +27,7 @@ class AddOrder extends React.Component {
     const date = getDate()
 
     this.setState(() => ({
-      workHours: this.state.workHours.filter(item => {
-        if (item >= date.time) {
-          return true
-        } else {
-          return false
-        }
-      }),
+      workHours: this.state.workHours.filter(item => item >= date.time),
       today: date
     }))
 

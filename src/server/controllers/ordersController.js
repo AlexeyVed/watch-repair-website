@@ -1,7 +1,9 @@
 const { checkSchema, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
-const error = require('../modules/services.js').makeError
+const Sequelize = require('sequelize')
 const { format } = require('date-fns')
+
+const { makeError } = require('../modules/services.js')
 const getToday = require('../modules/services.js').getToday
 const sendMsg = require('../modules/sendEmail.js').sendSuccessfullyMsg
 const Order = require('../models/orders.js')
@@ -12,6 +14,11 @@ const Customer = require('../models/customers.js')
 exports.list = function (req, res, next) {
   Order.findAll({
     include: [ { all: true } ],
+    where: !req.query.date ? null : {
+      date: {
+        [Op.startsWith]: req.query.date
+      }
+    },
     order: [
       ['date', 'ASC'],
       ['time', 'ASC']
@@ -65,7 +72,7 @@ exports.get = function (req, res, next) {
   })
     .then(order => {
       if (order === null) {
-        return next(error(404, `Order with id = ${req.params.id} not found!`))
+        return next(makeError(404, `Order with id = ${req.params.id} not found!`))
       }
       order.date = format(new Date(order.date), 'MMMM dd, yyyy')
       res.json(order)
@@ -163,11 +170,41 @@ exports.update = function (req, res, next) {
   })
     .then(master => {
       if (master.city_id !== city_id) {
-        return next(error(400, 'Master doesnt work in this town'))
+        return next(makeError(400, 'Master doesnt work in this town'))
       }
-      return true
+      return Clock.findByPk(clock_id)
     })
-    .then(() => {
+    .then(reqClock => {
+      const { duration } = reqClock
+      return Order.findAll({
+        where: {
+          master_id,
+          city_id,
+          date,
+          [Op.or]: [
+            {
+              time: {
+                [Op.and]: [
+                  { [Op.gt]: time },
+                  { [Op.lte]: time + duration }
+                ]
+              }
+            }, {
+              time: {
+                [Op.and]: [
+                  { [Op.lte]: time },
+                  { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+                ]
+              }
+            }
+          ]
+        }
+      })
+    })
+    .then(result => {
+      if (result.length) {
+        return next(makeError(400, 'Master already busy at this time.'))
+      }
       return Order.update({
         date,
         time,
@@ -187,7 +224,7 @@ exports.update = function (req, res, next) {
     })
     .then((order) => {
       if (order === null) {
-        return next(error(404, `Order with id = ${req.params.id} not found for update!`))
+        return next(makeError(404, `Order with id = ${req.params.id} not found for update!`))
       }
       order.date = format(new Date(order.date), 'MMMM dd, yyyy')
       res.json(order)
@@ -231,29 +268,36 @@ exports.getWorkers = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, clock_id, city_id } = req.body
+  const { date, clock_id, city_id, time } = req.body
   Clock.findByPk(clock_id)
     .then(clock => {
       const { duration } = clock
-      req.body = { ...req.body, duration }
       return Order.findAll({
         where: {
           date,
-          city_id
-        },
-        include: [ { model: Clock } ]
+          city_id,
+          [Op.or]: [
+            {
+              time: {
+                [Op.and]: [
+                  { [Op.gt]: time },
+                  { [Op.lte]: time + duration }
+                ]
+              }
+            }, {
+              time: {
+                [Op.and]: [
+                  { [Op.lte]: time },
+                  { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+                ]
+              }
+            }
+          ]
+        }
       })
     })
-    .then(ordersInDate => {
-      const { time, duration } = req.body
-      return ordersInDate.filter(order => {
-        return (order.time < time)
-          ? ((order.time + order.clock.duration) >= time)
-          : ((time + duration) >= order.time)
-      })
-    })
-    .then(busyMasters => {
-      const arrayIdBusyMaster = busyMasters.map(master => master.master_id)
+    .then(orders => {
+      const arrayIdBusyMaster = orders.map(order => order.master_id)
       return Master.findAll({
         where: {
           city_id,
@@ -331,27 +375,38 @@ exports.addAdmin = function (req, res, next) {
         where: {
           master_id,
           city_id,
-          date
+          date,
+          [Op.or]: [
+            {
+              time: {
+                [Op.and]: [
+                  { [Op.gt]: time },
+                  { [Op.lte]: time + duration }
+                ]
+              }
+            }, {
+              time: {
+                [Op.and]: [
+                  { [Op.lte]: time },
+                  { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+                ]
+              }
+            }
+          ]
         },
-        include: [{ model: Clock }],
         raw: true,
         nest: true
       })
     })
     .then(result => {
-      const isCreated = result.filter(order => {
-        return (order.time < time)
-          ? ((order.time + order.clock.duration) >= time)
-          : ((time + req.body.duration) >= order.time)
-      })
-      if (isCreated.length) {
-        return next(error(400, 'Master already busy at this time.'))
+      if (result.length) {
+        return next(makeError(400, 'Master already busy at this time.'))
       }
       return Master.findByPk(master_id)
     })
     .then(master => {
       if (master.city_id !== +city_id) {
-        return next(error(400, 'Master doesnt work in this town'))
+        return next(makeError(400, 'Master doesnt work in this town'))
       }
       const { duration } = req.body
       return Order.create({
@@ -479,6 +534,6 @@ exports.add = function (req, res, next) {
       res.status(201).json(order)
     })
     .catch(() => {
-      next(error(400, 'Error add order'))
+      next(makeError(400, 'Error add order'))
     })
 }

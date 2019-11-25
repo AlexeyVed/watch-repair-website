@@ -50,7 +50,7 @@ describe('Master reducer', () => {
 
   test('should add masters failure', () => {
     const action = {
-      type: types.ADD_MASTERS_FAILURE,
+      type: types.ADD_MASTER_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -63,7 +63,7 @@ describe('Master reducer', () => {
 
   test('should add masters started', () => {
     const action = {
-      type: types.ADD_MASTERS_STARTED
+      type: types.ADD_MASTER_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -74,7 +74,7 @@ describe('Master reducer', () => {
 
   test('should add masters success', () => {
     const action = {
-      type: types.ADD_MASTERS_SUCCESS,
+      type: types.ADD_MASTER_SUCCESS,
       payload: 'masters',
       message: 'hello'
     }
@@ -93,7 +93,7 @@ describe('Master reducer', () => {
 
   test('should edit masters started', () => {
     const action = {
-      type: types.EDIT_MASTERS_STARTED
+      type: types.EDIT_MASTER_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -104,7 +104,7 @@ describe('Master reducer', () => {
 
   test('should edit masters failure', () => {
     const action = {
-      type: types.EDIT_MASTERS_FAILURE,
+      type: types.EDIT_MASTER_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -117,7 +117,7 @@ describe('Master reducer', () => {
 
   test('should edit masters successes', () => {
     const action = {
-      type: types.EDIT_MASTERS_SUCCESS,
+      type: types.EDIT_MASTER_SUCCESS,
       payload: { id: 1, city: 'masters' },
       message: 'hello'
     }
@@ -139,7 +139,7 @@ describe('Master reducer', () => {
 
   test('should delete masters failure', () => {
     const action = {
-      type: types.DELETE_MASTERS_FAILURE,
+      type: types.DELETE_MASTER_FAILURE,
       payload: 'error'
     }
     expect(reducer(initialState, action)
@@ -152,7 +152,7 @@ describe('Master reducer', () => {
 
   test('should delete masters started', () => {
     const action = {
-      type: types.DELETE_MASTERS_STARTED
+      type: types.DELETE_MASTER_STARTED
     }
     expect(reducer(initialState, action)
     ).toEqual({
@@ -163,7 +163,7 @@ describe('Master reducer', () => {
 
   test('should delete masters success', () => {
     const action = {
-      type: types.DELETE_MASTERS_SUCCESS,
+      type: types.DELETE_MASTER_SUCCESS,
       payload: 1,
       message: 'hello'
     }

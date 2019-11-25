@@ -48,5 +48,21 @@ module.exports = {
       acquire: 30000,
       idle: 10000
     }
+  },
+  test: {
+    username: 'root',
+    password: 'e8zbprhH',
+    database: 'clockwise_test',
+    host: 'localhost',
+    dialect: 'mysql',
+    seederStorage: 'sequelize',
+    seederStorageTableName: 'sequelizemeta',
+    operatorsAliases: false,
+    port: 3306,
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    }
   }
 }
