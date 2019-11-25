@@ -1,6 +1,7 @@
 const { checkSchema, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
 const Sequelize = require('sequelize')
+const { format } = require('date-fns')
 
 const { makeError } = require('../modules/services.js')
 const getToday = require('../modules/services.js').getToday
@@ -35,12 +36,18 @@ exports.list = function (req, res, next) {
       if (indexToday !== -1) {
         const oldOrders = orders.splice(0, indexToday)
         const finallyObj = orders.concat(oldOrders)
+        finallyObj.map((order) => {
+          order.date = format(new Date(order.date), 'MMMM dd, yyyy')
+        })
         return res.json(finallyObj)
       }
+      orders.map((order) => {
+        order.date = format(new Date(order.date), 'MMMM dd, yyyy')
+      })
       res.json(orders)
     })
     .catch(() => {
-      next(makeError(400, 'Error get list of orders'))
+      next(error(400, 'Error get list of orders'))
     })
 }
 
@@ -57,7 +64,7 @@ exports.getValidation = checkSchema({
 exports.get = function (req, res, next) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return next(makeError(422, null, errors.array()))
+    return next(error(422, null, errors.array()))
   }
   Order.findOne({
     where: { id: req.params.id },
@@ -67,10 +74,11 @@ exports.get = function (req, res, next) {
       if (order === null) {
         return next(makeError(404, `Order with id = ${req.params.id} not found!`))
       }
+      order.date = format(new Date(order.date), 'MMMM dd, yyyy')
       res.json(order)
     })
     .catch(() => {
-      next(makeError(400, 'Error get order'))
+      next(error(400, 'Error get order'))
     })
 }
 
@@ -87,7 +95,7 @@ exports.removeValidation = checkSchema({
 exports.remove = function (req, res, next) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return next(makeError(422, null, errors.array()))
+    return next(error(422, null, errors.array()))
   }
   Order.destroy({
     where: { id: req.params.id }
@@ -96,7 +104,7 @@ exports.remove = function (req, res, next) {
       res.json(req.params.id)
     })
     .catch(() => {
-      next(makeError(400, 'Error delete order'))
+      next(error(400, 'Error delete order'))
     })
 }
 
@@ -153,7 +161,7 @@ exports.updateValidation = checkSchema({
 exports.update = function (req, res, next) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return next(makeError(422, null, errors.array()))
+    return next(error(422, null, errors.array()))
   }
   const { date, time, customer_id, clock_id, city_id, master_id } = req.body
   Master.findByPk(master_id, {
@@ -218,10 +226,11 @@ exports.update = function (req, res, next) {
       if (order === null) {
         return next(makeError(404, `Order with id = ${req.params.id} not found for update!`))
       }
+      order.date = format(new Date(order.date), 'MMMM dd, yyyy')
       res.json(order)
     })
     .catch(() => {
-      next(makeError(400, 'Error update order'))
+      next(error(400, 'Error update order'))
     })
 }
 
@@ -257,7 +266,7 @@ exports.getWorkersValidation = checkSchema({
 exports.getWorkers = function (req, res, next) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return next(makeError(422, null, errors.array()))
+    return next(error(422, null, errors.array()))
   }
   const { date, clock_id, city_id, time } = req.body
   Clock.findByPk(clock_id)
@@ -300,12 +309,12 @@ exports.getWorkers = function (req, res, next) {
     })
     .then(workers => {
       if (!workers.length) {
-        return next(makeError(404, 'There are no free masters in your city at this time. Please choose other time.'))
+        return next(error(404, 'There are no free masters in your city at this time. Please choose other time.'))
       }
       res.json(workers)
     })
     .catch(() => {
-      next(makeError(400, 'Error get free workers'))
+      next(error(400, 'Error get free workers'))
     })
 }
 
@@ -355,7 +364,7 @@ exports.addAdminValidation = checkSchema({
 exports.addAdmin = function (req, res, next) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return next(makeError(422, null, errors.array()))
+    return next(error(422, null, errors.array()))
   }
   const { date, time, customer_id, clock_id, city_id, master_id } = req.body
   Clock.findByPk(clock_id)
@@ -417,10 +426,11 @@ exports.addAdmin = function (req, res, next) {
       })
     })
     .then(newOrder => {
+      newOrder.date = format(new Date(newOrder.date), 'MMMM dd, yyyy')
       res.status(201).json(newOrder)
     })
     .catch(() => {
-      next(makeError(400, 'Error create order'))
+      next(error(400, 'Error create order'))
     })
 }
 
@@ -475,7 +485,7 @@ exports.addValidation = checkSchema({
 exports.add = function (req, res, next) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return next(makeError(422, null, errors.array()))
+    return next(error(422, null, errors.array()))
   }
   const { date, time, email, clock_id, city_id, master_id, name } = req.body
   Clock.findByPk(clock_id)

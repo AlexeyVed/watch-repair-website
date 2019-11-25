@@ -1,5 +1,6 @@
 import React from 'react'
 import DateFnsUtils from '@date-io/date-fns'
+import { format } from 'date-fns'
 import {
   MuiPickersUtilsProvider,
   DatePicker
@@ -10,14 +11,14 @@ import './DateField.less'
 const MaterialUIPickers = props => {
   const { input, label, min, max } = props
   const onChange = date => {
-    Date.parse(date) ? input.onChange(date.toISOString().split('T')[0]) : input.onChange(null)
+    input.onChange(format(new Date(date), 'yyy-MM-dd'))
   }
   return (
     <div className='date-pickers'>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
           disableToolbar
-          format='yyyy-MM-dd'
+          format='MMMM dd, yyyy'
           margin='normal'
           id='date-picker-dialog'
           label={label}
