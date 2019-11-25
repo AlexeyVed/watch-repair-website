@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core'
 
 import './SelectField.less'
 
-const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(theme => ({
   formControl: {
     minWidth: 220,
     textAlign: 'left'
@@ -14,8 +14,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const renderSelectField = props => {
-  const { input, label, meta, children, id } = props
-  const classes = useStyles()
+  const { input, label, meta, children, id, styles } = props
+  const classes = styles || useStyles()
   return (
     <div className='input-select-material-ui'>
       <FormControl className={classes.formControl}>

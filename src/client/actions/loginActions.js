@@ -3,24 +3,22 @@ import {
   SING_IN_FAILURE,
   SING_IN_STARTED,
   LOG_OUT,
-  LOGIN_ERROR_NULL
-  /* REGISTRATION_STARTED,
-  REGISTRATION_SUCCESS,
-  REGISTRATION_FAILURE, */
+  LOGIN_ERROR_NULL,
+  CHECK_ACCESS_ADMIN_STARTED,
+  CHECK_ACCESS_ADMIN_SUCCESS,
+  CHECK_ACCESS_ADMIN_FAILURE
 } from './types.js'
 
 import axios from 'axios'
 
-export const loginToApp = (values) => {
+export const loginToApp = values => {
   return (dispatch) => {
     dispatch({ type: SING_IN_STARTED })
-
-    axios
+    return axios
       .post(`/api/users/login`, values)
       .then(res => {
         localStorage.setItem('user', res.data.user.email)
         localStorage.setItem('token', res.data.token)
-        axios.defaults.headers.common['authorization'] = res.data.token
         dispatch(singInSuccess(res.data.user.email))
       })
       .catch(err => {
@@ -29,14 +27,27 @@ export const loginToApp = (values) => {
   }
 }
 
+export const checkAccesAdmin = email => {
+  return (dispatch) => {
+    dispatch({ type: CHECK_ACCESS_ADMIN_STARTED })
+    return axios
+      .post(`/api/users/authAdmin`, { email })
+      .then(res => {
+        dispatch({ type: CHECK_ACCESS_ADMIN_SUCCESS })
+      })
+      .catch(err => {
+        dispatch({ type: CHECK_ACCESS_ADMIN_FAILURE, payload: err.response.data })
+      })
+  }
+}
+
 export const logOutApp = () => {
   return (dispatch) => {
-    axios
-      .post(`/api/users/logout`)
+    return axios
+      .get(`/api/users/logout`)
       .then(res => {
         localStorage.removeItem('user')
         localStorage.removeItem('token')
-        delete axios.defaults.headers.common['authorization']
         dispatch({ type: LOG_OUT })
       })
       .catch(err => {
@@ -45,48 +56,14 @@ export const logOutApp = () => {
   }
 }
 
-export const missLoginError = () => {
-  return (dispatch) => {
-    dispatch({ type: LOGIN_ERROR_NULL })
-  }
-}
+export const missLoginError = () => ({ type: LOGIN_ERROR_NULL })
 
-const singInSuccess = user => ({
+export const singInSuccess = user => ({
   type: SING_IN_SUCCESS,
   payload: user
 })
 
-const singInFailure = error => ({
+export const singInFailure = error => ({
   type: SING_IN_FAILURE,
   payload: error
 })
-
-/* export const registrationToApp = (values) => {
-  return (dispatch) => {
-    dispatch(registrationStarted())
-
-    axios
-      .post(`http://localhost:3000/api/users/registration`, values)
-      .then(res => {
-        localStorage.setItem('user', res.data)
-        dispatch(registrationSuccess(res.data))
-      })
-      .catch(err => {
-        dispatch(registrationFailure(err.response.data))
-      })
-  }
-}
-
- const registrationStarted = () => ({
-  type: REGISTRATION_STARTED
-})
-
-const registrationSuccess = user => ({
-  type: REGISTRATION_SUCCESS,
-  payload: user
-})
-
-const registrationFailure = error => ({
-  type: REGISTRATION_FAILURE,
-  payload: error
-}) */

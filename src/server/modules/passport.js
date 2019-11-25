@@ -2,6 +2,23 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const User = require('../models/users.js')
 
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
+
+passport.deserializeUser((id, done) => {
+  User.findByPk(id)
+    .then(user => {
+      if (user === null) {
+        done(null, false)
+      }
+      done(null, user)
+    })
+    .catch(error => {
+      done(error)
+    })
+})
+
 passport.use('login',
   new LocalStrategy(
     {
@@ -17,14 +34,14 @@ passport.use('login',
           }
         })
           .then(dbUser => {
-            const json = JSON.stringify(dbUser)
-            const user = JSON.parse(json)
-            if (!user) {
+            if (!dbUser) {
               return done(null, false, {
                 code: 404,
                 message: 'User not found.'
               })
-            } else if (!User.validPassword(password, user.password)) {
+            }
+            const user = dbUser.get()
+            if (!User.validPassword(password, user.password)) {
               return done(null, false, {
                 code: 422,
                 message: 'Wrong password.'

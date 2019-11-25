@@ -1,206 +1,178 @@
-@headerColor: rgb(230, 231, 245);
+@import '../../../style/global-variable.less';
 
-@media screen and (max-width:600px) {
+.header {
+  background-color: @header-color;
+  display: flex;
+  border-bottom: @app-border-style;
+
+  
+  .container-logo {
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    background: url(../../../image/logo.png) no-repeat left;
+  }
+
+  .container-user {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &__user {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    &__user:hover {
+      color: #535353;
+    }
+  }
+
+  .container-buttons {
+    flex: 0 0 60px;
+    font-family: Verdana;
+    font-size: 18px;
+
+    button {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: none;
+      font: inherit;
+      cursor: pointer;
+      background-color: @header-color;
+    }
+
+    button:hover {
+      background-color: rgb(226, 227, 241);
+    }
+  }
+}
+
+@media screen and (max-width:695px) {
   .header {
     flex: 0 0 60px;
-    background-color: @headerColor;
-    width: 100%;
-    display: flex;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    min-width: 320px;
+    box-sizing: border-box;
+    border-bottom: @app-border-style;
 
     .container-logo {
       flex: 0 1 170px;
       min-width: 170px;
-      align-items: center;
       margin-left: 10px;
-      display: flex;
-      cursor: pointer;
-      background: url(../../../image/logo.png) no-repeat left;
-      background-size: 170px 60px;
+      background-size: 180px 60px;
     }
 
     .container-user {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      font-weight: 500;
+      flex: 1 1 160px;
       font-size: 14px;
 
       &__user {
-        margin-right: 5px;
-        height: 30px;
+        margin-right: 20px;
         width: 160px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-      }
-
-      &__user:hover {
-        color: #535353;
       }
     }
 
     .container-buttons {
       flex: 0 0 60px;
-      display: flex;
-      font-family: Verdana;
-      font-weight: 500;
-      font-size: 18px;
 
       button {
-        border-bottom-right-radius: 10px;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        border: none;
-        font: inherit;
-        color: inherit;
-        cursor: pointer;
-        background-color: @headerColor;
-        outline: none;
         border-left: 1px solid #a9b0b4;
 
         .MuiSvgIcon-root {
           font-size: 20px;
         }
       }
+    }
+  }
+}
 
-      a {
-        width: 50%;
-        height: 100%;
-        color: black;
+@media screen and (max-width:420px) {
+  .header {
+    flex: 0 0 60px;
+    min-width: 320px;
+    box-sizing: border-box;
+    border-bottom: @app-border-style;
+
+    .container-logo {
+      flex: 0 1 60px;
+      min-width: 60px;
+      margin-left: 10px;
+      background-size: 180px 60px;
+    }
+
+    .full-logo {
+      flex: 0 1 200px;
+      min-width: 200px;
+      background-size: 180px 60px;
+    }
+
+    .container-user {
+      width: 160px;
+      font-size: 14px;
+      font-weight: 550;
+
+      &__user {
+        margin-right: 20px;
       }
+    }
 
-      a > button {
-        width: 100%;
-        height: 100%;
-        border-bottom-right-radius: 10px;
-      }
+    .container-buttons {
+      flex: 0 0 60px;
 
-      a > button {
-        height: 100%;
-        padding: 0;
-        border: none;
-        font: inherit;
-        color: inherit;
-        cursor: pointer;
-        background-color: @headerColor;
-        outline: none;
-        border-left: 1px solid #e6e6e2;
+      button {
+        border-left: 1px solid #a9b0b4;
 
-      }
-
-      button:hover {
-        background-color: rgb(226, 227, 241);
+        .MuiSvgIcon-root {
+          font-size: 20px;
+        }
       }
     }
   }
 }
 
-@media screen and (min-width:600px) {
+@media screen and (min-width:696px) {
   .header {
     flex: 0 0 80px;
-    background-color: @headerColor;
     min-width: 695px;
-    display: flex;
-    border-left: 1px solid rgba(128, 128, 128, 0.4);
-    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
-    border-right: 1px solid rgba(128, 128, 128, 0.4);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    border-left: @app-border-style;
+    border-bottom: @app-border-style;
+    border-right: @app-border-style;
+    box-shadow: @app-box-shadows;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 
     .container-logo {
       flex: 0 1 220px;
       min-width: 225px;
-      align-items: center;
       margin-left: 30px;
-      display: flex;
-      cursor: pointer;
-      background: url(../../../image/logo.png) no-repeat left;
       background-size: 220px 75px;
     }
 
     .container-user {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      font-weight: 500;
-      font-size: 17px;
+     font-size: 17px;
+     width: 160px;
 
       &__user {
         margin-right: 40px;
-        height: 30px;
-        width: 160px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-      }
-
-      &__user:hover {
-        color: #535353;
       }
     }
 
     .container-buttons {
       flex: 0 0 100px;
-      display: flex;
-      font-family: Verdana;
-      font-weight: 500;
-      font-size: 18px;
 
       button {
         border-bottom-right-radius: 10px;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        border: none;
-        font: inherit;
-        color: inherit;
-        cursor: pointer;
-        background-color: @headerColor;
-        outline: none;
         border-left: 1px solid #a9b0b4;
-        border-right: 1px solid #e6e6e2;
 
         .MuiSvgIcon-root {
           font-size: 30px;
         }
-      }
-
-      a {
-        width: 50%;
-        height: 100%;
-        color: black;
-      }
-
-      a > button {
-        width: 100%;
-        height: 100%;
-        border-bottom-right-radius: 10px;
-      }
-
-      a > button {
-        height: 100%;
-        padding: 0;
-        border: none;
-        font: inherit;
-        color: inherit;
-        cursor: pointer;
-        background-color: @headerColor;
-        outline: none;
-        border-left: 1px solid #e6e6e2;
-
-      }
-
-      button:hover {
-        background-color: rgb(226, 227, 241);
       }
     }
   }

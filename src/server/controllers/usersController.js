@@ -3,7 +3,6 @@ const { checkSchema, validationResult } = require('express-validator')
 const config = require('../config/config.js')
 const jwt = require('jsonwebtoken')
 const error = require('../modules/services.js').makeError
-const User = require('../models/users.js')
 
 exports.loginValidation = checkSchema({
   email: {
@@ -32,24 +31,24 @@ exports.login = (req, res, next) => {
     if (!user) {
       return next(error(info.code, info.message))
     }
+    const email = user.email
     req.logIn(user, err => {
-      return User.findOne({
-        where: {
-          email: user.email
-        }
-      })
-        .then(user => {
-          const token = jwt.sign({ email: user.email }, config.jwt.secret)
-          const obj = {
-            auth: true,
-            token: token,
-            user: user,
-            exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60
-          }
-          res.status(200).json(obj)
-        })
+      if (err) {
+        return next(err)
+      }
+      const token = jwt.sign({ email, exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60 }, config.jwt.secret)
+      const obj = {
+        auth: true,
+        token: token,
+        user: user
+      }
+      res.status(200).json(obj)
     })
   })(req, res, next)
+}
+
+exports.checkAuth = (req, res, next) => {
+  res.status(200).send('OK')
 }
 
 exports.logout = (req, res, next) => {
@@ -60,26 +59,3 @@ exports.logout = (req, res, next) => {
     next(error(500, 'Error logout'))
   }
 }
-
-/* exports.registration = function (req, res) {
-  const user = new User(req.body)
-  user.check()
-    .then(() => {
-      user.registration()
-        .then(() => {
-          user.login()
-            .then(result => {
-              if (result[0].password === req.body.password) {
-                const json = JSON.stringify(result[0].email)
-                res.send(json)
-              }
-            })
-        })
-        .catch(error => {
-          res.status(400).send(error)
-        })
-    })
-    .catch(error => {
-      res.status(401).send('Email already used.')
-    })
-} */

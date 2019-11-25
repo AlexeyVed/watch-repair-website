@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import Preloader from '../../App/Preloader/Preloader.jsx'
 import ModalWindow from '../../ModalWindow/ModalWindowAdmin.jsx'
+import Dashboard from '../Dashboard/Dashboard.jsx'
 import AdminBar from '../Bar/AdminBar.jsx'
 import RefactorCities from '../TableCities/RefactorCities'
 import RefactorClients from '../TableClients/RefactorClients'
@@ -63,6 +64,7 @@ class MainAdmin extends React.Component {
               <Route path='/admin/clocks' component={RefactorClocks}/>
               <Route path='/admin/workers' component={RefactorWorkers}/>
               <Route path='/admin/orders' component={RefactorOrders}/>
+              <Route exact path='/admin' component={Dashboard}/>
               <Route component={NoMatchAdmin}/>
             </Switch>
           </div>

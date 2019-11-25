@@ -1,79 +1,47 @@
-@media screen and (max-width:600px) {
+@import '../../../style/global-variable.less';
+
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: @app-box-shadows;
+  overflow-y: auto;
+
+  .admin-content {
+    height: 100%;
+  }
+
+  .work-space {
+    height: 100%;
+    overflow: auto;
+  }
+}
+
+@media screen and (max-width:695px) {
   .admin-main {
-    flex: 1;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    display: flex;
-    width: 100%;
-    min-width: 430px;
-    flex-direction: column;
+    margin-bottom: 2px;
+    margin-top: 2px;
     font-size: 14px;
 
-
     .admin-content {
-      flex: 1 0;
-      min-width: 430px;
-      box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
-      background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
-      background-size: 450px 300px;
-      background-color: #f4f4f0;
-      margin-top: 1px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      magrin: auto;
-      position: relative;
-
-      &__navigation {
-        position: absolute;
-        right: 0;
-        top: 10px;
-
-        a {
-          width: 130px;
-          height: 20px;
-          color: #7c7f7c;
-          display: flex;
-          justify-content: right;
-        }
-
-        a > button {
-          height: 100%;
-          width: 100%;
-          padding: 0;
-          border: none;
-          font: inherit;
-          color: inherit;
-          background-color: inherit;
-          cursor: pointer;
-          outline: none;
-        }
-      }
-
-      .work-space {
-        height: 90%;
-        width: 90%;
-        margin-top: 2%;
-        overflow: auto;
-        magrin: auto;
-      }
+      min-width: 320px;
+      background: url(../../../image/background.png) no-repeat right -10px bottom 60px;
+      background-size: 240px 160px;
+      background-color: @tables-color;
     }
   }
 }
 
-@media screen and (min-width:600px) {
+@media screen and (min-width:696px) {
   .admin-main {
-    flex: 1;
     margin-bottom: 5px;
     margin-top: 5px;
-    display: flex;
-    flex-direction: column;
-
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    min-width: 695px;
 
     .admin-content {
-      flex: 1 0;
+      box-sizing: border-box;
       min-width: 695px;
       border: 1px solid rgba(128, 128, 128, 0.4);
       box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
@@ -81,48 +49,7 @@
       border-bottom-right-radius: 5px;
       background: url(../../../image/background.png) no-repeat right -10px bottom -10px;
       background-size: 450px 300px;
-      background-color: #f4f4f0;
-      margin-top: 1px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      magrin: auto;
-      position: relative;
-
-      &__navigation {
-        position: absolute;
-        right: 0;
-        top: 10px;
-
-        a {
-          width: 130px;
-          height: 20px;
-          color: #7c7f7c;
-          display: flex;
-          justify-content: right;
-        }
-
-        a > button {
-          height: 100%;
-          width: 100%;
-          padding: 0;
-          border: none;
-          font: inherit;
-          color: inherit;
-          background-color: inherit;
-          cursor: pointer;
-          outline: none;
-        }
-      }
-
-      .work-space {
-        height: 90%;
-        width: 90%;
-        margin-top: 2%;
-        overflow: auto;
-        magrin: auto;
-      }
+      background-color: @tables-color;
     }
   }
 }
-

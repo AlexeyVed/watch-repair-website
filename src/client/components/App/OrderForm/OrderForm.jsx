@@ -8,15 +8,15 @@ import SelectField from '../../ComponentMaterial/SelectField/'
 import DateField from '../../ComponentMaterial/DateField/'
 import { makeOrder } from '../../../actions'
 import { validateEmail, required } from '../../../validation'
-import { getDate } from './logic.js'
+import { getDate } from '../../../helpers/dateForOrders.js'
 
 import './OrderForm.less'
 
 class OrderForm extends Component {
   state = {
     workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
-    date: {
-      date: null,
+    today: {
+      date: new Date(),
       time: null
     }
   }
@@ -25,17 +25,11 @@ class OrderForm extends Component {
     const date = getDate()
 
     this.setState(() => ({
-      workHours: this.state.workHours.filter(item => {
-        if (item >= date.time) {
-          return true
-        } else {
-          return false
-        }
-      }),
-      date: date
+      workHours: this.state.workHours.filter(item => item >= date.time),
+      today: date
     }))
     const initialValues = {
-      date: date.date,
+      date: date.dateToString,
       time: date.time
     }
     this.props.dispatch(initialize('orderForm', initialValues, ['date', 'time']))
@@ -43,12 +37,13 @@ class OrderForm extends Component {
 
   render () {
     const { handleSubmit, chooseClock, chooseCities, makeOrder, chooseMaster } = this.props
+    const { today, workHours } = this.state
+
     if (chooseMaster) {
       return (
         <div className='main-form'>
           <div className='choosing-master'>
             Please, choose a free master.
-
           </div>
         </div>
       )
@@ -77,7 +72,7 @@ class OrderForm extends Component {
             validate={[validateEmail, required]}
           />
           <Field
-            name='clockId'
+            name='clock_id'
             component={SelectField}
             id='clock'
             type='number'
@@ -86,12 +81,12 @@ class OrderForm extends Component {
           >
             {
               chooseClock.map((clock, index) => (
-                <MenuItem key={index} value={clock.id}>{clock.typeClock}</MenuItem>
+                <MenuItem key={index} value={clock.id}>{clock.name}</MenuItem>
               ))
             }
           </Field>
           <Field
-            name='cityId'
+            name='city_id'
             component={SelectField}
             id='city'
             label='Choose your city'
@@ -100,15 +95,15 @@ class OrderForm extends Component {
           >
             {
               chooseCities.map((item, index) => (
-                <MenuItem key={index} value={item.id}>{item.city}</MenuItem>
+                <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
               ))
             }
           </Field>
           <Field
             label='Choose date'
             name='date'
-            min={this.state.date.date}
-            max='2019-12-30'
+            min={today.date}
+            max= {new Date(today.date.getFullYear(), today.date.getMonth() + 6, 0)}
             component={DateField}
             type='date'
             onChange={() => {
@@ -126,7 +121,7 @@ class OrderForm extends Component {
             validate={required}
           >
             {
-              this.state.workHours.map((item) => {
+              workHours.map((item) => {
                 return <MenuItem key={item} value={Number(item)}>{item}:00</MenuItem>
               })
             }

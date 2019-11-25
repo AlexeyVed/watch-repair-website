@@ -4,7 +4,7 @@ const City = require('../models/cities.js')
 
 exports.list = function (req, res, next) {
   City.findAll({
-    order: [ ['city', 'ASC'] ]
+    order: [ ['name', 'ASC'] ]
   })
     .then(cities => {
       res.json(cities)
@@ -31,6 +31,9 @@ exports.get = function (req, res, next) {
   }
   City.findByPk(req.params.id)
     .then(city => {
+      if (city === null) {
+        return next(error(404, `City with id = ${req.params.id} not found!`))
+      }
       res.json(city)
     })
     .catch(() => {
@@ -39,7 +42,7 @@ exports.get = function (req, res, next) {
 }
 
 exports.addValidation = checkSchema({
-  city: {
+  name: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isAlpha: true,
@@ -49,11 +52,10 @@ exports.addValidation = checkSchema({
 
 exports.add = function (req, res, next) {
   const errors = validationResult(req)
-  console.log(errors)
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  City.create({ city: req.body.city })
+  City.create({ name: req.body.name })
     .then(result => {
       res.status(201).json(result)
     })
@@ -83,7 +85,10 @@ exports.remove = function (req, res, next) {
     .then(result => {
       res.json(req.params.id)
     })
-    .catch(() => {
+    .catch(err => {
+      if (err.name === 'SequelizeForeignKeyConstraintError') {
+        return next(error(409, 'you have an orders in this city.'))
+      }
       next(error(400, 'Error delete city'))
     })
 }
@@ -96,7 +101,7 @@ exports.updateValidation = checkSchema({
     toInt: true,
     isEmpty: false
   },
-  city: {
+  name: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isAlpha: true,
@@ -110,13 +115,16 @@ exports.update = function (req, res, next) {
     return next(error(422, null, errors.array()))
   }
   City.update({
-    city: req.body.city }, {
+    name: req.body.name }, {
     where: { id: req.params.id }
   })
     .then((result) => {
       return City.findByPk(req.params.id)
     })
     .then(city => {
+      if (city === null) {
+        return next(error(404, `City with id = ${req.params.id} not found for update!`))
+      }
       res.json(city)
     })
     .catch(() => {

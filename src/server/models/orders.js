@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const db = require('../db/db-connection-config.js')
+const db = require('../db/db-connection.js')
 const Customer = require('./customers.js')
 const Clock = require('./clocks.js')
 const City = require('./cities.js')
@@ -13,6 +13,11 @@ const Order = db.define('orders', {
   time: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  duration: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0
   }
 },
 {
@@ -20,14 +25,30 @@ const Order = db.define('orders', {
   updatedAt: false
 })
 
-Customer.hasMany(Order)
-Clock.hasMany(Order)
-City.hasMany(Order)
-Master.hasMany(Order)
+Customer.hasMany(Order, {
+  foreignKey: 'customer_id'
+})
+Clock.hasMany(Order, {
+  foreignKey: 'clock_id'
+})
+City.hasMany(Order, {
+  foreignKey: 'city_id'
+})
+Master.hasMany(Order, {
+  foreignKey: 'master_id'
+})
 
-Order.belongsTo(Customer)
-Order.belongsTo(Clock)
-Order.belongsTo(City)
-Order.belongsTo(Master)
+Order.belongsTo(Customer, {
+  foreignKey: 'customer_id'
+})
+Order.belongsTo(Clock, {
+  foreignKey: 'clock_id'
+})
+Order.belongsTo(City, {
+  foreignKey: 'city_id'
+})
+Order.belongsTo(Master, {
+  foreignKey: 'master_id'
+})
 
 module.exports = Order

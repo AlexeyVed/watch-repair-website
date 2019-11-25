@@ -3,31 +3,21 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Field, reduxForm, initialize } from 'redux-form'
 import { Redirect } from 'react-router-dom'
-import axios from 'axios'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import Preloader from '../../App/Preloader/Preloader.jsx'
-import { editCityIntoDB } from '../../../actions'
-import { required } from '../../../validation'
+import { editCityIntoDB, getCity } from '../../../actions'
+import { required, validateOnlyLetter } from '../../../validation'
 
-import './RefactorCities.less'
+import '../../../style/refactor-modal.less'
 
 class EditCities extends React.Component {
-  state = {
-    load: true
-  }
-
   componentDidMount () {
     const arr = this.props.location.pathname.split('/')
-    axios
-      .get(`/api/cities/${arr[arr.length - 1]}`)
+    const id = arr[arr.length - 1]
+    this.props.getCity(id)
       .then(res => {
-        this.setState(() => ({
-          load: false
-        }
-        ))
-        this.props.dispatch(initialize('editCity', res.data, ['id', 'city']))
+        this.props.dispatch(initialize('editCity', res, ['id', 'name']))
       })
   }
 
@@ -40,13 +30,14 @@ class EditCities extends React.Component {
 
     return (
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-city'>
-            <div className="refactor-city__header">
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Edit city
-              <LinkButton to='/admin/cities' name='&times;' className='refactor-city__header__right-button-close'/>
+              <LinkButton to='/admin/cities' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
+              className='refactor-model__form'
               onSubmit={handleSubmit(editCity)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -57,17 +48,17 @@ class EditCities extends React.Component {
               />
               <Field
                 label='Enter city'
-                name='city'
+                name='name'
                 component={TextField}
-                validate={required}
+                validate={[required, validateOnlyLetter]}
                 type='text'
               />
               <button
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit</button>
             </form>
           </div>
-          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -82,7 +73,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editCity: values => dispatch(editCityIntoDB(values))
+    editCity: values => dispatch(editCityIntoDB(values)),
+    getCity: id => dispatch(getCity(id))
   }
 }
 

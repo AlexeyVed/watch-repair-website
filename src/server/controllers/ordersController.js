@@ -1,6 +1,9 @@
 const { checkSchema, validationResult } = require('express-validator')
 const Op = require('sequelize').Op
-const error = require('../modules/services.js').makeError
+const Sequelize = require('sequelize')
+const { format } = require('date-fns')
+
+const { makeError } = require('../modules/services.js')
 const getToday = require('../modules/services.js').getToday
 const sendMsg = require('../modules/sendEmail.js').sendSuccessfullyMsg
 const Order = require('../models/orders.js')
@@ -11,25 +14,36 @@ const Customer = require('../models/customers.js')
 exports.list = function (req, res, next) {
   Order.findAll({
     include: [ { all: true } ],
+    where: !req.query.date ? null : {
+      date: {
+        [Op.startsWith]: req.query.date
+      }
+    },
     order: [
       ['date', 'ASC'],
       ['time', 'ASC']
-    ]
+    ],
+    raw: true,
+    nest: true
   })
     .then(orders => {
-      const string = JSON.stringify(orders)
-      const obj = JSON.parse(string)
       const today = getToday()
-      const indexToday = obj.findIndex((elem, index, array) => {
+      const indexToday = orders.findIndex((elem, index, array) => {
         const x = elem.date.split('-')
         return (Number(x[0]) >= today.year && Number(x[1]) >= today.month)
           ? (Number(x[2]) >= today.day) ? elem.time >= today.hour : false : false
       })
       if (indexToday !== -1) {
-        const oldOrders = obj.splice(0, indexToday)
-        const finallyObj = obj.concat(oldOrders)
+        const oldOrders = orders.splice(0, indexToday)
+        const finallyObj = orders.concat(oldOrders)
+        finallyObj.map((order) => {
+          order.date = format(new Date(order.date), 'MMMM dd, yyyy')
+        })
         return res.json(finallyObj)
       }
+      orders.map((order) => {
+        order.date = format(new Date(order.date), 'MMMM dd, yyyy')
+      })
       res.json(orders)
     })
     .catch(() => {
@@ -57,6 +71,10 @@ exports.get = function (req, res, next) {
     include: [{ all: true }]
   })
     .then(order => {
+      if (order === null) {
+        return next(makeError(404, `Order with id = ${req.params.id} not found!`))
+      }
+      order.date = format(new Date(order.date), 'MMMM dd, yyyy')
       res.json(order)
     })
     .catch(() => {
@@ -98,28 +116,28 @@ exports.updateValidation = checkSchema({
     toInt: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  masterId: {
+  master_id: {
     in: ['body'],
     errorMessage: 'Master is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  customerId: {
+  customer_id: {
     in: ['body'],
     errorMessage: 'Customer is wrong',
     isInt: true,
@@ -145,24 +163,55 @@ exports.update = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, customerId, clockId, cityId, masterId } = req.body
-  Master.findByPk(masterId)
+  const { date, time, customer_id, clock_id, city_id, master_id } = req.body
+  Master.findByPk(master_id, {
+    raw: true,
+    nest: true
+  })
     .then(master => {
-      const stringMaster = JSON.stringify(master)
-      const objMaster = JSON.parse(stringMaster)
-      if (objMaster.cityId !== +cityId) {
-        return next(error(400, 'Master doesnt work in this town'))
+      if (master.city_id !== city_id) {
+        return next(makeError(400, 'Master doesnt work in this town'))
       }
-      return true
+      return Clock.findByPk(clock_id)
     })
-    .then(() => {
+    .then(reqClock => {
+      const { duration } = reqClock
+      return Order.findAll({
+        where: {
+          master_id,
+          city_id,
+          date,
+          [Op.or]: [
+            {
+              time: {
+                [Op.and]: [
+                  { [Op.gt]: time },
+                  { [Op.lte]: time + duration }
+                ]
+              }
+            }, {
+              time: {
+                [Op.and]: [
+                  { [Op.lte]: time },
+                  { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+                ]
+              }
+            }
+          ]
+        }
+      })
+    })
+    .then(result => {
+      if (result.length) {
+        return next(makeError(400, 'Master already busy at this time.'))
+      }
       return Order.update({
-        date: date,
-        time: time,
-        customerId: customerId,
-        clockId: clockId,
-        cityId: cityId,
-        masterId: masterId
+        date,
+        time,
+        customer_id,
+        clock_id,
+        city_id,
+        master_id
       }, {
         where: { id: req.params.id }
       })
@@ -174,6 +223,10 @@ exports.update = function (req, res, next) {
       })
     })
     .then((order) => {
+      if (order === null) {
+        return next(makeError(404, `Order with id = ${req.params.id} not found for update!`))
+      }
+      order.date = format(new Date(order.date), 'MMMM dd, yyyy')
       res.json(order)
     })
     .catch(() => {
@@ -182,14 +235,14 @@ exports.update = function (req, res, next) {
 }
 
 exports.getWorkersValidation = checkSchema({
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
@@ -215,31 +268,39 @@ exports.getWorkers = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, clockId, cityId } = req.body
-  Clock.findByPk(clockId)
+  const { date, clock_id, city_id, time } = req.body
+  Clock.findByPk(clock_id)
     .then(clock => {
-      req.body = { ...req.body, timeRepair: clock.timeRepair }
+      const { duration } = clock
       return Order.findAll({
         where: {
-          date: date,
-          cityId: cityId
-        },
-        include: [ { model: Clock } ]
+          date,
+          city_id,
+          [Op.or]: [
+            {
+              time: {
+                [Op.and]: [
+                  { [Op.gt]: time },
+                  { [Op.lte]: time + duration }
+                ]
+              }
+            }, {
+              time: {
+                [Op.and]: [
+                  { [Op.lte]: time },
+                  { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+                ]
+              }
+            }
+          ]
+        }
       })
     })
-    .then(ordersInDate => {
-      const { time, timeRepair } = req.body
-      return ordersInDate.filter(order => {
-        return (order.time < time)
-          ? ((order.time + order.clock.timeRepair) >= time)
-          : ((time + timeRepair) >= order.time)
-      })
-    })
-    .then(busyMasters => {
-      const arrayIdBusyMaster = busyMasters.map(master => master.masterId)
+    .then(orders => {
+      const arrayIdBusyMaster = orders.map(order => order.master_id)
       return Master.findAll({
         where: {
-          cityId: req.body.cityId,
+          city_id,
           id: { [Op.notIn]: arrayIdBusyMaster }
         },
         include: [{ all: true }],
@@ -258,28 +319,28 @@ exports.getWorkers = function (req, res, next) {
 }
 
 exports.addAdminValidation = checkSchema({
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  masterId: {
+  master_id: {
     in: ['body'],
     errorMessage: 'Master is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  customerId: {
+  customer_id: {
     in: ['body'],
     errorMessage: 'Customer is wrong',
     isInt: true,
@@ -305,45 +366,57 @@ exports.addAdmin = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, customerId, clockId, cityId, masterId } = req.body
-  Clock.findByPk(clockId)
+  const { date, time, customer_id, clock_id, city_id, master_id } = req.body
+  Clock.findByPk(clock_id)
     .then(reqClock => {
-      req.body = { ...req.body, timeRepair: reqClock.timeRepair }
+      const { duration } = reqClock
+      req.body = { ...req.body, duration }
       return Order.findAll({
         where: {
-          masterId: masterId,
-          cityId: cityId,
-          date: date
+          master_id,
+          city_id,
+          date,
+          [Op.or]: [
+            {
+              time: {
+                [Op.and]: [
+                  { [Op.gt]: time },
+                  { [Op.lte]: time + duration }
+                ]
+              }
+            }, {
+              time: {
+                [Op.and]: [
+                  { [Op.lte]: time },
+                  { [Op.gte]: Sequelize.literal(`(${time} - duration)`) }
+                ]
+              }
+            }
+          ]
         },
-        include: [{ model: Clock }]
+        raw: true,
+        nest: true
       })
     })
     .then(result => {
-      const string = JSON.stringify(result)
-      const obj = JSON.parse(string)
-      const isCreated = obj.filter(order => {
-        return (order.time < time)
-          ? ((order.time + order.clock.timeRepair) >= time)
-          : ((time + req.body.timeRepair) >= order.time)
-      })
-      if (isCreated.length) {
-        return next(error(400, 'Master already busy at this time.'))
+      if (result.length) {
+        return next(makeError(400, 'Master already busy at this time.'))
       }
-      return Master.findByPk(masterId)
+      return Master.findByPk(master_id)
     })
     .then(master => {
-      const stringMaster = JSON.stringify(master)
-      const objMaster = JSON.parse(stringMaster)
-      if (objMaster.cityId !== +cityId) {
-        return next(error(400, 'Master doesnt work in this town'))
+      if (master.city_id !== +city_id) {
+        return next(makeError(400, 'Master doesnt work in this town'))
       }
+      const { duration } = req.body
       return Order.create({
-        time: time,
-        date: date,
-        cityId: cityId,
-        clockId: clockId,
-        customerId: customerId,
-        masterId: masterId
+        time,
+        date,
+        city_id,
+        clock_id,
+        customer_id,
+        master_id,
+        duration
       })
     })
     .then(order => {
@@ -353,6 +426,7 @@ exports.addAdmin = function (req, res, next) {
       })
     })
     .then(newOrder => {
+      newOrder.date = format(new Date(newOrder.date), 'MMMM dd, yyyy')
       res.status(201).json(newOrder)
     })
     .catch(() => {
@@ -367,21 +441,21 @@ exports.addValidation = checkSchema({
     isAlpha: true,
     isEmpty: false
   },
-  cityId: {
+  city_id: {
     in: ['body'],
     errorMessage: 'City is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  masterId: {
+  master_id: {
     in: ['body'],
     errorMessage: 'Master is wrong',
     isInt: true,
     toInt: true,
     isEmpty: false
   },
-  clockId: {
+  clock_id: {
     in: ['body'],
     errorMessage: 'Clock is wrong',
     isInt: true,
@@ -413,46 +487,53 @@ exports.add = function (req, res, next) {
   if (!errors.isEmpty()) {
     return next(error(422, null, errors.array()))
   }
-  const { date, time, email, clockId, cityId, masterId, name } = req.body
-  Customer.findOrCreate({
-    where: { email: email },
-    defaults: { name: name }
-  })
+  const { date, time, email, clock_id, city_id, master_id, name } = req.body
+  Clock.findByPk(clock_id)
+    .then(reqClock => {
+      const { duration } = reqClock
+      req.body = { ...req.body, duration }
+    })
+    .then(() => {
+      return Customer.findOrCreate({
+        where: { email },
+        defaults: { name }
+      })
+    })
     .then(([user, created]) => {
+      const customer = user.get({
+        plain: true
+      })
       req.body = {
         ...req.body,
-        customerId: user.get({
-          plain: true
-        }).id
+        name: customer.name,
+        customer_id: customer.id
       }
+      const { customer_id, duration } = req.body
       return Order.create({
-        time: time,
-        date: date,
-        customerId: req.body.customerId,
-        clockId: clockId,
-        cityId: cityId,
-        masterId: masterId
+        time,
+        date,
+        customer_id,
+        clock_id,
+        city_id,
+        master_id,
+        duration
       })
     })
     .then(result => {
-      const string = JSON.stringify(result)
-      const obj = JSON.parse(string)
-      console.log('result order', obj)
       return Order.findOne({
-        where: { id: obj.id },
-        include: [{ all: true }]
+        where: { id: result.get().id },
+        include: [{ all: true }],
+        raw: true,
+        nest: true
       })
     })
     .then(order => {
-      const string = JSON.stringify(order)
-      const obj = JSON.parse(string)
-      console.log('result order include', obj)
-      return sendMsg(obj)
+      return sendMsg(order)
     })
     .then(order => {
       res.status(201).json(order)
     })
     .catch(() => {
-      next(error(400, 'Error add order'))
+      next(makeError(400, 'Error add order'))
     })
 }

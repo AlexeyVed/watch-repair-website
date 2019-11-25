@@ -6,7 +6,7 @@ import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded'
 
 import './header.less'
 
-class Header extends React.Component {
+export class ModuleHeader extends React.Component {
   state = {
     redirect: false,
     redirectAdmin: false
@@ -27,6 +27,7 @@ class Header extends React.Component {
 
   render () {
     const { currentUser } = this.props
+    let style
 
     if (this.state.redirect) {
       this.setState({ redirect: false })
@@ -35,11 +36,13 @@ class Header extends React.Component {
 
     if (this.state.redirectAdmin) {
       this.setState({ redirectAdmin: false })
-      return <Redirect to={{ pathname: '/admin/orders' }}/>
+      return <Redirect to={{ pathname: '/admin' }}/>
     }
+
+    currentUser ? style = 'container-logo' : style = 'container-logo full-logo'
     return (
       <div className='header'>
-        <div className='container-logo' onClick={this.clickLogo}>
+        <div className={`${style}`} onClick={this.clickLogo}>
         </div>
         {(!currentUser) ? <React.Fragment>
           <div className='container-user'>
@@ -64,14 +67,14 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     currentUser: state.loginReducer.singInUser,
     redirectLogOut: state.loginReducer.redirectLogOut
   }
 }
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
   return {
     logOut: () => dispatch(logOutApp())
   }
@@ -80,4 +83,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Header)
+)(ModuleHeader)

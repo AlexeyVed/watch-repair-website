@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const db = require('../db/db-connection-config.js')
+const db = require('../db/db-connection.js')
 const City = require('./cities.js')
 
 const Master = db.define('masters', {
@@ -17,8 +17,12 @@ const Master = db.define('masters', {
   updatedAt: false
 })
 
-City.hasMany(Master)
+City.hasMany(Master, {
+  foreignKey: 'city_id'
+})
 
-Master.belongsTo(City)
+Master.belongsTo(City, {
+  foreignKey: 'city_id'
+})
 
 module.exports = Master

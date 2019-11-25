@@ -1,17 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
-import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded'
-import AddRoundedIcon from '@material-ui/icons/AddRounded'
 
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { deleteMastersFromDB, loadCities, loadDataEnd, loadMasters, setPage } from '../../../actions'
 import AddWorkers from '../RefactorWorkers/AddWorkers.jsx'
 import EditWorkers from '../RefactorWorkers/EditWorkers.jsx'
 import NoMatchAdmin from '../../NoMatch/NoMatchAdmin'
+import DropMenu from '../../ComponentMaterial/DropMenuDelete'
 
-import './RefactorWorkers.less'
+import '../../../style/model-tables.less'
 
 class RefactorWorkers extends React.Component {
   state = {
@@ -58,14 +58,15 @@ class RefactorWorkers extends React.Component {
     }
 
     const renderItems = currentItem.map((item, index) => {
+      const deleteText = `Delete worker: ${item.name}?`
       return <tr key={item.id}>
         <td>{indexes()}</td>
         <td>{item.name}</td>
-        <td>{(item.city !== null) ? item.city.city : <b>City was deleted</b>}</td>
+        <td>{item.city.name}</td>
         <td>{item.rating}</td>
         <td>
           <LinkButton to={`/admin/workers/edit/${item.id}`} name={<EditOutlinedIcon/>}/>
-          <button onClick={ () => deleteWorker(item.id) }>{<DeleteOutlineRoundedIcon/>}</button>
+          <DropMenu DropDelete={ deleteWorker } itemId={ item.id } text={ deleteText }/>
         </td>
       </tr>
     })
@@ -77,7 +78,7 @@ class RefactorWorkers extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <div className='page'
+        <div className='table-model__numbers-pages__container__page page'
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -87,9 +88,9 @@ class RefactorWorkers extends React.Component {
       )
     })
     const table = <React.Fragment>
-      <div className='table-workers__title'>Table masters</div>
-      <div className='table-workers__table'>
-        <table>
+      <div className='table-model__title'>Table masters</div>
+      <div className='table-model__container'>
+        <table className='table-model__container__table'>
           <tbody>
             <tr>
               <th>№</th>
@@ -102,16 +103,16 @@ class RefactorWorkers extends React.Component {
           </tbody>
         </table>
       </div>
-      <div className='table-workers__numbers-pages'>
-        <div className='table-workers__numbers-pages__container'>
+      <div className='table-model__numbers-pages'>
+        <div className='table-model__numbers-pages__container'>
           { renderPageNumbers }
         </div>
-        <div className='table-workers__numbers-pages__bttn-add'>
+        <div className='table-model__numbers-pages__btn-add'>
           <LinkButton to='/admin/workers/add' name={<AddRoundedIcon/>}/>
         </div>
       </div></React.Fragment>
     return (
-      <div className='table-workers'>
+      <div className='table-model'>
         <Switch>
           <Route exact path='/admin/workers' render={() => (table)}/>
           <Route path='/admin/workers/add' render={() => (

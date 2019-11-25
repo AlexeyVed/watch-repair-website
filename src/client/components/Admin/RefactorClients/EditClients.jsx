@@ -6,31 +6,18 @@ import { Redirect } from 'react-router-dom'
 
 import TextField from '../../ComponentMaterial/TextField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
-import Preloader from '../../App/Preloader/Preloader.jsx'
 import { validateEmail, required } from '../../../validation'
-import { editCustomersIntoDB } from '../../../actions'
+import { editCustomersIntoDB, getCustomer } from '../../../actions'
 
-import './RefactorClients.less'
-import axios from 'axios'
+import '../../../style/refactor-modal.less'
 
 class EditClients extends React.Component {
-  state = {
-    load: true
-  }
-
   componentDidMount () {
     const arr = this.props.location.pathname.split('/')
-    axios
-      .get(`/api/customers/${arr[arr.length - 1]}`)
+    const id = arr[arr.length - 1]
+    this.props.getCustomer(id)
       .then(res => {
-        this.setState(() => ({
-          load: false
-        }
-        ))
-        this.props.dispatch(initialize('editClient', res.data, ['id', 'email', 'name']))
-      })
-      .catch(err => {
-        console.log(err)
+        this.props.dispatch(initialize('editClient', res, ['id', 'email', 'name']))
       })
   }
 
@@ -44,13 +31,14 @@ class EditClients extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-clients edit-client'>
-            <div className="refactor-clients__header">
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Edit Client
-              <LinkButton to='/admin/clients' name='&times;' className='refactor-clients__header__right-button-close'/>
+              <LinkButton to='/admin/clients' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
+              className='refactor-model__form'
               onSubmit={handleSubmit(editClient)}>
               <Field
                 label={`ID: ${arr[arr.length - 1]}`}
@@ -78,11 +66,11 @@ class EditClients extends React.Component {
                 required
               />
               <button
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit</button>
             </form>
           </div>
-          {(this.state.load ? <Preloader/> : null)}
         </div>
         , document.getElementById('modal-root'))
     )
@@ -97,7 +85,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editClient: values => dispatch(editCustomersIntoDB(values))
+    editClient: values => dispatch(editCustomersIntoDB(values)),
+    getCustomer: id => dispatch(getCustomer(id))
   }
 }
 

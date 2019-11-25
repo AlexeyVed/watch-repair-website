@@ -76,7 +76,7 @@ const appReducer = (state = initialState, action) => {
         chooseWorker: false,
         showModal: true,
         forOrder: {
-          freWorkers: [],
+          freeWorkers: [],
           insertId: null,
           masterId: null
         }

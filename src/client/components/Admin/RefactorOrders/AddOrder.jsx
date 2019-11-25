@@ -9,16 +9,16 @@ import SelectField from '../../ComponentMaterial/SelectField/'
 import DateField from '../../ComponentMaterial/DateField/'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 import { addOrdersToDB } from '../../../actions'
+import { getDate } from '../../../helpers/dateForOrders.js'
 import { required } from '../../../validation'
 
-import './RefactorOrders.less'
-import { getDate } from '../../App/OrderForm/logic'
+import '../../../style/refactor-modal.less'
 
 class AddOrder extends React.Component {
   state = {
     workHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
-    date: {
-      date: null,
+    today: {
+      date: new Date(),
       time: null
     }
   }
@@ -27,18 +27,12 @@ class AddOrder extends React.Component {
     const date = getDate()
 
     this.setState(() => ({
-      workHours: this.state.workHours.filter(item => {
-        if (item >= date.time) {
-          return true
-        } else {
-          return false
-        }
-      }),
-      date: date
+      workHours: this.state.workHours.filter(item => item >= date.time),
+      today: date
     }))
 
     const initialValues = {
-      date: date.date,
+      date: date.dateToString,
       time: date.time
     }
     this.props.dispatch(initialize('addOrder', initialValues, ['date', 'time']))
@@ -46,6 +40,7 @@ class AddOrder extends React.Component {
 
   render () {
     const { handleSubmit, addOrder, redirectBack, chooseClock, chooseCities, chooseUsers, chooseWorkers } = this.props
+    const { today } = this.state
 
     if (redirectBack) {
       return <Redirect to={{ pathname: '/admin/orders' }}/>
@@ -56,16 +51,17 @@ class AddOrder extends React.Component {
     return (
 
       ReactDOM.createPortal(
-        <div className='modal-window'>
-          <div className='refactor-orders'>
-            <div className='refactor-orders__header'>
+        <div className='modal-window-for-refactor'>
+          <div className='refactor-model'>
+            <div className='refactor-model__header'>
               Add Order
-              <LinkButton to='/admin/orders' name='&times;' className='refactor-orders__header__right-button-close'/>
+              <LinkButton to='/admin/orders' name='&times;' className='refactor-model__header__right-button-close'/>
             </div>
             <form
+              className='refactor-model__form'
               onSubmit={handleSubmit(addOrder)}>
               <Field
-                name='customerId'
+                name='customer_id'
                 id='customer'
                 label='Choose client email'
                 component={SelectField}
@@ -79,7 +75,7 @@ class AddOrder extends React.Component {
                 }
               </Field>
               <Field
-                name='masterId'
+                name='master_id'
                 id='master'
                 label='Choose master'
                 component={SelectField}
@@ -93,7 +89,7 @@ class AddOrder extends React.Component {
                 }
               </Field>
               <Field
-                name='clockId'
+                name='clock_id'
                 id='clock'
                 label='Choose your clock'
                 component={SelectField}
@@ -102,12 +98,12 @@ class AddOrder extends React.Component {
               >
                 {
                   chooseClock.map((clock, index) => (
-                    <MenuItem key={index} value={clock.id}>{clock.typeClock}</MenuItem>
+                    <MenuItem key={index} value={clock.id}>{clock.name}</MenuItem>
                   ))
                 }
               </Field>
               <Field
-                name='cityId'
+                name='city_id'
                 id='city'
                 label='Choose your city'
                 component={SelectField}
@@ -116,15 +112,15 @@ class AddOrder extends React.Component {
               >
                 {
                   chooseCities.map((item, index) => (
-                    <MenuItem key={index} value={item.id}>{item.city}</MenuItem>
+                    <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
                   ))
                 }
               </Field>
               <Field
                 label='Choose date'
                 name='date'
-                min={this.state.date.date}
-                max='2019-12-30'
+                min={today.date}
+                max={new Date(today.date.getFullYear(), today.date.getMonth() + 6, 0)}
                 component={DateField}
                 validate={[required]}
                 type='date'
@@ -149,6 +145,7 @@ class AddOrder extends React.Component {
                 }
               </Field>
               <button
+                className='refactor-model__form__button-submit'
                 type='submit'
                 label='submit'>Submit
               </button>
