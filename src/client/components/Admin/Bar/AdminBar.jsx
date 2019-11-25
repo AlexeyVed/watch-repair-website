@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import EventIcon from '@material-ui/icons/Event'
 import LinkButton from '../../LinkButton/LinkButton.jsx'
 
 import './AdminBar.less'
@@ -20,6 +21,7 @@ class AdminBar extends React.Component {
     return (
       <div className='bar-choose-item'>
         <div className="bar-choose-item__buttons">
+          <LinkButton className='button-bar board' to='/admin' name={ <EventIcon/> }/>
           <LinkButton className='button-bar orders' to='/admin/orders' name='Control orders'/>
           <LinkButton className='button-bar cities' to='/admin/cities' name='Control cities'/>
           <LinkButton className='button-bar masters' to='/admin/workers' name='Control masters'/>

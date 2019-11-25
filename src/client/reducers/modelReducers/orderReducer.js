@@ -16,11 +16,15 @@ import {
   END_LOAD_DATA,
   GET_ORDER_STARTED,
   GET_ORDER_SUCCESS,
-  GET_ORDER_FAILURE
+  GET_ORDER_FAILURE,
+  LOAD_DATA_FOR_DASHBOARD_STARTED,
+  LOAD_DATA_FOR_DASHBOARD_SUCCESS,
+  LOAD_DATA_FOR_DASHBOARD_FAILURE
 } from '../../actions/types.js'
 
 const initialState = {
   data: [],
+  dashboardData: [],
   error: null,
   redirectBackFromRefactor: false,
   refactorModelInProcess: false,
@@ -48,6 +52,27 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         data: [],
+        showModal: true,
+        error: action.payload
+      }
+
+    case LOAD_DATA_FOR_DASHBOARD_STARTED:
+      return {
+        ...state,
+        dataLoad: true
+      }
+
+    case LOAD_DATA_FOR_DASHBOARD_SUCCESS:
+      return {
+        ...state,
+        dashboardData: action.payload,
+        error: null
+      }
+
+    case LOAD_DATA_FOR_DASHBOARD_FAILURE:
+      return {
+        ...state,
+        dashboardData: [],
         showModal: true,
         error: action.payload
       }
